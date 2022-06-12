@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native'
 
 export default function App() {
   const varr = 'fdd'
+  const varr2 = 'fdd'
   return (
     <View style={styles.container}>
       <Text>Hi, this is the Ecuaciclismo app frontend!</Text>
