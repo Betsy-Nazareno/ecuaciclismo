@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View } from 'react-native'
 
 export default function App() {
-  const varr = 'fd'
+  const varr = 'fdd'
   return (
     <View style={styles.container}>
       <Text>Hi, this is the Ecuaciclismo app frontend!</Text>
