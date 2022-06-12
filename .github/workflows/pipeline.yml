@@ -17,7 +17,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14.15.3
-      - name: Install eslint
-        run: npm install -g eslint
+      # - name: Install eslint
+      #   run: npm install -g eslint
+      - name: Install depedencies
+        run: npm install
       - name: Verificar reglas de eslint
         run: npm run eslint
