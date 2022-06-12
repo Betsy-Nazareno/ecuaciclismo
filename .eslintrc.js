@@ -2,26 +2,27 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-    "react-native/react-native": true,
+    'react-native/react-native': true,
   },
   extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
   ],
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
-  plugins: ["react", "react-native", "@typescript-eslint"],
+  plugins: ['react', 'react-native', '@typescript-eslint'],
   rules: {},
   settings: {
     react: {
-      version: "16.12.0",
+      version: '16.12.0',
     },
   },
-};
+}
