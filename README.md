@@ -1,1 +1,2 @@
-# Ecuaciclismo-Frontend
+# Frontend para aplicación movil Ecuaciclismo
+
