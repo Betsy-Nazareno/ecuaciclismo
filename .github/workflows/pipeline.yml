@@ -29,5 +29,5 @@ jobs:
           token: -FRswLamh0-eAlloxbHuJsqb5JsIC4S2CejaYAWf
       - run: expo install expo-updates
       - run: npm install --global eas-cli
-      - name: Publish app
+      - name: Create APK for Android
         run: eas build -p android --profile preview
