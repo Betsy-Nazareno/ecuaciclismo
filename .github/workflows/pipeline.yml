@@ -29,4 +29,4 @@ jobs:
           token: -FRswLamh0-eAlloxbHuJsqb5JsIC4S2CejaYAWf
       - run: expo install expo-updates
       - name: Publish app
-        run: expo publish --non-interactive
+        run: eas build -p android --profile preview
