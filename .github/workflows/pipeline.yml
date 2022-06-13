@@ -28,5 +28,6 @@ jobs:
           expo-version: latest
           token: -FRswLamh0-eAlloxbHuJsqb5JsIC4S2CejaYAWf
       - run: expo install expo-updates
+      - run: npm install --global eas-cli
       - name: Publish app
         run: eas build -p android --profile preview
