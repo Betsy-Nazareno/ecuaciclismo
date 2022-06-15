@@ -1,0 +1,32 @@
+name: Deployment to production
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  checkout-repository:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.15.3
+      - name: Install depedencies
+        run: npm install
+      - name: Verificar reglas de eslint
+        run: npm run eslint
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          token: -FRswLamh0-eAlloxbHuJsqb5JsIC4S2CejaYAWf
+      - run: expo install expo-updates
+      - name: Publish preview app
+        run: expo publish --non-interactive
