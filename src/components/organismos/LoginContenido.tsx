@@ -7,15 +7,21 @@ import TouchableMessage from '../atomos/TouchableMessage'
 import Ruler from '../atomos/Ruler'
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../models/ScreensTypes'
+import { RootState } from '../../../redux/store'
+import { useSelector } from 'react-redux'
 
 interface Prop {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>
 }
 
 const LoginContenido = ({ navigation }: Prop) => {
+  const { name, email } = useSelector((state: RootState) => state.user)
   return (
     <>
       <View style={tw`w-full flex flex-row justify-center`}>
+        <Text>
+          {name} - {email}
+        </Text>
         <Image source={require('../../../assets/ecuaciclismo_logo.png')} />
       </View>
       <View style={tw`mt-4`}>
