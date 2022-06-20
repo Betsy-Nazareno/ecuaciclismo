@@ -2,7 +2,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React from 'react'
 import { TouchableHighlight, View } from 'react-native'
 import tw from 'twrnc'
-import { RootStackParamList, Screens } from '../../../models/ScreensTypes'
+import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import { ButtonTab } from '../atomos/ButtonTab'
 
 interface Props {
@@ -12,9 +12,9 @@ interface Props {
 const NavigationBar = ({ navigation }: Props) => {
   return (
     <View
-      style={tw`w-full absolute bottom-0 border-t-2 border-solid border-gray-200`}
+      style={tw`w-full absolute bottom-0 border-t-2 border-solid border-gray-200 bg-white`}
     >
-      <View style={tw`flex flex-row justify-between p-2`}>
+      <View style={tw`flex flex-row justify-between p-[2%]`}>
         <TouchableHighlight
           activeOpacity={0.1}
           onPress={() => navigation.navigate('Inicio')}

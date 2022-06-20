@@ -1,19 +1,19 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React from 'react'
-import { Text } from 'react-native'
-import { RootStackParamList } from '../../models/ScreensTypes'
+import { RootStackParamList } from '../../models/Screens.types'
 import BasePaginas from '../components/templates/BasePaginas'
+import Consejos from '../components/templates/Consejos'
 
 interface Props {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Inicio'>
 }
 
-const Consejos = ({ navigation }: Props) => {
+const Inicio = ({ navigation }: Props) => {
   return (
     <BasePaginas navigation={navigation}>
-      <Text>Consejos</Text>
+      <Consejos />
     </BasePaginas>
   )
 }
 
-export default Consejos
+export default Inicio

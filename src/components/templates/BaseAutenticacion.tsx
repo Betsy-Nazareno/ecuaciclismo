@@ -7,7 +7,7 @@ interface Props {
 }
 
 const BaseAutenticacion = ({ children }: Props) => {
-  return <ScrollView style={tw`mt-18 px-6`}>{children}</ScrollView>
+  return <ScrollView style={tw`mt-[15%] px-6`}>{children}</ScrollView>
 }
 
 export default BaseAutenticacion
