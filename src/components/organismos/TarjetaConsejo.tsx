@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, ImageSourcePropType } from 'react-native'
 import tw from 'twrnc'
 import { Consejo } from '../../../models/Consejo.model'
 import { JEST_TEXT } from '../../../utils/constants'
@@ -16,7 +16,10 @@ const TarjetaConsejo = ({ consejo, description }: TarjetaConsejoProps) => {
     <View style={styles.borderContainer}>
       <View style={tw`bg-white py-2 px-4 rounded-xl shadow-xl`}>
         <InformacionUsuario user={consejo.user} description={description} />
-        <ContenidoConsejo text={JEST_TEXT} image={consejo.image as any} />
+        <ContenidoConsejo
+          text={JEST_TEXT}
+          image={consejo.image as ImageSourcePropType}
+        />
       </View>
     </View>
   )
