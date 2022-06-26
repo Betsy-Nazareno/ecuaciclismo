@@ -1,8 +1,19 @@
+import { DocumentResult } from 'expo-document-picker'
 import { ImageSourcePropType } from 'react-native'
-import { User } from './User'
 
 export interface Consejo {
-  image?: string | ImageSourcePropType
-  text?: string
-  user: User
+  imagen?: TypeImageConsejo
+  email?: string
+  first_name?: string
+  foto?: string
+  last_name?: string
+  informacion: string
+  username?: string
+  token?: string
 }
+
+export type TypeImageConsejo =
+  | string
+  | ImageSourcePropType
+  | DocumentResult
+  | { uri: string }

@@ -13,7 +13,7 @@ const ContenidoConsejo = ({ image, text }: ContenidoConsejoProps) => {
   return (
     <View style={tw``}>
       <View style={tw`mx-auto`}>
-        {image && <Image source={image} style={{ width: 200, height: 200 }} />}
+        {image && <Image source={image} style={{ width: 350, height: 200 }} />}
       </View>
       {text && (
         <View style={tw`px-[3%]`}>

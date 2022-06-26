@@ -1,4 +1,4 @@
-import { useFormikContext } from 'formik'
+import { ErrorMessage } from 'formik'
 import * as React from 'react'
 import {
   Text,
@@ -10,34 +10,55 @@ import {
 } from 'react-native'
 import tw from 'twrnc'
 import { TextInputType } from '../../../models/TextInput.model'
-import { Login } from '../../../models/User'
+import { TEXT_COLORS } from '../../../utils/constants'
+import { FieldError } from './FieldError'
 
 interface InputProps {
   text?: string
   name: string
   type: TextInputType
+  multiline?: boolean
+  numberOfLines?: number
   placeholder?: string
   stylesProp?: string
   value?: string
   setValue?: (value: string) => void
 }
 
-const Input = ({ text, type, placeholder, stylesProp, name }: InputProps) => {
+const Input = ({
+  text,
+  type,
+  placeholder,
+  stylesProp,
+  name,
+  multiline = true,
+  numberOfLines = 1,
+  value,
+  setValue,
+}: InputProps) => {
   const [isFocus, setIsFocus] = React.useState(false)
 
-  const { values, setFieldValue } = useFormikContext<Login>()
   return (
     <View style={tw`${stylesProp || ''}`}>
-      {text && <Text style={tw`text-[#0C3248]`}>{text}</Text>}
-      <TextInput
-        style={isFocus ? styles.containerFocus : styles.containerUnfocus}
-        textContentType={type}
-        placeholder={placeholder}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(!isFocus)}
-        onChangeText={(value) => setFieldValue(name, value)}
-        value={values[name as keyof Login]}
-      />
+      {text && (
+        <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
+          {text}
+        </Text>
+      )}
+      <View style={tw`mt-1`}>
+        <TextInput
+          style={isFocus ? styles.containerFocus : styles.containerUnfocus}
+          textContentType={type}
+          placeholder={placeholder}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(!isFocus)}
+          onChangeText={(value) => setValue?.(value)}
+          multiline={multiline}
+          numberOfLines={numberOfLines}
+          value={value}
+        />
+      </View>
+      <ErrorMessage name={name} render={FieldError} />
     </View>
   )
 }
@@ -49,7 +70,7 @@ const container: StyleProp<TextStyle> = {
   borderStyle: 'solid',
   borderRadius: 10,
   paddingHorizontal: 10,
-  paddingVertical: 6,
+  paddingVertical: 10,
   fontSize: 16,
   marginTop: 2,
 }

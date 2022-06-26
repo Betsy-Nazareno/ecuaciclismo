@@ -49,8 +49,7 @@ export const useAuthentication = () => {
   }
 
   const deleteUserStore = async () => {
-    const result = await SecureStore.deleteItemAsync('user')
-    console.log(result)
+    await SecureStore.deleteItemAsync('user')
     dispatch(cerrarSesion())
   }
 

@@ -20,7 +20,7 @@ export const formatoMinLenght = (
   fieldName: string,
   minLength: number
 ): string => {
-  return `${fieldName} debe ser de al menos ${minLength} caracteres.`
+  return `${fieldName} debe contener al menos ${minLength} caracteres.`
 }
 
 export const formatoMaxLength = (
@@ -28,4 +28,8 @@ export const formatoMaxLength = (
   maxLength: number
 ): string => {
   return `${fieldName} no puede exceder ${maxLength} caracteres.`
+}
+
+export const formatOnlyText = (fieldName: string): string => {
+  return `${fieldName} no puede contener números o caracteres especiales.`
 }

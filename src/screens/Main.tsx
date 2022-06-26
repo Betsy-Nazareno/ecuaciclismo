@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { useAuthentication } from '../../hooks/useAuthentication'
 import Spinner from '../components/atomos/Spinner'
+import AgregarConsejo from './AgregarConsejo'
 
 const Stack = createNativeStackNavigator()
 
@@ -43,6 +44,7 @@ const Main = () => {
         screenOptions={{
           headerStyle: { backgroundColor: '#2D84C4' },
           headerTitle: Navbar,
+          animation: 'none',
           // headerBackImageSource: require('../../assets/left-arrow.png'),
         }}
         initialRouteName="Inicio"
@@ -55,6 +57,7 @@ const Main = () => {
         <Stack.Screen name="Publicaciones" component={Publicaciones} />
         <Stack.Screen name="Rutas" component={Rutas} />
         <Stack.Screen name="Perfil" component={Perfil} />
+        <Stack.Screen name="AgregarConsejo" component={AgregarConsejo} />
       </Stack.Navigator>
     )
   }

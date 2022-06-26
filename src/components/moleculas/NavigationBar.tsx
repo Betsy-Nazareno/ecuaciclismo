@@ -1,67 +1,39 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React from 'react'
-import { TouchableHighlight, View } from 'react-native'
+import { Image, View } from 'react-native'
 import tw from 'twrnc'
-import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import { ButtonTab } from '../atomos/ButtonTab'
 
-interface Props {
-  navigation: NativeStackNavigationProp<RootStackParamList, Screens>
-}
-
-const NavigationBar = ({ navigation }: Props) => {
+const NavigationBar = () => {
   return (
-    <View
-      style={tw`w-full absolute bottom-0 border-t-2 border-solid border-gray-200 bg-white`}
-    >
+    <View style={tw`w-full border-t-2 border-solid border-gray-200 bg-white`}>
       <View style={tw`flex flex-row justify-between p-[2%]`}>
-        <TouchableHighlight
-          activeOpacity={0.1}
-          onPress={() => navigation.navigate('Inicio')}
-          underlayColor="#E7F5FF"
-          style={tw`w-1/4`}
-        >
-          <ButtonTab
-            title="Inicio"
-            srcImage={require('../../../assets/home_inactive_icon.png')}
+        <ButtonTab screen="Inicio">
+          <Image
+            source={require('../../../assets/home_active_icon.png')}
+            style={{ width: 25, height: 25 }}
           />
-        </TouchableHighlight>
+        </ButtonTab>
 
-        <TouchableHighlight
-          activeOpacity={0.1}
-          underlayColor="#E7F5FF"
-          onPress={() => navigation.navigate('Publicaciones')}
-          style={tw`w-1/4`}
-        >
-          <ButtonTab
-            title="Noticias"
-            srcImage={require('../../../assets/publicaciones_inactive_icon.png')}
+        <ButtonTab screen="Publicaciones">
+          <Image
+            source={require('../../../assets/publicaciones_icon.png')}
+            style={{ width: 28, height: 28 }}
           />
-        </TouchableHighlight>
+        </ButtonTab>
 
-        <TouchableHighlight
-          activeOpacity={0.1}
-          underlayColor="#E7F5FF"
-          onPress={() => navigation.navigate('Rutas')}
-          style={tw`w-1/4`}
-        >
-          <ButtonTab
-            title="Rutas"
-            srcImage={require('../../../assets/rutas_inactive_icon.png')}
+        <ButtonTab screen="Rutas">
+          <Image
+            source={require('../../../assets/ubicacion_icon.png')}
+            style={{ width: 30, height: 25 }}
           />
-        </TouchableHighlight>
+        </ButtonTab>
 
-        <TouchableHighlight
-          activeOpacity={0.1}
-          underlayColor="#E7F5FF"
-          onPress={() => navigation.navigate('Perfil')}
-          style={tw`w-1/4`}
-        >
-          <ButtonTab
-            title="Perfil"
-            srcImage={require('../../../assets/perfil_inactive_icon.png')}
+        <ButtonTab screen="Perfil">
+          <Image
+            source={require('../../../assets/ciclista_icon.png')}
+            style={{ width: 25, height: 25 }}
           />
-        </TouchableHighlight>
+        </ButtonTab>
       </View>
     </View>
   )

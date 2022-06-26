@@ -1,17 +1,11 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React from 'react'
-import { RootStackParamList } from '../../models/Screens.types'
-import RegistroContenido from '../components/organismos/RegistroContenido'
+import RegistroFormulario from '../components/organismos/RegistroFormulario'
 import BaseAutenticacion from '../components/templates/BaseAutenticacion'
 
-interface Props {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Registro'>
-}
-
-const Registro = ({ navigation }: Props) => {
+const Registro = () => {
   return (
     <BaseAutenticacion>
-      <RegistroContenido navigation={navigation} />
+      <RegistroFormulario />
     </BaseAutenticacion>
   )
 }

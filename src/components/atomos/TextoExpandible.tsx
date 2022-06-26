@@ -16,8 +16,10 @@ const TextoExpandible = ({ text, maxLength }: TextoExpandibleProps) => {
     if (text && text.length > 200) {
       setHasMoreText(true)
       setTextRender(text.substring(0, maxLength) + '...')
+    } else {
+      setTextRender(text)
     }
-  }, [])
+  }, [text])
 
   const handleDisplayText = () => {
     if (text && hasMoreText) {
@@ -32,11 +34,13 @@ const TextoExpandible = ({ text, maxLength }: TextoExpandibleProps) => {
   return (
     <Text style={tw`text-sm ${TEXT_COLORS.DARK_BLUE}`}>
       {textRender}
-      <Pressable onPress={handleDisplayText}>
-        <Text style={tw`text-sm font-bold ${TEXT_COLORS.ORANGE}`}>
-          {hasMoreText ? 'Ver más' : 'Ver menos'}
-        </Text>
-      </Pressable>
+      {text.length > 200 && (
+        <Pressable onPress={handleDisplayText}>
+          <Text style={tw`text-sm font-bold ${TEXT_COLORS.ORANGE}`}>
+            {hasMoreText ? 'Ver más' : 'Ver menos'}
+          </Text>
+        </Pressable>
+      )}
     </Text>
   )
 }

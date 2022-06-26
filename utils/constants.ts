@@ -1,3 +1,5 @@
+import { Dimensions } from 'react-native'
+
 export const TEXT_COLORS = {
   ORANGE: 'text-[#F16F31]',
   GRAY: 'text-[#DFDFDF]',
@@ -13,17 +15,35 @@ export const BACKGROUND_COLORS = {
   PRIMARY_BLUE: 'bg-[#01579B]',
   DARK_BLUE: 'bg-[#0C3248]',
   BLUE_LIGHTER: 'bg-[#F2FAFF]',
+  GRAY: 'bg-[#DFDFDF]',
+  GREEN: 'bg-[#D0FCE3]',
 }
 
 export const BORDER_COLORS = {
   GRAY: 'border-[#DFDFDF]',
   PRIMARY_BLUE: 'border-[#2D84C4]',
+  GREEN: 'border-[#5DB075]',
 }
 
 export const JEST_TEXT =
   "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
 
-export const CONSEJO_MAX_LENGTH = 100
+export const WIDTH_DIMENSIONS = Dimensions.get('window').width
+export const HEIGHT_DIMENSIONS = Dimensions.get('window').height
 
-export const PASSWORD_MAX_SIZE = 16
-export const PASSWORD_MIN_SIZE = 8
+export const CONSEJO_MAX_LENGTH = 100
+export const PASSWORD = {
+  MAX_SIZE: 16,
+  MIN_SIZE: 8,
+}
+
+export const USERNAME = {
+  MAX_LENGTH: 16,
+  MIN_LENGTH: 8,
+}
+
+export const FOLDERS_STORAGE = {
+  CONSEJOS: 'consejos',
+  RUTAS: 'rutas',
+  PUBLICACIONES: 'publicaciones',
+}

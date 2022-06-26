@@ -14,6 +14,14 @@ export interface Login {
   password: string
 }
 
+export interface Registro {
+  email: string
+  username: string
+  first_name: string
+  last_name: string
+  password: string
+  password_confirmation: string
+}
 export interface UserSession {
   token: string
   user: User

@@ -13,7 +13,7 @@ const TitleWithIcon = ({ text, handleClick }: TitleWithIconProps) => {
   return (
     <View style={tw`relative`}>
       <SectionTitle text={text} hasUpdates />
-      <View style={tw`absolute -top-[24%] right-[6%]`}>
+      <View style={tw`absolute -top-[24%] right-[4%]`}>
         <RoundedButtonIcon
           handleClick={handleClick}
           src={require('../../../assets/edit.png')}
