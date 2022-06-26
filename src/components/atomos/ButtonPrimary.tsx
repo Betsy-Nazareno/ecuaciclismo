@@ -5,16 +5,17 @@ import tw from 'twrnc'
 interface ButtonPrimaryProps {
   label: string
   handleClick?: () => void
+  style: string
 }
 
-const ButtonPrimary = ({ label, handleClick }: ButtonPrimaryProps) => {
+const ButtonPrimary = ({ label, style, handleClick }: ButtonPrimaryProps) => {
   return (
     <TouchableHighlight
       activeOpacity={0.6}
       underlayColor="#E7F5FF"
       onPress={handleClick}
     >
-      <View style={tw`bg-[#2D84C4] py-3 px-6 rounded-md`}>
+      <View style={tw`${style} py-3 px-6 rounded-md`}>
         <Text style={tw`text-center font-bold text-white text-base`}>
           {label}
         </Text>

@@ -1,17 +1,17 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React from 'react'
-import { Text } from 'react-native'
-import { RootStackParamList } from '../../models/ScreensTypes'
+import { Image, View } from 'react-native'
 import BasePaginas from '../components/templates/BasePaginas'
+import tw from 'twrnc'
 
-interface Props {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Rutas'>
-}
-
-const Rutas = ({ navigation }: Props) => {
+const Rutas = () => {
   return (
-    <BasePaginas navigation={navigation}>
-      <Text>Rutas</Text>
+    <BasePaginas>
+      <View style={tw`mx-auto mt-[30%]`}>
+        <Image
+          source={require('../../assets/wip3.png')}
+          style={{ width: 256, height: 256 }}
+        />
+      </View>
     </BasePaginas>
   )
 }
