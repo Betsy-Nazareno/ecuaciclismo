@@ -19,7 +19,9 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', 'react-native', '@typescript-eslint'],
-  rules: {},
+  rules: {
+    '@typescript-eslint/no-var-requires': 0,
+  },
   settings: {
     react: {
       version: '16.12.0',

@@ -1,10 +1,13 @@
+import { Consejo } from './Consejo.model'
+
 export type RootStackParamList = {
-  Inicio: undefined
+  Inicio: { reload: boolean } | undefined
   Login: undefined
   Registro: undefined
   Publicaciones: undefined
   Rutas: undefined
   Perfil: undefined
+  AgregarConsejo: { consejo: Consejo } | undefined
 }
 
 export type Screens =
@@ -14,3 +17,4 @@ export type Screens =
   | 'Registro'
   | 'Publicaciones'
   | 'Rutas'
+  | 'AgregarConsejo'

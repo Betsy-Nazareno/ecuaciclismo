@@ -1,17 +1,21 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React from 'react'
-import { Text } from 'react-native'
-import { RootStackParamList } from '../../models/ScreensTypes'
+import { Button, Image, View } from 'react-native'
 import BasePaginas from '../components/templates/BasePaginas'
+import { useAuthentication } from '../../hooks/useAuthentication'
+import tw from 'twrnc'
 
-interface Props {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Perfil'>
-}
+const Perfil = () => {
+  const { deleteUserStore } = useAuthentication()
 
-const Perfil = ({ navigation }: Props) => {
   return (
-    <BasePaginas navigation={navigation}>
-      <Text>Perfil</Text>
+    <BasePaginas>
+      <View style={tw`mx-auto mt-[30%]  mb-[20%]`}>
+        <Image
+          source={require('../../assets/wip3.png')}
+          style={{ width: 256, height: 256 }}
+        />
+      </View>
+      <Button title="Cerrar sesion" onPress={deleteUserStore}></Button>
     </BasePaginas>
   )
 }
