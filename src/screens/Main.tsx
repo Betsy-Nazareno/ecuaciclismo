@@ -20,6 +20,8 @@ import SideMenu from '../components/templates/SideMenu'
 import Comunidad from './Comunidad'
 import Consejos from './Consejos'
 import Novedades from './Novedades'
+import ConsejoDetalle from './ConsejoDetalle'
+import Publicaciones from './Publicaciones'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -64,10 +66,10 @@ const Main = () => {
           component={Inicio}
           options={{ headerBackVisible: false }}
         />
-        <Stack.Screen name="Publicaciones" component={AgregarPublicidad} />
         <Stack.Screen name="DetallePublicidad" component={DetallePublicidad} />
         <Stack.Screen name="Rutas" component={Rutas} />
         <Stack.Screen name="Perfil" component={Perfil} />
+        <Stack.Screen name="Publicaciones" component={Publicaciones} />
         <Stack.Screen name="AgregarConsejo" component={AgregarConsejo} />
       </Stack.Navigator>
     )
@@ -90,6 +92,9 @@ const Main = () => {
         <Drawer.Screen name="HomeStack" component={HomeStack} />
         <Drawer.Screen name="Comunidad" component={Comunidad} />
         <Drawer.Screen name="Consejos" component={Consejos} />
+        <Drawer.Screen name="ConsejoDetalle" component={ConsejoDetalle} />
+        <Drawer.Screen name="DetallePublicidad" component={DetallePublicidad} />
+        <Stack.Screen name="AgregarPublicidad" component={AgregarPublicidad} />
         <Drawer.Screen name="Novedades" component={Novedades} />
       </Drawer.Navigator>
     )

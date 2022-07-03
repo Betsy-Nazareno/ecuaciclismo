@@ -4,6 +4,7 @@ export interface BannerPublicidadInterface {
   titulo: string
   imagen: ImageSourcePropType
   descripcion_corta: string
+  token?: string
 }
 
 interface DatosContacto {

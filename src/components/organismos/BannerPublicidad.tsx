@@ -6,7 +6,7 @@ import Publicidad from '../moleculas/Publicidad'
 const BannerPublicidad = () => {
   const mock_data = [
     {
-      token: 1,
+      token: '1',
       imagen: require('../../../assets/camisa.png'),
       titulo: 'Nueva camisa disponible 1',
       descripcion:
@@ -19,7 +19,7 @@ const BannerPublicidad = () => {
       },
     },
     {
-      token: 2,
+      token: '2',
       imagen: require('../../../assets/camisa.png'),
       titulo: 'Nueva camisa disponible 2',
       descripcion:
@@ -32,7 +32,7 @@ const BannerPublicidad = () => {
       },
     },
     {
-      token: 3,
+      token: '3',
       imagen: require('../../../assets/trajes.jpg'),
       titulo: 'Nueva camisa disponible 3',
       descripcion:

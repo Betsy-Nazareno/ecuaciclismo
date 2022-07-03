@@ -15,12 +15,13 @@ import { FieldError } from './FieldError'
 
 interface InputProps {
   text?: string
-  name: string
+  name?: string
   type: TextInputType
   multiline?: boolean
   numberOfLines?: number
   placeholder?: string
   stylesProp?: string
+  stylesInput?: string
   value?: string
   setValue?: (value: string) => void
 }
@@ -33,6 +34,7 @@ const Input = ({
   name,
   multiline = true,
   numberOfLines = 1,
+  stylesInput,
   value,
   setValue,
 }: InputProps) => {
@@ -47,7 +49,10 @@ const Input = ({
       )}
       <View style={tw`mt-1`}>
         <TextInput
-          style={isFocus ? styles.containerFocus : styles.containerUnfocus}
+          style={[
+            isFocus ? styles.containerFocus : styles.containerUnfocus,
+            tw`${stylesInput || ''}`,
+          ]}
           textContentType={type}
           placeholder={placeholder}
           onFocus={() => setIsFocus(true)}
@@ -58,7 +63,7 @@ const Input = ({
           value={value}
         />
       </View>
-      <ErrorMessage name={name} render={FieldError} />
+      {name && <ErrorMessage name={name} render={FieldError} />}
     </View>
   )
 }

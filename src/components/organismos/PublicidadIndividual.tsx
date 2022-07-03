@@ -13,7 +13,11 @@ interface PublicidadIndividualProps {
 const PublicidadIndividual = ({ data }: PublicidadIndividualProps) => {
   return (
     <View style={tw`mx-2 relative `}>
-      <ContenedorPaginasDetalle borderRight>
+      <ContenedorPaginasDetalle
+        borderRight
+        colorBorder="#F16F31"
+        borderWidth={12}
+      >
         <View style={tw`pb-24 relative`}>
           <Text
             style={tw`text-2xl font-bold text-center ${TEXT_COLORS.DARK_BLUE}`}

@@ -27,7 +27,7 @@ const Consejos = () => {
 
   return (
     <View style={tw`px-2`}>
-      <View style={tw`mt-[6%] ${BACKGROUND_COLORS.BLUE_LIGHTER}`}>
+      <View style={tw`mt-[2%] ${BACKGROUND_COLORS.BLUE_LIGHTER}`}>
         <SectionTitle
           text={'Consejos del día'}
           hasUpdates
