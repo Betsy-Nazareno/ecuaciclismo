@@ -2,7 +2,7 @@ import { Formik } from 'formik'
 import * as React from 'react'
 import { Text, ScrollView } from 'react-native'
 import tw from 'twrnc'
-import { Publicidad } from '../../../models/Publicidad.model'
+import { PublicidadInterface } from '../../../models/Publicidad.model'
 import { PublicidadValidationSchema } from '../../../schemas/PublicidadSchema'
 import { BACKGROUND_COLORS } from '../../../utils/constants'
 import GalleryButton from '../atomos/GalleryButton'
@@ -13,7 +13,7 @@ import FieldFormulario from '../moleculas/FieldFormulario'
 import HeaderScreen from '../moleculas/HeaderScreen'
 
 interface PublicidadFormularioProps {
-  publicidadProp?: Publicidad
+  publicidadProp?: PublicidadInterface
 }
 
 const PublicidadFormulario = ({

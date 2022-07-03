@@ -2,13 +2,13 @@ import { NavigationProp, useNavigation } from '@react-navigation/native'
 import * as React from 'react'
 import { Text, View, Image, Pressable } from 'react-native'
 import tw from 'twrnc'
-import { Publicidad } from '../../../models/Publicidad.model'
+import { PublicidadInterface } from '../../../models/Publicidad.model'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import { BORDER_COLORS, TEXT_COLORS } from '../../../utils/constants'
 import ButtonUnderline from '../atomos/ButtonUnderline'
 
 interface PublicidadProps {
-  data: Publicidad
+  data: PublicidadInterface
 }
 
 const Publicidad = ({ data }: PublicidadProps) => {
