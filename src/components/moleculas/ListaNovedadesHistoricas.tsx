@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { PublicidadInterface } from '../../../models/Publicidad.model'
@@ -209,7 +209,7 @@ interface ListaNovedadesHistoricasProps {
 }
 
 const ListaNovedadesHistoricas = ({ text }: ListaNovedadesHistoricasProps) => {
-  const { authToken } = useSelector((state: RootState) => state.user)
+  // const { authToken } = useSelector((state: RootState) => state.user)
   const [novedades, setNovedades] = React.useState<PublicidadInterface[]>([])
   const [filteredNovedades, setFilteredNovedades] = React.useState<
     PublicidadInterface[]

@@ -22,6 +22,7 @@ export const usePermissionsNotifications = () => {
     registerForPushNotificationsAsync().then((token) =>
       setExpoPushToken(token || '')
     )
+    console.info(expoPushToken, notification)
 
     // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current =
@@ -43,7 +44,6 @@ export const usePermissionsNotifications = () => {
         responseListener.current as Subscription
       )
     }
-    console.log(notification, 'mm')
   }, [])
 
   async function sendPushNotification() {

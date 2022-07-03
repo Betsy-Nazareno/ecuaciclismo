@@ -1,13 +1,6 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import * as React from 'react'
-import {
-  Text,
-  View,
-  StyleSheet,
-  Pressable,
-  Image,
-  ImageSourcePropType,
-} from 'react-native'
+import { Text, View, Pressable, Image, ImageSourcePropType } from 'react-native'
 import { useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { eliminarConsejo } from '../../../lib/services/consejos.services'

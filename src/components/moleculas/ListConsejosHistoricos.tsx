@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { obtenerConsejos } from '../../../lib/services/consejos.services'

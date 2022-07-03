@@ -1,6 +1,5 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import * as React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import tw from 'twrnc'
 import useDebounce from '../../../hooks/useDebounce'
