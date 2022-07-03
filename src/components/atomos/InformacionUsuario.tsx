@@ -6,13 +6,11 @@ import { TEXT_COLORS } from '../../../utils/constants'
 interface InformacionUsuarioProps {
   firstName: string
   lastName: string
-  description: string
 }
 
 const InformacionUsuario = ({
   firstName,
   lastName,
-  description,
 }: InformacionUsuarioProps) => {
   return (
     <View style={tw`flex flex-row pb-2`}>
@@ -21,11 +19,13 @@ const InformacionUsuario = ({
         style={{ width: 40, height: 45, borderRadius: 400 / 2 }}
       />
       <View style={tw`ml-[4%] mt-[1%]`}>
-        <Text style={tw`text-base ${TEXT_COLORS.DARK_BLUE} font-semibold`}>
+        <Text
+          style={tw`text-base ${TEXT_COLORS.DARK_BLUE} font-semibold capitalize`}
+        >
           {`${firstName} ${lastName}`}
         </Text>
         <Text style={tw`text-[11px] ${TEXT_COLORS.DARK_GRAY} font-semibold`}>
-          {description}
+          Administrador
         </Text>
       </View>
     </View>

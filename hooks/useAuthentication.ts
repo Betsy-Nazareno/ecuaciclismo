@@ -3,11 +3,18 @@ import { useDispatch } from 'react-redux'
 import { cerrarSesion, iniciarSesion } from '../redux/user'
 import * as SecureStore from 'expo-secure-store'
 import { Login } from '../models/User'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export const useAuthentication = () => {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(true)
+  const isMounted = useRef(true)
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false
+    }
+  }, [])
 
   const initUser = async (props: Login) => {
     const data = { user: { username: props.email, password: props.password } }
@@ -16,10 +23,10 @@ export const useAuthentication = () => {
         'https://ecuaciclismoapp.pythonanywhere.com/api/token-auth/',
         data
       )
-      const { first_name, last_name, email, username, token } =
+      const { first_name, last_name, email, username, token, admin } =
         response.data || {}
 
-      const user = { first_name, last_name, email, username }
+      const user = { first_name, last_name, email, username, admin }
 
       dispatch(
         iniciarSesion({
@@ -30,7 +37,7 @@ export const useAuthentication = () => {
 
       await SecureStore.setItemAsync('user', JSON.stringify({ token, user }))
     } catch (e) {
-      console.error(e, 'error')
+      throw new Error('Failed to Login')
     }
   }
 
@@ -45,7 +52,7 @@ export const useAuthentication = () => {
         })
       )
     }
-    setIsLoading(false)
+    isMounted.current && setIsLoading(false)
   }
 
   const deleteUserStore = async () => {
