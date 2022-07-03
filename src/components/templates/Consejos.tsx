@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux'
 import { Consejo } from '../../../models/Consejo.model'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import SectionTitle from '../atomos/SectionTitle'
-import RoundedButtonIcon from '../atomos/RoundedButtonIcon'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 
 const Consejos = () => {
@@ -21,39 +20,26 @@ const Consejos = () => {
 
   React.useEffect(() => {
     ;(async () => {
-      const response = await obtenerConsejos(
-        authToken as string,
-        'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/get_consejos_dia/'
-      )
+      const response = await obtenerConsejos(authToken as string)
       setListaConsejos(response.data)
     })()
   }, [hasModified])
 
   return (
-    <View>
+    <View style={tw`px-2`}>
       <View style={tw`mt-[6%] ${BACKGROUND_COLORS.BLUE_LIGHTER}`}>
-        <SectionTitle text={'Consejos del día'} hasUpdates />
+        <SectionTitle
+          text={'Consejos del día'}
+          hasUpdates
+          hasButton
+          buttonIcon={require('../../../assets/edit_white_icon.png')}
+          handleClickButton={() => navigation.navigate('AgregarConsejo')}
+        />
       </View>
       <View style={tw`mt-[4%]`}>
         {listaConsejos?.map((consejo, index) => {
-          return (
-            <TarjetaConsejo
-              key={index}
-              consejo={consejo}
-              description="Administrador"
-            />
-          )
+          return <TarjetaConsejo key={index} consejoProp={consejo} />
         })}
-      </View>
-      <View style={tw`mt-6`}>
-        <SectionTitle text={'Novedades'} />
-      </View>
-
-      <View style={tw`absolute top-3 right-4 z-40`}>
-        <RoundedButtonIcon
-          handleClick={() => navigation.navigate('AgregarConsejo')}
-          src={require('../../../assets/edit_white_icon.png')}
-        />
       </View>
     </View>
   )

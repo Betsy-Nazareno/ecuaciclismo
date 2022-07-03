@@ -1,7 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React, { useEffect } from 'react'
-import Publicaciones from './Publicaciones'
 import Navbar from '../components/atomos/Navbar'
 import Inicio from './Inicio'
 import Rutas from './Rutas'
@@ -13,15 +12,28 @@ import { RootState } from '../../redux/store'
 import { useAuthentication } from '../../hooks/useAuthentication'
 import Spinner from '../components/atomos/Spinner'
 import AgregarConsejo from './AgregarConsejo'
+import AgregarPublicidad from './AgregarPublicidad'
+import DetallePublicidad from './DetallePublicidad'
+import 'react-native-gesture-handler'
+import { createDrawerNavigator } from '@react-navigation/drawer'
+import SideMenu from '../components/templates/SideMenu'
+import Comunidad from './Comunidad'
+import Consejos from './Consejos'
+import Novedades from './Novedades'
 
 const Stack = createNativeStackNavigator()
+const Drawer = createDrawerNavigator()
 
 const Main = () => {
   const { authToken } = useSelector((state: RootState) => state.user)
   const { setUser, isLoading } = useAuthentication()
 
   useEffect(() => {
-    setUser()
+    let mounted = true
+    mounted && setUser()
+    return () => {
+      mounted = false
+    }
   }, [])
 
   const AuthStack = () => {
@@ -38,14 +50,12 @@ const Main = () => {
     )
   }
 
-  const MainStack = () => {
+  const HomeStack = () => {
     return (
       <Stack.Navigator
         screenOptions={{
-          headerStyle: { backgroundColor: '#2D84C4' },
-          headerTitle: Navbar,
+          headerShown: false,
           animation: 'none',
-          // headerBackImageSource: require('../../assets/left-arrow.png'),
         }}
         initialRouteName="Inicio"
       >
@@ -54,11 +64,34 @@ const Main = () => {
           component={Inicio}
           options={{ headerBackVisible: false }}
         />
-        <Stack.Screen name="Publicaciones" component={Publicaciones} />
+        <Stack.Screen name="Publicaciones" component={AgregarPublicidad} />
+        <Stack.Screen name="DetallePublicidad" component={DetallePublicidad} />
         <Stack.Screen name="Rutas" component={Rutas} />
         <Stack.Screen name="Perfil" component={Perfil} />
         <Stack.Screen name="AgregarConsejo" component={AgregarConsejo} />
       </Stack.Navigator>
+    )
+  }
+
+  const MainStack = () => {
+    return (
+      <Drawer.Navigator
+        drawerContent={SideMenu}
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#2D84C4',
+            height: 70,
+          },
+          headerTitle: Navbar,
+        }}
+        initialRouteName="HomeStack"
+        backBehavior="history"
+      >
+        <Drawer.Screen name="HomeStack" component={HomeStack} />
+        <Drawer.Screen name="Comunidad" component={Comunidad} />
+        <Drawer.Screen name="Consejos" component={Consejos} />
+        <Drawer.Screen name="Novedades" component={Novedades} />
+      </Drawer.Navigator>
     )
   }
 

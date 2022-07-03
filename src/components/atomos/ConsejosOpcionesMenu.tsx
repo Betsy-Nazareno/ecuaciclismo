@@ -3,7 +3,7 @@ import { Text, View, Image, Pressable } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { TEXT_COLORS } from '../../../utils/constants'
-import Ruler from '../atomos/Ruler'
+import Ruler from './Ruler'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import { Consejo } from '../../../models/Consejo.model'
@@ -16,7 +16,7 @@ interface MenuProps {
   consejo: Consejo
 }
 
-const Menu = ({ setDisplay, consejo }: MenuProps) => {
+const ConsejosOpcionesMenu = ({ setDisplay, consejo }: MenuProps) => {
   const { authToken } = useSelector((state: RootState) => state.user)
   const { hasModified } = useSelector((state: RootState) => state.consejo)
   const dispatch = useDispatch()
@@ -37,7 +37,7 @@ const Menu = ({ setDisplay, consejo }: MenuProps) => {
 
   return (
     <View
-      style={tw`absolute top-6 right-4 bg-white z-40 py-1 rounded-lg shadow-md`}
+      style={tw`absolute top-6 right-4 bg-white z-40 py-1 rounded-lg shadow-md w-28`}
     >
       <Pressable
         onPress={changeScreen}
@@ -71,4 +71,4 @@ const Menu = ({ setDisplay, consejo }: MenuProps) => {
   )
 }
 
-export default Menu
+export default ConsejosOpcionesMenu

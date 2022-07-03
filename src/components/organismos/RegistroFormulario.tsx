@@ -24,7 +24,6 @@ const RegistroFormulario = () => {
     password_confirmation: '',
   }
   const handleSubmit = async (props: Registro) => {
-    console.log(props)
     await createUser(props)
     navigation.navigate('Login')
   }

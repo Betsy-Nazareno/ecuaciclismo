@@ -6,9 +6,10 @@ import { BACKGROUND_COLORS } from '../../../utils/constants'
 
 interface Props {
   children: ReactNode | ReactNode[]
+  stickyHeader?: boolean
 }
 
-const BasePaginas = ({ children }: Props) => {
+const BasePaginas = ({ children, stickyHeader }: Props) => {
   const AnimatedNavbar = new Animated.Value(0)
   const NAVBAR_MAX_HEIGHT = 50
   const NAVBAR_MIN_HEIGHT = 0
@@ -23,13 +24,14 @@ const BasePaginas = ({ children }: Props) => {
     <View style={tw`relative h-full ${BACKGROUND_COLORS.BLUE_LIGHTER}`}>
       <StatusBar backgroundColor={'#2D84C4'} />
       <ScrollView
-        style={tw`px-2`}
+        style={tw``}
         scrollEventThrottle={16}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: AnimatedNavbar } } }],
           { useNativeDriver: false }
         )}
         showsVerticalScrollIndicator={false}
+        stickyHeaderIndices={stickyHeader ? [0] : []}
       >
         {children}
       </ScrollView>

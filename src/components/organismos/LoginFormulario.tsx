@@ -15,12 +15,23 @@ import {
   HEIGHT_DIMENSIONS,
   WIDTH_DIMENSIONS,
 } from '../../../utils/constants'
+import ErrorMessage from '../atomos/ErrorMessage'
+import { Login } from '../../../models/User'
 interface Prop {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>
 }
 
 const LoginFormulario = ({ navigation }: Prop) => {
   const { initUser } = useAuthentication()
+  const [failedLogin, setFailedLogin] = React.useState(false)
+
+  const login = async (props: Login) => {
+    try {
+      await initUser(props)
+    } catch (e) {
+      setFailedLogin(true)
+    }
+  }
 
   return (
     <>
@@ -35,7 +46,7 @@ const LoginFormulario = ({ navigation }: Prop) => {
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={loginValidationSchema}
-          onSubmit={initUser}
+          onSubmit={login}
         >
           {({ handleSubmit, setFieldValue, values }) => (
             <>
@@ -55,6 +66,9 @@ const LoginFormulario = ({ navigation }: Prop) => {
                 value={values.password}
                 setValue={(value) => setFieldValue('password', value)}
               />
+              {failedLogin && (
+                <ErrorMessage message="Usuario o contraseña incorrectos" />
+              )}
 
               <View style={tw`w-9/12 mx-auto mt-[${HEIGHT_DIMENSIONS * 0.04}]`}>
                 <ButtonPrimary

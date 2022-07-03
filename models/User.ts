@@ -7,6 +7,7 @@ export interface User {
   celular?: string
   fecha_nacimiento?: Date
   genero?: string
+  admin?: boolean
 }
 
 export interface Login {
