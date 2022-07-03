@@ -14,7 +14,7 @@ Notifications.setNotificationHandler({
 
 export const usePermissionsNotifications = () => {
   const [expoPushToken, setExpoPushToken] = useState('')
-  const [notification, setNotification] = useState(false)
+  const [notification, setNotification] = useState<Notifications.Notification>()
   const notificationListener = useRef<Subscription>()
   const responseListener = useRef<Subscription>()
 
@@ -27,7 +27,7 @@ export const usePermissionsNotifications = () => {
     // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification as any)
+        setNotification(notification)
       })
 
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)

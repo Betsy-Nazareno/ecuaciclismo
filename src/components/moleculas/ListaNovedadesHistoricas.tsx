@@ -1,9 +1,7 @@
 import * as React from 'react'
 import { View } from 'react-native'
-import { useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { PublicidadInterface } from '../../../models/Publicidad.model'
-import { RootState } from '../../../redux/store'
 import TarjetaNovedadHistorica from '../atomos/TarjetaNovedadHistorica'
 
 const mock_data: PublicidadInterface[] = [
