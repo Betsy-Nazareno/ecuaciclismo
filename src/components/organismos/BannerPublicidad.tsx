@@ -2,7 +2,6 @@ import * as React from 'react'
 import Carousel from 'react-native-carousel-loop'
 import { WIDTH_DIMENSIONS } from '../../../utils/constants'
 import Publicidad from '../moleculas/Publicidad'
-import { BannerPublicidad } from '../../../models/Publicidad.model'
 
 const BannerPublicidad = () => {
   const mock_data = [

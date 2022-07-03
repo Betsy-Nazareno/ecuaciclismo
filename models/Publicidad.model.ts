@@ -1,6 +1,6 @@
 import { ImageSourcePropType } from 'react-native'
 
-export interface BannerPublicidad {
+export interface BannerPublicidadInterface {
   titulo: string
   imagen: ImageSourcePropType
   descripcion_corta: string
@@ -11,7 +11,7 @@ interface DatosContacto {
   celular: string
   direccion: string
 }
-export interface Publicidad extends BannerPublicidad {
+export interface PublicidadInterface extends BannerPublicidadInterface {
   descripcion: string
   datos_contacto: DatosContacto
 }

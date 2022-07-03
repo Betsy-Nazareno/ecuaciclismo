@@ -4,10 +4,10 @@ import ContenedorPaginasDetalle from '../templates/ContenedorPaginasDetalle'
 import tw from 'twrnc'
 import { TEXT_COLORS } from '../../../utils/constants'
 import Ruler from '../atomos/Ruler'
-import { Publicidad } from '../../../models/Publicidad.model'
+import { PublicidadInterface } from '../../../models/Publicidad.model'
 
 interface PublicidadIndividualProps {
-  data: Publicidad
+  data: PublicidadInterface
 }
 
 const PublicidadIndividual = ({ data }: PublicidadIndividualProps) => {

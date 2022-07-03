@@ -1,5 +1,5 @@
 import { Consejo } from './Consejo.model'
-import { Publicidad } from './Publicidad.model'
+import { PublicidadInterface } from './Publicidad.model'
 
 export type RootStackParamList = {
   Inicio: { reload: boolean } | undefined
@@ -9,8 +9,8 @@ export type RootStackParamList = {
   Rutas: undefined
   Perfil: undefined
   AgregarConsejo: { consejo: Consejo } | undefined
-  AgregarPublicidad: { publicidad: Publicidad } | undefined
-  DetallePublicidad: { data: Publicidad } | undefined
+  AgregarPublicidad: { publicidad: PublicidadInterface } | undefined
+  DetallePublicidad: { data: PublicidadInterface } | undefined
 }
 
 export type Screens =
