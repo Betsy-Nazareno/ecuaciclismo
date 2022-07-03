@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text, View, StyleSheet, Image } from 'react-native'
+import { Text, View, Image, ImageSourcePropType } from 'react-native'
 import ContenedorPaginasDetalle from '../templates/ContenedorPaginasDetalle'
 import tw from 'twrnc'
 import { TEXT_COLORS } from '../../../utils/constants'
@@ -22,7 +22,10 @@ const PublicidadIndividual = ({ data }: PublicidadIndividualProps) => {
           </Text>
           <View style={tw`mx-auto py-3`}>
             <View style={tw`mx-auto`}>
-              <Image source={data.imagen} style={{ width: 200, height: 200 }} />
+              <Image
+                source={data.imagen as ImageSourcePropType}
+                style={{ width: 200, height: 200 }}
+              />
             </View>
           </View>
           <View style={tw`w-10/12 mx-auto pt-4 pb-4`}>

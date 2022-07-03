@@ -1,6 +1,8 @@
+import { ImageSourcePropType } from 'react-native'
+
 export interface BannerPublicidad {
   titulo: string
-  imagen: any
+  imagen: ImageSourcePropType
   descripcion_corta: string
 }
 

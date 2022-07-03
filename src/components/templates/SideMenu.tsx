@@ -1,4 +1,7 @@
-import { DrawerContentScrollView } from '@react-navigation/drawer'
+import {
+  DrawerContentComponentProps,
+  DrawerContentScrollView,
+} from '@react-navigation/drawer'
 import * as React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useDispatch } from 'react-redux'
@@ -9,7 +12,7 @@ import OptionSideMenu from '../atomos/OptionSideMenu'
 import Ruler from '../atomos/Ruler'
 import UserInformation from '../atomos/UserInformation'
 
-const SideMenu = (props: any) => {
+const SideMenu = (props: DrawerContentComponentProps) => {
   const dispatch = useDispatch()
 
   const handleClick = (tab: ScreensDrawer) => {

@@ -37,7 +37,7 @@ const PublicidadFormulario = ({
         validationSchema={PublicidadValidationSchema}
         onSubmit={handleSubmit}
       >
-        {({ handleSubmit, values, setFieldValue }) => (
+        {({ handleSubmit }) => (
           <>
             <FieldFormulario>
               <Input
