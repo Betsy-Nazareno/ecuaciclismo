@@ -2,11 +2,12 @@ import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { Formik } from 'formik'
 import * as React from 'react'
 import { Text, ScrollView } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { agregarNovedad } from '../../../lib/services/novedades.services'
 import { PublicidadInterface } from '../../../models/Publicidad.model'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
+import { setNovedadHasModified } from '../../../redux/novedad'
 import { RootState } from '../../../redux/store'
 import { PublicidadValidationSchema } from '../../../schemas/PublicidadSchema'
 import { BACKGROUND_COLORS, TEXT_COLORS } from '../../../utils/constants'
@@ -26,8 +27,13 @@ const PublicidadFormulario = ({
 }: PublicidadFormularioProps) => {
   const [isLoading, setIsLoading] = React.useState(false)
   const { authToken } = useSelector((state: RootState) => state.user)
+  const { novedadHasModified } = useSelector(
+    (state: RootState) => state.novedad
+  )
+  const dispatch = useDispatch()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
+
   const initialValues = {
     titulo: '',
     imagen: undefined,
@@ -45,6 +51,7 @@ const PublicidadFormulario = ({
     await agregarNovedad(authToken || '', props)
     console.info(publicidadProp)
     setIsLoading(false)
+    dispatch(setNovedadHasModified({ novedadHasModified: !novedadHasModified }))
     navigation.navigate('Inicio')
   }
 
@@ -122,30 +129,24 @@ const PublicidadFormulario = ({
               </Text>
               <Input
                 type="none"
-                name="datos_contacto.nombre"
+                name="nombre"
                 placeholder="Nombre"
-                value={values.datos_contacto?.nombre}
-                setValue={(value) =>
-                  setFieldValue('datos_contacto.nombre', value)
-                }
+                value={values.nombre}
+                setValue={(value) => setFieldValue('nombre', value)}
               />
               <Input
                 type="none"
-                name="datos_contacto.celular"
+                name="celular"
                 placeholder="Celular"
-                value={values.datos_contacto?.celular}
-                setValue={(value) =>
-                  setFieldValue('datos_contacto.celular', value)
-                }
+                value={values.celular}
+                setValue={(value) => setFieldValue('celular', value)}
               />
               <Input
                 type="none"
-                name="datos_contacto.direcion"
+                name="direcion"
                 placeholder="Dirección"
-                value={values.datos_contacto?.direccion}
-                setValue={(value) =>
-                  setFieldValue('datos_contacto.direccion', value)
-                }
+                value={values.direccion}
+                setValue={(value) => setFieldValue('direccion', value)}
               />
             </FieldFormulario>
 

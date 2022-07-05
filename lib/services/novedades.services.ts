@@ -27,11 +27,9 @@ export const agregarNovedad = async (
         descripcion: data.descripcion,
         descripcion_corta: data.descripcion_corta,
         imagen: path,
-        datos_contacto: {
-          nombre: data.datos_contacto?.nombre,
-          celular: data.datos_contacto?.celular,
-          direccion: data.datos_contacto?.direccion,
-        },
+        nombre: data.nombre,
+        celular: data.celular,
+        direccion: data.direccion,
       },
     })
   } catch (e) {
@@ -47,6 +45,19 @@ export const obtenerNovedades = async (token: string) => {
       headers: { Authorization: 'Token ' + token },
     })
     return response.data
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const eliminarNovedad = async (token: string, tokenNovedad: string) => {
+  try {
+    await axios({
+      method: 'DELETE',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/delete_novedad/',
+      data: { token: tokenNovedad },
+      headers: { Authorization: 'Token ' + token },
+    })
   } catch (e) {
     console.error(e)
   }

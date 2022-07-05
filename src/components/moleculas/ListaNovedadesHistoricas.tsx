@@ -17,6 +17,9 @@ const ListaNovedadesHistoricas = ({ text }: ListaNovedadesHistoricasProps) => {
   const [filteredNovedades, setFilteredNovedades] = React.useState<
     PublicidadInterface[]
   >([])
+  const { novedadHasModified } = useSelector(
+    (state: RootState) => state.novedad
+  )
 
   React.useEffect(() => {
     let isMounted = true
@@ -31,7 +34,7 @@ const ListaNovedadesHistoricas = ({ text }: ListaNovedadesHistoricasProps) => {
     return () => {
       isMounted = false
     }
-  }, [])
+  }, [novedadHasModified])
 
   React.useEffect(() => {
     let isMounted = true
@@ -54,7 +57,7 @@ const ListaNovedadesHistoricas = ({ text }: ListaNovedadesHistoricasProps) => {
         novedad.descripcion.toLowerCase().includes(standarText) ||
         novedad.descripcion_corta.toLowerCase().includes(standarText) ||
         novedad.titulo.toLowerCase().includes(standarText) ||
-        novedad.datos_contacto?.nombre.toLowerCase().includes(standarText)
+        novedad.nombre?.toLowerCase().includes(standarText)
     )
   }
 

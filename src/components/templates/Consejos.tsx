@@ -10,11 +10,13 @@ import { Consejo } from '../../../models/Consejo.model'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import SectionTitle from '../atomos/SectionTitle'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
+import EmptyTarjetaConsejo from '../organismos/EmptyTarjetaConsejo'
 
 const Consejos = () => {
   const { authToken } = useSelector((state: RootState) => state.user)
   const { hasModified } = useSelector((state: RootState) => state.consejo)
   const [listaConsejos, setListaConsejos] = React.useState<Consejo[]>([])
+  const [isLoading, setIsLoading] = React.useState(true)
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
@@ -24,6 +26,7 @@ const Consejos = () => {
       ;(async () => {
         const response = await obtenerConsejosActuales(authToken as string)
         setListaConsejos(response.data)
+        setIsLoading(false)
       })()
     }
     return () => {
@@ -43,9 +46,13 @@ const Consejos = () => {
         />
       </View>
       <View style={tw`mt-[4%]`}>
-        {listaConsejos?.map((consejo, index) => {
-          return <TarjetaConsejo key={index} consejoProp={consejo} />
-        })}
+        {isLoading ? (
+          <EmptyTarjetaConsejo />
+        ) : (
+          listaConsejos?.map((consejo, index) => {
+            return <TarjetaConsejo key={index} consejoProp={consejo} />
+          })
+        )}
       </View>
     </View>
   )

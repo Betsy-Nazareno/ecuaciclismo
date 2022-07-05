@@ -7,12 +7,9 @@ export interface BannerPublicidadInterface {
   token?: string
 }
 
-interface DatosContacto {
-  nombre: string
-  celular: string
-  direccion: string
-}
 export interface PublicidadInterface extends BannerPublicidadInterface {
   descripcion: string
-  datos_contacto: DatosContacto
+  nombre?: string
+  celular?: string
+  direccion?: string
 }

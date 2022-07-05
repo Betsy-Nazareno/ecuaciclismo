@@ -3,6 +3,7 @@ import userReducer from './user'
 import consejoReducer from './consejo'
 import screensReducer from './screens'
 import drawerTabsReducer from './drawerTabs'
+import NovedadReducer from './novedad'
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     consejo: consejoReducer,
     screens: screensReducer,
     drawerTabs: drawerTabsReducer,
+    novedad: NovedadReducer,
   },
 })
 

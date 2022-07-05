@@ -8,10 +8,10 @@ import {
 
 export const registroValidationSchema = Yup.object({
   first_name: Yup.string()
-    .matches(/^[aA-zZ]+$/, formatOnlyText('El nombre'))
+    .matches(/^[aA-zZ\s]+$/, formatOnlyText('El nombre'))
     .required('El nombre es requerido'),
   last_name: Yup.string()
-    .matches(/^[aA-zZ]+$/, formatOnlyText('El apellido'))
+    .matches(/^[aA-zZ\s]+$/, formatOnlyText('El apellido'))
     .required('El apellido es requerido'),
   username: Yup.string()
     .max(
