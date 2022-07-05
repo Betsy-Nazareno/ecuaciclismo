@@ -2,24 +2,24 @@ import React from 'react'
 import BasePaginas from '../components/templates/BasePaginas'
 import Consejos from '../components/templates/Consejos'
 import BannerPublicidad from '../components/organismos/BannerPublicidad'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import { getCiclistasToken } from '../../lib/services/notifications.services'
-import { Button } from 'react-native'
-import { usePermissionsNotifications } from '../../hooks/usePermissionsNotifications'
+import SectionTitle from '../components/atomos/SectionTitle'
+import AdminValidator from '../components/templates/AdminValidator'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { RootStackParamList, Screens } from '../../models/Screens.types'
 
 const Inicio = () => {
-  const { authToken } = useSelector((state: RootState) => state.user)
-  const { sendPushNotification } = usePermissionsNotifications()
-
-  const handle = async () => {
-    const tokens = await getCiclistasToken(authToken || '')
-    sendPushNotification(tokens)
-  }
-
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, Screens>>()
   return (
-    <BasePaginas stickyHeader>
-      <Button title="hola" onPress={handle}></Button>
+    <BasePaginas stickyIndexes={[1]}>
+      <AdminValidator stylesProp="py-4 px-2">
+        <SectionTitle
+          text="Novedades"
+          hasButton
+          buttonIcon={require('../../assets/edit_white_icon.png')}
+          handleClickButton={() => navigation.navigate('AgregarPublicidad')}
+        />
+      </AdminValidator>
       <BannerPublicidad />
       <Consejos />
     </BasePaginas>

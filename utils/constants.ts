@@ -44,11 +44,13 @@ export const USERNAME = {
 }
 
 export const PUBLICIDAD = {
-  MAX_LENGTH: 500,
+  DESCRIPCION_MAX_LENGTH: 500,
+  DESCRIPCION_CORTA_MAX_LENGTH: 150,
 }
 
 export const FOLDERS_STORAGE = {
   CONSEJOS: 'consejos',
   RUTAS: 'rutas',
   PUBLICACIONES: 'publicaciones',
+  NOVEDADES: 'novedades',
 }

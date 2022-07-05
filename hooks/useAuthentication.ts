@@ -10,7 +10,7 @@ export const useAuthentication = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const initUser = async (props: Login) => {
-    const data = { user: { username: props.email, password: props.password } }
+    const data = { user: { email: props.email, password: props.password } }
     try {
       const response = await axios.post(
         'https://ecuaciclismoapp.pythonanywhere.com/api/token-auth/',

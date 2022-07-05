@@ -72,6 +72,7 @@ const Main = () => {
         <Stack.Screen name="Rutas" component={Rutas} />
         <Stack.Screen name="Perfil" component={Perfil} />
         <Stack.Screen name="Publicaciones" component={Publicaciones} />
+        <Stack.Screen name="AgregarPublicidad" component={AgregarPublicidad} />
         <Stack.Screen name="AgregarConsejo" component={AgregarConsejo} />
       </Stack.Navigator>
     )
@@ -96,7 +97,6 @@ const Main = () => {
         <Drawer.Screen name="Consejos" component={Consejos} />
         <Drawer.Screen name="ConsejoDetalle" component={ConsejoDetalle} />
         <Drawer.Screen name="DetallePublicidad" component={DetallePublicidad} />
-        <Stack.Screen name="AgregarPublicidad" component={AgregarPublicidad} />
         <Drawer.Screen name="Novedades" component={Novedades} />
       </Drawer.Navigator>
     )

@@ -1,6 +1,13 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import * as React from 'react'
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import {
+  Image,
+  ImageSourcePropType,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import tw from 'twrnc'
 import { PublicidadInterface } from '../../../models/Publicidad.model'
 import {
@@ -32,7 +39,7 @@ const TarjetaNovedadHistorica = ({ novedad }: TarjetaNovedadHistoricaProps) => {
         <View style={[tw`flex flex-row items-center py-2`, styles.container]}>
           {novedad.imagen ? (
             <Image
-              source={novedad.imagen}
+              source={{ uri: novedad.imagen } as ImageSourcePropType}
               style={{ width: 50, height: 50, borderRadius: 20 / 2 }}
             />
           ) : null}

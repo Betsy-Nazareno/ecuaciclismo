@@ -3,7 +3,7 @@ import axios from 'axios'
 interface TokenNotificacion {
   token_notificacion: string
 }
-export const getCiclistasToken = async (token: String) => {
+export const getCiclistasToken = async (token: string) => {
   try {
     const response = await axios({
       method: 'GET',

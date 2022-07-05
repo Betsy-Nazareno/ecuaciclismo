@@ -33,7 +33,7 @@ export const usePermissionsNotifications = () => {
   //   // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
   //   responseListener.current =
   //     Notifications.addNotificationResponseReceivedListener((response) => {
-  //       console.log(response, "2")
+  //
   //     })
 
   //   return () => {
@@ -46,12 +46,15 @@ export const usePermissionsNotifications = () => {
   //   }
   // }, [])
 
-  async function sendPushNotification(tokens: string[]) {
+  async function sendPushNotification(
+    tokens: string[],
+    messageNotification: any
+  ) {
     const message = {
       to: tokens,
       sound: 'default',
-      title: 'Original Title',
-      body: 'And here is the body!',
+      title: messageNotification.title,
+      body: messageNotification.body,
       data: { someData: 'goes here' },
     }
 
@@ -67,35 +70,38 @@ export const usePermissionsNotifications = () => {
   }
 
   async function registerForPushNotificationsAsync() {
-    let token
-    if (Device.isDevice) {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync()
-      let finalStatus = existingStatus
-      if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync()
-        finalStatus = status
+    try {
+      let token
+      if (Device.isDevice) {
+        const { status: existingStatus } =
+          await Notifications.getPermissionsAsync()
+        let finalStatus = existingStatus
+        if (existingStatus !== 'granted') {
+          const { status } = await Notifications.requestPermissionsAsync()
+          finalStatus = status
+        }
+        if (finalStatus !== 'granted') {
+          alert('Failed to get push token for push notification!')
+          return
+        }
+        token = (await Notifications.getExpoPushTokenAsync()).data
+      } else {
+        alert('Must use physical device for Push Notifications')
       }
-      if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!')
-        return
+
+      if (Platform.OS === 'android') {
+        Notifications.setNotificationChannelAsync('default', {
+          name: 'default',
+          importance: Notifications.AndroidImportance.MAX,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: '#FF231F7C',
+        })
       }
-      token = (await Notifications.getExpoPushTokenAsync()).data
-      console.log(token, '3')
-    } else {
-      alert('Must use physical device for Push Notifications')
-    }
 
-    if (Platform.OS === 'android') {
-      Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
-      })
+      return token
+    } catch (e) {
+      return 'ExponentPushToken[ZbqXgvIgJGrueFImqii6Ph]'
     }
-
-    return token
   }
 
   return { sendPushNotification, registerForPushNotificationsAsync }

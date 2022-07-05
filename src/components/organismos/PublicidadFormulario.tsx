@@ -1,10 +1,15 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { Formik } from 'formik'
 import * as React from 'react'
 import { Text, ScrollView } from 'react-native'
+import { useSelector } from 'react-redux'
 import tw from 'twrnc'
+import { agregarNovedad } from '../../../lib/services/novedades.services'
 import { PublicidadInterface } from '../../../models/Publicidad.model'
+import { RootStackParamList, Screens } from '../../../models/Screens.types'
+import { RootState } from '../../../redux/store'
 import { PublicidadValidationSchema } from '../../../schemas/PublicidadSchema'
-import { BACKGROUND_COLORS } from '../../../utils/constants'
+import { BACKGROUND_COLORS, TEXT_COLORS } from '../../../utils/constants'
 import GalleryButton from '../atomos/GalleryButton'
 import Input from '../atomos/Input'
 import SecondaryButton from '../atomos/SecondaryButton'
@@ -20,40 +25,77 @@ const PublicidadFormulario = ({
   publicidadProp,
 }: PublicidadFormularioProps) => {
   const [isLoading, setIsLoading] = React.useState(false)
-
-  const handleSubmit = () => {
-    setIsLoading(false)
-    console.info(publicidadProp)
+  const { authToken } = useSelector((state: RootState) => state.user)
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, Screens>>()
+  const initialValues = {
+    titulo: '',
+    imagen: undefined,
+    descripcion: '',
+    descripcion_corta: '',
+    datos_contacto: {
+      nombre: '',
+      celular: '',
+      direccion: '',
+    },
   }
+
+  const handleSubmit = async (props: PublicidadInterface) => {
+    setIsLoading(true)
+    await agregarNovedad(authToken || '', props)
+    console.info(publicidadProp)
+    setIsLoading(false)
+    navigation.navigate('Inicio')
+  }
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={tw`px-2`}>
       <HeaderScreen
-        title="Publicidad"
-        message="¡Promociona algo entre la comunidad!"
+        title="Novedad"
+        message="¡Difunde información novedosa a la comunidad!"
         srcImage={require('../../../assets/publicidad_icon.png')}
       ></HeaderScreen>
       <Formik
-        initialValues={{}}
+        initialValues={initialValues}
         validationSchema={PublicidadValidationSchema}
         onSubmit={handleSubmit}
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, values, setFieldValue }) => (
           <>
             <FieldFormulario>
               <Input
                 multiline
                 text="Título"
                 type="none"
-                name="informacion"
-                placeholder="Agrega un título llamativo"
+                name="titulo"
+                value={values.titulo}
+                setValue={(value) => setFieldValue('titulo', value)}
+                placeholder="Escribe un título..."
               />
             </FieldFormulario>
 
             <FieldFormulario>
-              <GalleryButton
-                field="imagen"
-                icono={require('../../../assets/gallery_icon.png')}
+              <Input
+                multiline
+                text="Descripcion Corta"
+                type="none"
+                name="descripcion_corta"
+                value={values.descripcion_corta}
+                setValue={(value) => setFieldValue('descripcion_corta', value)}
+                placeholder="Agrega una breve descripción..."
               />
+            </FieldFormulario>
+
+            <FieldFormulario>
+              <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
+                Imagen
+              </Text>
+              <FieldFormulario>
+                <GalleryButton
+                  field="imagen"
+                  icono={require('../../../assets/gallery_icon.png')}
+                />
+              </FieldFormulario>
             </FieldFormulario>
 
             <FieldFormulario>
@@ -61,28 +103,49 @@ const PublicidadFormulario = ({
                 multiline
                 text="Descripción"
                 type="none"
-                name="descripción"
-                placeholder="Agrega una descripción completa del producto/servicio"
+                name="descripcion"
+                placeholder="Agrega una descripción completa..."
                 numberOfLines={4}
+                value={values.descripcion}
+                setValue={(value) => setFieldValue('descripcion', value)}
               />
             </FieldFormulario>
 
             <FieldFormulario>
-              <Text>Datos del contacto</Text>
+              <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
+                Datos del contacto
+                <Text
+                  style={tw`${TEXT_COLORS.DARK_GRAY} text-opacity-40 font-bold text-xs pl-2`}
+                >
+                  {` `} (Esta sección es opcional)
+                </Text>
+              </Text>
               <Input
                 type="none"
                 name="datos_contacto.nombre"
                 placeholder="Nombre"
+                value={values.datos_contacto?.nombre}
+                setValue={(value) =>
+                  setFieldValue('datos_contacto.nombre', value)
+                }
               />
               <Input
                 type="none"
                 name="datos_contacto.celular"
                 placeholder="Celular"
+                value={values.datos_contacto?.celular}
+                setValue={(value) =>
+                  setFieldValue('datos_contacto.celular', value)
+                }
               />
               <Input
                 type="none"
                 name="datos_contacto.direcion"
                 placeholder="Dirección"
+                value={values.datos_contacto?.direccion}
+                setValue={(value) =>
+                  setFieldValue('datos_contacto.direccion', value)
+                }
               />
             </FieldFormulario>
 

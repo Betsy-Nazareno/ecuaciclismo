@@ -2,7 +2,7 @@ import * as React from 'react'
 import { View } from 'react-native'
 import { useSelector } from 'react-redux'
 import tw from 'twrnc'
-import { obtenerConsejos } from '../../../lib/services/consejos.services'
+import { obtenerConsejosHistoricos } from '../../../lib/services/consejos.services'
 import { Consejo } from '../../../models/Consejo.model'
 import { RootState } from '../../../redux/store'
 import TarjetaConsejoHistorico from '../atomos/TarjetaConsejoHistorico'
@@ -20,7 +20,7 @@ const ListConsejosHistoricos = ({ text }: ListConsejosHistoricosProps) => {
     let isMounted = true
     if (isMounted) {
       ;(async function () {
-        const response = await obtenerConsejos(authToken as string)
+        const response = await obtenerConsejosHistoricos(authToken as string)
         setConsejos(response.data)
         setFilterdConsejos(response.data)
       })()

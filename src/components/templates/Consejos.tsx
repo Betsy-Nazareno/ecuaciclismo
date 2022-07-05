@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import tw from 'twrnc'
 import TarjetaConsejo from '../organismos/TarjetaConsejo'
 import { BACKGROUND_COLORS } from '../../../utils/constants'
-import { obtenerConsejos } from '../../../lib/services/consejos.services'
+import { obtenerConsejosActuales } from '../../../lib/services/consejos.services'
 import { RootState } from '../../../redux/store'
 import { useSelector } from 'react-redux'
 import { Consejo } from '../../../models/Consejo.model'
@@ -22,7 +22,7 @@ const Consejos = () => {
     let isMounted = true
     if (isMounted) {
       ;(async () => {
-        const response = await obtenerConsejos(authToken as string)
+        const response = await obtenerConsejosActuales(authToken as string)
         setListaConsejos(response.data)
       })()
     }
