@@ -1,8 +1,7 @@
 import React from 'react'
-import { Image, Text, View } from 'react-native'
+import { Image, View } from 'react-native'
 import BasePaginas from '../components/templates/BasePaginas'
 import tw from 'twrnc'
-import { TEXT_COLORS } from '../../utils/constants'
 
 const Rutas = () => {
   return (

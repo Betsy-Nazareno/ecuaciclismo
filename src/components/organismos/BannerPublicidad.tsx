@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Carousel from 'react-native-carousel-loop'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { obtenerNovedades } from '../../../lib/services/novedades.services'
 import { PublicidadInterface } from '../../../models/Publicidad.model'
 import { RootState } from '../../../redux/store'
