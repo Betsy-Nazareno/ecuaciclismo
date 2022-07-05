@@ -16,7 +16,7 @@ import Ruler from '../atomos/Ruler'
 const RegistroFormulario = () => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
-  const { registerForPushNotificationsAsync } = usePermissionsNotifications()
+
   const initialValues = {
     first_name: '',
     last_name: '',
