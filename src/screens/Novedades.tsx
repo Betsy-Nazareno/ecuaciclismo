@@ -1,11 +1,12 @@
 import * as React from 'react'
-import { Text, View } from 'react-native'
+import HistorialNovedades from '../components/organismos/HistorialNovedades'
+import BaseDrawerPaginas from '../components/templates/BasePaginasDrawer'
 
 const Novedades = () => {
   return (
-    <View>
-      <Text>Novedades</Text>
-    </View>
+    <BaseDrawerPaginas>
+      <HistorialNovedades />
+    </BaseDrawerPaginas>
   )
 }
 

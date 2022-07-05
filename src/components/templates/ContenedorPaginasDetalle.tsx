@@ -5,18 +5,29 @@ import tw from 'twrnc'
 interface ContenedorPaginasDetalleProps {
   borderRight?: boolean
   children: React.ReactNode | React.ReactNode[]
+  colorBorder: string
+  borderWidth: number
+  styleProps?: string
 }
 
 const ContenedorPaginasDetalle = ({
   borderRight,
   children,
+  colorBorder,
+  borderWidth,
+  styleProps,
 }: ContenedorPaginasDetalleProps) => {
-  // const borderRightClass = borderRight? "border-l-8 "
   return (
     <View
       style={[
-        tw`bg-white mt-4 py-2 px-3`,
-        borderRight ? styles.borderSide : styles.container,
+        tw`bg-white mt-4 py-2 px-3 ${styleProps || ''}`,
+        borderRight
+          ? {
+              ...styles.borderSide,
+              borderRightColor: colorBorder,
+              borderRightWidth: borderWidth,
+            }
+          : styles.container,
       ]}
     >
       {children}
@@ -34,8 +45,6 @@ const styles = StyleSheet.create({
     borderRadius: 14,
   },
   borderSide: {
-    borderRightColor: '#F16F31',
-    borderRightWidth: 12,
     borderBottomColor: '#DFDFF0',
     borderBottomWidth: 1,
     borderLeftColor: '#DFDFF0',

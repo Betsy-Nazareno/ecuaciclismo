@@ -21,10 +21,8 @@ const SectionTitle = ({
   handleClickButton,
 }: SectionTitleProps) => {
   return (
-    <View style={tw`relative`}>
-      <View
-        style={tw`flex flex-row relative ${BACKGROUND_COLORS.BLUE_LIGHTER}`}
-      >
+    <View style={tw`relative pt-4 ${BACKGROUND_COLORS.BLUE_LIGHTER}`}>
+      <View style={tw`flex flex-row`}>
         <View style={tw`h-full w-[2px] bg-blue-500`} />
         <Text style={tw`ml-2 text-2xl font-bold ${TEXT_COLORS.DARK_BLUE}`}>
           {text}
@@ -36,7 +34,7 @@ const SectionTitle = ({
         )}
       </View>
       {hasButton && buttonIcon && handleClickButton && (
-        <AdminValidator stylesProp="absolute -top-4 right-4">
+        <AdminValidator stylesProp="absolute top-0 right-4 z-40">
           <RoundedButtonIcon handleClick={handleClickButton} src={buttonIcon} />
         </AdminValidator>
       )}

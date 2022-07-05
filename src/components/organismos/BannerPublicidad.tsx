@@ -1,58 +1,40 @@
 import * as React from 'react'
 import Carousel from 'react-native-carousel-loop'
+import { useSelector } from 'react-redux'
+import { obtenerNovedades } from '../../../lib/services/novedades.services'
+import { PublicidadInterface } from '../../../models/Publicidad.model'
+import { RootState } from '../../../redux/store'
 import { WIDTH_DIMENSIONS } from '../../../utils/constants'
+import EmptyPublicidad from '../moleculas/EmptyPublicidad'
 import Publicidad from '../moleculas/Publicidad'
 
 const BannerPublicidad = () => {
-  const mock_data = [
-    {
-      token: 1,
-      imagen: require('../../../assets/camisa.png'),
-      titulo: 'Nueva camisa disponible 1',
-      descripcion:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply',
-      descripcion_corta: 'Camisas por temporada1',
-      datos_contacto: {
-        nombre: 'Daniel',
-        celular: '095224652',
-        direccion: 'Guerreros del fortin 2',
-      },
-    },
-    {
-      token: 2,
-      imagen: require('../../../assets/camisa.png'),
-      titulo: 'Nueva camisa disponible 2',
-      descripcion:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply',
-      descripcion_corta: 'Camisas por temporada2',
-      datos_contacto: {
-        nombre: 'Daniel2',
-        celular: '095224652',
-        direccion: 'Guerreros del fortin 2',
-      },
-    },
-    {
-      token: 3,
-      imagen: require('../../../assets/trajes.jpg'),
-      titulo: 'Nueva camisa disponible 3',
-      descripcion:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply',
-      descripcion_corta: 'Camisas por temporada3',
-      datos_contacto: {
-        nombre: 'Daniel3',
-        celular: '095224652',
-        direccion: 'Guerreros del fortin 2',
-      },
-    },
-  ]
+  const { authToken } = useSelector((state: RootState) => state.user)
+  const { novedadHasModified } = useSelector(
+    (state: RootState) => state.novedad
+  )
+  const [novedades, setNovedades] = React.useState<PublicidadInterface[]>([])
+  const [isLoading, setIsLoading] = React.useState(true)
 
-  return (
+  React.useEffect(() => {
+    ;(async function () {
+      const response = await obtenerNovedades(authToken || '')
+      const novedades: PublicidadInterface[] = response.data
+      setNovedades(novedades)
+      setIsLoading(false)
+    })()
+  }, [novedadHasModified])
+
+  return isLoading ? (
+    <EmptyPublicidad />
+  ) : (
     <Carousel
       delay={3000}
       autoplay
       style={{ width: WIDTH_DIMENSIONS, height: 100 }}
+      isLooped
     >
-      {mock_data.map((item, index) => {
+      {novedades?.map((item, index) => {
         return <Publicidad key={index} data={item} />
       })}
     </Carousel>

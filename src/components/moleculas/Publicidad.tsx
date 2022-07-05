@@ -1,6 +1,6 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import * as React from 'react'
-import { Text, View, Image, Pressable } from 'react-native'
+import { Text, View, Image, Pressable, ImageSourcePropType } from 'react-native'
 import tw from 'twrnc'
 import { PublicidadInterface } from '../../../models/Publicidad.model'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
@@ -23,7 +23,10 @@ const Publicidad = ({ data }: PublicidadProps) => {
       >
         <View style={tw`flex flex-row pl-2`}>
           <View style={tw`pl-4`}>
-            <Image source={data.imagen} style={{ width: 60, height: 60 }} />
+            <Image
+              source={{ uri: data.imagen } as ImageSourcePropType}
+              style={{ width: 60, height: 60 }}
+            />
           </View>
           <View style={tw`pl-6`}>
             <Text style={tw`text-base font-bold ${TEXT_COLORS.PRIMARY_BLUE}`}>

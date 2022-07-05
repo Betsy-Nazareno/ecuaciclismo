@@ -17,19 +17,23 @@ import {
 } from '../../../utils/constants'
 import ErrorMessage from '../atomos/ErrorMessage'
 import { Login } from '../../../models/User'
+import Spinner from '../atomos/Spinner'
 interface Prop {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>
 }
 
 const LoginFormulario = ({ navigation }: Prop) => {
   const { initUser } = useAuthentication()
+  const [isLoading, setIsLoading] = React.useState(false)
   const [failedLogin, setFailedLogin] = React.useState(false)
 
   const login = async (props: Login) => {
     try {
+      setIsLoading(true)
       await initUser(props)
     } catch (e) {
       setFailedLogin(true)
+      setIsLoading(false)
     }
   }
 
@@ -71,11 +75,15 @@ const LoginFormulario = ({ navigation }: Prop) => {
               )}
 
               <View style={tw`w-9/12 mx-auto mt-[${HEIGHT_DIMENSIONS * 0.04}]`}>
-                <ButtonPrimary
-                  style={BACKGROUND_COLORS.SKY_BLUE}
-                  label="Iniciar sesión"
-                  handleClick={handleSubmit}
-                />
+                {isLoading ? (
+                  <Spinner />
+                ) : (
+                  <ButtonPrimary
+                    style={BACKGROUND_COLORS.SKY_BLUE}
+                    label="Iniciar sesión"
+                    handleClick={handleSubmit}
+                  />
+                )}
               </View>
             </>
           )}

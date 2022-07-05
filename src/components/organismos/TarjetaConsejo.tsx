@@ -14,7 +14,13 @@ interface TarjetaConsejoProps {
 const TarjetaConsejo = ({ consejoProp }: TarjetaConsejoProps) => {
   const [consejo, setConsejo] = React.useState<Consejo>()
   React.useEffect(() => {
-    setConsejo(consejoProp)
+    let isMounted = true
+    if (isMounted) {
+      setConsejo(consejoProp)
+    }
+    return () => {
+      isMounted = false
+    }
   }, [consejoProp])
 
   return (

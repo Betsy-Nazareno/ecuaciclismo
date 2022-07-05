@@ -6,10 +6,10 @@ import { BACKGROUND_COLORS } from '../../../utils/constants'
 
 interface Props {
   children: ReactNode | ReactNode[]
-  stickyHeader?: boolean
+  stickyIndexes?: number[]
 }
 
-const BasePaginas = ({ children, stickyHeader }: Props) => {
+const BasePaginas = ({ children, stickyIndexes }: Props) => {
   const AnimatedNavbar = new Animated.Value(0)
   const NAVBAR_MAX_HEIGHT = 50
   const NAVBAR_MIN_HEIGHT = 0
@@ -31,7 +31,7 @@ const BasePaginas = ({ children, stickyHeader }: Props) => {
           { useNativeDriver: false }
         )}
         showsVerticalScrollIndicator={false}
-        stickyHeaderIndices={stickyHeader ? [0] : []}
+        stickyHeaderIndices={stickyIndexes || []}
       >
         {children}
       </ScrollView>

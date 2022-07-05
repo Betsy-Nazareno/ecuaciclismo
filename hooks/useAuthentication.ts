@@ -3,21 +3,14 @@ import { useDispatch } from 'react-redux'
 import { cerrarSesion, iniciarSesion } from '../redux/user'
 import * as SecureStore from 'expo-secure-store'
 import { Login } from '../models/User'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 
 export const useAuthentication = () => {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(true)
-  const isMounted = useRef(true)
-
-  useEffect(() => {
-    return () => {
-      isMounted.current = false
-    }
-  }, [])
 
   const initUser = async (props: Login) => {
-    const data = { user: { username: props.email, password: props.password } }
+    const data = { user: { email: props.email, password: props.password } }
     try {
       const response = await axios.post(
         'https://ecuaciclismoapp.pythonanywhere.com/api/token-auth/',
@@ -52,7 +45,7 @@ export const useAuthentication = () => {
         })
       )
     }
-    isMounted.current && setIsLoading(false)
+    setIsLoading(false)
   }
 
   const deleteUserStore = async () => {

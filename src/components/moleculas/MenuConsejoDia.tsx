@@ -11,9 +11,8 @@ interface MenuConsejoDiaProps {
 
 const MenuConsejoDia = ({ consejo }: MenuConsejoDiaProps) => {
   const [displayMenu, setDisplayMenu] = React.useState(false)
-  //stylesProp="w-6 -mr-2"
   return (
-    <AdminValidator stylesProp="">
+    <AdminValidator>
       <Pressable onPress={() => setDisplayMenu(!displayMenu)}>
         <View style={tw`w-6 -mr-2`}>
           <Image

@@ -15,7 +15,7 @@ const ButtonPrimary = ({ label, style, handleClick }: ButtonPrimaryProps) => {
       underlayColor="#E7F5FF"
       onPress={handleClick}
     >
-      <View style={tw`${style} py-3 px-6 rounded-md`}>
+      <View style={tw`py-3 px-6 rounded-md ${style}`}>
         <Text style={tw`text-center font-bold text-white text-base`}>
           {label}
         </Text>
