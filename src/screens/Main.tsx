@@ -32,7 +32,9 @@ const Main = () => {
 
   useEffect(() => {
     let mounted = true
-    mounted && setUser()
+    if (mounted) {
+      setUser()
+    }
     return () => {
       mounted = false
     }

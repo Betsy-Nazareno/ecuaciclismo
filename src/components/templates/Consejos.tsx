@@ -19,10 +19,16 @@ const Consejos = () => {
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
   React.useEffect(() => {
-    ;(async () => {
-      const response = await obtenerConsejos(authToken as string)
-      setListaConsejos(response.data)
-    })()
+    let isMounted = true
+    if (isMounted) {
+      ;(async () => {
+        const response = await obtenerConsejos(authToken as string)
+        setListaConsejos(response.data)
+      })()
+    }
+    return () => {
+      isMounted = false
+    }
   }, [hasModified])
 
   return (

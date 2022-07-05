@@ -214,17 +214,29 @@ const ListaNovedadesHistoricas = ({ text }: ListaNovedadesHistoricasProps) => {
   >([])
 
   React.useEffect(() => {
-    ;(async function () {
-      setNovedades(mock_data)
-      setFilteredNovedades(mock_data)
-    })()
+    let isMounted = true
+    if (isMounted) {
+      ;(async function () {
+        setNovedades(mock_data)
+        setFilteredNovedades(mock_data)
+      })()
+    }
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   React.useEffect(() => {
-    if (!text) {
-      setFilteredNovedades(mock_data)
-    } else {
-      setFilteredNovedades(filtrarNovedades())
+    let isMounted = true
+    if (isMounted) {
+      if (!text) {
+        setFilteredNovedades(mock_data)
+      } else {
+        setFilteredNovedades(filtrarNovedades())
+      }
+    }
+    return () => {
+      isMounted = false
     }
   }, [text])
 

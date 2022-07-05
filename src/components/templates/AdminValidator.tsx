@@ -13,7 +13,13 @@ const AdminValidator = ({ children, stylesProp }: AdminValidatorProps) => {
   const [isAdmin, setIsAdmin] = React.useState(false)
 
   React.useEffect(() => {
-    setIsAdmin(user?.admin || false)
+    let isMounted = true
+    if (isMounted) {
+      setIsAdmin(user?.admin || false)
+    }
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   return isAdmin ? (

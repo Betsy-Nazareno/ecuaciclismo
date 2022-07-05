@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Registro } from '../../models/User'
 
-export const createUser = async (data: Registro) => {
+export const createUser = async (data: Registro, tokenNotification: string) => {
   try {
     await axios({
       method: 'POST',
@@ -12,6 +12,7 @@ export const createUser = async (data: Registro) => {
         password: data.password,
         nombre: data.first_name,
         apellido: data.last_name,
+        token_notificacion: tokenNotification,
       },
     })
   } catch (e) {

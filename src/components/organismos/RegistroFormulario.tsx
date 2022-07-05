@@ -3,6 +3,7 @@ import { Formik } from 'formik'
 import * as React from 'react'
 import { Image, Text, View } from 'react-native'
 import tw from 'twrnc'
+import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
 import { createUser } from '../../../lib/services/user.services'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import { Registro } from '../../../models/User'
@@ -15,6 +16,7 @@ import Ruler from '../atomos/Ruler'
 const RegistroFormulario = () => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
+  const { registerForPushNotificationsAsync } = usePermissionsNotifications()
   const initialValues = {
     first_name: '',
     last_name: '',
@@ -23,8 +25,10 @@ const RegistroFormulario = () => {
     password: '',
     password_confirmation: '',
   }
+
   const handleSubmit = async (props: Registro) => {
-    await createUser(props)
+    const token = (await registerForPushNotificationsAsync()) || ''
+    await createUser(props, token)
     navigation.navigate('Login')
   }
   return (

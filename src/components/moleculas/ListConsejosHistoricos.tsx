@@ -17,21 +17,34 @@ const ListConsejosHistoricos = ({ text }: ListConsejosHistoricosProps) => {
   const [filteredConsejos, setFilterdConsejos] = React.useState([])
 
   React.useEffect(() => {
-    ;(async function () {
-      const response = await obtenerConsejos(authToken as string)
-      setConsejos(response.data)
-      setFilterdConsejos(response.data)
-    })()
+    let isMounted = true
+    if (isMounted) {
+      ;(async function () {
+        const response = await obtenerConsejos(authToken as string)
+        setConsejos(response.data)
+        setFilterdConsejos(response.data)
+      })()
+    }
+
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   React.useEffect(() => {
-    if (!text) {
-      setFilterdConsejos(consejos)
-    } else {
-      const filteredConsejos = consejos.filter((consejo: Consejo) =>
-        consejo.informacion.toLowerCase().includes(text.toLowerCase())
-      )
-      setFilterdConsejos(filteredConsejos)
+    let isMounted = true
+    if (isMounted) {
+      if (!text) {
+        setFilterdConsejos(consejos)
+      } else {
+        const filteredConsejos = consejos.filter((consejo: Consejo) =>
+          consejo.informacion.toLowerCase().includes(text.toLowerCase())
+        )
+        setFilterdConsejos(filteredConsejos)
+      }
+    }
+    return () => {
+      isMounted = false
     }
   }, [text])
 

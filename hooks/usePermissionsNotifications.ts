@@ -18,37 +18,37 @@ export const usePermissionsNotifications = () => {
   const notificationListener = useRef<Subscription>()
   const responseListener = useRef<Subscription>()
 
-  useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token || '')
-    )
-    console.info(expoPushToken, notification)
+  // useEffect(() => {
+  //   registerForPushNotificationsAsync().then((token) =>
+  //     setExpoPushToken(token || '')
+  //   )
+  //   console.info(expoPushToken, notification, "1")
 
-    // This listener is fired whenever a notification is received while the app is foregrounded
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification)
-      })
+  //   // This listener is fired whenever a notification is received while the app is foregrounded
+  //   notificationListener.current =
+  //     Notifications.addNotificationReceivedListener((notification) => {
+  //       setNotification(notification)
+  //     })
 
-    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response)
-      })
+  //   // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+  //   responseListener.current =
+  //     Notifications.addNotificationResponseReceivedListener((response) => {
+  //       console.log(response, "2")
+  //     })
 
-    return () => {
-      Notifications.removeNotificationSubscription(
-        notificationListener.current as Subscription
-      )
-      Notifications.removeNotificationSubscription(
-        responseListener.current as Subscription
-      )
-    }
-  }, [])
+  //   return () => {
+  //     Notifications.removeNotificationSubscription(
+  //       notificationListener.current as Subscription
+  //     )
+  //     Notifications.removeNotificationSubscription(
+  //       responseListener.current as Subscription
+  //     )
+  //   }
+  // }, [])
 
-  async function sendPushNotification() {
+  async function sendPushNotification(tokens: string[]) {
     const message = {
-      to: ['ExponentPushToken[ZbqXgvIgJGrueFImqii6Ph]'],
+      to: tokens,
       sound: 'default',
       title: 'Original Title',
       body: 'And here is the body!',
@@ -81,7 +81,7 @@ export const usePermissionsNotifications = () => {
         return
       }
       token = (await Notifications.getExpoPushTokenAsync()).data
-      console.log(token)
+      console.log(token, '3')
     } else {
       alert('Must use physical device for Push Notifications')
     }
@@ -98,5 +98,5 @@ export const usePermissionsNotifications = () => {
     return token
   }
 
-  return { sendPushNotification }
+  return { sendPushNotification, registerForPushNotificationsAsync }
 }

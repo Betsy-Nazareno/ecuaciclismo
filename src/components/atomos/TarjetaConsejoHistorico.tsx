@@ -29,8 +29,8 @@ const TarjetaConsejoHistorico = ({ consejo }: TarjetaConsejoHistoricoProps) => {
     >
       <ContenedorPaginasDetalle
         borderRight
-        colorBorder="#e6e6e6"
-        borderWidth={2}
+        colorBorder="#6a7bd2"
+        borderWidth={8}
         styleProps="mt-1"
       >
         <View style={[tw`flex flex-row items-center py-2`, styles.container]}>
