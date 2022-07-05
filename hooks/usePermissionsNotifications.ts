@@ -1,7 +1,5 @@
 import * as Device from 'expo-device'
-import { Subscription } from 'expo-modules-core'
 import * as Notifications from 'expo-notifications'
-import { useEffect, useRef, useState } from 'react'
 import { Platform } from 'react-native'
 
 Notifications.setNotificationHandler({
@@ -13,10 +11,10 @@ Notifications.setNotificationHandler({
 })
 
 export const usePermissionsNotifications = () => {
-  const [expoPushToken, setExpoPushToken] = useState('')
-  const [notification, setNotification] = useState<Notifications.Notification>()
-  const notificationListener = useRef<Subscription>()
-  const responseListener = useRef<Subscription>()
+  // const [expoPushToken, setExpoPushToken] = useState('')
+  // const [notification, setNotification] = useState<Notifications.Notification>()
+  // const notificationListener = useRef<Subscription>()
+  // const responseListener = useRef<Subscription>()
 
   // useEffect(() => {
   //   registerForPushNotificationsAsync().then((token) =>
@@ -46,15 +44,12 @@ export const usePermissionsNotifications = () => {
   //   }
   // }, [])
 
-  async function sendPushNotification(
-    tokens: string[],
-    messageNotification: any
-  ) {
+  async function sendPushNotification(tokens: string[]) {
     const message = {
       to: tokens,
       sound: 'default',
-      title: messageNotification.title,
-      body: messageNotification.body,
+      title: 'Hey',
+      body: 'This is the bpdy',
       data: { someData: 'goes here' },
     }
 

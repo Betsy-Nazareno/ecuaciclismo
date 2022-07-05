@@ -27,8 +27,8 @@ const RegistroFormulario = () => {
   }
 
   const handleSubmit = async (props: Registro) => {
-    const token = (await registerForPushNotificationsAsync()) || ''
-    await createUser(props, token)
+    // const token = (await registerForPushNotificationsAsync()) || ''
+    await createUser(props, '')
     navigation.navigate('Login')
   }
   return (
