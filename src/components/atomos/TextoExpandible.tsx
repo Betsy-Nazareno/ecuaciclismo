@@ -13,11 +13,17 @@ const TextoExpandible = ({ text, maxLength }: TextoExpandibleProps) => {
   const [textRender, setTextRender] = React.useState('')
 
   React.useEffect(() => {
-    if (text && text.length > 200) {
-      setHasMoreText(true)
-      setTextRender(text.substring(0, maxLength) + '...')
-    } else {
-      setTextRender(text)
+    let isMounted = true
+    if (isMounted) {
+      if (text && text.length > 200) {
+        setHasMoreText(true)
+        setTextRender(text.substring(0, maxLength) + '...')
+      } else {
+        setTextRender(text)
+      }
+    }
+    return () => {
+      isMounted = false
     }
   }, [text])
 

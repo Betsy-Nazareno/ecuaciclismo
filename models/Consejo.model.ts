@@ -2,7 +2,7 @@ import { DocumentResult } from 'expo-document-picker'
 import { ImageSourcePropType } from 'react-native'
 
 export interface Consejo {
-  imagen?: TypeImageConsejo
+  imagen?: TypeImage
   email?: string
   first_name?: string
   foto?: string
@@ -12,7 +12,7 @@ export interface Consejo {
   token?: string
 }
 
-export type TypeImageConsejo =
+export type TypeImage =
   | string
   | ImageSourcePropType
   | DocumentResult

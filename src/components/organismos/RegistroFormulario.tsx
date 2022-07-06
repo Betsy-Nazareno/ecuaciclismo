@@ -11,10 +11,13 @@ import { BACKGROUND_COLORS, HEIGHT_DIMENSIONS } from '../../../utils/constants'
 import ButtonPrimary from '../atomos/ButtonPrimary'
 import Input from '../atomos/Input'
 import Ruler from '../atomos/Ruler'
+import Spinner from '../atomos/Spinner'
 
 const RegistroFormulario = () => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
+  const [isLoading, setIsLoading] = React.useState(false)
+
   const initialValues = {
     first_name: '',
     last_name: '',
@@ -23,10 +26,13 @@ const RegistroFormulario = () => {
     password: '',
     password_confirmation: '',
   }
+
   const handleSubmit = async (props: Registro) => {
-    console.log(props)
-    await createUser(props)
+    setIsLoading(true)
+    // const token = (await registerForPushNotificationsAsync()) || ''
+    await createUser(props, '')
     navigation.navigate('Login')
+    setIsLoading(false)
   }
   return (
     <View style={tw`pt-[${HEIGHT_DIMENSIONS * 0.1}]`}>
@@ -101,13 +107,17 @@ const RegistroFormulario = () => {
                 setFieldValue('password_confirmation', value)
               }
             />
-            <View style={tw`w-9/12 mx-auto my-[7%]`}>
-              <ButtonPrimary
-                label="¡Unirme!"
-                handleClick={handleSubmit}
-                style={BACKGROUND_COLORS.SKY_BLUE}
-              />
-            </View>
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <View style={tw`w-9/12 mx-auto my-[7%]`}>
+                <ButtonPrimary
+                  label="¡Unirme!"
+                  handleClick={handleSubmit}
+                  style={BACKGROUND_COLORS.SKY_BLUE}
+                />
+              </View>
+            )}
           </>
         )}
       </Formik>

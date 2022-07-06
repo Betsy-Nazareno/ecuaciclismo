@@ -3,57 +3,56 @@ import { View } from 'react-native'
 import tw from 'twrnc'
 import TarjetaConsejo from '../organismos/TarjetaConsejo'
 import { BACKGROUND_COLORS } from '../../../utils/constants'
-import { obtenerConsejos } from '../../../lib/services/consejos.services'
+import { obtenerConsejosActuales } from '../../../lib/services/consejos.services'
 import { RootState } from '../../../redux/store'
 import { useSelector } from 'react-redux'
 import { Consejo } from '../../../models/Consejo.model'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import SectionTitle from '../atomos/SectionTitle'
-import RoundedButtonIcon from '../atomos/RoundedButtonIcon'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
+import EmptyTarjetaConsejo from '../organismos/EmptyTarjetaConsejo'
 
 const Consejos = () => {
   const { authToken } = useSelector((state: RootState) => state.user)
   const { hasModified } = useSelector((state: RootState) => state.consejo)
   const [listaConsejos, setListaConsejos] = React.useState<Consejo[]>([])
+  const [isLoading, setIsLoading] = React.useState(true)
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
   React.useEffect(() => {
-    ;(async () => {
-      const response = await obtenerConsejos(
-        authToken as string,
-        'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/get_consejos_dia/'
-      )
-      setListaConsejos(response.data)
-    })()
+    let isMounted = true
+    if (isMounted) {
+      ;(async () => {
+        const response = await obtenerConsejosActuales(authToken as string)
+        setListaConsejos(response.data)
+        setIsLoading(false)
+      })()
+    }
+    return () => {
+      isMounted = false
+    }
   }, [hasModified])
 
   return (
-    <View>
-      <View style={tw`mt-[6%] ${BACKGROUND_COLORS.BLUE_LIGHTER}`}>
-        <SectionTitle text={'Consejos del día'} hasUpdates />
+    <View style={tw`px-2`}>
+      <View style={tw`mt-[2%] ${BACKGROUND_COLORS.BLUE_LIGHTER}`}>
+        <SectionTitle
+          text={'Consejos del día'}
+          hasUpdates
+          hasButton
+          buttonIcon={require('../../../assets/edit_white_icon.png')}
+          handleClickButton={() => navigation.navigate('AgregarConsejo')}
+        />
       </View>
       <View style={tw`mt-[4%]`}>
-        {listaConsejos?.map((consejo, index) => {
-          return (
-            <TarjetaConsejo
-              key={index}
-              consejo={consejo}
-              description="Administrador"
-            />
-          )
-        })}
-      </View>
-      <View style={tw`mt-6`}>
-        <SectionTitle text={'Novedades'} />
-      </View>
-
-      <View style={tw`absolute top-3 right-4 z-40`}>
-        <RoundedButtonIcon
-          handleClick={() => navigation.navigate('AgregarConsejo')}
-          src={require('../../../assets/edit_white_icon.png')}
-        />
+        {isLoading ? (
+          <EmptyTarjetaConsejo />
+        ) : (
+          listaConsejos?.map((consejo, index) => {
+            return <TarjetaConsejo key={index} consejoProp={consejo} />
+          })
+        )}
       </View>
     </View>
   )

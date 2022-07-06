@@ -1,4 +1,4 @@
-import { useFormikContext } from 'formik'
+import { ErrorMessage, useFormikContext } from 'formik'
 import * as React from 'react'
 import {
   Text,
@@ -11,6 +11,7 @@ import { Consejo } from '../../../models/Consejo.model'
 import * as DocumentPicker from 'expo-document-picker'
 import tw from 'twrnc'
 import { TEXT_COLORS } from '../../../utils/constants'
+import { FieldError } from './FieldError'
 const CANCEL_TYPE = 'cancel'
 
 interface GalleryButtonProps {
@@ -64,6 +65,11 @@ const GalleryButton = ({ icono, field }: GalleryButtonProps) => {
           <Text style={tw`text-center ${TEXT_COLORS.DARK_GRAY}`}>
             Selecciona una imagen de tu galería
           </Text>
+          {field && (
+            <View style={tw`mx-auto`}>
+              <ErrorMessage name={field} render={FieldError} />
+            </View>
+          )}
         </View>
       )}
     </TouchableHighlight>

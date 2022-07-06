@@ -15,7 +15,9 @@ const Perfil = () => {
           style={{ width: 256, height: 256 }}
         />
       </View>
-      <Button title="Cerrar sesion" onPress={deleteUserStore}></Button>
+      <View style={tw`w-8/12 mx-auto`}>
+        <Button title="Cerrar sesion" onPress={deleteUserStore}></Button>
+      </View>
     </BasePaginas>
   )
 }

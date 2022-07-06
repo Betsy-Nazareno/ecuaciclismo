@@ -23,6 +23,7 @@ export const BORDER_COLORS = {
   GRAY: 'border-[#DFDFDF]',
   PRIMARY_BLUE: 'border-[#2D84C4]',
   GREEN: 'border-[#5DB075]',
+  ORANGE: 'border-[#F16F31]',
 }
 
 export const JEST_TEXT =
@@ -39,11 +40,17 @@ export const PASSWORD = {
 
 export const USERNAME = {
   MAX_LENGTH: 16,
-  MIN_LENGTH: 8,
+  MIN_LENGTH: 3,
+}
+
+export const PUBLICIDAD = {
+  DESCRIPCION_MAX_LENGTH: 500,
+  DESCRIPCION_CORTA_MAX_LENGTH: 150,
 }
 
 export const FOLDERS_STORAGE = {
   CONSEJOS: 'consejos',
   RUTAS: 'rutas',
   PUBLICACIONES: 'publicaciones',
+  NOVEDADES: 'novedades',
 }
