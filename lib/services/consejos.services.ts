@@ -35,7 +35,7 @@ export const obtenerConsejosActuales = async (token: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/get_historico_consejos_dia/',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/get_consejos_dia/',
       headers: { Authorization: 'Token ' + token },
     })
     return response.data

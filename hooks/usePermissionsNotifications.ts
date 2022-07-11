@@ -1,6 +1,8 @@
 import * as Device from 'expo-device'
 import * as Notifications from 'expo-notifications'
+import { useEffect, useRef, useState } from 'react'
 import { Platform } from 'react-native'
+import { Subscription } from 'expo-modules-core'
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -11,38 +13,38 @@ Notifications.setNotificationHandler({
 })
 
 export const usePermissionsNotifications = () => {
-  // const [expoPushToken, setExpoPushToken] = useState('')
-  // const [notification, setNotification] = useState<Notifications.Notification>()
-  // const notificationListener = useRef<Subscription>()
-  // const responseListener = useRef<Subscription>()
+  const [expoPushToken, setExpoPushToken] = useState('')
+  const [notification, setNotification] = useState<Notifications.Notification>()
+  const notificationListener = useRef<Subscription>()
+  const responseListener = useRef<Subscription>()
 
-  // useEffect(() => {
-  //   registerForPushNotificationsAsync().then((token) =>
-  //     setExpoPushToken(token || '')
-  //   )
-  //   console.info(expoPushToken, notification, "1")
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) => {
+      setExpoPushToken(token || '')
+      console.info(token)
+    })
 
-  //   // This listener is fired whenever a notification is received while the app is foregrounded
-  //   notificationListener.current =
-  //     Notifications.addNotificationReceivedListener((notification) => {
-  //       setNotification(notification)
-  //     })
+    // This listener is fired whenever a notification is received while the app is foregrounded
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification)
+      })
 
-  //   // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-  //   responseListener.current =
-  //     Notifications.addNotificationResponseReceivedListener((response) => {
-  //
-  //     })
+    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) =>
+        console.log(response)
+      )
 
-  //   return () => {
-  //     Notifications.removeNotificationSubscription(
-  //       notificationListener.current as Subscription
-  //     )
-  //     Notifications.removeNotificationSubscription(
-  //       responseListener.current as Subscription
-  //     )
-  //   }
-  // }, [])
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current as Subscription
+      )
+      Notifications.removeNotificationSubscription(
+        responseListener.current as Subscription
+      )
+    }
+  }, [])
 
   async function sendPushNotification(tokens: string[]) {
     const message = {
@@ -99,5 +101,9 @@ export const usePermissionsNotifications = () => {
     }
   }
 
-  return { sendPushNotification, registerForPushNotificationsAsync }
+  return {
+    sendPushNotification,
+    registerForPushNotificationsAsync,
+    expoPushToken,
+  }
 }
