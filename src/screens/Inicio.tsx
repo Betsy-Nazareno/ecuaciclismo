@@ -16,7 +16,7 @@ const Inicio = () => {
   return (
     <BasePaginas stickyIndexes={[1]}>
       <Button
-        title="Notificame"
+        title={`Notificame ${expoPushToken}`}
         onPress={() => {
           sendPushNotification([expoPushToken])
         }}
