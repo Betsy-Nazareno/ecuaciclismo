@@ -47,11 +47,7 @@ const TarjetaConsejo = ({ consejoProp }: TarjetaConsejoProps) => {
         )}
 
         <View style={tw`py-4 flex items-center`}>
-          <Reacciones
-            // reacciones={consejo?.reacciones || {}}
-            // token={consejo?.token || ''}
-            item={consejo as Consejo}
-          />
+          <Reacciones item={consejo as Consejo} />
         </View>
       </View>
     </View>

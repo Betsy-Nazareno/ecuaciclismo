@@ -62,10 +62,6 @@ const Reacciones = ({ item }: ReaccionesProps) => {
     setIsLoading(false)
   }
 
-  const getCountReaction = (name: ReaccionTypes) => {
-    return pulsedReactions[name]?.usuarios?.length || 0
-  }
-
   return (
     <View>
       <View style={tw`flex flex-row`}>
@@ -75,7 +71,7 @@ const Reacciones = ({ item }: ReaccionesProps) => {
           name="like"
           handleClick={handleClick}
           isSelected={pulsedReactions.like?.reaccion_usuario}
-          countReaction={getCountReaction('like')}
+          countReaction={pulsedReactions.like?.usuarios?.length || 0}
           isLoading={isLoading}
         />
 
@@ -85,7 +81,7 @@ const Reacciones = ({ item }: ReaccionesProps) => {
           name="fuerza"
           handleClick={handleClick}
           isSelected={pulsedReactions.fuerza?.reaccion_usuario}
-          countReaction={getCountReaction('fuerza')}
+          countReaction={pulsedReactions.fuerza?.usuarios?.length || 0}
           isLoading={isLoading}
         />
 
@@ -95,7 +91,7 @@ const Reacciones = ({ item }: ReaccionesProps) => {
           name="encanta"
           handleClick={handleClick}
           isSelected={pulsedReactions.encanta?.reaccion_usuario}
-          countReaction={getCountReaction('encanta')}
+          countReaction={pulsedReactions.encanta?.usuarios?.length || 0}
           isLoading={isLoading}
         />
 
@@ -105,7 +101,7 @@ const Reacciones = ({ item }: ReaccionesProps) => {
           name="ciclista"
           handleClick={handleClick}
           isSelected={pulsedReactions.ciclista?.reaccion_usuario}
-          countReaction={getCountReaction('ciclista')}
+          countReaction={pulsedReactions.ciclista?.usuarios?.length || 0}
           isLoading={isLoading}
         />
 
@@ -115,7 +111,7 @@ const Reacciones = ({ item }: ReaccionesProps) => {
           name="apoyo"
           handleClick={handleClick}
           isSelected={pulsedReactions.apoyo?.reaccion_usuario}
-          countReaction={getCountReaction('apoyo')}
+          countReaction={pulsedReactions.apoyo?.usuarios?.length || 0}
           isLoading={isLoading}
         />
       </View>
