@@ -32,7 +32,7 @@ const Input = ({
   placeholder,
   stylesProp,
   name,
-  multiline = true,
+  multiline = false,
   numberOfLines = 1,
   stylesInput,
   value,

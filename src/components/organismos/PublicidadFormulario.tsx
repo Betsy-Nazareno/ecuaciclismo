@@ -71,7 +71,6 @@ const PublicidadFormulario = ({
           <>
             <FieldFormulario>
               <Input
-                multiline
                 text="Título"
                 type="none"
                 name="titulo"
@@ -83,7 +82,6 @@ const PublicidadFormulario = ({
 
             <FieldFormulario>
               <Input
-                multiline
                 text="Descripcion Corta"
                 type="none"
                 name="descripcion_corta"

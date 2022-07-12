@@ -49,16 +49,10 @@ const PublicidadIndividual = ({ data }: PublicidadIndividualProps) => {
         borderWidth={12}
         styleProps="py-6"
       >
-        <View style={tw`pb-24 relative`}>
-          <Text
-            style={tw`text-2xl font-bold text-center ${TEXT_COLORS.DARK_BLUE}`}
-          >
-            {data.titulo || ''}
-          </Text>
-
+        <View style={tw`pb-24`}>
           <AdminValidator>
             <Pressable onPress={handleDelete}>
-              <View style={tw`absolute -top-10 right-0`}>
+              <View style={tw`self-end`}>
                 <Image
                   source={require('../../../assets/bin_icon.png')}
                   style={{ width: 24, height: 24, marginRight: 8 }}
@@ -66,6 +60,11 @@ const PublicidadIndividual = ({ data }: PublicidadIndividualProps) => {
               </View>
             </Pressable>
           </AdminValidator>
+          <Text
+            style={tw`text-2xl font-bold text-center ${TEXT_COLORS.DARK_BLUE}`}
+          >
+            {data.titulo || ''}
+          </Text>
 
           <View style={tw`mx-auto pt-6 pb-4`}>
             <View style={tw`mx-auto`}>

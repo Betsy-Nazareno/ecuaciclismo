@@ -1,5 +1,6 @@
 import { DocumentResult } from 'expo-document-picker'
 import { ImageSourcePropType } from 'react-native'
+import { ReaccionesInterface } from './Reacciones.model'
 
 export interface Consejo {
   imagen?: TypeImage
@@ -10,6 +11,7 @@ export interface Consejo {
   informacion: string
   username?: string
   token?: string
+  reacciones?: ReaccionesInterface
 }
 
 export type TypeImage =

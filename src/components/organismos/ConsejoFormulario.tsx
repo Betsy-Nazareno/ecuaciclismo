@@ -23,13 +23,17 @@ import { isDocumentResultType } from '../../../utils/ckeckTypes'
 import { setHasModified } from '../../../redux/consejo'
 import tw from 'twrnc'
 import { DocumentResult } from 'expo-document-picker'
+import { getCiclistasToken } from '../../../lib/services/notifications.services'
+import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
+import { capitalize } from '../../../utils/capitalizeText'
 interface ConsejoFormularioProps {
   consejoProp?: Consejo
 }
 
 const ConsejoFormulario = ({ consejoProp }: ConsejoFormularioProps) => {
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken, user } = useSelector((state: RootState) => state.user)
   const { hasModified } = useSelector((state: RootState) => state.consejo)
+  const { sendPushNotification } = usePermissionsNotifications()
   const [isLoading, setIsLoading] = React.useState(false)
   const dispatch = useDispatch()
   const navigation =
@@ -44,23 +48,21 @@ const ConsejoFormulario = ({ consejoProp }: ConsejoFormularioProps) => {
 
   const handleSubmit = async (props: Consejo) => {
     setIsLoading(true)
-    const { imagen = {}, informacion = '' } = props || {}
-    let path = consejoProp?.imagen || ''
-    if (imagen && isDocumentResultType(imagen)) {
-      path = await guardarArchivo(
-        FOLDERS_STORAGE.CONSEJOS,
-        imagen as DocumentResult
-      )
-    }
-    const temp = { informacion: informacion, imagen: path }
-    if (consejoProp && consejoProp.token) {
-      await editarConsejo(temp, authToken as string, consejoProp.token)
+    if (consejoProp) {
+      await editarConsejo(props, authToken as string, consejoProp)
     } else {
-      await agregarConsejo(temp, authToken as string)
+      await agregarConsejo(props, authToken as string)
     }
+    const tokens = await getCiclistasToken(authToken || '')
+    await sendPushNotification({
+      tokens,
+      title: '¡Nuevo consejo del día!',
+      body: `${capitalize(user?.first_name)} ${capitalize(
+        user?.last_name
+      )} ha agregado un nuevo consejo para la comunnidad. ¡No te lo pierdas!`,
+    })
     dispatch(setHasModified({ hasModified: !hasModified }))
     navigation.navigate('Inicio')
-
     setIsLoading(false)
   }
 
