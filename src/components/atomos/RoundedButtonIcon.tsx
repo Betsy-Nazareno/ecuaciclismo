@@ -20,9 +20,9 @@ const RoundedButtonIcon = ({ handleClick, src }: RoundedButtonProps) => {
       onPress={handleClick}
     >
       <View
-        style={tw`${BACKGROUND_COLORS.PRIMARY_BLUE} shadow-xl h-13 w-13 rounded-full flex items-center justify-center`}
+        style={tw`${BACKGROUND_COLORS.PRIMARY_BLUE} shadow-xl h-10 w-10 rounded-full flex items-center justify-center`}
       >
-        <Image source={src} style={{ width: 25, height: 24 }} />
+        <Image source={src} style={{ width: 18, height: 17 }} />
       </View>
     </TouchableHighlight>
   )

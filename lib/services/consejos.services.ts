@@ -1,12 +1,24 @@
 import axios from 'axios'
+import { DocumentResult } from 'expo-document-picker'
 import { Consejo } from '../../models/Consejo.model'
+import { isDocumentResultType } from '../../utils/ckeckTypes'
+import { FOLDERS_STORAGE } from '../../utils/constants'
+import { guardarArchivo } from '../googleCloudStorage'
 
 export const agregarConsejo = async (consejo: Consejo, token: string) => {
   try {
+    const { imagen = {}, informacion = '' } = consejo || {}
+    let path = ''
+    if (imagen && isDocumentResultType(imagen)) {
+      path = await guardarArchivo(
+        FOLDERS_STORAGE.CONSEJOS,
+        imagen as DocumentResult
+      )
+    }
     await axios({
       method: 'POST',
       url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/new_consejo_dia/',
-      data: consejo,
+      data: { imagen: path, informacion },
       headers: { Authorization: 'Token ' + token },
     })
   } catch (e) {
@@ -17,13 +29,21 @@ export const agregarConsejo = async (consejo: Consejo, token: string) => {
 export const editarConsejo = async (
   consejo: Consejo,
   token: string,
-  tokenConsejo: string
+  oldConsejo: Consejo
 ) => {
   try {
+    const { imagen = {}, informacion = '' } = consejo || {}
+    let path = oldConsejo.imagen || ''
+    if (imagen && isDocumentResultType(imagen)) {
+      path = await guardarArchivo(
+        FOLDERS_STORAGE.CONSEJOS,
+        imagen as DocumentResult
+      )
+    }
     await axios({
       method: 'POST',
       url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/update_consejo_dia/',
-      data: { ...consejo, token: tokenConsejo },
+      data: { informacion: informacion, imagen: path, token: oldConsejo.token },
       headers: { Authorization: 'Token ' + token },
     })
   } catch (e) {

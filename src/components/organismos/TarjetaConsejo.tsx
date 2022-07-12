@@ -3,6 +3,7 @@ import { View, StyleSheet, ImageSourcePropType } from 'react-native'
 import tw from 'twrnc'
 import { Consejo } from '../../../models/Consejo.model'
 import InformacionUsuario from '../atomos/InformacionUsuario'
+import Reacciones from '../moleculas/BarraReacciones'
 import Ruler from '../atomos/Ruler'
 import ContenidoConsejo from '../moleculas/ContenidoConsejo'
 import MenuConsejoDia from '../moleculas/MenuConsejoDia'
@@ -13,6 +14,7 @@ interface TarjetaConsejoProps {
 
 const TarjetaConsejo = ({ consejoProp }: TarjetaConsejoProps) => {
   const [consejo, setConsejo] = React.useState<Consejo>()
+
   React.useEffect(() => {
     let isMounted = true
     if (isMounted) {
@@ -35,7 +37,7 @@ const TarjetaConsejo = ({ consejoProp }: TarjetaConsejoProps) => {
         </View>
 
         <Ruler style="w-full bg-gray-200 mb-2" />
-        {consejoProp.imagen ? (
+        {consejo?.imagen ? (
           <ContenidoConsejo
             text={consejo?.informacion}
             image={{ uri: consejo?.imagen } as ImageSourcePropType}
@@ -43,6 +45,10 @@ const TarjetaConsejo = ({ consejoProp }: TarjetaConsejoProps) => {
         ) : (
           <ContenidoConsejo text={consejo?.informacion} />
         )}
+
+        <View style={tw`py-4 flex items-center`}>
+          <Reacciones item={consejo as Consejo} />
+        </View>
       </View>
     </View>
   )
