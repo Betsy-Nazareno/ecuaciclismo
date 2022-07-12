@@ -11,7 +11,7 @@ interface ContenidoConsejoProps {
 
 const ContenidoConsejo = ({ image, text }: ContenidoConsejoProps) => {
   return (
-    <View style={tw``}>
+    <View>
       <View style={tw`mx-auto`}>
         {image && (
           <Image
