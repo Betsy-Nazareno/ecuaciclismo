@@ -49,6 +49,7 @@ const PublicidadFormulario = ({
   const handleSubmit = async (props: PublicidadInterface) => {
     setIsLoading(true)
     await agregarNovedad(authToken || '', props)
+    console.info(publicidadProp)
     setIsLoading(false)
     dispatch(setNovedadHasModified({ novedadHasModified: !novedadHasModified }))
     navigation.navigate('Inicio')

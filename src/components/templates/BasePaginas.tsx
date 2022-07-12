@@ -9,9 +9,6 @@ import {
 } from 'react-native'
 import NavigationBar from '../moleculas/NavigationBar'
 import { BACKGROUND_COLORS } from '../../../utils/constants'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../redux/store'
-import { setHasModified } from '../../../redux/consejo'
 
 interface Props {
   children: ReactNode | ReactNode[]
