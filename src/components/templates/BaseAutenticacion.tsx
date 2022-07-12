@@ -10,7 +10,7 @@ interface Props {
 const BaseAutenticacion = ({ children }: Props) => {
   return (
     <ScrollView style={tw`px-6`}>
-      <StatusBar backgroundColor={'#2D84C4'} />
+      <StatusBar backgroundColor={'#fff'} />
       {children}
     </ScrollView>
   )

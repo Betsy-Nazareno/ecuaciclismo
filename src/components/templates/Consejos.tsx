@@ -45,7 +45,7 @@ const Consejos = () => {
           handleClickButton={() => navigation.navigate('AgregarConsejo')}
         />
       </View>
-      <View style={tw`mt-[4%]`}>
+      <View style={tw`mt-[4%] mb-8`}>
         {isLoading ? (
           <EmptyTarjetaConsejo />
         ) : (

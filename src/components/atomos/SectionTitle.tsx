@@ -34,7 +34,7 @@ const SectionTitle = ({
         )}
       </View>
       {hasButton && buttonIcon && handleClickButton && (
-        <AdminValidator stylesProp="absolute top-0 right-4 z-40">
+        <AdminValidator stylesProp="absolute top-2 right-2 z-40">
           <RoundedButtonIcon handleClick={handleClickButton} src={buttonIcon} />
         </AdminValidator>
       )}

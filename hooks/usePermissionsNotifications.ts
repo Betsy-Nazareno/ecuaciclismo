@@ -2,6 +2,12 @@ import * as Device from 'expo-device'
 import * as Notifications from 'expo-notifications'
 import { Platform } from 'react-native'
 
+export interface PushNotificationProps {
+  tokens: string[]
+  title: string
+  body: string
+}
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -11,48 +17,18 @@ Notifications.setNotificationHandler({
 })
 
 export const usePermissionsNotifications = () => {
-  // const [expoPushToken, setExpoPushToken] = useState('')
-  // const [notification, setNotification] = useState<Notifications.Notification>()
-  // const notificationListener = useRef<Subscription>()
-  // const responseListener = useRef<Subscription>()
-
-  // useEffect(() => {
-  //   registerForPushNotificationsAsync().then((token) =>
-  //     setExpoPushToken(token || '')
-  //   )
-  //   console.info(expoPushToken, notification, "1")
-
-  //   // This listener is fired whenever a notification is received while the app is foregrounded
-  //   notificationListener.current =
-  //     Notifications.addNotificationReceivedListener((notification) => {
-  //       setNotification(notification)
-  //     })
-
-  //   // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-  //   responseListener.current =
-  //     Notifications.addNotificationResponseReceivedListener((response) => {
-  //
-  //     })
-
-  //   return () => {
-  //     Notifications.removeNotificationSubscription(
-  //       notificationListener.current as Subscription
-  //     )
-  //     Notifications.removeNotificationSubscription(
-  //       responseListener.current as Subscription
-  //     )
-  //   }
-  // }, [])
-
-  async function sendPushNotification(tokens: string[]) {
+  async function sendPushNotification({
+    tokens,
+    title,
+    body,
+  }: PushNotificationProps) {
     const message = {
       to: tokens,
       sound: 'default',
-      title: 'Hey',
-      body: 'This is the bpdy',
+      title,
+      body,
       data: { someData: 'goes here' },
     }
-
     await fetch('https://exp.host/--/api/v2/push/send', {
       method: 'POST',
       headers: {
@@ -89,15 +65,19 @@ export const usePermissionsNotifications = () => {
           name: 'default',
           importance: Notifications.AndroidImportance.MAX,
           vibrationPattern: [0, 250, 250, 250],
+          sound: '../assets/sounds/bell-notification.wav',
           lightColor: '#FF231F7C',
         })
       }
 
       return token
     } catch (e) {
-      return 'ExponentPushToken[ZbqXgvIgJGrueFImqii6Ph]'
+      return ''
     }
   }
 
-  return { sendPushNotification, registerForPushNotificationsAsync }
+  return {
+    sendPushNotification,
+    registerForPushNotificationsAsync,
+  }
 }

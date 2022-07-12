@@ -25,14 +25,21 @@ const Publicidad = ({ data }: PublicidadProps) => {
           <View style={tw`pl-4`}>
             <Image
               source={{ uri: data.imagen } as ImageSourcePropType}
-              style={{ width: 60, height: 60 }}
+              style={{ width: 70, height: 70, borderRadius: 20 / 2 }}
             />
           </View>
-          <View style={tw`pl-6`}>
-            <Text style={tw`text-base font-bold ${TEXT_COLORS.PRIMARY_BLUE}`}>
+          <View style={[tw`pl-4 w-8/12 overflow-hidden`]}>
+            <Text
+              style={tw`text-base font-bold ${TEXT_COLORS.PRIMARY_BLUE}`}
+              numberOfLines={1}
+            >
               {data.titulo}
             </Text>
-            <Text style={tw`text-sm font-semibold ${TEXT_COLORS.DARK_GRAY}`}>
+
+            <Text
+              style={tw`text-sm font-semibold ${TEXT_COLORS.DARK_GRAY}`}
+              numberOfLines={1}
+            >
               {data.descripcion_corta}
             </Text>
             <ButtonUnderline
@@ -40,7 +47,7 @@ const Publicidad = ({ data }: PublicidadProps) => {
               handleClick={() => {
                 return
               }}
-              style={TEXT_COLORS.ORANGE}
+              style={`${TEXT_COLORS.ORANGE} pt-2`}
             />
           </View>
         </View>
