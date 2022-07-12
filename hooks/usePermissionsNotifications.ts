@@ -1,8 +1,6 @@
 import * as Device from 'expo-device'
 import * as Notifications from 'expo-notifications'
-import { useRef, useState } from 'react'
 import { Platform } from 'react-native'
-import { Subscription } from 'expo-modules-core'
 
 export interface PushNotificationProps {
   tokens: string[]
