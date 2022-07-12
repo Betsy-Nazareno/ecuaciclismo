@@ -65,7 +65,7 @@ export const usePermissionsNotifications = () => {
           name: 'default',
           importance: Notifications.AndroidImportance.MAX,
           vibrationPattern: [0, 250, 250, 250],
-          sound: '../assets/sounds/bell-notification.wav',
+          sound: '../assets/sounds/bellnotification.wav',
           lightColor: '#FF231F7C',
         })
       }

@@ -11,7 +11,7 @@
         "expo-notifications",
         {
           "icon": "./assets/adaptive-icon.png",
-          "sounds": ["./assets/sounds/bell-notification.wav"]
+          "sounds": ["./assets/sounds/bellnotification.wav"]
         }
       ]
     ],
