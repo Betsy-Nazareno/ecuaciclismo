@@ -15,8 +15,6 @@ import { RootState } from '../../../redux/store'
 import Reaccion from '../atomos/Reaccion'
 
 export interface ReaccionesProps {
-  // reacciones: ReaccionesInterface
-  // token: string
   item: Consejo
 }
 
@@ -32,34 +30,17 @@ const Reacciones = ({ item }: ReaccionesProps) => {
   const [pulsedReactions, setPulsedReactions] =
     React.useState<ReaccionesInterface>(initValues)
   const { authToken } = useSelector((state: RootState) => state.user)
-  const [isLoading, setIsLoading] = React.useState(false)
 
   React.useEffect(() => {
     setPulsedReactions(item?.reacciones || {})
   }, [item])
 
-  const handleClick = async (name: ReaccionTypes) => {
-    setIsLoading(true)
-    const users = pulsedReactions[name]?.usuarios || []
-
-    if (pulsedReactions[name]?.reaccion_usuario) {
-      const filteredUsers = users.filter((user) => user !== authToken)
-      setPulsedReactions({
-        ...pulsedReactions,
-        [name]: {
-          usuarios: filteredUsers,
-          reaccion_usuario: false,
-        },
-      })
+  const handleClick = async (name: ReaccionTypes, alreadySelected: boolean) => {
+    if (alreadySelected) {
       await eliminarReaccion(name, item.token || '', authToken || '')
     } else {
-      setPulsedReactions({
-        ...pulsedReactions,
-        [name]: { usuarios: [...users, authToken], reaccion_usuario: true },
-      })
       await agregarReacciones(name, item.token || '', authToken || '')
     }
-    setIsLoading(false)
   }
 
   return (
@@ -70,9 +51,8 @@ const Reacciones = ({ item }: ReaccionesProps) => {
           dimension={18}
           name="like"
           handleClick={handleClick}
+          reaccionObject={pulsedReactions?.like}
           isSelected={pulsedReactions.like?.reaccion_usuario}
-          countReaction={pulsedReactions.like?.usuarios?.length || 0}
-          isLoading={isLoading}
         />
 
         <Reaccion
@@ -80,9 +60,8 @@ const Reacciones = ({ item }: ReaccionesProps) => {
           dimension={18}
           name="fuerza"
           handleClick={handleClick}
+          reaccionObject={pulsedReactions?.fuerza}
           isSelected={pulsedReactions.fuerza?.reaccion_usuario}
-          countReaction={pulsedReactions.fuerza?.usuarios?.length || 0}
-          isLoading={isLoading}
         />
 
         <Reaccion
@@ -90,9 +69,8 @@ const Reacciones = ({ item }: ReaccionesProps) => {
           dimension={20}
           name="encanta"
           handleClick={handleClick}
+          reaccionObject={pulsedReactions?.encanta}
           isSelected={pulsedReactions.encanta?.reaccion_usuario}
-          countReaction={pulsedReactions.encanta?.usuarios?.length || 0}
-          isLoading={isLoading}
         />
 
         <Reaccion
@@ -100,9 +78,8 @@ const Reacciones = ({ item }: ReaccionesProps) => {
           dimension={18}
           name="ciclista"
           handleClick={handleClick}
+          reaccionObject={pulsedReactions?.ciclista}
           isSelected={pulsedReactions.ciclista?.reaccion_usuario}
-          countReaction={pulsedReactions.ciclista?.usuarios?.length || 0}
-          isLoading={isLoading}
         />
 
         <Reaccion
@@ -110,9 +87,8 @@ const Reacciones = ({ item }: ReaccionesProps) => {
           dimension={18}
           name="apoyo"
           handleClick={handleClick}
+          reaccionObject={pulsedReactions?.apoyo}
           isSelected={pulsedReactions.apoyo?.reaccion_usuario}
-          countReaction={pulsedReactions.apoyo?.usuarios?.length || 0}
-          isLoading={isLoading}
         />
       </View>
     </View>
