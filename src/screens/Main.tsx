@@ -22,6 +22,7 @@ import Consejos from './HistorialConsejos'
 import Novedades from './HistorialNovedades'
 import ConsejoDetalle from './ConsejoDetalle'
 import Publicaciones from './Publicaciones'
+import DetallePublicacion from './DetallePublicacion'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -69,6 +70,10 @@ const Main = () => {
           options={{ headerBackVisible: false }}
         />
         <Stack.Screen name="DetalleNovedad" component={DetalleNovedad} />
+        <Stack.Screen
+          name="DetallePublicacion"
+          component={DetallePublicacion}
+        />
         <Stack.Screen name="Rutas" component={Rutas} />
         <Stack.Screen name="Perfil" component={Perfil} />
         <Stack.Screen name="Publicaciones" component={Publicaciones} />

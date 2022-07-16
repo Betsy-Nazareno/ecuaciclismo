@@ -10,7 +10,7 @@ import { ScreensDrawer } from '../../models/Screens.types'
 import { setActiveTab } from '../../redux/drawerTabs'
 import OptionSideMenu from '../atomos/OptionSideMenu'
 import Ruler from '../atomos/Ruler'
-import UserInformation from '../atomos/UserInformation'
+import UserInformation from '../moleculas/UserInformation'
 
 const SideMenu = (props: DrawerContentComponentProps) => {
   const dispatch = useDispatch()

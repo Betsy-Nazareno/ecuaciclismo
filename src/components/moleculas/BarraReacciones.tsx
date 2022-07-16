@@ -15,7 +15,7 @@ import { RootState } from '../../redux/store'
 import Reaccion from '../atomos/Reaccion'
 
 export interface ReaccionesProps {
-  item: Consejo
+  item?: Consejo
 }
 
 const initValues = {
@@ -37,9 +37,9 @@ const Reacciones = ({ item }: ReaccionesProps) => {
 
   const handleClick = async (name: ReaccionTypes, alreadySelected: boolean) => {
     if (alreadySelected) {
-      await eliminarReaccion(name, item.token || '', authToken || '')
+      await eliminarReaccion(name, item?.token || '', authToken || '')
     } else {
-      await agregarReacciones(name, item.token || '', authToken || '')
+      await agregarReacciones(name, item?.token || '', authToken || '')
     }
   }
 
