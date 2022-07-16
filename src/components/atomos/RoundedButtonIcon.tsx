@@ -10,9 +10,14 @@ import { BACKGROUND_COLORS } from '../../utils/constants'
 interface RoundedButtonProps {
   handleClick: () => void
   src: ImageSourcePropType
+  style?: string
 }
 
-const RoundedButtonIcon = ({ handleClick, src }: RoundedButtonProps) => {
+const RoundedButtonIcon = ({
+  handleClick,
+  src,
+  style = '',
+}: RoundedButtonProps) => {
   return (
     <TouchableHighlight
       activeOpacity={0.6}
@@ -20,7 +25,7 @@ const RoundedButtonIcon = ({ handleClick, src }: RoundedButtonProps) => {
       onPress={handleClick}
     >
       <View
-        style={tw`${BACKGROUND_COLORS.PRIMARY_BLUE} shadow-xl h-10 w-10 rounded-full flex items-center justify-center`}
+        style={tw`h-10 w-10 rounded-full flex items-center justify-center ${BACKGROUND_COLORS.PRIMARY_BLUE} ${style}`}
       >
         <Image source={src} style={{ width: 18, height: 17 }} />
       </View>

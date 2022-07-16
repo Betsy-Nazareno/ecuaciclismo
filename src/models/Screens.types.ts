@@ -11,6 +11,7 @@ export type RootStackParamList = {
   ConsejoFormulario: { consejo: Consejo } | undefined
   NovedadFormulario: { publicidad: NovedadInterface } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
+  DetallePublicacion: undefined
 }
 
 export type Screens =
@@ -23,6 +24,7 @@ export type Screens =
   | 'Publicaciones'
   | 'NovedadFormulario'
   | 'DetalleNovedad'
+  | 'DetallePublicacion'
 
 export type RootDrawerParamList = {
   HomeStack: undefined

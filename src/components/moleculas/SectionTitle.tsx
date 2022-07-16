@@ -8,6 +8,7 @@ import { CustomText } from '../atomos/CustomText'
 
 interface SectionTitleProps {
   text: string
+  styleText?: string
   background?: boolean
   hasUpdates?: boolean
   hasButton?: boolean
@@ -20,6 +21,7 @@ const SectionTitle = ({
   hasUpdates,
   hasButton,
   buttonIcon,
+  styleText = '',
   background = true,
   handleClickButton,
 }: SectionTitleProps) => {
@@ -31,7 +33,9 @@ const SectionTitle = ({
     >
       <View style={tw`flex flex-row`}>
         {background && <View style={tw`h-full w-[2px] bg-blue-500 mr-2`} />}
-        <CustomText style={`text-2xl font-bold ${TEXT_COLORS.DARK_BLUE}`}>
+        <CustomText
+          style={`text-2xl font-bold ${TEXT_COLORS.DARK_BLUE} ${styleText}`}
+        >
           {text}
         </CustomText>
         {hasUpdates && (

@@ -8,7 +8,7 @@ interface HeaderRoundedContainerProps {
 const HeaderRoundedContainer = ({ children }: HeaderRoundedContainerProps) => {
   return (
     <View
-      style={[tw`bg-white rounded-b-3xl mx-2 py-4`, styles.borderContainer]}
+      style={[tw`bg-white rounded-b-3xl pt-4 pb-1`, styles.borderContainer]}
     >
       {children}
     </View>
