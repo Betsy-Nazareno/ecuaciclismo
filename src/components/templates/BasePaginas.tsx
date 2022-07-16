@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native'
 import NavigationBar from '../moleculas/NavigationBar'
-import { BACKGROUND_COLORS } from '../../../utils/constants'
+import { BACKGROUND_COLORS } from '../../utils/constants'
 
 interface Props {
   children: ReactNode | ReactNode[]
@@ -21,7 +21,6 @@ const wait = (timeout: number) => {
 }
 
 const BasePaginas = ({ children, stickyIndexes, handleRefresh }: Props) => {
-  // const dispatch = useDispatch()
   const [refreshing, setRefreshing] = React.useState(false)
 
   const onRefresh = () => {

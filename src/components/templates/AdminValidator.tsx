@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { View } from 'react-native'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../../redux/store'
+import { RootState } from '../../redux/store'
 import tw from 'twrnc'
 interface AdminValidatorProps {
   children: React.ReactNode | React.ReactNode[]

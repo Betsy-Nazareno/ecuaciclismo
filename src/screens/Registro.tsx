@@ -1,5 +1,5 @@
 import React from 'react'
-import RegistroFormulario from '../components/organismos/RegistroFormulario'
+import RegistroFormulario from '../components/templates/Registro/RegistroFormulario'
 import BaseAutenticacion from '../components/templates/BaseAutenticacion'
 
 const Registro = () => {

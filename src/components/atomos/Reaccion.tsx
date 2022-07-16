@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Text, View, Image, ImageSourcePropType, Pressable } from 'react-native'
 import tw from 'twrnc'
-import { ReaccionTypes, ReaccionValues } from '../../../models/Reacciones.model'
-import { BACKGROUND_COLORS, TEXT_COLORS } from '../../../utils/constants'
+import { ReaccionTypes, ReaccionValues } from '../../models/Reacciones.model'
+import { BACKGROUND_COLORS, TEXT_COLORS } from '../../utils/constants'
 
 interface ReaccionProps {
   image: ImageSourcePropType

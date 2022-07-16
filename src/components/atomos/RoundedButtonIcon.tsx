@@ -6,7 +6,7 @@ import {
   ImageSourcePropType,
 } from 'react-native'
 import tw from 'twrnc'
-import { BACKGROUND_COLORS } from '../../../utils/constants'
+import { BACKGROUND_COLORS } from '../../utils/constants'
 interface RoundedButtonProps {
   handleClick: () => void
   src: ImageSourcePropType

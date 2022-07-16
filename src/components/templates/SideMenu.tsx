@@ -6,8 +6,8 @@ import * as React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useDispatch } from 'react-redux'
 import tw from 'twrnc'
-import { ScreensDrawer } from '../../../models/Screens.types'
-import { setActiveTab } from '../../../redux/drawerTabs'
+import { ScreensDrawer } from '../../models/Screens.types'
+import { setActiveTab } from '../../redux/drawerTabs'
 import OptionSideMenu from '../atomos/OptionSideMenu'
 import Ruler from '../atomos/Ruler'
 import UserInformation from '../atomos/UserInformation'
@@ -25,7 +25,7 @@ const SideMenu = (props: DrawerContentComponentProps) => {
       <View style={[tw`flex flex-row items-center pl-4`, styles.container]}>
         <UserInformation />
       </View>
-      {/* <DrawerItemList {...props} /> */}
+
       <View style={tw`mt-2`}>
         <View>
           <OptionSideMenu
@@ -50,9 +50,9 @@ const SideMenu = (props: DrawerContentComponentProps) => {
         <View>
           <OptionSideMenu
             label="Consejos"
-            name="Consejos"
+            name="HistorialConsejos"
             source={require('../../../assets/consejo_blue_icon.png')}
-            handleClick={() => handleClick('Consejos')}
+            handleClick={() => handleClick('HistorialConsejos')}
           />
           <Ruler style="w-11/12 bg-[#e6e6e6] mx-auto" />
         </View>

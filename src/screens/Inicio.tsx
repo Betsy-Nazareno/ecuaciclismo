@@ -1,15 +1,15 @@
 import React from 'react'
 import BasePaginas from '../components/templates/BasePaginas'
-import Consejos from '../components/templates/Consejos'
-import BannerPublicidad from '../components/organismos/BannerPublicidad'
-import SectionTitle from '../components/atomos/SectionTitle'
+import Consejos from '../components/templates/Inicio/Consejos'
+import BannerPublicidad from '../components/templates/Inicio/BannerPublicidad'
+import SectionTitle from '../components/moleculas/SectionTitle'
 import AdminValidator from '../components/templates/AdminValidator'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
-import { RootStackParamList, Screens } from '../../models/Screens.types'
+import { RootStackParamList, Screens } from '../models/Screens.types'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import { setHasModified } from '../../redux/consejo'
-import { setNovedadHasModified } from '../../redux/novedad'
+import { RootState } from '../redux/store'
+import { setHasModified } from '../redux/consejo'
+import { setNovedadHasModified } from '../redux/novedad'
 
 const Inicio = () => {
   const navigation =
@@ -32,7 +32,7 @@ const Inicio = () => {
           text="Novedades"
           hasButton
           buttonIcon={require('../../assets/edit_white_icon.png')}
-          handleClickButton={() => navigation.navigate('AgregarPublicidad')}
+          handleClickButton={() => navigation.navigate('NovedadFormulario')}
         />
       </AdminValidator>
       <BannerPublicidad />

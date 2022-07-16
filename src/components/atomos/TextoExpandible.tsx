@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Text, Pressable } from 'react-native'
 import tw from 'twrnc'
-import { TEXT_COLORS } from '../../../utils/constants'
+import { TEXT_COLORS } from '../../utils/constants'
 
 interface TextoExpandibleProps {
   text: string

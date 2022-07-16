@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { View, ImageSourcePropType, Image } from 'react-native'
 import tw from 'twrnc'
-import { CONSEJO_MAX_LENGTH, WIDTH_DIMENSIONS } from '../../../utils/constants'
+import { CONSEJO_MAX_LENGTH, WIDTH_DIMENSIONS } from '../../utils/constants'
 import TextoExpandible from '../atomos/TextoExpandible'
 
 interface ContenidoConsejoProps {
