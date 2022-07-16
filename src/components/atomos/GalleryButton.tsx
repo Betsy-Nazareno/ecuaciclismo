@@ -7,10 +7,10 @@ import {
   Image,
   TouchableHighlight,
 } from 'react-native'
-import { Consejo } from '../../../models/Consejo.model'
+import { Consejo } from '../../models/Consejo.model'
 import * as DocumentPicker from 'expo-document-picker'
 import tw from 'twrnc'
-import { TEXT_COLORS } from '../../../utils/constants'
+import { TEXT_COLORS } from '../../utils/constants'
 import { FieldError } from './FieldError'
 const CANCEL_TYPE = 'cancel'
 

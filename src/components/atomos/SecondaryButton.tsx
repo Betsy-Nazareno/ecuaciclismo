@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Text, View, TouchableHighlight } from 'react-native'
 import tw from 'twrnc'
-import { BACKGROUND_COLORS } from '../../../utils/constants'
+import { BACKGROUND_COLORS } from '../../utils/constants'
 
 interface SecondaryButtonProps {
   label: string

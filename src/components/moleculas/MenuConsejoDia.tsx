@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { View, Pressable, Image } from 'react-native'
-import { Consejo } from '../../../models/Consejo.model'
+import { Consejo } from '../../models/Consejo.model'
 import ConsejosOpcionesMenu from '../atomos/ConsejosOpcionesMenu'
 import AdminValidator from '../templates/AdminValidator'
 import tw from 'twrnc'
@@ -14,10 +14,10 @@ const MenuConsejoDia = ({ consejo }: MenuConsejoDiaProps) => {
   return (
     <AdminValidator>
       <Pressable onPress={() => setDisplayMenu(!displayMenu)}>
-        <View style={tw`w-6 -mr-2`}>
+        <View style={tw`mt-2 w-6 -mr-2`}>
           <Image
             source={require('../../../assets/menu_icon.png')}
-            style={{ height: 25, width: 12 }}
+            style={{ height: 20, width: 12 }}
           />
         </View>
       </Pressable>

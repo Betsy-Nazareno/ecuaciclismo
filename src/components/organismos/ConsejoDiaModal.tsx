@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Text, View, Modal, Pressable } from 'react-native'
 import tw from 'twrnc'
-import { BORDER_COLORS, TEXT_COLORS } from '../../../utils/constants'
+import { BORDER_COLORS, TEXT_COLORS } from '../../utils/constants'
 import Ruler from '../atomos/Ruler'
 
 interface ConsejoDiaModalProps {

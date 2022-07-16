@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { View, StyleSheet, Image } from 'react-native'
 import tw from 'twrnc'
-import { BACKGROUND_COLORS, WIDTH_DIMENSIONS } from '../../../utils/constants'
+import { BACKGROUND_COLORS, WIDTH_DIMENSIONS } from '../../utils/constants'
 import Ruler from '../atomos/Ruler'
 
 const EmptyTarjetaConsejo = () => {

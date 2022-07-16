@@ -9,8 +9,8 @@ import {
   TextStyle,
 } from 'react-native'
 import tw from 'twrnc'
-import { TextInputType } from '../../../models/TextInput.model'
-import { TEXT_COLORS } from '../../../utils/constants'
+import { TextInputType } from '../../models/TextInput.model'
+import { TEXT_COLORS } from '../../utils/constants'
 import { FieldError } from './FieldError'
 
 interface InputProps {

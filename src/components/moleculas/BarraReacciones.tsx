@@ -5,13 +5,13 @@ import tw from 'twrnc'
 import {
   agregarReacciones,
   eliminarReaccion,
-} from '../../../lib/services/reacciones.services'
-import { Consejo } from '../../../models/Consejo.model'
+} from '../../lib/services/reacciones.services'
+import { Consejo } from '../../models/Consejo.model'
 import {
   ReaccionesInterface,
   ReaccionTypes,
-} from '../../../models/Reacciones.model'
-import { RootState } from '../../../redux/store'
+} from '../../models/Reacciones.model'
+import { RootState } from '../../redux/store'
 import Reaccion from '../atomos/Reaccion'
 
 export interface ReaccionesProps {

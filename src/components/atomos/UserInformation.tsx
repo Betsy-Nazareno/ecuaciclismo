@@ -1,9 +1,10 @@
 import * as React from 'react'
-import { Text, View, Image } from 'react-native'
+import { View, Image } from 'react-native'
 import { useSelector } from 'react-redux'
 import tw from 'twrnc'
-import { RootState } from '../../../redux/store'
-import { TEXT_COLORS } from '../../../utils/constants'
+import { RootState } from '../../redux/store'
+import { TEXT_COLORS } from '../../utils/constants'
+import { CustomText } from './CustomText'
 
 const UserInformation = () => {
   const { user } = useSelector((state: RootState) => state.user)
@@ -16,13 +17,13 @@ const UserInformation = () => {
         />
       </View>
       <View>
-        <Text
-          style={tw`font-bold text-white text-lg capitalize`}
-        >{`${user?.first_name} ${user?.last_name}`}</Text>
+        <CustomText
+          style={`font-bold text-white text-lg capitalize`}
+        >{`${user?.first_name} ${user?.last_name}`}</CustomText>
 
-        <Text style={tw`font-semibold ${TEXT_COLORS.ORANGE} text-sm`}>
+        <CustomText style={`font-bold ${TEXT_COLORS.ORANGE} text-sm`}>
           {user?.admin ? 'Administrador' : 'Ciclista'}
-        </Text>
+        </CustomText>
       </View>
     </View>
   )

@@ -1,6 +1,6 @@
 import { Text } from 'react-native'
 import tw from 'twrnc'
-import { TEXT_COLORS } from '../../../utils/constants'
+import { TEXT_COLORS } from '../../utils/constants'
 import React from 'react'
 
 export const FieldError = (message: string) => {
