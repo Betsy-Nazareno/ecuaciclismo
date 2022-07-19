@@ -7,11 +7,12 @@ import DetallePublicador from '../../moleculas/DetalleUsuario'
 import VerticalDivider from '../../atomos/VerticalDivider'
 import Reacciones from '../../moleculas/BarraReacciones'
 import BotonAgregarComentario from './BotonAgregarComentario'
-import tw from 'twrnc'
 import InputAgregarComentario from './InputAgregarComentario'
 import TarjetaComentarioPublicacion from './TarjetaComentarioPublicacion'
+import tw from 'twrnc'
 
 const Publicacion = () => {
+  const [isAddingComent, setIsAddingComent] = React.useState(false)
   return (
     <View style={tw`p-2`}>
       <RoundedWhiteBaseTemplate shadow={false}>
@@ -52,26 +53,25 @@ const Publicacion = () => {
         </View>
       </RoundedWhiteBaseTemplate>
 
-      <View style={tw`pt-2`}>
-        <BotonAgregarComentario />
-      </View>
+      <TarjetaComentarioPublicacion />
 
-      <View style={tw`pt-2`}>
-        <InputAgregarComentario />
-      </View>
+      <TarjetaComentarioPublicacion />
 
-      <View style={tw`pt-2`}>
-        <TarjetaComentarioPublicacion />
-      </View>
-      <View style={tw`pt-2`}>
-        <TarjetaComentarioPublicacion />
-      </View>
-      <View style={tw`pt-2`}>
-        <TarjetaComentarioPublicacion />
-      </View>
-      <View style={tw`pt-2`}>
-        <TarjetaComentarioPublicacion />
-      </View>
+      <TarjetaComentarioPublicacion />
+
+      <TarjetaComentarioPublicacion />
+
+      {!isAddingComent && (
+        <View style={tw``}>
+          <BotonAgregarComentario handleClick={() => setIsAddingComent(true)} />
+        </View>
+      )}
+
+      {isAddingComent && (
+        <View style={tw`pt-2`}>
+          <InputAgregarComentario handleSend={() => setIsAddingComent(false)} />
+        </View>
+      )}
     </View>
   )
 }

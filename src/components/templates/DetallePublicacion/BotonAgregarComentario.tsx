@@ -8,9 +8,15 @@ import { CustomText } from '../../atomos/CustomText'
 import Gap from '../../atomos/Gap'
 import { TEXT_COLORS } from '../../../utils/constants'
 
-const BotonAgregarComentario = () => {
+interface BotonAgregarComentarioProps {
+  handleClick: () => void
+}
+
+const BotonAgregarComentario = ({
+  handleClick,
+}: BotonAgregarComentarioProps) => {
   return (
-    <Pressable>
+    <Pressable onPress={handleClick}>
       <RoundedWhiteBaseTemplate shadow={false}>
         <View style={tw`relative`}>
           <VerticalDivider style="top-0" />

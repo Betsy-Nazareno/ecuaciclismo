@@ -10,7 +10,7 @@ import { Registro } from '../../../models/User'
 import { registroValidationSchema } from '../../../schemas/RegistroSchema'
 import { BACKGROUND_COLORS, HEIGHT_DIMENSIONS } from '../../../utils/constants'
 import ButtonPrimary from '../../atomos/ButtonPrimary'
-import Input from '../../atomos/Input'
+import Input from '../../moleculas/Input'
 import Ruler from '../../atomos/Ruler'
 import Spinner from '../../atomos/Spinner'
 

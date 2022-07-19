@@ -5,11 +5,16 @@ import tw from 'twrnc'
 interface GapProps {
   styles?: string
   px: string
+  py?: string
   children: React.ReactNode | React.ReactNode[]
 }
 
-const Gap = ({ styles, px, children }: GapProps) => {
-  return <View style={tw`px-${px} ${styles || ''}`}>{children}</View>
+const Gap = ({ styles, px, py, children }: GapProps) => {
+  return (
+    <View style={tw`px-${px} ${styles || ''} ${py ? `py-${py}` : ''}`}>
+      {children}
+    </View>
+  )
 }
 
 export default Gap
