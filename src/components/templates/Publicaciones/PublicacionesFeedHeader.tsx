@@ -1,6 +1,8 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 import * as React from 'react'
 import { View } from 'react-native'
 import tw from 'twrnc'
+import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import HeaderRoundedContainer from '../../moleculas/HeaderRoundedContainer'
 import SearchBar from '../../moleculas/SearchBar'
 import SectionTitle from '../../moleculas/SectionTitle'
@@ -30,6 +32,8 @@ const filtros = [
 ]
 
 const PublicacionesFeedHeader = () => {
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, Screens>>()
   return (
     <HeaderRoundedContainer>
       <View style={tw`mx-4`}>
@@ -39,9 +43,7 @@ const PublicacionesFeedHeader = () => {
           background={false}
           hasButton
           buttonIcon={require('../../../../assets/edit_white_icon.png')}
-          handleClickButton={() => {
-            return
-          }}
+          handleClickButton={() => navigation.navigate('PublicacionFormulario')}
         />
         <SearchBar
           text=""

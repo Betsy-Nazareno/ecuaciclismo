@@ -11,7 +11,7 @@ import {
 import tw from 'twrnc'
 import { TextInputType } from '../../models/TextInput.model'
 import { TEXT_COLORS } from '../../utils/constants'
-import { FieldError } from './FieldError'
+import { FieldError } from '../atomos/FieldError'
 
 interface InputProps {
   text?: string
@@ -22,6 +22,7 @@ interface InputProps {
   placeholder?: string
   stylesProp?: string
   stylesInput?: string
+  textAlignVertical?: 'auto' | 'top' | 'bottom' | 'center' | undefined
   value?: string
   setValue?: (value: string) => void
 }
@@ -34,6 +35,7 @@ const Input = ({
   name,
   multiline = false,
   numberOfLines = 1,
+  textAlignVertical = 'center',
   stylesInput,
   value,
   setValue,
@@ -53,6 +55,7 @@ const Input = ({
             isFocus ? styles.containerFocus : styles.containerUnfocus,
             tw`${stylesInput || ''}`,
           ]}
+          textAlignVertical={textAlignVertical}
           textContentType={type}
           placeholder={placeholder}
           onFocus={() => setIsFocus(true)}

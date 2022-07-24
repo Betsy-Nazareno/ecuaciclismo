@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { View, Image, Pressable } from 'react-native'
 import tw from 'twrnc'
-import Input from '../atomos/Input'
+import Input from './Input'
 interface SearchBarProps {
   text: string
   setText: (text: string) => void

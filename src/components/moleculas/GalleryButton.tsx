@@ -11,7 +11,7 @@ import { Consejo } from '../../models/Consejo.model'
 import * as DocumentPicker from 'expo-document-picker'
 import tw from 'twrnc'
 import { TEXT_COLORS } from '../../utils/constants'
-import { FieldError } from './FieldError'
+import { FieldError } from '../atomos/FieldError'
 const CANCEL_TYPE = 'cancel'
 
 interface GalleryButtonProps {

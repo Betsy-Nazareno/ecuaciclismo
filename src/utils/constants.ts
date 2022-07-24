@@ -51,3 +51,36 @@ export const FOLDERS_STORAGE = {
   PUBLICACIONES: 'publicaciones',
   NOVEDADES: 'novedades',
 }
+
+export const etiquetasPublicaciones = [
+  {
+    value: 'placeholder',
+    label: 'Recomendaciones, Ofertas...',
+    icon: '',
+    enabled: false,
+  },
+  {
+    value: 'recomendaciones',
+    label: 'Recomendaciones',
+    icon: require('../../assets/recomendacion_icon.png'),
+    enabled: true,
+  },
+  {
+    value: 'salud',
+    label: 'Salud',
+    icon: require('../../assets/salud_icon.png'),
+    enabled: true,
+  },
+  {
+    value: 'felicitaciones',
+    label: 'Felicitaciones',
+    icon: require('../../assets/celebracion_icon.png'),
+    enabled: true,
+  },
+  {
+    value: 'peligro',
+    label: 'Peligro',
+    icon: require('../../assets/peligro_icon.png'),
+    enabled: true,
+  },
+]
