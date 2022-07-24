@@ -14,10 +14,10 @@ const SelectInput = ({ values, setValuesSelected }: SelectInputProps) => {
       mode="dropdown"
     >
       {values.map((item) => {
-        const { label, value, enabled } = item
+        const { nombre, value, enabled } = item
         return (
           <Picker.Item
-            label={label}
+            label={nombre}
             value={value}
             key={value}
             enabled={enabled}

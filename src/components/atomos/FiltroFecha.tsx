@@ -9,12 +9,11 @@ import DateTimePicker, {
 import { BACKGROUND_COLORS } from '../../utils/constants'
 import CancelButton from './CancelButton'
 interface FiltroFechaProps {
-  date?: Date
+  date?: number
   setDate: (date: Date | undefined) => void
 }
 
 const FiltroFecha = ({ date, setDate }: FiltroFechaProps) => {
-  // const [date, setDate] = React.useState(new Date(1598051730000))
   const [show, setShow] = React.useState(false)
 
   const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
@@ -43,7 +42,7 @@ const FiltroFecha = ({ date, setDate }: FiltroFechaProps) => {
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
-          value={date || new Date(Date.now())}
+          value={date ? new Date(date) : new Date(Date.now())}
           is24Hour={true}
           onChange={onChange}
         />
@@ -59,7 +58,7 @@ const FiltroFecha = ({ date, setDate }: FiltroFechaProps) => {
           />
         </Gap>
         <CustomText style="text-white text-xs">
-          {date?.toLocaleDateString() || 'Fecha'}
+          {date ? new Date(date).toLocaleDateString() : 'Fecha'}
         </CustomText>
         {date && <CancelButton />}
       </Pressable>

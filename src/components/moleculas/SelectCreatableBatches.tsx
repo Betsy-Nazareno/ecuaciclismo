@@ -32,13 +32,13 @@ const SelectCreatableBatches = ({
     const badge = etiquetasPublicaciones.find(
       (etiqueta) => etiqueta.value === value
     )
-    const { value: valor, label } = badge || {}
+    const { value: valor, nombre } = badge || {}
     return (
       <Gap px="1" py="1" key={valor}>
         <View style={tw`relative`}>
           <Badge
             name={valor || ''}
-            label={label || ''}
+            label={nombre || ''}
             backgroundColor={BACKGROUND_COLORS.ORANGE}
           />
           <CancelButton handleClick={deleteValue} value={valor || ''} />

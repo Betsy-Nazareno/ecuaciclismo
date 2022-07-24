@@ -1,3 +1,4 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { Formik } from 'formik'
 import * as React from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -5,6 +6,7 @@ import { useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { agregarPublicacion } from '../../../lib/services/publicaciones.services'
 import { Publicacion } from '../../../models/Publicaciones.model'
+import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import { RootState } from '../../../redux/store'
 import { PublicacionValidationSchema } from '../../../schemas/PublicacionSchema'
 import HeaderScreen from '../../moleculas/HeaderScreen'
@@ -13,6 +15,8 @@ import PublicacionContenido from './PublicacionContenidoFormulario'
 const PublicacionFormularioTemplate = () => {
   const [isLoading, setIsLoading] = React.useState(false)
   const { authToken } = useSelector((state: RootState) => state.user)
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, Screens>>()
   const initialValues = {
     titulo: '',
     etiquetas: [],
@@ -25,6 +29,7 @@ const PublicacionFormularioTemplate = () => {
     setIsLoading(true)
     await agregarPublicacion(publicacion, authToken || '')
     setIsLoading(false)
+    navigation.navigate('Publicaciones')
     // return
   }
   return (

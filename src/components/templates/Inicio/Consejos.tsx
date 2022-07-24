@@ -41,7 +41,7 @@ const Consejos = () => {
           text={'Consejos del día'}
           hasUpdates
           hasButton
-          buttonIcon={require('../../../../assets/edit_white_icon.png')}
+          buttonIcon={require('../../../../assets/plus.png')}
           handleClickButton={() => navigation.navigate('ConsejoFormulario')}
         />
       </View>

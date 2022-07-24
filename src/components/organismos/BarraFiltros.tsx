@@ -1,8 +1,10 @@
 import * as React from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
+import { useDispatch, useSelector } from 'react-redux'
 import tw from 'twrnc'
-import { BuildFiltro } from '../../models/Etiqueta.model'
 import { Filtro } from '../../models/Publicaciones.model'
+import { setDate, setEtiquetas } from '../../redux/publicacionBusqueda'
+import { RootState } from '../../redux/store'
 import { BACKGROUND_COLORS } from '../../utils/constants'
 import CancelButton from '../atomos/CancelButton'
 import FiltroFecha from '../atomos/FiltroFecha'
@@ -14,26 +16,8 @@ interface BarraFiltrosProps {
 }
 
 const BarraFiltros = ({ filtros }: BarraFiltrosProps) => {
-  const [buildFiltros, setBuildFiltros] = React.useState<BuildFiltro>({})
-
-  const handleDate = (date: Date | undefined) => {
-    setBuildFiltros({ ...buildFiltros, fecha: date })
-  }
-
-  const handleEtiquetas = (name: string) => {
-    const { etiquetas = [] } = buildFiltros
-    if (etiquetas?.includes(name)) {
-      const filteredEtiquetas = etiquetas.filter(
-        (etiqueta) => etiqueta !== name
-      )
-      setBuildFiltros({ ...buildFiltros, etiquetas: filteredEtiquetas })
-    } else {
-      setBuildFiltros({
-        ...buildFiltros,
-        etiquetas: [...etiquetas, name],
-      })
-    }
-  }
+  const { buildFiltros } = useSelector((state: RootState) => state.busqueda)
+  const dispatch = useDispatch()
 
   const isSelected = (value: string) => {
     return buildFiltros.etiquetas?.includes(value)
@@ -45,25 +29,39 @@ const BarraFiltros = ({ filtros }: BarraFiltrosProps) => {
       : BACKGROUND_COLORS.ORANGE
   }
 
+  const hanleDateSelection = (date: Date | undefined) => {
+    dispatch(setDate({ fecha: date?.getTime() }))
+  }
+
+  const handleEtiquetasSelections = (name: string) => {
+    dispatch(setEtiquetas({ name }))
+  }
+
   return (
     <ScrollView
       horizontal
       style={tw`my-2 py-4 mx-4 flex flex-row overflow-hidden`}
     >
       <Gap px="1">
-        <FiltroFecha setDate={handleDate} date={buildFiltros.fecha} />
+        <FiltroFecha
+          setDate={hanleDateSelection}
+          date={buildFiltros.fecha as number}
+        />
       </Gap>
       {filtros.map((filtro) => {
-        const { icon, value, label } = filtro
+        const { icon, value, nombre } = filtro
         const backgoundColor = getBackgroundColor(value)
+        if (typeof icon === 'string') {
+          return null
+        }
         return (
           <Gap key={filtro.value} px="1">
             <Badge
-              label={label}
+              label={nombre}
               name={value}
               icon={icon}
               backgroundColor={backgoundColor}
-              handleClick={handleEtiquetas}
+              handleClick={handleEtiquetasSelections}
             />
             {isSelected(value) && <CancelButton />}
           </Gap>

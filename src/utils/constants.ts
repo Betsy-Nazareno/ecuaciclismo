@@ -4,6 +4,7 @@ export const TEXT_COLORS = {
   ORANGE: 'text-[#F16F31]',
   GRAY: 'text-[#DFDFDF]',
   DARK_GRAY: 'text-[#767676]',
+  GRAY_PLACEHOLDER: 'text-[#B0B4B7]',
   PRIMARY_BLUE: 'text-[#01579B]',
   SKY_BLUE: 'text-[#2D84C4]',
   DARK_BLUE: 'text-[#0C3248]',
@@ -71,57 +72,36 @@ export const MIME_TYPES = {
 export const etiquetasPublicaciones = [
   {
     value: 'placeholder',
-    label: 'Recomendaciones, Ofertas...',
+    nombre: 'Recomendaciones, Ofertas...',
     icon: '',
   },
   {
     value: 'recomendaciones',
-    label: 'Recomendaciones',
+    nombre: 'Recomendaciones',
     icon: require('../../assets/recomendacion_icon.png'),
     enabled: true,
   },
   {
     value: 'salud',
-    label: 'Salud',
+    nombre: 'Salud',
     icon: require('../../assets/salud_icon.png'),
     enabled: true,
   },
   {
     value: 'felicitaciones',
-    label: 'Felicitaciones',
+    nombre: 'Felicitaciones',
     icon: require('../../assets/celebracion_icon.png'),
     enabled: true,
   },
   {
     value: 'peligro',
-    label: 'Peligro',
+    nombre: 'Peligro',
     icon: require('../../assets/peligro_icon.png'),
     enabled: true,
   },
-]
-
-export const filtrosPublicaciones = [
   {
-    value: 'recomendaciones',
-    label: 'Recomendaciones',
-    icon: require('../../assets/recomendacion_icon.png'),
-    enabled: true,
-  },
-  {
-    value: 'salud',
-    label: 'Salud',
-    icon: require('../../assets/salud_icon.png'),
-    enabled: true,
-  },
-  {
-    value: 'felicitaciones',
-    label: 'Felicitaciones',
-    icon: require('../../assets/celebracion_icon.png'),
-    enabled: true,
-  },
-  {
-    value: 'peligro',
-    label: 'Peligro',
+    value: 'noticias',
+    nombre: 'Noticias',
     icon: require('../../assets/peligro_icon.png'),
     enabled: true,
   },

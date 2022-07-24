@@ -1,6 +1,6 @@
 export interface Etiqueta {
   value: string
-  label: string
+  nombre: string
 }
 
 export interface SelectPickerValues extends Etiqueta {
@@ -8,6 +8,13 @@ export interface SelectPickerValues extends Etiqueta {
 }
 
 export interface BuildFiltro {
-  fecha?: Date
+  fecha?: number
   etiquetas?: string[]
 }
+
+export type ValuesEtiquetaPublicacion =
+  | 'recomendaciones'
+  | 'felicitaciones'
+  | 'peligro'
+  | 'salud'
+  | 'noticia'
