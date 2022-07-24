@@ -11,12 +11,14 @@ interface RoundedButtonProps {
   handleClick: () => void
   src: ImageSourcePropType
   style?: string
+  dimension?: number
 }
 
 const RoundedButtonIcon = ({
   handleClick,
   src,
   style = '',
+  dimension = 18,
 }: RoundedButtonProps) => {
   return (
     <TouchableHighlight
@@ -27,7 +29,7 @@ const RoundedButtonIcon = ({
       <View
         style={tw`h-10 w-10 rounded-full flex items-center justify-center ${BACKGROUND_COLORS.PRIMARY_BLUE} ${style}`}
       >
-        <Image source={src} style={{ width: 18, height: 17 }} />
+        <Image source={src} style={{ width: dimension, height: dimension }} />
       </View>
     </TouchableHighlight>
   )
