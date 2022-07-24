@@ -1,25 +1,31 @@
 import { Formik } from 'formik'
 import * as React from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
+import { useSelector } from 'react-redux'
 import tw from 'twrnc'
+import { agregarPublicacion } from '../../../lib/services/publicaciones.services'
+import { Publicacion } from '../../../models/Publicaciones.model'
+import { RootState } from '../../../redux/store'
 import { PublicacionValidationSchema } from '../../../schemas/PublicacionSchema'
 import HeaderScreen from '../../moleculas/HeaderScreen'
-import PublicacionAdjuntos from './PublicacionAdjuntos'
 import PublicacionContenido from './PublicacionContenidoFormulario'
 
 const PublicacionFormularioTemplate = () => {
-  const [page, setPage] = React.useState(1)
+  const [isLoading, setIsLoading] = React.useState(false)
+  const { authToken } = useSelector((state: RootState) => state.user)
   const initialValues = {
     titulo: '',
     etiquetas: [],
     descripcion: '',
-    fotos: [],
+    multimedia: [],
     audios: [],
-    adjuntos: [],
   }
 
-  const handleSubmit = async () => {
-    return
+  const handleSubmit = async (publicacion: Publicacion) => {
+    setIsLoading(true)
+    await agregarPublicacion(publicacion, authToken || '')
+    setIsLoading(false)
+    // return
   }
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={tw`px-2 mb-8`}>
@@ -33,10 +39,7 @@ const PublicacionFormularioTemplate = () => {
         validationSchema={PublicacionValidationSchema}
         onSubmit={handleSubmit}
       >
-        <>
-          <PublicacionContenido setPage={setPage} page={page} />
-          <PublicacionAdjuntos setPage={setPage} page={page} />
-        </>
+        <PublicacionContenido isSubmiting={isLoading} />
       </Formik>
     </ScrollView>
   )

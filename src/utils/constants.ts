@@ -29,6 +29,11 @@ export const BORDER_COLORS = {
 export const WIDTH_DIMENSIONS = Dimensions.get('window').width
 export const HEIGHT_DIMENSIONS = Dimensions.get('window').height
 
+export const DOCUMENT_RESULT_TYPES = {
+  CANCEL: 'cancel',
+  SUCCESS: 'success',
+}
+
 export const CONSEJO_MAX_LENGTH = 100
 export const PASSWORD = {
   MAX_SIZE: 16,
@@ -45,6 +50,10 @@ export const PUBLICIDAD = {
   DESCRIPCION_CORTA_MAX_LENGTH: 150,
 }
 
+export const PUBLICACION = {
+  TITULO_MAX_LENGTH: 150,
+}
+
 export const FOLDERS_STORAGE = {
   CONSEJOS: 'consejos',
   RUTAS: 'rutas',
@@ -52,13 +61,46 @@ export const FOLDERS_STORAGE = {
   NOVEDADES: 'novedades',
 }
 
+export const MIME_TYPES = {
+  IMAGE: 'image',
+  VIDEO: 'video',
+  PDF: 'application',
+  AUDIO: 'audio',
+}
+
 export const etiquetasPublicaciones = [
   {
     value: 'placeholder',
     label: 'Recomendaciones, Ofertas...',
     icon: '',
-    enabled: false,
   },
+  {
+    value: 'recomendaciones',
+    label: 'Recomendaciones',
+    icon: require('../../assets/recomendacion_icon.png'),
+    enabled: true,
+  },
+  {
+    value: 'salud',
+    label: 'Salud',
+    icon: require('../../assets/salud_icon.png'),
+    enabled: true,
+  },
+  {
+    value: 'felicitaciones',
+    label: 'Felicitaciones',
+    icon: require('../../assets/celebracion_icon.png'),
+    enabled: true,
+  },
+  {
+    value: 'peligro',
+    label: 'Peligro',
+    icon: require('../../assets/peligro_icon.png'),
+    enabled: true,
+  },
+]
+
+export const filtrosPublicaciones = [
   {
     value: 'recomendaciones',
     label: 'Recomendaciones',

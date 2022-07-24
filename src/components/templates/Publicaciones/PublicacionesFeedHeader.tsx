@@ -3,33 +3,11 @@ import * as React from 'react'
 import { View } from 'react-native'
 import tw from 'twrnc'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
+import { filtrosPublicaciones } from '../../../utils/constants'
 import HeaderRoundedContainer from '../../moleculas/HeaderRoundedContainer'
 import SearchBar from '../../moleculas/SearchBar'
 import SectionTitle from '../../moleculas/SectionTitle'
 import BarraFiltros from '../../organismos/BarraFiltros'
-
-const filtros = [
-  {
-    icon: require('../../../../assets/calendar.png'),
-    value: 'fecha',
-    label: 'Fecha',
-  },
-  {
-    icon: require('../../../../assets/peligro_icon.png'),
-    value: 'peligro',
-    label: 'Peligro',
-  },
-  {
-    icon: require('../../../../assets/celebracion_icon.png'),
-    value: 'celebraciones',
-    label: 'Celebraciones',
-  },
-  {
-    icon: require('../../../../assets/recomendacion_icon.png'),
-    value: 'recomendaciones',
-    label: 'Recomendaciones',
-  },
-]
 
 const PublicacionesFeedHeader = () => {
   const navigation =
@@ -52,7 +30,7 @@ const PublicacionesFeedHeader = () => {
           }}
         />
       </View>
-      <BarraFiltros filtros={filtros} />
+      <BarraFiltros filtros={filtrosPublicaciones} />
     </HeaderRoundedContainer>
   )
 }

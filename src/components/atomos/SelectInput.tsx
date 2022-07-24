@@ -12,7 +12,6 @@ const SelectInput = ({ values, setValuesSelected }: SelectInputProps) => {
     <Picker
       onValueChange={(itemValue) => setValuesSelected(itemValue as string)}
       mode="dropdown"
-      placeholder="Etiqueta"
     >
       {values.map((item) => {
         const { label, value, enabled } = item
