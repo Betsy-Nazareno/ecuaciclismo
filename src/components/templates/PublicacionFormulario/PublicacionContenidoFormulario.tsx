@@ -1,6 +1,6 @@
 import { useFormikContext } from 'formik'
 import * as React from 'react'
-import { Text } from 'react-native'
+import { Text, View } from 'react-native'
 import { Publicacion } from '../../../models/Publicaciones.model'
 import {
   BACKGROUND_COLORS,
@@ -12,17 +12,32 @@ import SecondaryButton from '../../atomos/SecondaryButton'
 import FieldFormulario from '../../moleculas/FieldFormulario'
 import tw from 'twrnc'
 import SelectCreatableBatches from '../../moleculas/SelectCreatableBatches'
+import GalleryMultiImages from '../../organismos/GalleryMultiImages'
+import CreatableAudioRecord from '../../organismos/CreatableAudioRecord'
+import { Audio } from 'expo-av'
+import Spinner from '../../atomos/Spinner'
 
-interface PublicacionContenidoFormularioProps {
-  page: number
-  setPage: (value: number) => void
+interface PublicacionContenidoProps {
+  isSubmiting: boolean
 }
 
 const PublicacionContenidoFormulario = ({
-  page,
-  setPage,
-}: PublicacionContenidoFormularioProps) => {
-  const { values, setFieldValue } = useFormikContext<Publicacion>()
+  isSubmiting,
+}: PublicacionContenidoProps) => {
+  const { values, setFieldValue, handleSubmit } =
+    useFormikContext<Publicacion>()
+
+  const addAudio = (audio: Audio.Recording) => {
+    const { audios } = values
+    setFieldValue('audios', [...(audios || []), audio])
+  }
+
+  const deleteAudio = (uri: string) => {
+    const { audios } = values
+    setFieldValue('audios', [
+      ...(audios || []).filter((audio) => audio._uri !== uri),
+    ])
+  }
 
   const addEtiquetas = (value: string) => {
     const exists = values.etiquetas.find((etiqueta) => etiqueta === value)
@@ -39,9 +54,6 @@ const PublicacionContenidoFormulario = ({
     ])
   }
 
-  if (page !== 1) {
-    return null
-  }
   return (
     <>
       <FieldFormulario>
@@ -64,6 +76,7 @@ const PublicacionContenidoFormulario = ({
           selectedValues={values.etiquetas}
           setValuesSelected={addEtiquetas}
           deleteValue={deleteEtiqueta}
+          field={'etiquetas'}
         />
       </FieldFormulario>
 
@@ -74,18 +87,48 @@ const PublicacionContenidoFormulario = ({
           text="Descripción"
           type="none"
           name="descripcion"
-          value={values.titulo}
+          value={values.descripcion}
           textAlignVertical="top"
           stylesInput="pt-2"
           setValue={(value) => setFieldValue('descripcion', value)}
           placeholder="Agrega una descripción..."
         />
       </FieldFormulario>
-      <SecondaryButton
-        label="Continuar >"
-        handleClick={() => setPage(2)}
-        style={`${BACKGROUND_COLORS.ORANGE} w-6/12 mx-auto mt-6`}
-      />
+
+      <FieldFormulario>
+        <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
+          Multimedia
+        </Text>
+        <GalleryMultiImages
+          field="multimedia"
+          setFieldValue={setFieldValue}
+          values={values.multimedia}
+        />
+      </FieldFormulario>
+
+      <FieldFormulario>
+        <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
+          Audios
+        </Text>
+        <CreatableAudioRecord
+          field="audios"
+          setField={addAudio}
+          values={values.audios}
+          deleteValue={deleteAudio}
+        />
+      </FieldFormulario>
+
+      {isSubmiting ? (
+        <Spinner />
+      ) : (
+        <View style={tw`flex flex-row justify-center items-center my-6`}>
+          <SecondaryButton
+            label="Publicar"
+            handleClick={handleSubmit}
+            style={`${BACKGROUND_COLORS.ORANGE} w-48 shadow-sm`}
+          />
+        </View>
+      )}
     </>
   )
 }

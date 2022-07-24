@@ -10,20 +10,28 @@ import BotonAgregarComentario from './BotonAgregarComentario'
 import InputAgregarComentario from './InputAgregarComentario'
 import TarjetaComentarioPublicacion from './TarjetaComentarioPublicacion'
 import tw from 'twrnc'
+import MenuPublicaciones from '../../moleculas/MenuPublicaciones'
 
 const Publicacion = () => {
   const [isAddingComent, setIsAddingComent] = React.useState(false)
   return (
     <View style={tw`p-2`}>
       <RoundedWhiteBaseTemplate shadow={false}>
-        <CustomText
-          style={`text-xl ${TEXT_COLORS.DARK_BLUE}`}
-          containerProps={{ textAlign: 'center' }}
-        >
-          Descuento en respuestos
-        </CustomText>
+        <View style={tw`relative`}>
+          <View style={tw`w-11/12`}>
+            <CustomText
+              style={`text-xl ${TEXT_COLORS.DARK_BLUE}`}
+              containerProps={{ textAlign: 'center' }}
+            >
+              Descuento en respuestos
+            </CustomText>
+          </View>
+          <View style={tw`absolute right-0`}>
+            <MenuPublicaciones />
+          </View>
+        </View>
 
-        <View style={tw`pt-3 px-2 relative pb-6`}>
+        <View style={tw`pt-3 px-2 relative pb-6 z-10`}>
           <View style={tw`z-40`}>
             <DetallePublicador />
           </View>

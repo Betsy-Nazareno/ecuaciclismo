@@ -1,5 +1,6 @@
 import { Consejo } from './Consejo.model'
 import { NovedadInterface } from './Novedad.model'
+import { Publicacion } from './Publicaciones.model'
 
 export type RootStackParamList = {
   Inicio: { reload: boolean } | undefined
@@ -12,7 +13,7 @@ export type RootStackParamList = {
   NovedadFormulario: { publicidad: NovedadInterface } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
   DetallePublicacion: undefined
-  PublicacionFormulario: undefined
+  PublicacionFormulario: { data: Publicacion } | undefined
 }
 
 export type Screens =

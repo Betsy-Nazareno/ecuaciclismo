@@ -7,21 +7,21 @@ import Gap from '../atomos/Gap'
 import { BACKGROUND_COLORS } from '../../utils/constants'
 
 interface LinkedBadgesProps {
-  badges: Etiqueta[]
+  etiquetas: Etiqueta[]
 }
 
-const LinkedBadges = ({ badges }: LinkedBadgesProps) => {
+const LinkedBadges = ({ etiquetas }: LinkedBadgesProps) => {
   return (
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
       style={tw`mx-4 flex flex-row overflow-hidden`}
     >
-      {badges.map((badge) => (
-        <Gap key={badge.value} px="1">
+      {etiquetas.map((etiqueta) => (
+        <Gap key={etiqueta.value} px="1">
           <Badge
-            name={badge.value}
-            label={badge.label}
+            name={etiqueta.value}
+            label={etiqueta.nombre}
             backgroundColor={BACKGROUND_COLORS.SKY_BLUE}
           />
         </Gap>

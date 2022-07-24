@@ -8,11 +8,17 @@ import { guardarArchivo } from '../googleCloudStorage'
 export const agregarConsejo = async (consejo: Consejo, token: string) => {
   try {
     const { imagen = {}, informacion = '' } = consejo || {}
+    const document = imagen as DocumentResult
+    if (document.type === 'cancel') {
+      return
+    }
+
     let path = ''
     if (imagen && isDocumentResultType(imagen)) {
       path = await guardarArchivo(
         FOLDERS_STORAGE.CONSEJOS,
-        imagen as DocumentResult
+        document.name,
+        document.uri
       )
     }
     await axios({
@@ -34,10 +40,16 @@ export const editarConsejo = async (
   try {
     const { imagen = {}, informacion = '' } = consejo || {}
     let path = oldConsejo.imagen || ''
+    const document = imagen as DocumentResult
+    if (document.type === 'cancel') {
+      return
+    }
+
     if (imagen && isDocumentResultType(imagen)) {
       path = await guardarArchivo(
         FOLDERS_STORAGE.CONSEJOS,
-        imagen as DocumentResult
+        document.name,
+        document.uri
       )
     }
     await axios({

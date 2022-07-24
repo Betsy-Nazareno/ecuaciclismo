@@ -31,7 +31,7 @@ const Inicio = () => {
         <SectionTitle
           text="Novedades"
           hasButton
-          buttonIcon={require('../../assets/edit_white_icon.png')}
+          buttonIcon={require('../../assets/plus.png')}
           handleClickButton={() => navigation.navigate('NovedadFormulario')}
         />
       </AdminValidator>

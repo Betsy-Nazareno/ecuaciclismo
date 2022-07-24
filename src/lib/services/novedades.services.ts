@@ -11,10 +11,17 @@ export const agregarNovedad = async (
 ) => {
   const { imagen } = data
   let path = imagen || ''
+
+  const document = imagen as DocumentResult
+  if (document.type === 'cancel') {
+    return
+  }
+
   if (imagen && isDocumentResultType(imagen)) {
     path = await guardarArchivo(
       FOLDERS_STORAGE.NOVEDADES,
-      imagen as DocumentResult
+      document.name,
+      document.uri
     )
   }
   try {

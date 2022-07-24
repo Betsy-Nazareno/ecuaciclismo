@@ -12,13 +12,12 @@ const SelectInput = ({ values, setValuesSelected }: SelectInputProps) => {
     <Picker
       onValueChange={(itemValue) => setValuesSelected(itemValue as string)}
       mode="dropdown"
-      placeholder="Etiqueta"
     >
       {values.map((item) => {
-        const { label, value, enabled } = item
+        const { nombre, value, enabled } = item
         return (
           <Picker.Item
-            label={label}
+            label={nombre}
             value={value}
             key={value}
             enabled={enabled}

@@ -7,7 +7,7 @@ import Ruler from '../atomos/Ruler'
 const EmptyTarjetaConsejo = () => {
   return (
     <View style={styles.borderContainer}>
-      <View style={tw`bg-white py-2 px-4 rounded-xl shadow-xl`}>
+      <View style={tw`bg-white py-2 px-4 rounded-xl`}>
         <View style={tw`flex flex-row relative`}>
           <View style={tw`pr-8 pb-4`}>
             <Image

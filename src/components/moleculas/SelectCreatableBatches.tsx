@@ -1,11 +1,14 @@
+import { ErrorMessage } from 'formik'
 import * as React from 'react'
-import { View, Image, Pressable } from 'react-native'
+import { View } from 'react-native'
 import tw from 'twrnc'
 import { SelectPickerValues } from '../../models/Etiqueta.model'
 import {
   BACKGROUND_COLORS,
   etiquetasPublicaciones,
 } from '../../utils/constants'
+import CancelButton from '../atomos/CancelButton'
+import { FieldError } from '../atomos/FieldError'
 import Gap from '../atomos/Gap'
 import SelectInput from '../atomos/SelectInput'
 import Badge from './Badge'
@@ -15,9 +18,11 @@ interface SelectCreatableBatchesProps {
   selectedValues: string[]
   deleteValue: (value: string) => void
   setValuesSelected: (value: string) => void
+  field: string
 }
 
 const SelectCreatableBatches = ({
+  field,
   values,
   selectedValues,
   setValuesSelected,
@@ -27,25 +32,16 @@ const SelectCreatableBatches = ({
     const badge = etiquetasPublicaciones.find(
       (etiqueta) => etiqueta.value === value
     )
-    const { value: valor, label } = badge || {}
+    const { value: valor, nombre } = badge || {}
     return (
-      <Gap px="1" py="1">
+      <Gap px="1" py="1" key={valor}>
         <View style={tw`relative`}>
           <Badge
-            key={valor}
             name={valor || ''}
-            label={label || ''}
+            label={nombre || ''}
             backgroundColor={BACKGROUND_COLORS.ORANGE}
           />
-          <Pressable
-            onPress={() => deleteValue(valor || '')}
-            style={tw`absolute -top-1 -right-5 w-8`}
-          >
-            <Image
-              source={require('../../../assets/cancel_icon.png')}
-              style={{ width: 15, height: 15 }}
-            />
-          </Pressable>
+          <CancelButton handleClick={deleteValue} value={valor || ''} />
         </View>
       </Gap>
     )
@@ -56,6 +52,7 @@ const SelectCreatableBatches = ({
         {selectedValues.map((value) => renderBadge(value))}
       </View>
       <SelectInput values={values} setValuesSelected={setValuesSelected} />
+      <ErrorMessage name={field} render={FieldError} />
     </View>
   )
 }
