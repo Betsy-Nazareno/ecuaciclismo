@@ -7,7 +7,8 @@ import HeaderRoundedContainer from '../../moleculas/HeaderRoundedContainer'
 import SectionTitle from '../../moleculas/SectionTitle'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
-// import BarraFiltros from '../../organismos/BarraFiltros'
+import BarraFiltros from '../../organismos/BarraFiltros'
+import { etiquetasRutas } from '../../../utils/constants'
 
 const RutasFeedHeader = () => {
   const { user } = useSelector((state: RootState) => state.user)
@@ -37,8 +38,8 @@ const RutasFeedHeader = () => {
           iconDimension={iconDimension}
           handleClickButton={() => navigation.navigate('PublicacionFormulario')}
         />
-        {/* <BarraFiltros filtros={filtros} /> */}
       </View>
+      <BarraFiltros filtros={etiquetasRutas} icons={false} />
     </HeaderRoundedContainer>
   )
 }

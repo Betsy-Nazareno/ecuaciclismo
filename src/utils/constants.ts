@@ -106,3 +106,18 @@ export const etiquetasPublicaciones = [
     enabled: true,
   },
 ]
+
+export const etiquetasRutas = [
+  {
+    value: 'disponibles',
+    nombre: 'Disponibles',
+  },
+  {
+    value: 'finalizada',
+    nombre: 'Finalizada',
+  },
+  {
+    value: 'sin_cupo',
+    nombre: 'Sin Cupo',
+  },
+]

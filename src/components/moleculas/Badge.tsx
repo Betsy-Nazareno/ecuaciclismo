@@ -8,7 +8,7 @@ interface BadgeProps {
   label: string
   name: string
   backgroundColor: string
-  icon?: ImageSourcePropType
+  icon?: ImageSourcePropType | undefined
   handleClick?: (name: string) => void
 }
 
