@@ -51,13 +51,13 @@ const ConsejoForm = ({ consejoProp }: ConsejoFormularioProps) => {
       await agregarConsejo(props, authToken as string)
     }
     const tokens = await getCiclistasToken(authToken || '')
-    // await sendPushNotification({
-    //   tokens,
-    //   title: '¡Nuevo consejo del día!',
-    //   body: `${capitalize(user?.first_name)} ${capitalize(
-    //     user?.last_name
-    //   )} ha agregado un nuevo consejo para la comunidad. ¡No te lo pierdas!`,
-    // })
+    await sendPushNotification({
+      tokens,
+      title: '¡Nuevo consejo del día!',
+      body: `${capitalize(user?.first_name)} ${capitalize(
+        user?.last_name
+      )} ha agregado un nuevo consejo para la comunidad. ¡No te lo pierdas!`,
+    })
     dispatch(setHasModified({ hasModified: !hasModified }))
     navigation.navigate('Inicio')
     setIsLoading(false)
