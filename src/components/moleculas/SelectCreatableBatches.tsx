@@ -32,6 +32,7 @@ const SelectCreatableBatches = ({
     const badge = etiquetasPublicaciones.find(
       (etiqueta) => etiqueta.value === value
     )
+
     const { value: valor, nombre } = badge || {}
     return (
       <Gap px="1" py="1" key={valor}>

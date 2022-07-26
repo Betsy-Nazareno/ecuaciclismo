@@ -1,11 +1,17 @@
+import { RouteProp } from '@react-navigation/native'
 import * as React from 'react'
 import BasePaginasSecundarias from '../components/templates/BasePaginasSecundarias'
 import PublicacionFormularioTemplate from '../components/templates/PublicacionFormulario/PublicacionFormularioTemplate'
+import { RootStackParamList } from '../models/Screens.types'
 
-const PublicacionFormulario = () => {
+interface Props {
+  route: RouteProp<RootStackParamList, 'PublicacionFormulario'>
+}
+
+const PublicacionFormulario = ({ route }: Props) => {
   return (
     <BasePaginasSecundarias>
-      <PublicacionFormularioTemplate />
+      <PublicacionFormularioTemplate publicacionProp={route.params?.data} />
     </BasePaginasSecundarias>
   )
 }

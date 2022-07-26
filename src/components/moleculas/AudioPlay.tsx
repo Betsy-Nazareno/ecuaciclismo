@@ -1,12 +1,10 @@
 import * as React from 'react'
-import { Text, View, Image, Pressable } from 'react-native'
+import { View, Image, Pressable } from 'react-native'
 import { Audio } from 'expo-av'
 import tw from 'twrnc'
-import { TEXT_COLORS } from '../../utils/constants'
-import { DocumentResult } from 'expo-document-picker'
 
 interface AudioPlayProps {
-  source: DocumentResult
+  source: any
 }
 
 const AudioPlay = ({ source }: AudioPlayProps) => {
@@ -14,10 +12,8 @@ const AudioPlay = ({ source }: AudioPlayProps) => {
   const [isPlaying, setIsPlaying] = React.useState(false)
 
   async function playSound() {
-    if (source.type === 'cancel') {
-      return
-    }
-    const { sound } = await Audio.Sound.createAsync(source)
+    const uri = source.uri || source.link
+    const { sound } = await Audio.Sound.createAsync({ uri })
     setSound(sound)
     await sound.playAsync()
     setIsPlaying(true)
@@ -54,15 +50,6 @@ const AudioPlay = ({ source }: AudioPlayProps) => {
             }}
           />
         </Pressable>
-      </View>
-      <View style={tw`w-20`}>
-        <Text
-          style={tw`${TEXT_COLORS.DARK_GRAY} text-xs`}
-          ellipsizeMode="middle"
-          numberOfLines={1}
-        >
-          {source.type !== 'cancel' && source.name}
-        </Text>
       </View>
     </View>
   )

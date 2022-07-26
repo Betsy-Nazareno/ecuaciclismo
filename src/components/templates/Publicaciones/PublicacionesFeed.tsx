@@ -14,6 +14,9 @@ const PublicacionesFeed = () => {
   const { authToken } = useSelector((state: RootState) => state.user)
   const [publicaciones, setPublicaciones] = React.useState<Publicacion[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
+  const { publicacionHasModified } = useSelector(
+    (state: RootState) => state.publicacion
+  )
   const { text, buildFiltros } = useSelector(
     (state: RootState) => state.busqueda
   )
@@ -28,7 +31,7 @@ const PublicacionesFeed = () => {
       setFilteredPublicaciones(publicaciones)
       setIsLoading(false)
     })()
-  }, [])
+  }, [publicacionHasModified])
 
   React.useEffect(() => {
     const { etiquetas = [], fecha } = buildFiltros
@@ -52,10 +55,9 @@ const PublicacionesFeed = () => {
     if (fecha) {
       const date = new Date(fecha)
       date.setHours(0, 0, 0, 0)
-      //Esta parte se debe modificar. Enrique me tiene q enviar la fecha como un date o minimo del tipo yy-mm-dd
       publicacionesFiltradas = publicacionesFiltradas?.filter((publicacion) => {
         const fechaCreacion = new Date(publicacion.ultimo_cambio || '')
-        fechaCreacion.setHours(0, 0, 0, 0)
+        fechaCreacion.setUTCHours(5)
         return date.getTime() === fechaCreacion.getTime()
       })
     }

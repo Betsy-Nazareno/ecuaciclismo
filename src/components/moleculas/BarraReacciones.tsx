@@ -7,6 +7,7 @@ import {
   eliminarReaccion,
 } from '../../lib/services/reacciones.services'
 import { Consejo } from '../../models/Consejo.model'
+import { Publicacion } from '../../models/Publicaciones.model'
 import {
   ReaccionesInterface,
   ReaccionTypes,
@@ -15,7 +16,8 @@ import { RootState } from '../../redux/store'
 import Reaccion from '../atomos/Reaccion'
 
 export interface ReaccionesProps {
-  item?: Consejo
+  item?: Consejo | Publicacion
+  type: 'Consejo' | 'Publicacion'
 }
 
 const initValues = {
@@ -26,7 +28,7 @@ const initValues = {
   ciclista: { usuarios: [], reaccion_usuario: false },
 }
 
-const Reacciones = ({ item }: ReaccionesProps) => {
+const Reacciones = ({ item, type }: ReaccionesProps) => {
   const [pulsedReactions, setPulsedReactions] =
     React.useState<ReaccionesInterface>(initValues)
   const { authToken } = useSelector((state: RootState) => state.user)
@@ -36,10 +38,10 @@ const Reacciones = ({ item }: ReaccionesProps) => {
   }, [item])
 
   const handleClick = async (name: ReaccionTypes, alreadySelected: boolean) => {
-    if (alreadySelected) {
-      await eliminarReaccion(name, item?.token || '', authToken || '')
-    } else {
-      await agregarReacciones(name, item?.token || '', authToken || '')
+    if (alreadySelected && authToken) {
+      await eliminarReaccion(name, item?.token || '', authToken, type)
+    } else if (authToken) {
+      await agregarReacciones(name, item?.token || '', authToken, type)
     }
   }
 

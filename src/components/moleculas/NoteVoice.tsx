@@ -3,26 +3,27 @@ import * as React from 'react'
 import tw from 'twrnc'
 import { View, Pressable, Image } from 'react-native'
 import * as Progress from 'react-native-progress'
-import { WIDTH_DIMENSIONS } from '../../utils/constants'
 
 interface NoteVoiceProps {
-  record: Audio.Recording
+  record?: Audio.Recording
+  uriRecord?: string
+  width: number
 }
 
-const NoteVoice = ({ record }: NoteVoiceProps) => {
+const NoteVoice = ({ record, uriRecord, width }: NoteVoiceProps) => {
   const [sound, setSound] = React.useState<Audio.Sound>()
   const [isPlaying, setIsPlaying] = React.useState(false)
   const [progress, setProgress] = React.useState(0)
 
   const handlePlay = async () => {
-    const uri = record.getURI() || ''
+    const uri = record ? record.getURI() : uriRecord
     const { sound } = await Audio.Sound.createAsync(
-      { uri },
+      { uri: uri as string },
       { shouldPlay: true },
       (status: AVPlaybackStatus) => {
         if (status.isLoaded) {
           setProgress(
-            (status.positionMillis || 0) / record._finalDurationMillis
+            (status.positionMillis || 0) / (status.durationMillis || 1)
           )
           if (status.didJustFinish) {
             setProgress(1)
@@ -62,7 +63,7 @@ const NoteVoice = ({ record }: NoteVoiceProps) => {
       </Pressable>
       <Progress.Bar
         progress={progress}
-        width={WIDTH_DIMENSIONS * 0.8}
+        width={width}
         color={'#F16F31'}
         unfilledColor={'#e6e6e6'}
         borderColor="#fff"

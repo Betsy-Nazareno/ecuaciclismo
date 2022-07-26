@@ -4,8 +4,15 @@ import RoundedWhiteBaseTemplate from '../../organismos/RoundedWhiteBaseTemplate'
 import tw from 'twrnc'
 import VerticalDivider from '../../atomos/VerticalDivider'
 import { TEXT_COLORS } from '../../../utils/constants'
+import { Comentario } from '../../../models/Publicaciones.model'
 
-const TarjetaComentarioPublicacion = () => {
+interface TarjetaComentarioPublicacionProps {
+  comentario: Comentario
+}
+
+const TarjetaComentarioPublicacion = ({
+  comentario,
+}: TarjetaComentarioPublicacionProps) => {
   return (
     <RoundedWhiteBaseTemplate shadow={false}>
       <View style={tw`flex flex-row items-center`}>
@@ -23,12 +30,10 @@ const TarjetaComentarioPublicacion = () => {
           <Text
             style={tw`text-sm font-semibold capitalize ${TEXT_COLORS.DARK_BLUE}`}
           >
-            José Delgado
+            {comentario.first_name} {comentario.last_name}
           </Text>
 
-          <Text style={tw`text-sm`}>
-            La presente declaración de uno de nuestros miembros de la comunidad
-          </Text>
+          <Text style={tw`text-sm`}>{comentario.comentario}</Text>
         </View>
       </View>
     </RoundedWhiteBaseTemplate>
