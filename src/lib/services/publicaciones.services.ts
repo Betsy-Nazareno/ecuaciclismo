@@ -39,10 +39,8 @@ export const editarPublicacion = async (
 ) => {
   try {
     const { audios, multimedia } = publicacion
-    // console.log(audios)
     const audiosPaths = await guardrAudios(audios)
     const multimediaPaths = await guardarMultimedia(multimedia)
-    console.log(audiosPaths.length)
     const data = {
       token: tokenPublicacion,
       titulo: publicacion.titulo,
@@ -51,13 +49,12 @@ export const editarPublicacion = async (
       multimedia: [...audiosPaths, ...multimediaPaths],
     }
 
-    const response = await axios({
+    await axios({
       method: 'POST',
       url: 'https://ecuaciclismoapp.pythonanywhere.com/api/publicacion/update_publicacion/',
       data,
       headers: { Authorization: 'Token ' + authToken },
     })
-    console.log(response.data)
   } catch (e) {
     console.error(e)
   }
@@ -65,7 +62,6 @@ export const editarPublicacion = async (
 
 const guardrAudios = async (audios: Audio.Recording[]) => {
   const audiosPaths = []
-  console.log(audios?.length)
   for (let i = 0; i < audios?.length; i++) {
     const audio = audios[i]
     const isAudioRecord = isAudioRecording(audio)
@@ -82,7 +78,6 @@ const guardrAudios = async (audios: Audio.Recording[]) => {
       audiosPaths.push({ link: audioResult.link, tipo: 'audio', path: '' })
     }
   }
-  console.log(audiosPaths)
   return audiosPaths
 }
 
@@ -102,11 +97,13 @@ const guardarMultimedia = async (multimedia: DocumentResult[]) => {
       multimediaPaths.push({ link: path, tipo: fileType, path: '' })
     } else {
       const fileResult = file as unknown as MultimediaResult
-      multimediaPaths.push({
-        link: fileResult.link,
-        tipo: fileResult.tipo,
-        path: '',
-      })
+      if (fileResult.tipo !== 'audio') {
+        multimediaPaths.push({
+          link: fileResult.link,
+          tipo: fileResult.tipo,
+          path: '',
+        })
+      }
     }
   }
   return multimediaPaths

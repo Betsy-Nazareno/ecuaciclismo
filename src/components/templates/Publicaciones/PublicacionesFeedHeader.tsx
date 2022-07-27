@@ -25,10 +25,11 @@ const PublicacionesFeedHeader = () => {
     <HeaderRoundedContainer>
       <View style={tw`mx-4`}>
         <SectionTitle
+          hasButton
+          isRestricted={false}
           text="Publicaciones"
           styleText="text-3xl"
           background={false}
-          hasButton
           buttonIcon={require('../../../../assets/plus.png')}
           handleClickButton={() => navigation.navigate('PublicacionFormulario')}
         />
