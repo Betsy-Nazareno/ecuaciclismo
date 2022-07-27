@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { View } from 'react-native'
-import SectionTitle from '../atomos/SectionTitle'
+import SectionTitle from './SectionTitle'
 import tw from 'twrnc'
 import RoundedButtonIcon from '../atomos/RoundedButtonIcon'
 

@@ -1,13 +1,8 @@
 import * as React from 'react'
-import {
-  Text,
-  View,
-  ImageSourcePropType,
-  StyleSheet,
-  Image,
-} from 'react-native'
+import { View, ImageSourcePropType, StyleSheet, Image } from 'react-native'
 import tw from 'twrnc'
-import { TEXT_COLORS } from '../../../utils/constants'
+import { TEXT_COLORS } from '../../utils/constants'
+import { CustomText } from '../atomos/CustomText'
 
 interface HeaderScreenProps {
   title: string
@@ -20,24 +15,23 @@ const HeaderScreen = ({ title, message, srcImage }: HeaderScreenProps) => {
     <View
       style={[tw`bg-white rounded-b-3xl mx-[1px] py-4`, styles.borderContainer]}
     >
-      <View style={tw`flex flex-row justify-center items-center`}>
+      <View style={tw`flex flex-row justify-center items-center `}>
         {srcImage && (
           <View style={tw`pr-4`}>
             <Image source={srcImage} style={{ width: 50, height: 50 }} />
           </View>
         )}
-        <View style={tw`w-6/12`}>
-          <Text style={tw`text-2xl font-bold ${TEXT_COLORS.DARK_BLUE}`}>
-            {title}
-          </Text>
-        </View>
+        <CustomText style={`text-2xl font-extrabold ${TEXT_COLORS.DARK_BLUE}`}>
+          {title}
+        </CustomText>
       </View>
       <View style={tw`mt-2`}>
-        <Text
-          style={tw`text-center text-sm font-medium ${TEXT_COLORS.DARK_GRAY}`}
+        <CustomText
+          containerProps={{ textAlign: 'center' }}
+          style={`text-center text-xs font-medium ${TEXT_COLORS.DARK_GRAY}`}
         >
-          {message}
-        </Text>
+          {message || ''}
+        </CustomText>
       </View>
     </View>
   )

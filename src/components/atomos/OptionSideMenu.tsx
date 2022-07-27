@@ -2,8 +2,8 @@ import * as React from 'react'
 import { Image, ImageSourcePropType, Pressable, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import tw from 'twrnc'
-import { RootState } from '../../../redux/store'
-import { BACKGROUND_COLORS, TEXT_COLORS } from '../../../utils/constants'
+import { RootState } from '../../redux/store'
+import { BACKGROUND_COLORS, TEXT_COLORS } from '../../utils/constants'
 
 interface OptionSideMenuProps {
   source: ImageSourcePropType

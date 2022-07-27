@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { View, Image, Pressable } from 'react-native'
 import tw from 'twrnc'
-import Input from '../atomos/Input'
+import Input from './Input'
 interface SearchBarProps {
   text: string
   setText: (text: string) => void
@@ -18,11 +18,11 @@ const SearchBar = ({ text, setText }: SearchBarProps) => {
           value={text}
           setValue={setText}
         />
-        <Pressable style={tw`absolute top-4 right-4`}>
+        <Pressable style={tw`absolute top-5 right-4`}>
           <View>
             <Image
               source={require('../../../assets/search_icon.png')}
-              style={{ width: 30, height: 30 }}
+              style={{ width: 20, height: 20 }}
             />
           </View>
         </Pressable>

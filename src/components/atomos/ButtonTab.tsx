@@ -3,10 +3,10 @@ import React, { ReactNode } from 'react'
 import { Pressable, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import tw from 'twrnc'
-import { RootStackParamList, Screens } from '../../../models/Screens.types'
-import { setActiveScreen } from '../../../redux/screens'
-import { RootState } from '../../../redux/store'
-import { BACKGROUND_COLORS } from '../../../utils/constants'
+import { RootStackParamList, Screens } from '../../models/Screens.types'
+import { setActiveScreen } from '../../redux/screens'
+import { RootState } from '../../redux/store'
+import { BACKGROUND_COLORS } from '../../utils/constants'
 
 interface Props {
   children: ReactNode

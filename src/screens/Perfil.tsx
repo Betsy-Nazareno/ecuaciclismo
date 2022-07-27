@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Image, View } from 'react-native'
 import BasePaginas from '../components/templates/BasePaginas'
-import { useAuthentication } from '../../hooks/useAuthentication'
+import { useAuthentication } from '../hooks/useAuthentication'
 import tw from 'twrnc'
 
 const Perfil = () => {

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Image, Text, View } from 'react-native'
 import tw from 'twrnc'
-import { TEXT_COLORS } from '../../../utils/constants'
+import { TEXT_COLORS } from '../../utils/constants'
 
 interface InformacionUsuarioProps {
   firstName: string

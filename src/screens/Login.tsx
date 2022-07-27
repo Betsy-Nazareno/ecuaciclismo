@@ -1,8 +1,8 @@
 import React from 'react'
 import BaseAutenticacion from '../components/templates/BaseAutenticacion'
-import { RootStackParamList } from '../../models/Screens.types'
+import { RootStackParamList } from '../models/Screens.types'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import LoginFormulario from '../components/organismos/LoginFormulario'
+import LoginFormulario from '../components/templates/Login/LoginFormulario'
 
 interface Props {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>

@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 import tw from 'twrnc'
 import { ScrollView, StatusBar, View } from 'react-native'
-import { BACKGROUND_COLORS } from '../../../utils/constants'
+import { BACKGROUND_COLORS } from '../../utils/constants'
 
 interface Props {
   children: ReactNode | ReactNode[]

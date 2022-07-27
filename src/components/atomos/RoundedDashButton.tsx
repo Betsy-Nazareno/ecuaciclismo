@@ -6,9 +6,9 @@ import {
   BACKGROUND_COLORS,
   BORDER_COLORS,
   TEXT_COLORS,
-} from '../../../utils/constants'
+} from '../../utils/constants'
 import { useFormikContext } from 'formik'
-import { Consejo } from '../../../models/Consejo.model'
+import { Consejo } from '../../models/Consejo.model'
 const CANCEL_TYPE = 'cancel'
 
 interface RoundedDashButtonProps {

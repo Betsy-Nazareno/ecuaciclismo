@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { View, StyleSheet, Image } from 'react-native'
 import tw from 'twrnc'
-import { BACKGROUND_COLORS, WIDTH_DIMENSIONS } from '../../../utils/constants'
+import { BACKGROUND_COLORS, WIDTH_DIMENSIONS } from '../../utils/constants'
 import Ruler from '../atomos/Ruler'
 
 const EmptyTarjetaConsejo = () => {
   return (
     <View style={styles.borderContainer}>
-      <View style={tw`bg-white py-2 px-4 rounded-xl shadow-xl`}>
+      <View style={tw`bg-white py-2 px-4 rounded-xl`}>
         <View style={tw`flex flex-row relative`}>
           <View style={tw`pr-8 pb-4`}>
             <Image
