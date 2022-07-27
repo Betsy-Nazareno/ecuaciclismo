@@ -12,7 +12,7 @@ export type RootStackParamList = {
   ConsejoFormulario: { consejo: Consejo } | undefined
   NovedadFormulario: { publicidad: NovedadInterface } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
-  DetallePublicacion: undefined
+  DetallePublicacion: { token: string } | undefined
   PublicacionFormulario: { data: Publicacion } | undefined
 }
 

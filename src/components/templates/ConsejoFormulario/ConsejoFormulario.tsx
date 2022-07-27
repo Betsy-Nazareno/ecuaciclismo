@@ -56,7 +56,7 @@ const ConsejoForm = ({ consejoProp }: ConsejoFormularioProps) => {
       title: '¡Nuevo consejo del día!',
       body: `${capitalize(user?.first_name)} ${capitalize(
         user?.last_name
-      )} ha agregado un nuevo consejo para la comunnidad. ¡No te lo pierdas!`,
+      )} ha agregado un nuevo consejo para la comunidad. ¡No te lo pierdas!`,
     })
     dispatch(setHasModified({ hasModified: !hasModified }))
     navigation.navigate('Inicio')
@@ -83,6 +83,7 @@ const ConsejoForm = ({ consejoProp }: ConsejoFormularioProps) => {
                 text="Informacion"
                 type="none"
                 name="informacion"
+                textAlignVertical="top"
                 placeholder="Agrega información relevante para la comunidad"
                 numberOfLines={6}
                 value={values.informacion}

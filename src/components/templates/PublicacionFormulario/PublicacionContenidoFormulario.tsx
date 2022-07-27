@@ -1,10 +1,14 @@
 import { useFormikContext } from 'formik'
 import * as React from 'react'
 import { Text, View } from 'react-native'
-import { Publicacion } from '../../../models/Publicaciones.model'
+import {
+  MultimediaResult,
+  Publicacion,
+} from '../../../models/Publicaciones.model'
 import {
   BACKGROUND_COLORS,
   etiquetasPublicaciones,
+  MIME_TYPES,
   TEXT_COLORS,
 } from '../../../utils/constants'
 import Input from '../../moleculas/Input'
@@ -19,13 +23,25 @@ import Spinner from '../../atomos/Spinner'
 
 interface PublicacionContenidoProps {
   isSubmiting: boolean
+  isEdit: boolean
 }
 
 const PublicacionContenidoFormulario = ({
   isSubmiting,
+  isEdit,
 }: PublicacionContenidoProps) => {
   const { values, setFieldValue, handleSubmit } =
     useFormikContext<Publicacion>()
+
+  React.useEffect(() => {
+    if (isEdit) {
+      const audios = values.multimedia?.filter((file) => {
+        const fileResult = file as unknown as MultimediaResult
+        return fileResult.tipo === MIME_TYPES.AUDIO
+      })
+      setFieldValue('audios', audios)
+    }
+  }, [])
 
   const addAudio = (audio: Audio.Recording) => {
     const { audios } = values
@@ -35,7 +51,14 @@ const PublicacionContenidoFormulario = ({
   const deleteAudio = (uri: string) => {
     const { audios } = values
     setFieldValue('audios', [
-      ...(audios || []).filter((audio) => audio._uri !== uri),
+      ...(audios || []).filter((audio) => {
+        if (isEdit) {
+          const audioResult = audio as unknown as MultimediaResult
+          return audioResult.link !== uri
+        } else {
+          return audio._uri !== uri
+        }
+      }),
     ])
   }
 
@@ -123,7 +146,7 @@ const PublicacionContenidoFormulario = ({
       ) : (
         <View style={tw`flex flex-row justify-center items-center my-6`}>
           <SecondaryButton
-            label="Publicar"
+            label={isEdit ? 'Guardar' : 'Publicar'}
             handleClick={handleSubmit}
             style={`${BACKGROUND_COLORS.ORANGE} w-48 shadow-sm`}
           />

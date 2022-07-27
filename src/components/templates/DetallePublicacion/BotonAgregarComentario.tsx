@@ -29,7 +29,7 @@ const BotonAgregarComentario = ({
               }}
             />
             <Gap px="5">
-              <CustomText style={TEXT_COLORS.ORANGE}>
+              <CustomText style={TEXT_COLORS.DARK_BLUE}>
                 Agregar comentario
               </CustomText>
             </Gap>

@@ -8,6 +8,7 @@ import { CustomText } from '../atomos/CustomText'
 
 interface SectionTitleProps {
   text: string
+  isRestricted?: boolean
   styleText?: string
   background?: boolean
   hasUpdates?: boolean
@@ -25,6 +26,7 @@ const SectionTitle = ({
   styleText = '',
   background = true,
   iconDimension = 18,
+  isRestricted = true,
   handleClickButton,
 }: SectionTitleProps) => {
   return (
@@ -46,14 +48,26 @@ const SectionTitle = ({
           />
         )}
       </View>
-      {hasButton && buttonIcon && handleClickButton && (
-        <AdminValidator stylesProp="absolute top-2 right-2 z-40">
-          <RoundedButtonIcon
-            handleClick={handleClickButton}
-            src={buttonIcon}
-            dimension={iconDimension}
-          />
-        </AdminValidator>
+      {hasButton && buttonIcon && (
+        <>
+          {isRestricted ? (
+            <AdminValidator stylesProp="absolute top-2 right-2 z-40">
+              <RoundedButtonIcon
+                handleClick={() => handleClickButton?.()}
+                src={buttonIcon}
+                dimension={iconDimension}
+              />
+            </AdminValidator>
+          ) : (
+            <View style={tw`absolute top-2 right-2 z-40`}>
+              <RoundedButtonIcon
+                handleClick={() => handleClickButton?.()}
+                src={buttonIcon}
+                dimension={iconDimension}
+              />
+            </View>
+          )}
+        </>
       )}
     </View>
   )

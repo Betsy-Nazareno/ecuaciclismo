@@ -1,5 +1,4 @@
 import tw from 'twrnc'
-import { DocumentResult } from 'expo-document-picker'
 import * as React from 'react'
 import { View, Image } from 'react-native'
 import { MIME_TYPES } from '../../utils/constants'
@@ -8,33 +7,32 @@ import Gap from '../atomos/Gap'
 import VideoPlayer from 'expo-video-player'
 import CancelButton from '../atomos/CancelButton'
 import PreviewPdf from '../moleculas/PreviewPdf'
-import AudioPlay from '../moleculas/AudioPlay'
 
 interface PreviewDocumentsProps {
-  values: DocumentResult[]
-  handleDelete: (file: DocumentResult) => void
+  values: any
+  handleDelete: (uri: string) => void
 }
 
 const PreviewDocuments = ({ values, handleDelete }: PreviewDocumentsProps) => {
   const handleClick = (name: string) => {
-    const fileClicked = values.find((file) => {
-      if (file.type !== 'cancel') {
-        return file.name === name
-      }
-    })
-    fileClicked && handleDelete(fileClicked)
+    const multimedia = [...values]
+    const fileClicked =
+      multimedia.find((file) => {
+        const fileUri = file.uri || file.link
+        return fileUri === name
+      }) || []
+    const uriDelete = fileClicked.uri || fileClicked.link
+    handleDelete(uriDelete)
   }
-  const renderPreview = (file: DocumentResult) => {
-    if (file.type === 'cancel') {
-      return null
-    }
-    const typeFile = file.mimeType?.split('/')[0]
-    const { name, uri } = file
+
+  const renderPreview = (file: any) => {
+    const typeFile = file.mimeType?.split('/')[0] || file.tipo
+    const uri = file.uri || file.link
     switch (typeFile) {
       case MIME_TYPES.IMAGE:
         return (
           <Image
-            key={name || uri}
+            key={uri}
             source={{ uri }}
             style={{ width: 100, height: 100 }}
           />
@@ -42,7 +40,7 @@ const PreviewDocuments = ({ values, handleDelete }: PreviewDocumentsProps) => {
       case MIME_TYPES.VIDEO:
         return (
           <VideoPlayer
-            key={name}
+            key={uri}
             style={{ width: 100, height: 100 }}
             slider={{ visible: false }}
             videoProps={{
@@ -53,26 +51,27 @@ const PreviewDocuments = ({ values, handleDelete }: PreviewDocumentsProps) => {
           />
         )
       case MIME_TYPES.PDF:
-        return <PreviewPdf key={name} name={name} />
-      case MIME_TYPES.AUDIO:
-        return <AudioPlay key={name || uri} source={file} />
+        return <PreviewPdf key={uri} />
+      default:
+        return null
     }
   }
 
   return (
     <View style={tw`flex flex-row flex-wrap`}>
-      {values.map((file) => {
-        if (file.type === 'cancel') {
+      {values.map((file: any) => {
+        if (file.tipo === 'audio') {
           return null
         }
+        const uri = file.uri || file.link
         return (
-          <Gap px="2" py="2" styles="relative" key={file.uri}>
+          <Gap px="2" py="2" styles="relative" key={uri}>
             {renderPreview(file)}
             <CancelButton
               styles="-right-3"
               size={20}
               handleClick={handleClick}
-              value={file.name}
+              value={uri}
             />
           </Gap>
         )

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, View } from 'react-native'
 import * as DocumentPicker from 'expo-document-picker'
-import { DOCUMENT_RESULT_TYPES, TEXT_COLORS } from '../../utils/constants'
+import { TEXT_COLORS } from '../../utils/constants'
 import { TouchableHighlight } from 'react-native-gesture-handler'
 import tw from 'twrnc'
 import { ErrorMessage } from 'formik'
@@ -20,20 +20,20 @@ const GalleryMultiImages = ({
   values,
   setFieldValue,
 }: GalleryMultiImagesProps) => {
-  const deleteFile = (fileToDelete: DocumentPicker.DocumentResult) => {
+  const deleteFile = (uri: string) => {
     setFieldValue(field, [
-      ...(values || []).filter((file: DocumentPicker.DocumentResult) => {
-        if (file.type !== 'cancel' && fileToDelete.type !== 'cancel') {
-          return file.name !== fileToDelete.name
-        }
-        return true
+      ...(values || []).filter((file: any) => {
+        const uriFile = file.uri || file.link
+        return uriFile !== uri
       }),
     ])
   }
 
   const getFile = async () => {
-    const file = await DocumentPicker.getDocumentAsync()
-    if (file.type !== DOCUMENT_RESULT_TYPES.CANCEL) {
+    const file = await DocumentPicker.getDocumentAsync({
+      type: ['image/*', 'application/pdf', 'video/*'],
+    })
+    if (file.type !== 'cancel') {
       setFieldValue(field, [...(values || []), file])
     }
   }
