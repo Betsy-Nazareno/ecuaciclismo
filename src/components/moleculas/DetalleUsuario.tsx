@@ -4,13 +4,15 @@ import tw from 'twrnc'
 import { TEXT_COLORS } from '../../utils/constants'
 
 interface DetalleUsuarioProps {
-  hasRole?: boolean
   hasDate?: boolean
+  fecha?: string
+  nombre: string
 }
 
 const DetalleUsuario = ({
-  hasRole = true,
   hasDate = true,
+  nombre,
+  fecha,
 }: DetalleUsuarioProps) => {
   return (
     <View style={tw`flex flex-row items-center`}>
@@ -25,11 +27,11 @@ const DetalleUsuario = ({
         <Text
           style={tw`text-sm font-semibold capitalize ${TEXT_COLORS.DARK_BLUE}`}
         >
-          José Delgado {hasRole ? '- Ciclista' : ''}
+          {nombre}
         </Text>
         {hasDate && (
           <Text style={tw`text-xs capitalize ${TEXT_COLORS.DARK_GRAY}`}>
-            12 Dic. 2021 14:00
+            {fecha}
           </Text>
         )}
       </View>

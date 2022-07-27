@@ -1,6 +1,6 @@
 import { Formik } from 'formik'
 import * as React from 'react'
-import { ImageSourcePropType, ScrollView } from 'react-native'
+import { ImageSourcePropType, ScrollView, Text } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   agregarConsejo,
@@ -9,11 +9,11 @@ import {
 import { Consejo } from '../../../models/Consejo.model'
 import { RootState } from '../../../redux/store'
 import { ConsejoValidationSchema } from '../../../schemas/ConsejoSchema'
-import { BACKGROUND_COLORS } from '../../../utils/constants'
-import Input from '../../atomos/Input'
+import { BACKGROUND_COLORS, TEXT_COLORS } from '../../../utils/constants'
+import Input from '../../moleculas/Input'
 import FieldFormulario from '../../moleculas/FieldFormulario'
 import HeaderScreen from '../../moleculas/HeaderScreen'
-import GalleryButton from '../../atomos/GalleryButton'
+import GalleryButton from '../../moleculas/GalleryButton'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import SecondaryButton from '../../atomos/SecondaryButton'
 import Spinner from '../../atomos/Spinner'
@@ -56,7 +56,7 @@ const ConsejoForm = ({ consejoProp }: ConsejoFormularioProps) => {
       title: '¡Nuevo consejo del día!',
       body: `${capitalize(user?.first_name)} ${capitalize(
         user?.last_name
-      )} ha agregado un nuevo consejo para la comunnidad. ¡No te lo pierdas!`,
+      )} ha agregado un nuevo consejo para la comunidad. ¡No te lo pierdas!`,
     })
     dispatch(setHasModified({ hasModified: !hasModified }))
     navigation.navigate('Inicio')
@@ -83,6 +83,7 @@ const ConsejoForm = ({ consejoProp }: ConsejoFormularioProps) => {
                 text="Informacion"
                 type="none"
                 name="informacion"
+                textAlignVertical="top"
                 placeholder="Agrega información relevante para la comunidad"
                 numberOfLines={6}
                 value={values.informacion}
@@ -91,10 +92,15 @@ const ConsejoForm = ({ consejoProp }: ConsejoFormularioProps) => {
             </FieldFormulario>
 
             <FieldFormulario>
-              <GalleryButton
-                field="imagen"
-                icono={require('../../../../assets/gallery_icon.png')}
-              />
+              <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
+                Imagen
+              </Text>
+              <FieldFormulario>
+                <GalleryButton
+                  field="imagen"
+                  icono={require('../../../../assets/gallery_icon.png')}
+                />
+              </FieldFormulario>
             </FieldFormulario>
 
             {isLoading ? (

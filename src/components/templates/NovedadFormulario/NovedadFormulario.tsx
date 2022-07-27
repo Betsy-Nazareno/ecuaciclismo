@@ -11,20 +11,14 @@ import { setNovedadHasModified } from '../../../redux/novedad'
 import { RootState } from '../../../redux/store'
 import { PublicidadValidationSchema } from '../../../schemas/PublicidadSchema'
 import { BACKGROUND_COLORS, TEXT_COLORS } from '../../../utils/constants'
-import GalleryButton from '../../atomos/GalleryButton'
-import Input from '../../atomos/Input'
+import GalleryButton from '../../moleculas/GalleryButton'
+import Input from '../../moleculas/Input'
 import SecondaryButton from '../../atomos/SecondaryButton'
 import Spinner from '../../atomos/Spinner'
 import FieldFormulario from '../../moleculas/FieldFormulario'
 import HeaderScreen from '../../moleculas/HeaderScreen'
 
-interface PublicidadFormularioProps {
-  publicidadProp?: NovedadInterface
-}
-
-const PublicidadFormulario = ({
-  publicidadProp,
-}: PublicidadFormularioProps) => {
+const PublicidadFormulario = () => {
   const [isLoading, setIsLoading] = React.useState(false)
   const { authToken } = useSelector((state: RootState) => state.user)
   const { novedadHasModified } = useSelector(
@@ -49,7 +43,6 @@ const PublicidadFormulario = ({
   const handleSubmit = async (props: NovedadInterface) => {
     setIsLoading(true)
     await agregarNovedad(authToken || '', props)
-    console.info(publicidadProp)
     setIsLoading(false)
     dispatch(setNovedadHasModified({ novedadHasModified: !novedadHasModified }))
     navigation.navigate('Inicio')
@@ -61,7 +54,7 @@ const PublicidadFormulario = ({
         title="Novedades"
         message="¡Difunde información importante a la comunidad!"
         srcImage={require('../../../../assets/publicidad_icon.png')}
-      ></HeaderScreen>
+      />
       <Formik
         initialValues={initialValues}
         validationSchema={PublicidadValidationSchema}

@@ -1,5 +1,6 @@
 import { Consejo } from './Consejo.model'
 import { NovedadInterface } from './Novedad.model'
+import { Publicacion } from './Publicaciones.model'
 
 export type RootStackParamList = {
   Inicio: { reload: boolean } | undefined
@@ -11,7 +12,8 @@ export type RootStackParamList = {
   ConsejoFormulario: { consejo: Consejo } | undefined
   NovedadFormulario: { publicidad: NovedadInterface } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
-  DetallePublicacion: undefined
+  DetallePublicacion: { token: string } | undefined
+  PublicacionFormulario: { data: Publicacion } | undefined
 }
 
 export type Screens =
@@ -25,6 +27,7 @@ export type Screens =
   | 'NovedadFormulario'
   | 'DetalleNovedad'
   | 'DetallePublicacion'
+  | 'PublicacionFormulario'
 
 export type RootDrawerParamList = {
   HomeStack: undefined

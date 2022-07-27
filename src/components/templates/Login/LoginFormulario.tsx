@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Text, View, Image, TouchableHighlight } from 'react-native'
-import Input from '../../atomos/Input'
+import Input from '../../moleculas/Input'
 import ButtonPrimary from '../../atomos/ButtonPrimary'
 import TouchableMessage from '../../atomos/TouchableMessage'
 import Ruler from '../../atomos/Ruler'

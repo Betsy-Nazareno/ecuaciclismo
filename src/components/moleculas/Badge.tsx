@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Image, ImageSourcePropType, View } from 'react-native'
+import { Image, ImageSourcePropType, Pressable } from 'react-native'
 import tw from 'twrnc'
 import { CustomText } from '../atomos/CustomText'
 import Gap from '../atomos/Gap'
@@ -9,11 +9,19 @@ interface BadgeProps {
   name: string
   backgroundColor: string
   icon?: ImageSourcePropType
+  handleClick?: (name: string) => void
 }
 
-const Badge = ({ label, name, icon, backgroundColor }: BadgeProps) => {
+const Badge = ({
+  label,
+  name,
+  icon,
+  backgroundColor,
+  handleClick,
+}: BadgeProps) => {
   return (
-    <View
+    <Pressable
+      onPress={() => handleClick?.(name)}
       key={name}
       style={tw`${backgroundColor} rounded-3xl py-1 pl-2 pr-3 flex flex-row items-center h-7`}
     >
@@ -23,7 +31,7 @@ const Badge = ({ label, name, icon, backgroundColor }: BadgeProps) => {
         </Gap>
       )}
       <CustomText style="text-white text-xs">{label}</CustomText>
-    </View>
+    </Pressable>
   )
 }
 

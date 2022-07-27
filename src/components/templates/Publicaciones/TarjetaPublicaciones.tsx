@@ -5,64 +5,91 @@ import { CustomText } from '../../atomos/CustomText'
 import TarjetaTemplate from '../../organismos/RoundedWhiteBaseTemplate'
 import { TEXT_COLORS } from '../../../utils/constants'
 import LinkedBadges from '../../moleculas/LinkedBadges'
-import AdditionalMediaIcon from '../../atomos/AdditionalMediaIcon'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
+import { Publicacion } from '../../../models/Publicaciones.model'
+import VideoPlayer from 'expo-video-player'
+import { ResizeMode } from 'expo-av'
 
-const badges = [
-  {
-    value: 'peligro',
-    label: 'Peligro',
-  },
-  {
-    value: 'celebraciones',
-    label: 'Celebraciones',
-  },
-  {
-    value: 'recomendaciones',
-    label: 'Recomendaciones',
-  },
-  {
-    value: 'salud',
-    label: 'Salud',
-  },
-]
+interface TarjetaPublicacionesProps {
+  publicacion: Publicacion
+}
 
-const TarjetaPublicaciones = () => {
+const TarjetaPublicaciones = ({ publicacion }: TarjetaPublicacionesProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
+
+  const getImagenPrincipal = () => {
+    const { multimediaResult } = publicacion
+    const main = multimediaResult?.find((file) => file.tipo === 'image')
+    if (!main) return null
+
+    return (
+      <Image
+        source={{ uri: main?.link }}
+        style={{ width: 80, height: 80, borderRadius: 40 / 2 }}
+      />
+    )
+  }
+
+  const getVideoPrincipal = () => {
+    const { multimediaResult } = publicacion
+    const main = multimediaResult?.find((file) => file.tipo === 'video')
+    if (!main) return null
+
+    return (
+      <VideoPlayer
+        style={{ width: 80, height: 80 }}
+        videoProps={{
+          source: { uri: main.link },
+          resizeMode: 'contain' as ResizeMode,
+          isLooping: true,
+        }}
+      />
+    )
+  }
+
+  const getImagePlaceholder = () => {
+    return (
+      <Image
+        source={require('../../../../assets/publicacion_default_icon.png')}
+        style={{ width: 80, height: 80, borderRadius: 40 / 2 }}
+      />
+    )
+  }
+
+  const portadaPrincipal =
+    getImagenPrincipal() || getVideoPrincipal() || getImagePlaceholder()
+
   return (
-    <Pressable onPress={() => navigation.navigate('DetallePublicacion')}>
+    <Pressable
+      onPress={() =>
+        navigation.navigate('DetallePublicacion', {
+          token: publicacion.token || '',
+        })
+      }
+    >
       <TarjetaTemplate shadow={false}>
-        <View style={tw`pt-2 pb-8 relative`}>
+        <View style={tw`pt-2 pb-4 relative`}>
           <CustomText style={`${TEXT_COLORS.DARK_BLUE}`}>
-            Descuento en repuestos
+            {publicacion.titulo}
           </CustomText>
           <View style={tw`py-3 flex flex-row`}>
-            <View style={tw`w-3/12`}>
-              <Image
-                source={require('../../../../assets/repuestos.png')}
-                style={{ width: 80, height: 80, borderRadius: 40 / 2 }}
-              />
-            </View>
+            <View style={tw`w-3/12`}>{portadaPrincipal}</View>
             <View style={tw`w-10/12 pr-3`}>
-              <LinkedBadges badges={badges} />
-              <View style={tw`pl-4 pr-4 pt-1`}>
-                <Text numberOfLines={2}>
-                  Se venden repuestos semi-nuevos para bicicleta, pueden
-                  acercarse a cualquier sucursal de las que se muestran en esta
-                  publicacion
-                </Text>
+              <View style={tw`w-full h-9`}>
+                <LinkedBadges etiquetas={publicacion.etiquetasResult || []} />
               </View>
-              <View style={tw`self-end pr-6 pt-2`}>
-                <AdditionalMediaIcon />
+              <View style={tw`pl-6 pr-4 pt-1 w-11/12`}>
+                <Text numberOfLines={2}>{publicacion.descripcion}</Text>
               </View>
             </View>
           </View>
 
           <View style={tw`absolute bottom-0 right-2`}>
-            <Text style={tw`${TEXT_COLORS.DARK_GRAY}`}>
-              José - 9 Dic. 2021 08:00{' '}
+            <Text style={tw`${TEXT_COLORS.DARK_GRAY} capitalize text-xs`}>
+              {publicacion.first_name} {publicacion.last_name}{' '}
+              {publicacion.ultimo_cambio}
             </Text>
           </View>
         </View>

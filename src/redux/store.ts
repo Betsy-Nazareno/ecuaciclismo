@@ -4,6 +4,8 @@ import consejoReducer from './consejo'
 import screensReducer from './screens'
 import drawerTabsReducer from './drawerTabs'
 import NovedadReducer from './novedad'
+import publicacionBusqueda from './publicacionBusqueda'
+import publicacionReducer from './publicacion'
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +14,8 @@ export const store = configureStore({
     screens: screensReducer,
     drawerTabs: drawerTabsReducer,
     novedad: NovedadReducer,
+    busqueda: publicacionBusqueda,
+    publicacion: publicacionReducer,
   },
 })
 

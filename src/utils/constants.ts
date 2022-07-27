@@ -4,6 +4,7 @@ export const TEXT_COLORS = {
   ORANGE: 'text-[#F16F31]',
   GRAY: 'text-[#DFDFDF]',
   DARK_GRAY: 'text-[#767676]',
+  GRAY_PLACEHOLDER: 'text-[#B0B4B7]',
   PRIMARY_BLUE: 'text-[#01579B]',
   SKY_BLUE: 'text-[#2D84C4]',
   DARK_BLUE: 'text-[#0C3248]',
@@ -29,6 +30,11 @@ export const BORDER_COLORS = {
 export const WIDTH_DIMENSIONS = Dimensions.get('window').width
 export const HEIGHT_DIMENSIONS = Dimensions.get('window').height
 
+export const DOCUMENT_RESULT_TYPES = {
+  CANCEL: 'cancel',
+  SUCCESS: 'success',
+}
+
 export const CONSEJO_MAX_LENGTH = 100
 export const PASSWORD = {
   MAX_SIZE: 16,
@@ -45,9 +51,58 @@ export const PUBLICIDAD = {
   DESCRIPCION_CORTA_MAX_LENGTH: 150,
 }
 
+export const PUBLICACION = {
+  TITULO_MAX_LENGTH: 150,
+}
+
 export const FOLDERS_STORAGE = {
   CONSEJOS: 'consejos',
   RUTAS: 'rutas',
   PUBLICACIONES: 'publicaciones',
   NOVEDADES: 'novedades',
 }
+
+export const MIME_TYPES = {
+  IMAGE: 'image',
+  VIDEO: 'video',
+  PDF: 'application',
+  AUDIO: 'audio',
+}
+
+export const etiquetasPublicaciones = [
+  {
+    value: 'placeholder',
+    nombre: 'Recomendaciones, Ofertas...',
+    icon: '',
+  },
+  {
+    value: 'recomendaciones',
+    nombre: 'Recomendaciones',
+    icon: require('../../assets/recomendacion_icon.png'),
+    enabled: true,
+  },
+  {
+    value: 'salud',
+    nombre: 'Salud',
+    icon: require('../../assets/salud_icon.png'),
+    enabled: true,
+  },
+  {
+    value: 'felicitaciones',
+    nombre: 'Felicitaciones',
+    icon: require('../../assets/celebracion_icon.png'),
+    enabled: true,
+  },
+  {
+    value: 'peligro',
+    nombre: 'Peligro',
+    icon: require('../../assets/peligro_icon.png'),
+    enabled: true,
+  },
+  {
+    value: 'noticias',
+    nombre: 'Noticias',
+    icon: require('../../assets/peligro_icon.png'),
+    enabled: true,
+  },
+]

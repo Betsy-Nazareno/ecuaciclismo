@@ -1,12 +1,18 @@
+import { RouteProp } from '@react-navigation/native'
 import React from 'react'
-import BasePaginas from '../components/templates/BasePaginas'
+import BasePaginasSecundarias from '../components/templates/BasePaginasSecundarias'
 import Publicacion from '../components/templates/DetallePublicacion/Publicacion'
+import { RootStackParamList } from '../models/Screens.types'
 
-const DetallePublicacion = () => {
+interface DetallePublicacionProps {
+  route: RouteProp<RootStackParamList, 'DetallePublicacion'>
+}
+
+const DetallePublicacion = ({ route }: DetallePublicacionProps) => {
   return (
-    <BasePaginas>
-      <Publicacion />
-    </BasePaginas>
+    <BasePaginasSecundarias>
+      <Publicacion token={route.params?.token as string} />
+    </BasePaginasSecundarias>
   )
 }
 

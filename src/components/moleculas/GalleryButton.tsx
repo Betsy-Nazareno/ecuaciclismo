@@ -10,9 +10,8 @@ import {
 import { Consejo } from '../../models/Consejo.model'
 import * as DocumentPicker from 'expo-document-picker'
 import tw from 'twrnc'
-import { TEXT_COLORS } from '../../utils/constants'
-import { FieldError } from './FieldError'
-const CANCEL_TYPE = 'cancel'
+import { DOCUMENT_RESULT_TYPES, TEXT_COLORS } from '../../utils/constants'
+import { FieldError } from '../atomos/FieldError'
 
 interface GalleryButtonProps {
   field: string
@@ -22,10 +21,10 @@ interface GalleryButtonProps {
 const GalleryButton = ({ icono, field }: GalleryButtonProps) => {
   const { values, setFieldValue } = useFormikContext<Consejo>()
   const imagen = values.imagen as ImageSourcePropType
+
   const getFile = async () => {
     const file = await DocumentPicker.getDocumentAsync()
-
-    if (file.type !== CANCEL_TYPE) {
+    if (file.type !== DOCUMENT_RESULT_TYPES.CANCEL) {
       setFieldValue(field, file)
     }
   }

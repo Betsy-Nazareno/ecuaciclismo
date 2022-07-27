@@ -23,6 +23,7 @@ import Novedades from './HistorialNovedades'
 import ConsejoDetalle from './ConsejoDetalle'
 import Publicaciones from './Publicaciones'
 import DetallePublicacion from './DetallePublicacion'
+import PublicacionFormulario from './PublicacionFormulario'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -64,21 +65,25 @@ const Main = () => {
         }}
         initialRouteName="Inicio"
       >
+        <Stack.Screen name="Rutas" component={Rutas} />
+        <Stack.Screen name="Perfil" component={Perfil} />
+        <Stack.Screen name="DetalleNovedad" component={DetalleNovedad} />
+        <Stack.Screen name="Publicaciones" component={Publicaciones} />
+        <Stack.Screen name="NovedadFormulario" component={NovedadFormulario} />
+        <Stack.Screen name="ConsejoFormulario" component={ConsejoFormulario} />
+        <Stack.Screen
+          name="PublicacionFormulario"
+          component={PublicacionFormulario}
+        />
         <Stack.Screen
           name="Inicio"
           component={Inicio}
           options={{ headerBackVisible: false }}
         />
-        <Stack.Screen name="DetalleNovedad" component={DetalleNovedad} />
         <Stack.Screen
           name="DetallePublicacion"
           component={DetallePublicacion}
         />
-        <Stack.Screen name="Rutas" component={Rutas} />
-        <Stack.Screen name="Perfil" component={Perfil} />
-        <Stack.Screen name="Publicaciones" component={Publicaciones} />
-        <Stack.Screen name="NovedadFormulario" component={NovedadFormulario} />
-        <Stack.Screen name="ConsejoFormulario" component={ConsejoFormulario} />
       </Stack.Navigator>
     )
   }

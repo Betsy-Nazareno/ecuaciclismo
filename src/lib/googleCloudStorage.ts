@@ -1,4 +1,3 @@
-import { DocumentResult } from 'expo-document-picker'
 import {
   getDownloadURL,
   ref,
@@ -9,12 +8,10 @@ import { firebaseStorage } from '../config/firebase'
 
 export const guardarArchivo = async (
   folder: string,
-  file: DocumentResult
+  name: string,
+  uri: string
 ): Promise<string> => {
-  if (file.type === 'cancel') {
-    return ''
-  }
-  const filePath = `/${folder}/${file.name?.replace(/\s/g, '')}`
+  const filePath = `/${folder}/${name?.replace(/\s/g, '')}`
   const fileRef: StorageReference = ref(firebaseStorage, filePath)
 
   const blob: Blob = await new Promise((resolve, reject) => {
@@ -26,7 +23,7 @@ export const guardarArchivo = async (
       reject(new TypeError('Network request failed'))
     }
     xhr.responseType = 'blob'
-    xhr.open('GET', file.uri, true)
+    xhr.open('GET', uri, true)
     xhr.send(null)
   })
 
