@@ -3,10 +3,6 @@ export interface Etiqueta {
   nombre: string
 }
 
-export interface SelectPickerValues extends Etiqueta {
-  enabled?: boolean
-}
-
 export interface BuildFiltro {
   fecha?: number
   etiquetas?: string[]

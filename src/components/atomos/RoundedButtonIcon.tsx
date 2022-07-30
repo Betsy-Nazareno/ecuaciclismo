@@ -25,6 +25,7 @@ const RoundedButtonIcon = ({
       activeOpacity={0.6}
       underlayColor="#E7F5FF"
       onPress={handleClick}
+      style={{ borderRadius: 100 / 2 }}
     >
       <View
         style={tw`h-10 w-10 rounded-full flex items-center justify-center ${BACKGROUND_COLORS.PRIMARY_BLUE} ${style}`}

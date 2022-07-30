@@ -2,7 +2,6 @@ import * as React from 'react'
 import { Text, View, Image } from 'react-native'
 import RoundedWhiteBaseTemplate from '../../organismos/RoundedWhiteBaseTemplate'
 import tw from 'twrnc'
-import VerticalDivider from '../../atomos/VerticalDivider'
 import { TEXT_COLORS } from '../../../utils/constants'
 import { Comentario } from '../../../models/Publicaciones.model'
 
@@ -23,7 +22,6 @@ const TarjetaComentarioPublicacion = ({
               style={{ width: 40, height: 45, borderRadius: 400 / 2 }}
             />
           </View>
-          <VerticalDivider />
         </View>
 
         <View style={tw`relative px-2 pr-12 `}>

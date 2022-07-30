@@ -6,6 +6,7 @@ import drawerTabsReducer from './drawerTabs'
 import NovedadReducer from './novedad'
 import publicacionBusqueda from './publicacionBusqueda'
 import publicacionReducer from './publicacion'
+import BusquedaRutas from './rutasBusqueda'
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     novedad: NovedadReducer,
     busqueda: publicacionBusqueda,
     publicacion: publicacionReducer,
+    busquedaRutas: BusquedaRutas,
   },
 })
 

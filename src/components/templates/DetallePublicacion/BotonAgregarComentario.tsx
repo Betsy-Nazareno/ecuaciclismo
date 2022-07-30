@@ -2,7 +2,6 @@ import * as React from 'react'
 import { View, Pressable } from 'react-native'
 import RoundedWhiteBaseTemplate from '../../organismos/RoundedWhiteBaseTemplate'
 import tw from 'twrnc'
-import VerticalDivider from '../../atomos/VerticalDivider'
 import RoundedButtonIcon from '../../atomos/RoundedButtonIcon'
 import { CustomText } from '../../atomos/CustomText'
 import Gap from '../../atomos/Gap'
@@ -19,7 +18,6 @@ const BotonAgregarComentario = ({
     <Pressable onPress={handleClick}>
       <RoundedWhiteBaseTemplate shadow={false}>
         <View style={tw`relative`}>
-          <VerticalDivider style="top-0" />
           <View style={tw`py-1 flex flex-row items-center mx-auto`}>
             <RoundedButtonIcon
               style="h-8 w-8"

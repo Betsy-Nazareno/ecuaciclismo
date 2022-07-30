@@ -69,7 +69,7 @@ const ConsejoForm = ({ consejoProp }: ConsejoFormularioProps) => {
         title="Consejo del día"
         message="¡Recomiendaciones para la comunidad!"
         srcImage={require('../../../../assets/consejo_icon.png')}
-      ></HeaderScreen>
+      />
       <Formik
         initialValues={initialValues}
         validationSchema={ConsejoValidationSchema}

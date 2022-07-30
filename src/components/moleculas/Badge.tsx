@@ -8,6 +8,7 @@ interface BadgeProps {
   label: string
   name: string
   backgroundColor: string
+  stylesProp?: string
   icon?: ImageSourcePropType | undefined
   handleClick?: (name: string) => void
 }
@@ -16,6 +17,7 @@ const Badge = ({
   label,
   name,
   icon,
+  stylesProp,
   backgroundColor,
   handleClick,
 }: BadgeProps) => {
@@ -23,7 +25,9 @@ const Badge = ({
     <Pressable
       onPress={() => handleClick?.(name)}
       key={name}
-      style={tw`${backgroundColor} rounded-3xl py-1 pl-2 pr-3 flex flex-row items-center h-7`}
+      style={tw`${backgroundColor} rounded-3xl py-1 pl-2 pr-3 flex flex-row items-center h-7 ${
+        stylesProp || ''
+      }`}
     >
       {icon && (
         <Gap px="2">

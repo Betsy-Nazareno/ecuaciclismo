@@ -1,7 +1,8 @@
-import React from 'react'
-import { useFonts } from 'expo-font'
+import React, { useEffect, useState } from 'react'
+// import { useFonts } from 'expo-font'
 import { Text, TextStyle } from 'react-native'
 import tw from 'twrnc'
+import * as Font from 'expo-font'
 
 interface Props {
   children: React.ReactText | React.ReactText[]
@@ -10,9 +11,23 @@ interface Props {
 }
 
 export const CustomText = ({ children, style, containerProps }: Props) => {
-  const [fontsLoaded] = useFonts({
-    Montserrat: require('../../../assets/fonts/Montserrat-Bold.ttf'),
-  })
+  const [fontsLoaded, setFontsLoaded] = useState(false)
+
+  const _loadFontsAsync = async () => {
+    await Font.loadAsync({
+      Montserrat: require('../../../assets/fonts/Montserrat-Bold.ttf'),
+    })
+  }
+
+  useEffect(() => {
+    let isUnmounted = true
+    _loadFontsAsync().then(() => {
+      if (isUnmounted) setFontsLoaded(true)
+    })
+    return () => {
+      isUnmounted = false
+    }
+  }, [])
 
   return fontsLoaded ? (
     <Text style={{ fontFamily: 'Montserrat', ...containerProps }}>

@@ -1,6 +1,6 @@
 import * as React from 'react'
-import PublicidadFormulario from '../components/templates/NovedadFormulario/NovedadFormulario'
 import BasePaginasSecundarias from '../components/templates/BasePaginasSecundarias'
+import PublicidadFormulario from '../components/templates/FormularioNovedad/NovedadFormulario'
 
 const NovedadFormulario = () => {
   return (

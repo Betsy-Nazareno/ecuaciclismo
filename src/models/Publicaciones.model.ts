@@ -5,7 +5,7 @@ import { Etiqueta } from './Etiqueta.model'
 import { ReaccionesInterface } from './Reacciones.model'
 
 export interface Filtro extends Etiqueta {
-  icon?: ImageSourcePropType | string
+  icon?: ImageSourcePropType
 }
 
 export interface Publicacion {

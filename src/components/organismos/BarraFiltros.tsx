@@ -1,7 +1,7 @@
 import * as React from 'react'
+import tw from 'twrnc'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
-import tw from 'twrnc'
 import { Filtro } from '../../models/Publicaciones.model'
 import { setDate, setEtiquetas } from '../../redux/publicacionBusqueda'
 import { RootState } from '../../redux/store'
@@ -10,7 +10,6 @@ import CancelButton from '../atomos/CancelButton'
 import FiltroFecha from '../atomos/FiltroFecha'
 import Gap from '../atomos/Gap'
 import Badge from '../moleculas/Badge'
-import AdminValidator from '../templates/AdminValidator'
 
 interface BarraFiltrosProps {
   filtros: Filtro[]
@@ -50,34 +49,10 @@ const BarraFiltros = ({ filtros, icons = true }: BarraFiltrosProps) => {
           date={buildFiltros.fecha as number}
         />
       </Gap>
-      <AdminValidator>
-        <Gap px="1">
-          <Badge
-            label={'Propuestas'}
-            name={'propuestas'}
-            backgroundColor={BACKGROUND_COLORS.ORANGE}
-            handleClick={() => {
-              return
-            }}
-          />
-        </Gap>
-      </AdminValidator>
-      <Gap px="1">
-        <Badge
-          label={'Inscritas'}
-          name={'inscritas'}
-          backgroundColor={BACKGROUND_COLORS.ORANGE}
-          handleClick={() => {
-            return
-          }}
-        />
-      </Gap>
+
       {filtros.map((filtro) => {
         const { icon, value, nombre } = filtro
         const backgoundColor = getBackgroundColor(value)
-        if ((icons && typeof icon === 'string') || typeof icon === 'string') {
-          return null
-        }
         return (
           <Gap key={filtro.value} px="1">
             <Badge

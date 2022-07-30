@@ -8,6 +8,8 @@ export const TEXT_COLORS = {
   PRIMARY_BLUE: 'text-[#01579B]',
   SKY_BLUE: 'text-[#2D84C4]',
   DARK_BLUE: 'text-[#0C3248]',
+  GREEN_PRIMARY: 'text-[#5DB075]',
+  RED: 'text-[#B00020]',
 }
 
 export const BACKGROUND_COLORS = {
@@ -18,11 +20,14 @@ export const BACKGROUND_COLORS = {
   BLUE_LIGHTER: 'bg-[#F2FAFF]',
   GRAY: 'bg-[#DFDFDF]',
   GREEN: 'bg-[#D0FCE3]',
+  GREEN_PRIMARY: 'bg-[#5DB075]',
+  RED: 'bg-[#B00020]',
 }
 
 export const BORDER_COLORS = {
   GRAY: 'border-[#DFDFDF]',
   PRIMARY_BLUE: 'border-[#2D84C4]',
+  DARK_BLUE: 'border-[#0C3248]',
   GREEN: 'border-[#5DB075]',
   ORANGE: 'border-[#F16F31]',
 }
@@ -55,6 +60,12 @@ export const PUBLICACION = {
   TITULO_MAX_LENGTH: 150,
 }
 
+export const RUTAS = {
+  NOMBRE_MAX_LENGTH: 200,
+  NOMBRE_MIN_LENGTH: 5,
+  MAX_CUPOS: 9999999,
+  MIN_CUPOS: 1,
+}
 export const FOLDERS_STORAGE = {
   CONSEJOS: 'consejos',
   RUTAS: 'rutas',
@@ -71,39 +82,29 @@ export const MIME_TYPES = {
 
 export const etiquetasPublicaciones = [
   {
-    value: 'placeholder',
-    nombre: 'Recomendaciones, Ofertas...',
-    icon: '',
-  },
-  {
     value: 'recomendaciones',
     nombre: 'Recomendaciones',
     icon: require('../../assets/recomendacion_icon.png'),
-    enabled: true,
   },
   {
     value: 'salud',
     nombre: 'Salud',
     icon: require('../../assets/salud_icon.png'),
-    enabled: true,
   },
   {
     value: 'felicitaciones',
     nombre: 'Felicitaciones',
     icon: require('../../assets/celebracion_icon.png'),
-    enabled: true,
   },
   {
     value: 'peligro',
     nombre: 'Peligro',
     icon: require('../../assets/peligro_icon.png'),
-    enabled: true,
   },
   {
     value: 'noticias',
     nombre: 'Noticias',
     icon: require('../../assets/peligro_icon.png'),
-    enabled: true,
   },
 ]
 
@@ -119,5 +120,36 @@ export const etiquetasRutas = [
   {
     value: 'sin_cupo',
     nombre: 'Sin Cupo',
+  },
+]
+
+//Esto se va a ir a la bd
+export const tiposRuta = [
+  {
+    value: 'montaña',
+    nombre: 'Montaña',
+  },
+  {
+    value: 'ciclopaseo',
+    nombre: 'Ciclopaseo',
+  },
+  {
+    value: 'familiar',
+    nombre: 'Familiar',
+  },
+]
+
+export const catalogoRequisitos = [
+  {
+    nombre: 'Nivel Oro',
+    value: '9109v',
+  },
+  {
+    nombre: 'Insumos médicos',
+    value: '9039c',
+  },
+  {
+    nombre: 'Alimentos',
+    value: '9as9c',
   },
 ]
