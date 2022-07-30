@@ -30,6 +30,7 @@ import InicioRastreo from './InicioRastreo'
 import RastreoUbicacion from '../components/templates/RastreoRutas/RastreoUbicacion'
 import RutaIncompleta from './RutaIncompleta'
 import FinalRuta from './FinalRuta'
+import Agenda from './Agenda'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -114,6 +115,7 @@ const Main = () => {
         <Drawer.Screen name="ConsejoDetalle" component={ConsejoDetalle} />
         <Drawer.Screen name="DetalleNovedad" component={DetalleNovedad} />
         <Drawer.Screen name="Novedades" component={Novedades} />
+        <Drawer.Screen name="Agenda" component={Agenda} />
       </Drawer.Navigator>
     )
   }
