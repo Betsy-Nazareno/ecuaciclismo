@@ -21,7 +21,7 @@ const RastreoUbicacion = () => {
       const { status } = await Location.requestForegroundPermissionsAsync()
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied')
-        return
+        return errorMsg
       }
 
       const location = await Location.getCurrentPositionAsync({})
