@@ -1,6 +1,6 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { View } from 'react-native'
+import { Text, View } from 'react-native'
 import * as Location from 'expo-location'
 import { LocationObject } from 'expo-location'
 import MapView, { Marker } from 'react-native-maps'
@@ -8,13 +8,19 @@ import { HEIGHT_DIMENSIONS, WIDTH_DIMENSIONS } from '../../../utils/constants'
 import MapViewDirections from 'react-native-maps-directions'
 import RoundedButtonIcon from '../../atomos/RoundedButtonIcon'
 import RutaModal from '../../organismos/RutaModal'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { RootStackParamList, Screens } from '../../../models/Screens.types'
 
 const RastreoUbicacion = () => {
   const [location, setLocation] = React.useState<LocationObject>()
   const [initialLocation, setinitialLocation] = React.useState<LocationObject>()
   const [errorMsg, setErrorMsg] = React.useState('')
   const [showModal, setShowModal] = React.useState(false)
+  const [showModal2, setShowModal2] = React.useState(false)
   const ASPECT_RATIO = WIDTH_DIMENSIONS / HEIGHT_DIMENSIONS
+
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
   React.useEffect(() => {
     ;(async () => {
@@ -36,6 +42,16 @@ const RastreoUbicacion = () => {
     })()
   }, [])
 
+  React.useEffect(() => {
+    if (
+      coordinateY.latitude === location?.coords.latitude &&
+      coordinateY.longitude === location?.coords.longitude
+    ) {
+      // navigation.navigate('FinalRuta')
+      setShowModal2(true)
+    }
+  }, [location])
+
   // let text = 'Waiting..'
   // if (errorMsg) {
   //   text = errorMsg
@@ -43,9 +59,14 @@ const RastreoUbicacion = () => {
   //   text = JSON.stringify(location)
   // }
 
+  // const coordinateY = {
+  //   latitude: -2.1453200715782175,
+  //   longitude: -79.89056378602983,
+  // }
+
   const coordinateY = {
-    latitude: -2.1453200715782175,
-    longitude: -79.89056378602983,
+    latitude: -2.1288014497416903,
+    longitude: -79.95376970618963,
   }
 
   const latDelta =
@@ -81,15 +102,19 @@ const RastreoUbicacion = () => {
             />
 
             <Marker
+              // draggable={true}
               coordinate={{
                 longitude: location.coords.longitude,
                 latitude: location.coords.latitude,
               }}
+              // onDragEnd={(prop) => console.log(prop.nativeEvent.coordinate)}
               image={require('../../../../assets/bicicleta_marker.png')}
             />
             <Marker
+              // draggable={true}
               coordinate={coordinateY}
               image={require('../../../../assets/meta.png')}
+              // onDragEnd={(prop) => console.log(prop.nativeEvent.coordinate)}
             />
           </>
         )}
@@ -101,6 +126,11 @@ const RastreoUbicacion = () => {
         />
       </View>
       {showModal && <RutaModal visible={showModal} setVisible={setShowModal} />}
+      {showModal2 && (
+        <View style={tw`bg-red-200 top-0 absolute`}>
+          <Text>Haz llegado!</Text>
+        </View>
+      )}
     </View>
   )
 }
