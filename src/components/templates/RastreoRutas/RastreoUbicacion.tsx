@@ -8,8 +8,6 @@ import { HEIGHT_DIMENSIONS, WIDTH_DIMENSIONS } from '../../../utils/constants'
 import MapViewDirections from 'react-native-maps-directions'
 import RoundedButtonIcon from '../../atomos/RoundedButtonIcon'
 import RutaModal from '../../organismos/RutaModal'
-import { NavigationProp, useNavigation } from '@react-navigation/native'
-import { RootStackParamList, Screens } from '../../../models/Screens.types'
 
 const RastreoUbicacion = () => {
   const [location, setLocation] = React.useState<LocationObject>()
@@ -18,9 +16,6 @@ const RastreoUbicacion = () => {
   const [showModal, setShowModal] = React.useState(false)
   const [showModal2, setShowModal2] = React.useState(false)
   const ASPECT_RATIO = WIDTH_DIMENSIONS / HEIGHT_DIMENSIONS
-
-  const navigation =
-    useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
   React.useEffect(() => {
     ;(async () => {
