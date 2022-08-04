@@ -35,7 +35,7 @@ const LinkedBadges = ({
                 backgroundColor={BACKGROUND_COLORS.SKY_BLUE}
               />
             ) : tipo === 'rounded' ? (
-              <RoundedBadge label={etiqueta.nombre} />
+              <RoundedBadge label={etiqueta.nombre} styles="bg-white" />
             ) : (
               <></>
             )}

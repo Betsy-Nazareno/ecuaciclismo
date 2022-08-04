@@ -4,12 +4,17 @@ import { View, Image } from 'react-native'
 import { TEXT_COLORS } from '../../utils/constants'
 import { CustomText } from '../atomos/CustomText'
 
-const WithoutResults = () => {
+interface WithoutResultsProps {
+  styles: string
+  dimension?: number
+}
+
+const WithoutResults = ({ styles, dimension = 250 }: WithoutResultsProps) => {
   return (
-    <View style={tw`pt-12 flex flex-col items-center justify-center`}>
+    <View style={tw`flex flex-col items-center justify-center ${styles}`}>
       <Image
         source={require('../../../assets/explorer.png')}
-        style={{ width: 250, height: 250, opacity: 0.5 }}
+        style={{ width: dimension, height: dimension, opacity: 0.5 }}
       />
       <View style={tw`w-8/12 mt-4`}>
         <CustomText
