@@ -19,6 +19,7 @@ export const BACKGROUND_COLORS = {
   DARK_BLUE: 'bg-[#0C3248]',
   BLUE_LIGHTER: 'bg-[#F2FAFF]',
   GRAY: 'bg-[#DFDFDF]',
+  GRAY_PLACEHOLDER: 'bg-[#e6e6e6]',
   GREEN: 'bg-[#D0FCE3]',
   GREEN_PRIMARY: 'bg-[#5DB075]',
   RED: 'bg-[#B00020]',
@@ -39,6 +40,19 @@ export const DOCUMENT_RESULT_TYPES = {
   CANCEL: 'cancel',
   SUCCESS: 'success',
 }
+
+export const ESTADOS_RUTA = {
+  DISPONIBLE: 'Disponible',
+  FINALIZADA: 'Finalizada',
+  CANCELADA: 'Cancelada',
+  SIN_CUPOS: 'Sin Cupos',
+  EN_CURSO: 'En Curso',
+}
+
+export const uri_rastreo_icon =
+  'https://firebasestorage.googleapis.com/v0/b/omega-keep-354005.appspot.com/o/rutas%2Fbicicleta_marker.png?alt=media&token=64be3e62-3b1a-4e47-9761-77253ce4fac7'
+export const uri_meta_icon =
+  'https://firebasestorage.googleapis.com/v0/b/omega-keep-354005.appspot.com/o/rutas%2Fmeta.png?alt=media&token=5da6553c-e489-4e89-9614-ce23276d04df'
 
 export const CONSEJO_MAX_LENGTH = 100
 export const PASSWORD = {
@@ -141,7 +155,7 @@ export const tiposRuta = [
 
 export const catalogoRequisitos = [
   {
-    nombre: 'Nivel Oro',
+    nombre: 'Nivel Intermedio',
     value: '9109v',
   },
   {

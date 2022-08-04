@@ -39,7 +39,8 @@ const FormularioRutas = () => {
         longitude: -79.89056378602983,
       },
     },
-    fecha: new Date(Date.now()),
+    fechaInicio: new Date(Date.now()),
+    fechaFin: new Date(Date.now()),
   }
 
   const handleSubmit = (prop: any) => {
@@ -69,6 +70,20 @@ const FormularioRutas = () => {
                 placeholder="Nombre de la ruta..."
                 value={values.nombre}
                 setValue={(value) => setFieldValue('nombre', value)}
+              />
+            </FieldFormulario>
+
+            <FieldFormulario>
+              <Input
+                multiline
+                numberOfLines={4}
+                textAlignVertical="top"
+                text="Descripcion"
+                type="none"
+                name="descripcion"
+                placeholder="Agrega una descripción del evento..."
+                value={values.nombre}
+                setValue={(value) => setFieldValue('descripcion', value)}
               />
             </FieldFormulario>
 
@@ -164,11 +179,21 @@ const FormularioRutas = () => {
 
             <FieldFormulario>
               <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
-                Fecha
+                Fecha de inicio
               </Text>
               <FieldFechaHora
-                fecha={values.fecha}
-                setFecha={(value) => setFieldValue('fecha', value)}
+                fecha={values.fechaInicio}
+                setFecha={(value) => setFieldValue('fechaInicio', value)}
+              />
+            </FieldFormulario>
+
+            <FieldFormulario>
+              <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
+                Fecha de finalización
+              </Text>
+              <FieldFechaHora
+                fecha={values.fechaFin}
+                setFecha={(value) => setFieldValue('fechaFin', value)}
               />
             </FieldFormulario>
 

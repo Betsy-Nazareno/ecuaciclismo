@@ -70,12 +70,12 @@ const RutaModal = ({ visible, setVisible }: RutaModalProps) => {
             </Text>
           </View>
 
-          <Ruler style="w-11/12 mx-auto" />
+          <Ruler style="w-11/12 mx-auto mb-4" />
 
           <SecondaryButton
             label="Abandonar Ruta"
-            style="w-9/12 mx-auto my-4"
-            handleClick={() => navigation.navigate('FinalRuta')}
+            style="w-9/12 mx-auto"
+            handleClick={() => navigation.navigate('RutaIncompleta')}
           />
         </View>
       </View>

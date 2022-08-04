@@ -58,7 +58,7 @@ const RutaDetalleHeader = () => {
               name={'en_curso'}
               label={'En curso'}
               backgroundColor={getColorBadge('En curso')}
-              handleClick={() => navigation.navigate('RutaIncompleta')}
+              handleClick={() => navigation.navigate('FinalRuta')}
             />
           </Gap>
         </LinkedBadges>

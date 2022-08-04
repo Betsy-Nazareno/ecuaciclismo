@@ -48,7 +48,7 @@ const BarraFiltrosRutas = ({ filtros }: BarraFiltrosRutasProps) => {
           setDate={() => {
             return
           }}
-          date={new Date(Date.now()).getTime()}
+          date={undefined}
         />
       </Gap>
       <AdminValidator>

@@ -2,7 +2,11 @@ import * as React from 'react'
 import tw from 'twrnc'
 import { View } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
-import { WIDTH_DIMENSIONS } from '../../utils/constants'
+import {
+  uri_meta_icon,
+  uri_rastreo_icon,
+  WIDTH_DIMENSIONS,
+} from '../../utils/constants'
 import MapViewDirections from 'react-native-maps-directions'
 import { Ruta } from '../../models/Rutas'
 
@@ -49,7 +53,7 @@ const MapViewSelectUbication = ({
               coordinateX: e.nativeEvent.coordinate,
             })
           }
-          image={require('../../../assets/bicicleta_marker.png')}
+          image={{ uri: uri_rastreo_icon }}
         />
         <Marker
           draggable={select}
@@ -60,7 +64,7 @@ const MapViewSelectUbication = ({
               coordinateY: e.nativeEvent.coordinate,
             })
           }
-          image={require('../../../assets/meta.png')}
+          image={{ uri: uri_meta_icon }}
         />
       </MapView>
     </View>

@@ -9,11 +9,16 @@ const RutasFeed = () => {
     <View style={tw`px-2`}>
       <RutasFeedHeader />
       <View style={tw`py-2`}>
-        <TarjetaRutas />
-        <TarjetaRutas />
-        <TarjetaRutas />
-        <TarjetaRutas />
-        <TarjetaRutas />
+        <TarjetaRutas estado="En Curso" inscrito />
+        <TarjetaRutas estado="En Curso" />
+        <TarjetaRutas estado="Disponible" inscrito />
+        <TarjetaRutas estado="Disponible" />
+        <TarjetaRutas estado="Sin Cupos" />
+        <TarjetaRutas estado="Sin Cupos" />
+        <TarjetaRutas estado="Finalizada" />
+        <TarjetaRutas estado="Finalizada" />
+        <TarjetaRutas estado="Finalizada" />
+        <TarjetaRutas estado="Cancelada" />
       </View>
     </View>
   )

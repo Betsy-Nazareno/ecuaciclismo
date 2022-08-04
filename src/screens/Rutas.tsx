@@ -4,7 +4,7 @@ import RutasFeed from '../components/templates/Rutas/RutasFeed'
 
 const Rutas = () => {
   return (
-    <BasePaginas>
+    <BasePaginas backgroundColor="bg-white">
       <RutasFeed />
     </BasePaginas>
   )
