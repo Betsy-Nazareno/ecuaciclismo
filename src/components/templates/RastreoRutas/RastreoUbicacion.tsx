@@ -33,7 +33,7 @@ const RastreoUbicacion = () => {
         setErrorMsg('Permission to access location on background was denied')
         return errorMsg
       }
-      await startForegroundUpdate()
+      // await startForegroundUpdate()
       await startBackgroundLocation()
     })()
   }, [])
@@ -51,39 +51,14 @@ const RastreoUbicacion = () => {
   }
 
   const startBackgroundLocation = async () => {
-    const isTaskDefined = await TaskManager.isTaskDefined(TASK_NAME)
-    if (!isTaskDefined) {
-      return
-    }
-
-    // Don't track if it is already running in background
-    const hasStarted = await Location.hasStartedLocationUpdatesAsync(TASK_NAME)
-    if (hasStarted) {
-      return
-    }
-
     await Location.startLocationUpdatesAsync(TASK_NAME, {
-      accuracy: 5,
-      showsBackgroundLocationIndicator: true,
+      accuracy: Location.Accuracy.Highest,
+      timeInterval: 10000,
+      distanceInterval: 0,
     })
+    const hasStarted = await Location.hasStartedLocationUpdatesAsync(TASK_NAME)
+    console.log('tracking started?', hasStarted)
   }
-
-  TaskManager.defineTask(TASK_NAME, async ({ data, error }) => {
-    if (error) {
-      return
-    }
-    if (data) {
-      const { locations } = (data as any) || {}
-      const [location] = locations || []
-
-      if (location) {
-        setLocation(location)
-        setLista([...lista, 1])
-      } else {
-        setLista([...lista, 0])
-      }
-    }
-  })
 
   const coordinateY = {
     latitude: -2.1288014497416903,
@@ -149,5 +124,19 @@ const RastreoUbicacion = () => {
     </View>
   )
 }
+
+TaskManager.defineTask(TASK_NAME, async ({ data, error }) => {
+  if (error) {
+    return
+  }
+  if (data) {
+    const { locations } = (data as any) || {}
+    const [location] = locations || []
+
+    if (location) {
+      console.log('\n\n', location)
+    }
+  }
+})
 
 export default RastreoUbicacion
