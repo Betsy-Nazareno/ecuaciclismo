@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/native'
 import * as React from 'react'
 import { RootStackParamList } from '../models/Screens.types'
-import ConsejoForm from '../components/templates/ConsejoFormulario/ConsejoFormulario'
+import ConsejoForm from '../components/templates/FormularioConsejo/ConsejoFormulario'
 import BasePaginasSecundarias from '../components/templates/BasePaginasSecundarias'
 
 interface Props {

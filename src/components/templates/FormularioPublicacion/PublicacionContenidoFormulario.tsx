@@ -99,6 +99,7 @@ const PublicacionContenidoFormulario = ({
           selectedValues={values.etiquetas}
           setValuesSelected={addEtiquetas}
           deleteValue={deleteEtiqueta}
+          placeholder="Recomendaciones, Ofertas..."
           field={'etiquetas'}
         />
       </FieldFormulario>
@@ -126,6 +127,9 @@ const PublicacionContenidoFormulario = ({
           field="multimedia"
           setFieldValue={setFieldValue}
           values={values.multimedia}
+          allowedFiles={['image/*', 'application/pdf', 'video/*']}
+          icon={require('../../../../assets/multimedia.png')}
+          placeholder="Puedes agregar imágenes / videos / audios o archivos"
         />
       </FieldFormulario>
 

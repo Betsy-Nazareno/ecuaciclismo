@@ -76,7 +76,7 @@ const PublicacionesFeed = () => {
             <EmptyTarjetaPublicacion />
           </>
         ) : filteredPublicaciones?.length <= 0 ? (
-          <WithoutResults />
+          <WithoutResults styles="pt-12" />
         ) : (
           filteredPublicaciones.map((publicacion) => (
             <TarjetaPublicaciones

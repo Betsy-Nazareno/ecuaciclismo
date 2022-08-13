@@ -25,7 +25,7 @@ const DetalleUsuario = ({
 
       <View>
         <Text
-          style={tw`text-sm font-semibold capitalize ${TEXT_COLORS.DARK_BLUE}`}
+          style={tw`text-base font-semibold capitalize ${TEXT_COLORS.DARK_BLUE}`}
         >
           {nombre}
         </Text>

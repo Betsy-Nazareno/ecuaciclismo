@@ -23,12 +23,12 @@ const EmptyPublicacionDetalle = () => {
           </View>
         </View>
 
-        <View style={tw`ml-24`}>
-          <View style={tw`w-52 h-64 rounded-lg ${BACKGROUND_COLORS.GRAY}`} />
-          <View
-            style={tw`mt-4 w-10/12 h-4 rounded-xl ${BACKGROUND_COLORS.GRAY}`}
-          />
-        </View>
+        <View
+          style={tw`w-full mt-4 h-64 rounded-lg ${BACKGROUND_COLORS.GRAY}`}
+        />
+        <View
+          style={tw`mt-4 w-full h-4 rounded-xl ${BACKGROUND_COLORS.GRAY}`}
+        />
       </RoundedWhiteBaseTemplate>
 
       <RoundedWhiteBaseTemplate shadow={false}>

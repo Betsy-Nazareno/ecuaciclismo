@@ -1,7 +1,7 @@
 import * as React from 'react'
+import tw from 'twrnc'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
-import tw from 'twrnc'
 import { Filtro } from '../../models/Publicaciones.model'
 import { setDate, setEtiquetas } from '../../redux/publicacionBusqueda'
 import { RootState } from '../../redux/store'
@@ -13,9 +13,10 @@ import Badge from '../moleculas/Badge'
 
 interface BarraFiltrosProps {
   filtros: Filtro[]
+  icons?: boolean
 }
 
-const BarraFiltros = ({ filtros }: BarraFiltrosProps) => {
+const BarraFiltros = ({ filtros, icons = true }: BarraFiltrosProps) => {
   const { buildFiltros } = useSelector((state: RootState) => state.busqueda)
   const dispatch = useDispatch()
 
@@ -48,18 +49,16 @@ const BarraFiltros = ({ filtros }: BarraFiltrosProps) => {
           date={buildFiltros.fecha as number}
         />
       </Gap>
+
       {filtros.map((filtro) => {
         const { icon, value, nombre } = filtro
         const backgoundColor = getBackgroundColor(value)
-        if (typeof icon === 'string') {
-          return null
-        }
         return (
           <Gap key={filtro.value} px="1">
             <Badge
               label={nombre}
               name={value}
-              icon={icon}
+              icon={icons ? icon : undefined}
               backgroundColor={backgoundColor}
               handleClick={handleEtiquetasSelections}
             />

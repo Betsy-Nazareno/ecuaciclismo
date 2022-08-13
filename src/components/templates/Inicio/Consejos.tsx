@@ -25,7 +25,7 @@ const Consejos = () => {
     if (isMounted) {
       ;(async () => {
         const response = await obtenerConsejosActuales(authToken as string)
-        setListaConsejos(response.data)
+        setListaConsejos(response?.data)
         setIsLoading(false)
       })()
     }

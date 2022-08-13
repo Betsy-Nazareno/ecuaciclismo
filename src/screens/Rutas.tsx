@@ -1,17 +1,21 @@
 import React from 'react'
-import { Image, View } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 import BasePaginas from '../components/templates/BasePaginas'
-import tw from 'twrnc'
+import RutasFeed from '../components/templates/Rutas/RutasFeed'
+import { setRutaHasModified } from '../redux/ruta'
+import { RootState } from '../redux/store'
 
 const Rutas = () => {
+  const dispatch = useDispatch()
+  const { rutaHasModified } = useSelector((state: RootState) => state.ruta)
+
+  const onRefresh = async () => {
+    dispatch(setRutaHasModified({ rutaHasModified: !rutaHasModified }))
+  }
+
   return (
-    <BasePaginas>
-      <View style={tw`mx-auto mt-[30%]`}>
-        <Image
-          source={require('../../assets/wip3.png')}
-          style={{ width: 256, height: 256 }}
-        />
-      </View>
+    <BasePaginas backgroundColor="bg-white" handleRefresh={onRefresh}>
+      <RutasFeed />
     </BasePaginas>
   )
 }

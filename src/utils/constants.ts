@@ -8,6 +8,8 @@ export const TEXT_COLORS = {
   PRIMARY_BLUE: 'text-[#01579B]',
   SKY_BLUE: 'text-[#2D84C4]',
   DARK_BLUE: 'text-[#0C3248]',
+  GREEN_PRIMARY: 'text-[#5DB075]',
+  RED: 'text-[#B00020]',
 }
 
 export const BACKGROUND_COLORS = {
@@ -17,12 +19,16 @@ export const BACKGROUND_COLORS = {
   DARK_BLUE: 'bg-[#0C3248]',
   BLUE_LIGHTER: 'bg-[#F2FAFF]',
   GRAY: 'bg-[#DFDFDF]',
+  GRAY_PLACEHOLDER: 'bg-[#e6e6e6]',
   GREEN: 'bg-[#D0FCE3]',
+  GREEN_PRIMARY: 'bg-[#5DB075]',
+  RED: 'bg-[#B00020]',
 }
 
 export const BORDER_COLORS = {
   GRAY: 'border-[#DFDFDF]',
   PRIMARY_BLUE: 'border-[#2D84C4]',
+  DARK_BLUE: 'border-[#0C3248]',
   GREEN: 'border-[#5DB075]',
   ORANGE: 'border-[#F16F31]',
 }
@@ -34,6 +40,19 @@ export const DOCUMENT_RESULT_TYPES = {
   CANCEL: 'cancel',
   SUCCESS: 'success',
 }
+
+export const ESTADOS_RUTA = {
+  DISPONIBLE: 'Disponible',
+  FINALIZADA: 'Finalizada',
+  CANCELADA: 'Cancelada',
+  SIN_CUPOS: 'Sin Cupos',
+  EN_CURSO: 'En Curso',
+}
+
+export const uri_rastreo_icon =
+  'https://firebasestorage.googleapis.com/v0/b/omega-keep-354005.appspot.com/o/rutas%2Fbicicleta_marker.png?alt=media&token=64be3e62-3b1a-4e47-9761-77253ce4fac7'
+export const uri_meta_icon =
+  'https://firebasestorage.googleapis.com/v0/b/omega-keep-354005.appspot.com/o/rutas%2Fmeta.png?alt=media&token=5da6553c-e489-4e89-9614-ce23276d04df'
 
 export const CONSEJO_MAX_LENGTH = 100
 export const PASSWORD = {
@@ -55,6 +74,12 @@ export const PUBLICACION = {
   TITULO_MAX_LENGTH: 150,
 }
 
+export const RUTAS = {
+  NOMBRE_MAX_LENGTH: 200,
+  NOMBRE_MIN_LENGTH: 5,
+  MAX_CUPOS: 9999999,
+  MIN_CUPOS: 1,
+}
 export const FOLDERS_STORAGE = {
   CONSEJOS: 'consejos',
   RUTAS: 'rutas',
@@ -71,38 +96,47 @@ export const MIME_TYPES = {
 
 export const etiquetasPublicaciones = [
   {
-    value: 'placeholder',
-    nombre: 'Recomendaciones, Ofertas...',
-    icon: '',
-  },
-  {
     value: 'recomendaciones',
     nombre: 'Recomendaciones',
     icon: require('../../assets/recomendacion_icon.png'),
-    enabled: true,
   },
   {
     value: 'salud',
     nombre: 'Salud',
     icon: require('../../assets/salud_icon.png'),
-    enabled: true,
   },
   {
     value: 'felicitaciones',
     nombre: 'Felicitaciones',
     icon: require('../../assets/celebracion_icon.png'),
-    enabled: true,
   },
   {
     value: 'peligro',
     nombre: 'Peligro',
     icon: require('../../assets/peligro_icon.png'),
-    enabled: true,
   },
   {
     value: 'noticias',
     nombre: 'Noticias',
     icon: require('../../assets/peligro_icon.png'),
-    enabled: true,
+  },
+]
+
+export const etiquetasRutas = [
+  {
+    value: 'inscritas',
+    nombre: 'Inscritas',
+  },
+  {
+    value: 'disponibles',
+    nombre: 'Disponibles',
+  },
+  {
+    value: 'finalizada',
+    nombre: 'Finalizada',
+  },
+  {
+    value: 'sin_cupo',
+    nombre: 'Sin Cupo',
   },
 ]
