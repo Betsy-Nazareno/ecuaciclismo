@@ -50,7 +50,7 @@ export const ESTADOS_RUTA = {
 }
 
 export const uri_rastreo_icon =
-  'https://firebasestorage.googleapis.com/v0/b/omega-keep-354005.appspot.com/o/rutas%2Fbicicleta_marker.png?alt=media&token=64be3e62-3b1a-4e47-9761-77253ce4fac7'
+  'https://firebasestorage.googleapis.com/v0/b/omega-keep-354005.appspot.com/o/rutas%2Fbicicleta_marker.png?alt=media&token=ee9540cd-54cf-401a-822d-6b1920fc5102'
 export const uri_meta_icon =
   'https://firebasestorage.googleapis.com/v0/b/omega-keep-354005.appspot.com/o/rutas%2Fmeta.png?alt=media&token=5da6553c-e489-4e89-9614-ce23276d04df'
 

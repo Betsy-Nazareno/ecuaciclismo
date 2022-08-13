@@ -132,8 +132,14 @@ const Main = () => {
     <Spinner />
   ) : (
     <NavigationContainer>
-      <SafeHomeModal visible={showSafeHome} setVisible={setShowSafeHome} />
-      {authToken ? <MainStack /> : <AuthStack />}
+      {authToken ? (
+        <>
+          <SafeHomeModal visible={showSafeHome} setVisible={setShowSafeHome} />
+          <MainStack />
+        </>
+      ) : (
+        <AuthStack />
+      )}
     </NavigationContainer>
   )
 }
