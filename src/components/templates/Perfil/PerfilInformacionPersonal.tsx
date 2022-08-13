@@ -6,7 +6,7 @@ import RowWithImage from '../../atomos/RowWithImage'
 
 const PerfilInformacionPersonal = () => {
   return (
-    <View style={tw`w-9/12 mx-auto`}>
+    <View style={tw`w-10/12 mx-auto`}>
       <Gap py="2">
         <RowWithImage
           icon={require('../../../../assets/email_icon.png')}

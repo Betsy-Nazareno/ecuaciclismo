@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../components/atomos/Navbar'
 import Inicio from './Inicio'
 import Rutas from './Rutas'
@@ -30,7 +30,8 @@ import InicioRastreo from './InicioRastreo'
 import RastreoUbicacion from '../components/templates/RastreoRutas/RastreoUbicacion'
 import RutaIncompleta from './RutaIncompleta'
 import FinalRuta from './FinalRuta'
-import Agenda from './Agenda'
+import PerfilFormulario from './PerfilFormulario'
+import SafeHomeModal from '../components/organismos/SafeHomeModal'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -38,9 +39,16 @@ const Drawer = createDrawerNavigator()
 const Main = () => {
   const { authToken } = useSelector((state: RootState) => state.user)
   const { setUser, isLoading } = useAuthentication()
+  const [showSafeHome, setShowSafeHome] = useState(false)
 
   useEffect(() => {
     setUser()
+  }, [])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowSafeHome(true)
+    }, 3000)
   }, [])
 
   const AuthStack = () => {
@@ -77,6 +85,7 @@ const Main = () => {
         <Stack.Screen name="RastreoUbicacion" component={RastreoUbicacion} />
         <Stack.Screen name="RutaIncompleta" component={RutaIncompleta} />
         <Stack.Screen name="FinalRuta" component={FinalRuta} />
+        <Stack.Screen name="PerfilFormulario" component={PerfilFormulario} />
         <Stack.Screen
           name="PublicacionFormulario"
           component={PublicacionFormulario}
@@ -115,7 +124,6 @@ const Main = () => {
         <Drawer.Screen name="ConsejoDetalle" component={ConsejoDetalle} />
         <Drawer.Screen name="DetalleNovedad" component={DetalleNovedad} />
         <Drawer.Screen name="Novedades" component={Novedades} />
-        <Drawer.Screen name="Agenda" component={Agenda} />
       </Drawer.Navigator>
     )
   }
@@ -124,6 +132,7 @@ const Main = () => {
     <Spinner />
   ) : (
     <NavigationContainer>
+      <SafeHomeModal visible={showSafeHome} setVisible={setShowSafeHome} />
       {authToken ? <MainStack /> : <AuthStack />}
     </NavigationContainer>
   )

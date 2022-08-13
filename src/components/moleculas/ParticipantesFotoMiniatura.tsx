@@ -1,141 +1,53 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import {
-  Text,
-  View,
-  StyleSheet,
-  Pressable,
-  Image,
-  ImageSourcePropType,
-} from 'react-native'
+import { View, Image } from 'react-native'
 import ViewMoreRounded from '../atomos/ViewMoreRounded'
+import { User } from '../../models/User'
 
 interface ParticipantesFotoMiniaturaProps {
   dimensionImages?: number
-  images?: ImageSourcePropType[]
+  ciclistas?: Partial<User>[]
 }
 
 const ParticipantesFotoMiniatura = ({
   dimensionImages = 40,
-  images,
+  ciclistas,
 }: ParticipantesFotoMiniaturaProps) => {
+  const [usersDisplay, setUsersDisplay] = React.useState<Partial<User>[]>([])
+
+  React.useEffect(() => {
+    if (ciclistas && ciclistas.length > 10) {
+      setUsersDisplay(ciclistas.splice(0, 10))
+    } else {
+      setUsersDisplay(ciclistas || [])
+    }
+  }, [])
+
   return (
     <View style={tw`flex flex-row`}>
-      {images?.map((image, index) => (
-        <Image
-          key={index}
-          source={image}
-          style={{
-            width: dimensionImages,
-            height: dimensionImages,
-            borderRadius: 100 / 2,
-            marginLeft: -10,
-          }}
-        />
-      ))}
+      {usersDisplay?.map((ciclista, index) => {
+        const foto = ciclista.foto
+          ? { uri: ciclista.foto }
+          : require('../../../assets/lorena.jpg')
+        return (
+          <Image
+            key={index}
+            source={foto}
+            style={{
+              width: dimensionImages,
+              height: dimensionImages,
+              borderRadius: 100 / 2,
+              marginLeft: -10,
+            }}
+          />
+        )
+      })}
 
-      {/* <View>
-        <Image
-          source={require('../../../assets/lorena.jpg')}
-          style={{
-            width: dimensionImages,
-            height: dimensionImages,
-            borderRadius: 100 / 2,
-            marginLeft: -10,
-          }}
-        />
-      </View>
-      <View>
-        <Image
-          source={require('../../../assets/lorena.jpg')}
-          style={{
-            width: dimensionImages,
-            height: dimensionImages,
-            borderRadius: 100 / 2,
-            marginLeft: -10,
-          }}
-        />
-      </View>
-
-      <View>
-        <Image
-          source={require('../../../assets/lorena.jpg')}
-          style={{
-            width: dimensionImages,
-            height: dimensionImages,
-            borderRadius: 100 / 2,
-            marginLeft: -10,
-          }}
-        />
-      </View>
-
-      <View>
-        <Image
-          source={require('../../../assets/lorena.jpg')}
-          style={{
-            width: dimensionImages,
-            height: dimensionImages,
-            borderRadius: 100 / 2,
-            marginLeft: -10,
-          }}
-        />
-      </View>
-
-      <View>
-        <Image
-          source={require('../../../assets/lorena.jpg')}
-          style={{
-            width: dimensionImages,
-            height: dimensionImages,
-            borderRadius: 100 / 2,
-            marginLeft: -10,
-          }}
-        />
-      </View>
-
-      <View>
-        <Image
-          source={require('../../../assets/lorena.jpg')}
-          style={{
-            width: dimensionImages,
-            height: dimensionImages,
-            borderRadius: 100 / 2,
-            marginLeft: -10,
-          }}
-        />
-      </View>
-
-      <View>
-        <Image
-          source={require('../../../assets/lorena.jpg')}
-          style={{
-            width: dimensionImages,
-            height: dimensionImages,
-            borderRadius: 100 / 2,
-            marginLeft: -10,
-          }}
-        />
-      </View>
-
-      <View>
-        <Image
-          source={require('../../../assets/lorena.jpg')}
-          style={{
-            width: dimensionImages,
-            height: dimensionImages,
-            borderRadius: 100 / 2,
-            marginLeft: -10,
-          }}
-        />
-      </View> */}
-
-      <ViewMoreRounded label="+34" dimension={dimensionImages} />
+      {ciclistas && ciclistas?.length > 10 ? (
+        <ViewMoreRounded label="+10" dimension={dimensionImages} />
+      ) : null}
     </View>
   )
 }
 
 export default ParticipantesFotoMiniatura
-
-const styles = StyleSheet.create({
-  container: {},
-})

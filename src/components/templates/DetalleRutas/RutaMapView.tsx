@@ -3,21 +3,23 @@ import RoundedWhiteBaseTemplate from '../../organismos/RoundedWhiteBaseTemplate'
 import TitleWithDivider from '../../moleculas/TitleWithDivider'
 import MapViewSelectUbication from '../../moleculas/MapViewSelectUbication'
 import { WIDTH_DIMENSIONS } from '../../../utils/constants'
-import { Ruta } from '../../../models/Rutas'
+import { RutaCoordinadas } from '../../../models/Rutas'
 
 interface RutaMapViewProps {
-  ubicacion: Ruta
+  ubicacion: RutaCoordinadas
 }
 
 const RutaMapView = ({ ubicacion }: RutaMapViewProps) => {
   return (
     <RoundedWhiteBaseTemplate shadow={false}>
       <TitleWithDivider label="Ruta" />
-      <MapViewSelectUbication
-        value={ubicacion}
-        height={300}
-        width={WIDTH_DIMENSIONS * 0.86}
-      />
+      {ubicacion ? (
+        <MapViewSelectUbication
+          value={ubicacion}
+          height={300}
+          width={WIDTH_DIMENSIONS * 0.86}
+        />
+      ) : null}
     </RoundedWhiteBaseTemplate>
   )
 }

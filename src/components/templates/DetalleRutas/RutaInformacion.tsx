@@ -5,9 +5,20 @@ import TitleWithDivider from '../../moleculas/TitleWithDivider'
 import RoundedWhiteBaseTemplate from '../../organismos/RoundedWhiteBaseTemplate'
 import { TEXT_COLORS } from '../../../utils/constants'
 
-const RutaInformacion = () => {
-  let cupos = 2
-  cupos = 10
+interface RutaInformacionProps {
+  fecha: Date
+  lugar: string
+  cupos: number
+  registrados: number
+}
+
+const RutaInformacion = ({
+  fecha,
+  lugar,
+  cupos,
+  registrados,
+}: RutaInformacionProps) => {
+  const totalCupos = cupos + registrados
   const getColorCupos = (cupos: number) => {
     if (cupos < 10) {
       return TEXT_COLORS.RED
@@ -26,10 +37,8 @@ const RutaInformacion = () => {
           />
         </View>
         <View style={tw`w-11/12 ml-4`}>
-          <Text style={tw`${TEXT_COLORS.DARK_BLUE}`}>
-            06 de Febrero del 2022 7 AM{' '}
-          </Text>
-          <Text style={tw`${TEXT_COLORS.DARK_BLUE}`}>Malecón de Salinas</Text>
+          <Text style={tw`${TEXT_COLORS.DARK_BLUE}`}>{fecha}</Text>
+          <Text style={tw`${TEXT_COLORS.DARK_BLUE}`}>{lugar}</Text>
         </View>
       </View>
 
@@ -42,7 +51,7 @@ const RutaInformacion = () => {
         </View>
         <View style={tw`w-11/12 ml-4`}>
           <Text style={tw`${TEXT_COLORS.DARK_BLUE}`}>
-            25 Cupos planificados
+            {totalCupos} Cupos planificados
           </Text>
           <Text style={tw`${getColorCupos(cupos)}`}>
             {cupos}{' '}

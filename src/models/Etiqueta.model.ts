@@ -8,6 +8,11 @@ export interface BuildFiltro {
   etiquetas?: string[]
 }
 
+export interface BuildUniqueFiltro {
+  fecha?: number
+  etiqueta?: string
+}
+
 export type ValuesEtiquetaPublicacion =
   | 'recomendaciones'
   | 'felicitaciones'

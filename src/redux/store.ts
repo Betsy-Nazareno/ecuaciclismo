@@ -7,6 +7,7 @@ import NovedadReducer from './novedad'
 import publicacionBusqueda from './publicacionBusqueda'
 import publicacionReducer from './publicacion'
 import BusquedaRutas from './rutasBusqueda'
+import Rutas from './ruta'
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     busqueda: publicacionBusqueda,
     publicacion: publicacionReducer,
     busquedaRutas: BusquedaRutas,
+    ruta: Rutas,
   },
 })
 

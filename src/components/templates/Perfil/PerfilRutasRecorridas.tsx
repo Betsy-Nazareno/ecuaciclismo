@@ -8,7 +8,7 @@ import RutaRecorrida from '../../moleculas/RutaRecorrida'
 
 const PerfilRutasRecorridas = () => {
   return (
-    <View style={tw`mx-12 mt-2`}>
+    <View style={tw`mx-4 mt-2`}>
       <CustomText style={TEXT_COLORS.PRIMARY_BLUE}>Mis Rutas</CustomText>
 
       <View style={tw`flex flex-row flex-wrap items-center mt-3`}>

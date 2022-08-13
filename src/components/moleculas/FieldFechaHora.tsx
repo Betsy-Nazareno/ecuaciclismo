@@ -8,11 +8,16 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker'
 
 interface FieldFechaHoraProps {
-  fecha: Date
+  fecha?: Date
   setFecha: (fecha: Date) => void
+  placeholder?: string
 }
 
-const FieldFechaHora = ({ fecha, setFecha }: FieldFechaHoraProps) => {
+const FieldFechaHora = ({
+  fecha,
+  setFecha,
+  placeholder,
+}: FieldFechaHoraProps) => {
   const [show, setShow] = React.useState(false)
   const [date, setDate] = React.useState<Date>()
   const [mode, setMode] = React.useState<'date' | 'time'>('date')
@@ -60,7 +65,7 @@ const FieldFechaHora = ({ fecha, setFecha }: FieldFechaHoraProps) => {
               </Text>
             ) : (
               <Text style={tw`${TEXT_COLORS.GRAY_PLACEHOLDER} text-sm`}>
-                Establece una fecha para este evento...
+                {placeholder || 'Establece una fecha para este evento...'}
               </Text>
             )}
             <Image

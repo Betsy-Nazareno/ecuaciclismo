@@ -13,7 +13,7 @@ export const RutasValidationSchema = Yup.object({
       formatoMinLenght('El nombre de la ruta', RUTAS.NOMBRE_MIN_LENGTH)
     )
     .required('Por favor, ingresa el nombre de la ruta'),
-  cupos: Yup.number()
+  cupos_disponibles: Yup.number()
     .required(
       'Por favor, ingresa la cantidad de cupos disponibles para esta ruta'
     )
@@ -25,5 +25,9 @@ export const RutasValidationSchema = Yup.object({
   ubicacion: Yup.mixed().required(
     'Por favor, seleccione el punto de partida y destino de la ruta'
   ),
-  fecha: Yup.mixed().required('La fecha es requerida'),
+  fecha_inicio: Yup.mixed().required('La fecha es requerida'),
+  fecha_fin: Yup.mixed().required('La fecha es requerida'),
+  tipoRuta: Yup.array()
+    .min(1, 'Debes seleccionar el tipo de ruta.')
+    .required('El tipo de ruta es requerido'),
 })

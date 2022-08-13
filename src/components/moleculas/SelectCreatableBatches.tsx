@@ -48,11 +48,20 @@ const SelectCreatableBatches = ({
       <View style={tw`flex flex-row flex-wrap my-2`}>
         {selectedValues.map((value) => renderBadge(value))}
       </View>
-      <SelectInput
-        values={values}
-        setValuesSelected={setValuesSelected}
-        placeholder={placeholder}
-      />
+      <View
+        style={{
+          borderWidth: 1,
+          borderColor: '#e6e6e6',
+          borderStyle: 'solid',
+          borderRadius: 10,
+        }}
+      >
+        <SelectInput
+          values={values}
+          setValuesSelected={setValuesSelected}
+          placeholder={placeholder}
+        />
+      </View>
       <ErrorMessage name={field} render={FieldError} />
     </>
   )

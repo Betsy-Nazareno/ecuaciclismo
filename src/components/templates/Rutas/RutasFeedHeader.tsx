@@ -7,7 +7,6 @@ import HeaderRoundedContainer from '../../moleculas/HeaderRoundedContainer'
 import SectionTitle from '../../moleculas/SectionTitle'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
-import { etiquetasRutas } from '../../../utils/constants'
 import BarraFiltrosRutas from '../../organismos/BarraFiltrosRutas'
 
 const RutasFeedHeader = () => {
@@ -40,7 +39,7 @@ const RutasFeedHeader = () => {
           handleClickButton={() => navigation.navigate('RutasFormulario')}
         />
       </View>
-      <BarraFiltrosRutas filtros={etiquetasRutas} />
+      <BarraFiltrosRutas />
     </HeaderRoundedContainer>
   )
 }

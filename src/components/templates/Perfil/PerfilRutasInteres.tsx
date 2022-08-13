@@ -8,7 +8,7 @@ import RoundedBadge from '../../moleculas/RoundedBadge'
 
 const PerfilRutasInteres = () => {
   return (
-    <View style={tw`mx-12 mt-2`}>
+    <View style={tw`mx-4 mt-2`}>
       <CustomText style={TEXT_COLORS.PRIMARY_BLUE}>Rutas de Interés</CustomText>
       <View style={tw`flex flex-row flex-wrap mt-4`}>
         <Gap px="1" py="1">

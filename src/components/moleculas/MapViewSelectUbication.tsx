@@ -7,16 +7,16 @@ import {
   uri_rastreo_icon,
   WIDTH_DIMENSIONS,
 } from '../../utils/constants'
-import MapViewDirections from 'react-native-maps-directions'
-import { Ruta } from '../../models/Rutas'
+// import MapViewDirections from 'react-native-maps-directions'
+import { RutaCoordinadas } from '../../models/Rutas'
 
 interface MapViewSelectUbicationProps {
   field?: string
-  value: Ruta
+  value: RutaCoordinadas
   select?: boolean
   height?: number
   width?: number
-  setField?: (field: string, ubicacion: Ruta) => void
+  setField?: (field: string, ubicacion: RutaCoordinadas) => void
 }
 
 const initialRegion = {
@@ -37,13 +37,13 @@ const MapViewSelectUbication = ({
   return (
     <View style={tw`mt-4`}>
       <MapView style={{ width, height }} initialRegion={initialRegion}>
-        <MapViewDirections
+        {/* <MapViewDirections
           origin={value?.coordinateX}
           destination={value?.coordinateY}
           apikey="AIzaSyDMi7l9iptdGvFXZ4FgkBlmFquHvzZxpmU"
           strokeWidth={4}
           strokeColor="#0C3248"
-        />
+        /> */}
         <Marker
           draggable={select}
           coordinate={value?.coordinateX}
@@ -66,6 +66,17 @@ const MapViewSelectUbication = ({
           }
           image={{ uri: uri_meta_icon }}
         />
+        {/* <Marker
+          draggable={select}
+          coordinate={value?.coordinateY}
+          onDragEnd={(e) =>
+            setField?.(field || '', {
+              ...value,
+              coordinateY: e.nativeEvent.coordinate,
+            })
+          }
+          // image={{ uri: uri_meta_icon }}
+        /> */}
       </MapView>
     </View>
   )

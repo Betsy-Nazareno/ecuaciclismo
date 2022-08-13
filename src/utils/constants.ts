@@ -124,6 +124,10 @@ export const etiquetasPublicaciones = [
 
 export const etiquetasRutas = [
   {
+    value: 'inscritas',
+    nombre: 'Inscritas',
+  },
+  {
     value: 'disponibles',
     nombre: 'Disponibles',
   },
@@ -134,36 +138,5 @@ export const etiquetasRutas = [
   {
     value: 'sin_cupo',
     nombre: 'Sin Cupo',
-  },
-]
-
-//Esto se va a ir a la bd
-export const tiposRuta = [
-  {
-    value: 'montaña',
-    nombre: 'Montaña',
-  },
-  {
-    value: 'ciclopaseo',
-    nombre: 'Ciclopaseo',
-  },
-  {
-    value: 'familiar',
-    nombre: 'Familiar',
-  },
-]
-
-export const catalogoRequisitos = [
-  {
-    nombre: 'Nivel Intermedio',
-    value: '9109v',
-  },
-  {
-    nombre: 'Insumos médicos',
-    value: '9039c',
-  },
-  {
-    nombre: 'Alimentos',
-    value: '9as9c',
   },
 ]

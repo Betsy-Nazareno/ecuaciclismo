@@ -13,6 +13,7 @@ interface ButtonPrimaryProps {
   handleClick?: () => void
   style: string
   icon?: ImageSourcePropType
+  iconDimension?: number
 }
 
 const ButtonPrimary = ({
@@ -20,6 +21,7 @@ const ButtonPrimary = ({
   style,
   handleClick,
   icon,
+  iconDimension = 25,
 }: ButtonPrimaryProps) => {
   return (
     <TouchableHighlight
@@ -36,7 +38,11 @@ const ButtonPrimary = ({
         {icon && (
           <Image
             source={icon}
-            style={{ width: 25, height: 25, marginLeft: 12 }}
+            style={{
+              width: iconDimension,
+              height: iconDimension,
+              marginLeft: 12,
+            }}
           />
         )}
       </View>

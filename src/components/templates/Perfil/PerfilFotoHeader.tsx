@@ -8,8 +8,12 @@ import {
 } from '../../../utils/constants'
 import RoundedButtonIcon from '../../atomos/RoundedButtonIcon'
 import { CustomText } from '../../atomos/CustomText'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { RootStackParamList, Screens } from '../../../models/Screens.types'
 
 const PerfilFotoHeader = () => {
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, Screens>>()
   return (
     <>
       <View style={tw`relative mb-6`}>
@@ -20,9 +24,7 @@ const PerfilFotoHeader = () => {
         />
         <RoundedButtonIcon
           src={require('../../../../assets/edit_white_icon.png')}
-          handleClick={() => {
-            return
-          }}
+          handleClick={() => navigation.navigate('PerfilFormulario')}
           style="absolute -bottom-6 right-2 w-12 h-12"
           dimension={27}
         />

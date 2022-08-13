@@ -1,27 +1,13 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import {
-  View,
-  StyleSheet,
-  Image,
-  ImageSourcePropType,
-  Text,
-} from 'react-native'
-import { TEXT_COLORS } from '../../utils/constants'
+import { View, Image, ImageSourcePropType } from 'react-native'
 
 interface ImageScaleColorProps {
   scale: 'gray' | 'red' | 'none'
   image: ImageSourcePropType
-  colorBanda: string
-  label: string
 }
 
-const ImageScaleColor = ({
-  scale,
-  image,
-  colorBanda,
-  label,
-}: ImageScaleColorProps) => {
+const ImageScaleColor = ({ scale, image }: ImageScaleColorProps) => {
   const getTintColor = () => {
     switch (scale) {
       case 'gray':
@@ -54,21 +40,8 @@ const ImageScaleColor = ({
           top: 0,
         }}
       />
-      <View
-        style={tw`absolute bottom-1 w-full h-4 ${colorBanda} bg-[#e6e6e6] bg-opacity-80`}
-      >
-        <Text
-          style={tw`${TEXT_COLORS.DARK_BLUE} font-semibold text-xs text-center`}
-        >
-          {label}
-        </Text>
-      </View>
     </View>
   )
 }
 
 export default ImageScaleColor
-
-const styles = StyleSheet.create({
-  container: {},
-})

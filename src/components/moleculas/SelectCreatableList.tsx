@@ -35,12 +35,21 @@ const SelectCreatableList = ({
     )
   }
   return (
-    <View style={tw``}>
-      <SelectInput
-        values={values}
-        setValuesSelected={setValuesSelected}
-        placeholder={placeholder}
-      />
+    <View>
+      <View
+        style={{
+          borderWidth: 1,
+          borderColor: '#e6e6e6',
+          borderStyle: 'solid',
+          borderRadius: 10,
+        }}
+      >
+        <SelectInput
+          values={values}
+          setValuesSelected={setValuesSelected}
+          placeholder={placeholder}
+        />
+      </View>
       <ErrorMessage name={field} render={FieldError} />
       <View style={tw`mt-2 mx-3`}>
         {selectedValues?.map((value) => renderItem(value))}

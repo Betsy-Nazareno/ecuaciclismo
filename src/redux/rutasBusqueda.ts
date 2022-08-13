@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { BuildFiltro } from '../models/Etiqueta.model'
+import { BuildUniqueFiltro } from '../models/Etiqueta.model'
 
 interface BusquedaRutas {
-  buildFiltros: BuildFiltro
+  buildFiltros: BuildUniqueFiltro
 }
 
 const initialState: BusquedaRutas = {
-  buildFiltros: { fecha: undefined, etiquetas: [] },
+  buildFiltros: { fecha: undefined, etiqueta: '' },
 }
 
 export const BusquedaRutas = createSlice({
@@ -18,14 +18,11 @@ export const BusquedaRutas = createSlice({
     },
     setEtiquetas: (state, action: PayloadAction<{ name: string }>) => {
       const { name } = action.payload
-      const { etiquetas } = state.buildFiltros
-      if (etiquetas?.includes(name)) {
-        const filteredEtiquetas = etiquetas.filter(
-          (etiqueta) => etiqueta !== name
-        )
-        state.buildFiltros.etiquetas = filteredEtiquetas
+      const { etiqueta } = state.buildFiltros
+      if (etiqueta === name) {
+        state.buildFiltros.etiqueta = ''
       } else {
-        state.buildFiltros.etiquetas = [...(etiquetas || []), name]
+        state.buildFiltros.etiqueta = name
       }
     },
   },

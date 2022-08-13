@@ -6,7 +6,7 @@ import { WIDTH_DIMENSIONS } from '../../../utils/constants'
 import TitleWithDivider from '../../moleculas/TitleWithDivider'
 import Carousel from 'react-native-carousel-loop/lib'
 
-const RutaFotos = () => {
+const RutaFotos = ({ fotos }: any) => {
   return (
     <RoundedWhiteBaseTemplate shadow={false}>
       <TitleWithDivider label="Galería" />
@@ -20,14 +20,13 @@ const RutaFotos = () => {
             borderRadius: 20 / 2,
           }}
         >
-          <Image
-            source={require('../../../../assets/rutaa1.png')}
-            style={{ width: WIDTH_DIMENSIONS * 0.86, height: 250 }}
-          />
-          <Image
-            source={require('../../../../assets/rutaa2.png')}
-            style={{ width: WIDTH_DIMENSIONS * 0.86, height: 250 }}
-          />
+          {fotos?.map((foto: any, index: number) => (
+            <Image
+              key={index}
+              source={{ uri: foto.link }}
+              style={{ width: WIDTH_DIMENSIONS * 0.86, height: 250 }}
+            />
+          ))}
         </Carousel>
       </View>
     </RoundedWhiteBaseTemplate>

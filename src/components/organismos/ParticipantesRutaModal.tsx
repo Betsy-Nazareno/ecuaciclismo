@@ -1,18 +1,17 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { Text, View, StyleSheet, Modal, Pressable } from 'react-native'
+import { Text, View, Modal, Pressable } from 'react-native'
 import { CustomText } from '../atomos/CustomText'
-import { BACKGROUND_COLORS, TEXT_COLORS } from '../../utils/constants'
+import { TEXT_COLORS } from '../../utils/constants'
 import Ruler from '../atomos/Ruler'
-import Gap from '../atomos/Gap'
-import DetalleUsuario from '../moleculas/DetalleUsuario'
 import { ScrollView } from 'react-native-gesture-handler'
 import { User } from '../../models/User'
+import DetalleUsuarioColaboracion from '../moleculas/DetalleUsuarioColaboracion'
 
 interface ParticipantesRutaModalProps {
   visible: boolean
   setVisible: (visible: boolean) => void
-  participantes: User[]
+  participantes: Partial<User>[]
 }
 
 const ParticipantesRutaModal = ({
@@ -54,12 +53,7 @@ const ParticipantesRutaModal = ({
           <View style={tw`h-52`}>
             <ScrollView>
               {participantes.map((user, index) => (
-                <Gap py="3" key={index}>
-                  <DetalleUsuario
-                    nombre={`${user.first_name} ${user.last_name}`}
-                    hasDate={false}
-                  />
-                </Gap>
+                <DetalleUsuarioColaboracion user={user} key={index} />
               ))}
             </ScrollView>
           </View>
@@ -70,7 +64,3 @@ const ParticipantesRutaModal = ({
 }
 
 export default ParticipantesRutaModal
-
-const styles = StyleSheet.create({
-  container: {},
-})
