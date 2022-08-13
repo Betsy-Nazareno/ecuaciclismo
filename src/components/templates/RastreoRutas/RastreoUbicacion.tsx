@@ -8,13 +8,16 @@ import { HEIGHT_DIMENSIONS, WIDTH_DIMENSIONS } from '../../../utils/constants'
 import MapViewDirections from 'react-native-maps-directions'
 import RoundedButtonIcon from '../../atomos/RoundedButtonIcon'
 import RutaModal from '../../organismos/RutaModal'
+import * as TaskManager from 'expo-task-manager'
+
+const TASK_NAME = 'BACKGROUND_LOCATION_TASK'
 
 const RastreoUbicacion = () => {
   const [location, setLocation] = React.useState<LocationObject>()
   const [initialLocation, setinitialLocation] = React.useState<LocationObject>()
   const [errorMsg, setErrorMsg] = React.useState('')
+  const [lista, setLista] = React.useState<number[]>([])
   const [showModal, setShowModal] = React.useState(false)
-  const [showModal2, setShowModal2] = React.useState(false)
   const ASPECT_RATIO = WIDTH_DIMENSIONS / HEIGHT_DIMENSIONS
 
   React.useEffect(() => {
@@ -24,40 +27,66 @@ const RastreoUbicacion = () => {
         setErrorMsg('Permission to access location was denied')
         return errorMsg
       }
-
-      const location = await Location.getCurrentPositionAsync({})
-      setinitialLocation(location)
-
-      await Location.watchPositionAsync(
-        { accuracy: 5, distanceInterval: 1 },
-        (location) => {
-          setLocation(location)
-        }
-      )
+      await startForegroundUpdate()
+      await startBackgroundLocation()
     })()
   }, [])
 
-  React.useEffect(() => {
-    if (
-      coordinateY.latitude === location?.coords.latitude &&
-      coordinateY.longitude === location?.coords.longitude
-    ) {
-      // navigation.navigate('FinalRuta')
-      setShowModal2(true)
+  const startForegroundUpdate = async () => {
+    await Location.getBackgroundPermissionsAsync()
+
+    const location = await Location.getCurrentPositionAsync({})
+    setinitialLocation(location)
+
+    await Location.watchPositionAsync(
+      { accuracy: 5, distanceInterval: 1 },
+      (location) => {
+        setLocation(location)
+      }
+    )
+  }
+
+  const startBackgroundLocation = async () => {
+    const isTaskDefined = await TaskManager.isTaskDefined(TASK_NAME)
+    if (!isTaskDefined) {
+      return
     }
-  }, [location])
 
-  // let text = 'Waiting..'
-  // if (errorMsg) {
-  //   text = errorMsg
-  // } else if (location) {
-  //   text = JSON.stringify(location)
-  // }
+    // Don't track if it is already running in background
+    const hasStarted = await Location.hasStartedLocationUpdatesAsync(TASK_NAME)
+    if (hasStarted) {
+      return
+    }
 
-  // const coordinateY = {
-  //   latitude: -2.1453200715782175,
-  //   longitude: -79.89056378602983,
-  // }
+    await Location.startLocationUpdatesAsync(TASK_NAME, {
+      // For better logs, we set the accuracy to the most sensitive option
+      accuracy: Location.Accuracy.BestForNavigation,
+      // Make sure to enable this notification if you want to consistently track in the background
+      showsBackgroundLocationIndicator: true,
+      foregroundService: {
+        notificationTitle: 'Location',
+        notificationBody: 'Location tracking in background',
+        notificationColor: '#fff',
+      },
+    })
+  }
+
+  TaskManager.defineTask(TASK_NAME, async ({ data, error }) => {
+    if (error) {
+      console.error(error)
+      return
+    }
+    if (data) {
+      const { locations } = data as any
+      const [location] = locations
+
+      if (location) {
+        setLocation(location)
+        setLista([...lista, 1])
+        // Do something with location...
+      }
+    }
+  })
 
   const coordinateY = {
     latitude: -2.1288014497416903,
@@ -97,19 +126,15 @@ const RastreoUbicacion = () => {
             />
 
             <Marker
-              // draggable={true}
               coordinate={{
                 longitude: location.coords.longitude,
                 latitude: location.coords.latitude,
               }}
-              // onDragEnd={(prop) => console.log(prop.nativeEvent.coordinate)}
               image={require('../../../../assets/bicicleta_marker.png')}
             />
             <Marker
-              // draggable={true}
               coordinate={coordinateY}
               image={require('../../../../assets/meta.png')}
-              // onDragEnd={(prop) => console.log(prop.nativeEvent.coordinate)}
             />
           </>
         )}
@@ -121,11 +146,9 @@ const RastreoUbicacion = () => {
         />
       </View>
       {showModal && <RutaModal visible={showModal} setVisible={setShowModal} />}
-      {showModal2 && (
-        <View style={tw`bg-red-200 top-0 absolute`}>
-          <Text>Haz llegado!</Text>
-        </View>
-      )}
+      {lista?.map((item, index) => (
+        <Text key={index}>{item}</Text>
+      ))}
     </View>
   )
 }
