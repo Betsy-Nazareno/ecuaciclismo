@@ -27,14 +27,18 @@ const RastreoUbicacion = () => {
         setErrorMsg('Permission to access location was denied')
         return errorMsg
       }
+      const { status: statusBackground } =
+        await Location.requestBackgroundPermissionsAsync()
+      if (statusBackground !== 'granted') {
+        setErrorMsg('Permission to access location on background was denied')
+        return errorMsg
+      }
       await startForegroundUpdate()
       await startBackgroundLocation()
     })()
   }, [])
 
   const startForegroundUpdate = async () => {
-    await Location.getBackgroundPermissionsAsync()
-
     const location = await Location.getCurrentPositionAsync({})
     setinitialLocation(location)
 
@@ -75,7 +79,6 @@ const RastreoUbicacion = () => {
       if (location) {
         setLocation(location)
         setLista([...lista, 1])
-        // Do something with location...
       } else {
         setLista([...lista, 0])
       }
