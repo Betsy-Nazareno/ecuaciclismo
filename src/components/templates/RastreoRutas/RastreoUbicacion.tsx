@@ -16,12 +16,11 @@ const TASK_NAME = 'BACKGROUND_LOCATION_TASK'
 
 const RastreoUbicacion = () => {
   const [location, setLocation] = React.useState<LocationObject>()
-  const [initialLocation, setinitialLocation] = React.useState<LocationObject>()
   const [errorMsg, setErrorMsg] = React.useState('')
   const [infParticipantes, setinfParticipantes] = React.useState<any>([])
   const [showModal, setShowModal] = React.useState(false)
   const { authToken } = useSelector((state: RootState) => state.user)
-  const ASPECT_RATIO = WIDTH_DIMENSIONS / HEIGHT_DIMENSIONS
+
   React.useEffect(() => {
     ;(async () => {
       const { status } = await Location.requestForegroundPermissionsAsync()
@@ -89,35 +88,15 @@ const RastreoUbicacion = () => {
     })
   }
 
-  const coordinateY = {
-    latitude: -2.1288014497416903,
-    longitude: -79.95376970618963,
-  }
-
-  const latDelta = (location?.coords.latitude || 0) - coordinateY.latitude
-  const lngDelta = latDelta * ASPECT_RATIO
-
   return (
     <View style={tw`relative`}>
-      <MapView
-        style={{ width: WIDTH_DIMENSIONS, height: HEIGHT_DIMENSIONS }}
-        initialRegion={
-          location
-            ? {
-                latitude: location?.coords.latitude,
-                longitude: location?.coords.longitude,
-                latitudeDelta: latDelta,
-                longitudeDelta: lngDelta,
-              }
-            : undefined
-        }
-      >
+      <MapView style={{ width: WIDTH_DIMENSIONS, height: HEIGHT_DIMENSIONS }}>
         {location && (
           <>
             <Marker
               coordinate={{
-                longitude: location.coords.longitude,
-                latitude: location.coords.latitude,
+                longitude: location?.coords?.longitude,
+                latitude: location?.coords?.latitude,
               }}
             >
               <Image
@@ -132,10 +111,9 @@ const RastreoUbicacion = () => {
                   longitude: participante?.longitude || 0,
                   latitude: participante?.latitude || 0,
                 }}
-                onDragEnd={(prop) => console.log(prop.nativeEvent.coordinate)}
               >
                 <Image
-                  source={{ uri: participante.foto }}
+                  source={{ uri: participante?.foto }}
                   style={{ width: 35, height: 35, borderRadius: 100 / 2 }}
                 />
               </Marker>
