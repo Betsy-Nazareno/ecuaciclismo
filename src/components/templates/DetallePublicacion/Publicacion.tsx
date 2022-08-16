@@ -73,7 +73,6 @@ const PublicacionDetalle = ({ token }: PublicacionProps) => {
               style={{
                 width: WIDTH_DIMENSIONS * 0.85,
                 height: 250,
-                // borderRadius: 20 / 2,
                 backgroundColor: '#fff',
               }}
               resizeMode="cover"

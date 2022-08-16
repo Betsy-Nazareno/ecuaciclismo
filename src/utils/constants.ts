@@ -88,6 +88,7 @@ export const FOLDERS_STORAGE = {
 }
 
 export const MIME_TYPES = {
+  IMAGEN: 'imagen',
   IMAGE: 'image',
   VIDEO: 'video',
   PDF: 'application',

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View, ImageSourcePropType } from 'react-native'
+import { View, ImageSourcePropType, Text, Image } from 'react-native'
 import tw from 'twrnc'
 import { Consejo } from '../../../models/Consejo.model'
 import InformacionUsuario from '../../atomos/InformacionUsuario'
@@ -33,7 +33,15 @@ const TarjetaConsejo = ({ consejoProp }: TarjetaConsejoProps) => {
           firstName={consejo?.first_name || ''}
           lastName={consejo?.last_name || ''}
         />
-        <MenuConsejoDia consejo={consejo as Consejo} />
+        <View style={tw`flex flex-row`}>
+          {consejo?.fijado ? (
+            <Image
+              source={require('../../../../assets/pin_gold.png')}
+              style={{ width: 15, height: 15, marginTop: 10, marginRight: 4 }}
+            />
+          ) : null}
+          <MenuConsejoDia consejo={consejo as Consejo} />
+        </View>
       </View>
 
       <Ruler style="w-full bg-gray-200 mb-2" />

@@ -29,6 +29,7 @@ const PreviewDocuments = ({ values, handleDelete }: PreviewDocumentsProps) => {
     const typeFile = file.mimeType?.split('/')[0] || file.tipo
     const uri = file.uri || file.link
     switch (typeFile) {
+      case MIME_TYPES.IMAGEN:
       case MIME_TYPES.IMAGE:
         return (
           <Image

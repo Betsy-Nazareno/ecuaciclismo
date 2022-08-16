@@ -5,7 +5,7 @@ import DetalleUsuario from './DetalleUsuario'
 import { User } from '../../models/User'
 
 interface DetalleUsuarioColaboracionProps {
-  user: Partial<User>
+  user: any
 }
 
 const DetalleUsuarioColaboracion = ({
@@ -34,29 +34,15 @@ const DetalleUsuarioColaboracion = ({
       </View>
       {display && (
         <View style={tw`ml-16`}>
-          <View style={tw`flex flex-row items-center py-1`}>
-            <Image
-              source={require('../../../assets/check_filled_icon.png')}
-              style={{ width: 15, height: 15, marginRight: 8 }}
-            />
-            <Text>Bomba</Text>
-          </View>
-
-          <View style={tw`flex flex-row items-center py-1`}>
-            <Image
-              source={require('../../../assets/check_filled_icon.png')}
-              style={{ width: 15, height: 15, marginRight: 8 }}
-            />
-            <Text>Parches</Text>
-          </View>
-
-          <View style={tw`flex flex-row items-center py-1`}>
-            <Image
-              source={require('../../../assets/check_filled_icon.png')}
-              style={{ width: 15, height: 15, marginRight: 8 }}
-            />
-            <Text>Agua Oxigenada</Text>
-          </View>
+          {user.colaboraciones?.map((colaboracion: string, index: number) => (
+            <View style={tw`flex flex-row items-center py-1`} key={index}>
+              <Image
+                source={require('../../../assets/check_filled_icon.png')}
+                style={{ width: 15, height: 15, marginRight: 8 }}
+              />
+              <Text>{colaboracion}</Text>
+            </View>
+          ))}
         </View>
       )}
     </View>

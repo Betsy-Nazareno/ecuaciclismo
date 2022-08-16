@@ -25,8 +25,11 @@ export interface Ruta {
   fecha_inicio?: Date
   fecha_fin?: Date
   requisitos: string[]
+  requisitosValues?: any[]
   colaboraciones: string[]
-  tipoRuta: any
+  colaboracionesValues?: any[]
+  tipoRuta: any[]
+  tipoRutaValues?: any[]
   ubicacion: RutaCoordinadas
   fotos: any
   token?: string
@@ -35,6 +38,7 @@ export interface Ruta {
   inscrito?: boolean
   participantes?: Partial<User>[]
   aprobado?: boolean
+  motivo_cancelacion?: string
 }
 
 export interface Estado {
@@ -42,6 +46,7 @@ export interface Estado {
   estado_finalizado?: boolean
   estado_en_curso?: boolean
   estado_sin_cupos?: boolean
+  estado_cancelado?: boolean
   prioridad: number
 }
 

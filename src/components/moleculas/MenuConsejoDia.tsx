@@ -9,7 +9,11 @@ import { RootState } from '../../redux/store'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../models/Screens.types'
 import { setHasModified } from '../../redux/consejo'
-import { eliminarConsejo } from '../../lib/services/consejos.services'
+import {
+  despinnearConsejo,
+  eliminarConsejo,
+  pinnearConsejo,
+} from '../../lib/services/consejos.services'
 
 interface MenuConsejoDiaProps {
   consejo: Consejo
@@ -36,6 +40,18 @@ const MenuConsejoDia = ({ consejo }: MenuConsejoDiaProps) => {
     setDisplayMenu(false)
   }
 
+  const handlePin = async () => {
+    const { token } = consejo
+    if (authToken && token) {
+      if (consejo.fijado) {
+        await despinnearConsejo(token, authToken)
+      } else {
+        await pinnearConsejo(token, authToken)
+      }
+    }
+    dispatch(setHasModified({ hasModified: !hasModified }))
+  }
+
   return (
     <AdminValidator>
       <Pressable onPress={() => setDisplayMenu(!displayMenu)}>
@@ -48,9 +64,10 @@ const MenuConsejoDia = ({ consejo }: MenuConsejoDiaProps) => {
       </Pressable>
       {displayMenu && (
         <ConsejosOpcionesMenu
-          setDisplay={setDisplayMenu}
           handleEdit={changeScreen}
           handleDelete={deleteConsejo}
+          handlePin={handlePin}
+          pinLabel={consejo.fijado ? 'Desfijar' : 'Fijar'}
         />
       )}
     </AdminValidator>

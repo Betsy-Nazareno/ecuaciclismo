@@ -39,17 +39,17 @@ const Drawer = createDrawerNavigator()
 const Main = () => {
   const { authToken } = useSelector((state: RootState) => state.user)
   const { setUser, isLoading } = useAuthentication()
-  const [showSafeHome, setShowSafeHome] = useState(false)
+  // const [showSafeHome, setShowSafeHome] = useState(false)
 
   useEffect(() => {
     setUser()
   }, [])
 
-  useEffect(() => {
-    setTimeout(() => {
-      setShowSafeHome(true)
-    }, 3000)
-  }, [])
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setShowSafeHome(true)
+  //   }, 3000)
+  // }, [])
 
   const AuthStack = () => {
     return (
@@ -134,7 +134,7 @@ const Main = () => {
     <NavigationContainer>
       {authToken ? (
         <>
-          <SafeHomeModal visible={showSafeHome} setVisible={setShowSafeHome} />
+          {/* <SafeHomeModal visible={showSafeHome} setVisible={setShowSafeHome} /> */}
           <MainStack />
         </>
       ) : (

@@ -12,7 +12,7 @@ import { RootState } from '../../../redux/store'
 import { configureBgTask } from '../../../backgroundTasks/locationTask'
 import { getDatabase, ref, onValue } from 'firebase/database'
 
-const TASK_NAME = 'BACKGROUND_LOCATION_TASK'
+// const TASK_NAME = 'BACKGROUND_LOCATION_TASK'
 
 const RastreoUbicacion = () => {
   const [location, setLocation] = React.useState<LocationObject>()
@@ -35,7 +35,7 @@ const RastreoUbicacion = () => {
         return errorMsg
       }
       // await startForegroundUpdate()
-      await startBackgroundLocation()
+      // await startBackgroundLocation()
     })()
   }, [])
 
@@ -74,19 +74,19 @@ const RastreoUbicacion = () => {
   //   )
   // }
 
-  const startBackgroundLocation = async () => {
-    await Location.startLocationUpdatesAsync(TASK_NAME, {
-      accuracy: 5,
-      timeInterval: 5000,
-      showsBackgroundLocationIndicator: true,
-      distanceInterval: 5000,
-      foregroundService: {
-        notificationTitle: 'Tracking your location',
-        notificationBody: "Let's rock and roll",
-        notificationColor: '#008000',
-      },
-    })
-  }
+  // const startBackgroundLocation = async () => {
+  //   await Location.startLocationUpdatesAsync(TASK_NAME, {
+  //     accuracy: 5,
+  //     timeInterval: 5000,
+  //     showsBackgroundLocationIndicator: true,
+  //     distanceInterval: 5000,
+  //     foregroundService: {
+  //       notificationTitle: 'Tracking your location',
+  //       notificationBody: "Let's rock and roll",
+  //       notificationColor: '#008000',
+  //     },
+  //   })
+  // }
 
   return (
     <View style={tw`relative`}>

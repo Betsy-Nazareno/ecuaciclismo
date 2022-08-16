@@ -93,15 +93,36 @@ export const guardarRuta = async (authToken: string, ruta: Ruta) => {
   }
 }
 
+export const editarRuta = async (
+  authToken: string,
+  ruta: Ruta,
+  tokenRuta: string
+) => {
+  try {
+    const fotos = await guardarGaleriaFotos(ruta.fotos || [])
+    await axios({
+      method: 'POST',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/editar_ruta/',
+      data: {
+        ...ruta,
+        token_ruta: tokenRuta,
+        fotos,
+        fecha_inicio: ruta.fecha_inicio?.toISOString().split('.')[0],
+        fecha_fin: ruta.fecha_fin?.toISOString().split('.')[0],
+      },
+      headers: { Authorization: 'Token ' + authToken },
+    })
+  } catch (e) {
+    console.error(e)
+  }
+}
+
 const guardarGaleriaFotos = async (fotos: DocumentResult[]) => {
   const paths = []
   for (let i = 0; i < fotos.length; i++) {
-    let publicLink = ''
-    const imagen = fotos[i] as DocumentResult
-    if (imagen.type === 'cancel') {
-      return
-    }
-    if (imagen && isDocumentResultType(imagen)) {
+    const imagen = fotos[i] as any
+    let publicLink = imagen.link || ''
+    if (imagen && isDocumentResultType(imagen) && imagen.type !== 'cancel') {
       publicLink = await guardarArchivo(
         FOLDERS_STORAGE.RUTAS,
         imagen.name,
@@ -110,10 +131,32 @@ const guardarGaleriaFotos = async (fotos: DocumentResult[]) => {
     }
     paths.push({
       link: publicLink,
-      path: `${FOLDERS_STORAGE.RUTAS}/${imagen.name}`,
+      path: imagen.path || `${FOLDERS_STORAGE.RUTAS}/${imagen.name}`,
     })
   }
   return paths
+}
+
+const converterRuta = (ruta: any) => {
+  const { colaboraciones, requisitos, tipoRuta } = ruta
+  const parseColaboraciones = colaboraciones.map((colaboracion: any) => {
+    return colaboracion.token
+  })
+  const parseRequisitos = requisitos.map((requisito: any) => {
+    return requisito.token
+  })
+  const parseTipos = tipoRuta.map((tipo: any) => {
+    return tipo.token
+  })
+  return {
+    ...ruta,
+    colaboraciones: parseColaboraciones,
+    colaboracionesValues: colaboraciones,
+    requisitos: parseRequisitos,
+    requisitosValues: requisitos,
+    tipoRuta: parseTipos,
+    tipoRutaValues: tipoRuta,
+  }
 }
 
 export const getRutaById = async (authToken: string, tokenRuta: string) => {
@@ -129,7 +172,7 @@ export const getRutaById = async (authToken: string, tokenRuta: string) => {
       },
     })
     const [ruta] = response.data?.data || []
-    return ruta
+    return converterRuta(ruta)
   } catch (e) {
     console.error(e)
   }
@@ -170,13 +213,14 @@ export const eliminarRuta = async (authToken: string, tokenRuta: string) => {
 
 export const inscribirUsuarioEnRuta = async (
   authToken: string,
-  tokenRuta: string
+  tokenRuta: string,
+  colaboraciones: string[]
 ) => {
   try {
     await axios({
       method: 'POST',
       url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/inscribirse_ruta/',
-      data: { token: tokenRuta },
+      data: { token: tokenRuta, colaboraciones },
       headers: {
         Authorization: 'Token ' + authToken,
         'Content-Type': 'application/json',
@@ -196,6 +240,26 @@ export const cancelarInscripcionUsuario = async (
       method: 'POST',
       url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/cancelar_inscripcion/',
       data: { token: tokenRuta },
+      headers: {
+        Authorization: 'Token ' + authToken,
+        'Content-Type': 'application/json',
+      },
+    })
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const cancelarRutas = async (
+  authToken: string,
+  tokenRuta: string,
+  motivo: string
+) => {
+  try {
+    await axios({
+      method: 'POST',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/cancelar_ruta/',
+      data: { token: tokenRuta, motivo_cancelacion: motivo },
       headers: {
         Authorization: 'Token ' + authToken,
         'Content-Type': 'application/json',

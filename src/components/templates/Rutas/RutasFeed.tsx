@@ -35,6 +35,7 @@ const RutasFeed = () => {
   const rutas = rutasFeed
     ?.slice()
     ?.sort((a, b) => (a.estado?.prioridad || 0) - (b.estado?.prioridad || 0))
+
   return (
     <View style={tw`px-2`}>
       <RutasFeedHeader />

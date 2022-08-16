@@ -15,6 +15,7 @@ import Spinner from '../../atomos/Spinner'
 import SecondaryButton from '../../atomos/SecondaryButton'
 import SelectCreatableBatches from '../../moleculas/SelectCreatableBatches'
 import {
+  editarRuta,
   getColaboracionesRutas,
   getRequisitos,
   getTiposRuta,
@@ -25,11 +26,17 @@ import { RootState } from '../../../redux/store'
 import { Ruta } from '../../../models/Rutas'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
-import { getAdminTokens } from '../../../lib/services/notifications.services'
+import {
+  getAdminTokens,
+  getCiclistasToken,
+} from '../../../lib/services/notifications.services'
 import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
 import { capitalize } from '../../../utils/capitalizeText'
 
-const FormularioRutas = () => {
+interface FormularioRutasProp {
+  rutaProp: Ruta
+}
+const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
   const { authToken, user } = useSelector((state: RootState) => state.user)
   const [isLoading, setIsLoading] = React.useState(false)
   const [requisitosCatalog, setRequisitosCatalog] = React.useState([])
@@ -38,14 +45,21 @@ const FormularioRutas = () => {
   const { sendPushNotification } = usePermissionsNotifications()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
+
+  const converterDates = (date: any) => {
+    if (!date) return undefined
+    const [fecha] = date.split(' ')
+    return new Date(fecha)
+  }
+
   const initialValues = {
-    nombre: '',
-    cupos_disponibles: undefined,
-    requisitos: [],
-    tipoRuta: [],
-    fotos: [],
-    lugar: '',
-    ubicacion: {
+    nombre: rutaProp?.nombre || '',
+    cupos_disponibles: rutaProp?.cupos_disponibles || undefined,
+    requisitos: rutaProp?.requisitos || [],
+    tipoRuta: rutaProp?.tipoRuta || [],
+    fotos: rutaProp?.fotos || [],
+    lugar: rutaProp?.lugar || '',
+    ubicacion: rutaProp?.ubicacion || {
       coordinateX: {
         latitude: -2.1538019492930163,
         longitude: -79.88844282925129,
@@ -55,10 +69,10 @@ const FormularioRutas = () => {
         longitude: -79.89056378602983,
       },
     },
-    fecha_inicio: undefined,
-    fecha_fin: undefined,
-    descripcion: '',
-    colaboraciones: [],
+    fecha_inicio: converterDates(rutaProp?.fecha_inicio) || undefined,
+    fecha_fin: converterDates(rutaProp?.fecha_fin) || undefined,
+    descripcion: rutaProp?.descripcion || '',
+    colaboraciones: rutaProp?.colaboraciones || [],
   }
 
   React.useEffect(() => {
@@ -83,10 +97,25 @@ const FormularioRutas = () => {
     })
   }
 
+  const sendNotificationToUsers = async () => {
+    if (!authToken) return
+    const tokens = await getCiclistasToken(authToken)
+    await sendPushNotification({
+      tokens,
+      title: 'Ruta Modificada',
+      body: `Se han modificado los detalles de la ruta ${rutaProp.nombre}. Por favor, revisa esta actividad`,
+    })
+  }
+
   const handleSubmit = async (prop: Ruta) => {
     setIsLoading(true)
     if (authToken) {
-      await guardarRuta(authToken, prop)
+      if (rutaProp && rutaProp.token) {
+        await editarRuta(authToken, prop, rutaProp.token)
+        // await sendNotificationToUsers()
+      } else {
+        await guardarRuta(authToken, prop)
+      }
       if (!user?.admin) {
         await sendNotificationToAdmins()
       }
@@ -294,7 +323,9 @@ const FormularioRutas = () => {
               <Spinner />
             ) : (
               <SecondaryButton
-                label={user?.admin ? 'Publicar' : 'Proponer'}
+                label={
+                  rutaProp ? 'Guardar' : user?.admin ? 'Publicar' : 'Proponer'
+                }
                 handleClick={handleSubmit}
                 style={`${BACKGROUND_COLORS.PRIMARY_BLUE} w-6/12 mx-auto mt-6`}
               />
