@@ -23,7 +23,7 @@ interface InputProps {
   stylesProp?: string
   stylesInput?: string
   textAlignVertical?: 'auto' | 'top' | 'bottom' | 'center' | undefined
-  value?: string
+  value?: string | number
   setValue?: (value: string) => void
 }
 
@@ -63,7 +63,7 @@ const Input = ({
           onChangeText={(value) => setValue?.(value)}
           multiline={multiline}
           numberOfLines={numberOfLines}
-          value={value}
+          value={value ? `${value}` : ''}
         />
       </View>
       {name && <ErrorMessage name={name} render={FieldError} />}

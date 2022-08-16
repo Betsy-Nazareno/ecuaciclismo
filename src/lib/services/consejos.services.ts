@@ -118,3 +118,29 @@ export const eliminarConsejo = async (token: string, tokenConsejo: string) => {
     console.error(e)
   }
 }
+
+export const despinnearConsejo = async (token: string, authtoken: string) => {
+  try {
+    await axios({
+      method: 'POST',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/remove_fijar_consejo/',
+      headers: { Authorization: 'Token ' + authtoken },
+      data: { token_consejo: token },
+    })
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const pinnearConsejo = async (token: string, authtoken: string) => {
+  try {
+    await axios({
+      method: 'POST',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/fijar_consejo/',
+      headers: { Authorization: 'Token ' + authtoken },
+      data: { token_consejo: token },
+    })
+  } catch (e) {
+    console.error(e)
+  }
+}

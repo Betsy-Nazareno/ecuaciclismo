@@ -29,6 +29,7 @@ import * as FileSystem from 'expo-file-system'
 import Gap from '../../atomos/Gap'
 import EmptyPublicacionDetalle from '../../organismos/EmptyPublicacionDetalle'
 import PermissionWrapper from '../PermissionWrapper'
+import { CustomText } from '../../atomos/CustomText'
 
 interface PublicacionProps {
   token: string
@@ -70,9 +71,8 @@ const PublicacionDetalle = ({ token }: PublicacionProps) => {
               key={index}
               source={{ uri: file.link }}
               style={{
-                width: WIDTH_DIMENSIONS * 0.7,
+                width: WIDTH_DIMENSIONS * 0.85,
                 height: 250,
-                borderRadius: 20 / 2,
                 backgroundColor: '#fff',
               }}
               resizeMode="cover"
@@ -83,7 +83,7 @@ const PublicacionDetalle = ({ token }: PublicacionProps) => {
             <VideoPlayer
               key={index}
               style={{
-                width: WIDTH_DIMENSIONS * 0.7,
+                width: WIDTH_DIMENSIONS * 0.85,
                 height: 250,
                 videoBackgroundColor: '#fff',
               }}
@@ -117,11 +117,9 @@ const PublicacionDetalle = ({ token }: PublicacionProps) => {
     const items = multimediaResult.map((file, index) => {
       if (file.tipo === MIME_TYPES.AUDIO) {
         return (
-          <NoteVoice
-            key={index}
-            uriRecord={file.link}
-            width={WIDTH_DIMENSIONS * 0.7}
-          />
+          <RoundedWhiteBaseTemplate shadow={false} key={index}>
+            <NoteVoice uriRecord={file.link} width={WIDTH_DIMENSIONS * 0.75} />
+          </RoundedWhiteBaseTemplate>
         )
       }
     })
@@ -168,7 +166,7 @@ const PublicacionDetalle = ({ token }: PublicacionProps) => {
           </PermissionWrapper>
         </View>
 
-        <View style={tw`pt-3 px-2 relative pb-6 z-10`}>
+        <View style={tw`pt-3 px-2 relative z-10`}>
           <View style={tw`z-40`}>
             <DetallePublicador
               nombre={`${publicacion?.first_name} ${publicacion?.last_name}`}
@@ -176,31 +174,28 @@ const PublicacionDetalle = ({ token }: PublicacionProps) => {
             />
           </View>
 
-          <VerticalDivider style="top-4" />
+          <View style={tw` mt-6`}>
+            <Carousel
+              swipe
+              isLooped
+              bullets
+              style={{
+                width: WIDTH_DIMENSIONS * 0.85,
+                height: 250,
+              }}
+            >
+              {diplayImagesAndVideos(publicacion?.multimediaResult || [])}
+            </Carousel>
 
-          <View style={tw`ml-10 mt-6`}>
-            <View style={tw`ml-2`}>
-              <Carousel
-                swipe
-                isLooped
-                pageInfo
-                pageInfoTextStyle={{ color: '#000' }}
-                pageInfoBackgroundColor="rgba(242, 250, 255, 0.4)"
-                style={{
-                  width: WIDTH_DIMENSIONS * 0.7,
-                  height: 250,
-                  borderRadius: 20 / 2,
-                }}
+            <View style={tw`pt-4`}>
+              <CustomText
+                style={`text-base font-bold ${TEXT_COLORS.DARK_BLUE}`}
               >
-                {diplayImagesAndVideos(publicacion?.multimediaResult || [])}
-              </Carousel>
-            </View>
-
-            <View style={tw`pt-4 pl-4`}>
-              <Text style={tw`text-base font-bold ${TEXT_COLORS.DARK_BLUE}`}>
                 {publicacion?.titulo || ''}
-              </Text>
-              <Text>{publicacion?.descripcion}</Text>
+              </CustomText>
+              <Gap py="2">
+                <Text>{publicacion?.descripcion}</Text>
+              </Gap>
             </View>
 
             <View style={tw`mt-4`}>
@@ -209,33 +204,39 @@ const PublicacionDetalle = ({ token }: PublicacionProps) => {
             <View style={tw`mt-4`}>
               {displayDocuments(publicacion?.multimediaResult || [])}
             </View>
-            <View style={tw`mx-auto pt-2`}>
+
+            <View style={tw`mx-auto my-4`}>
               <Reacciones item={publicacion} type="Publicacion" />
             </View>
           </View>
         </View>
       </RoundedWhiteBaseTemplate>
 
-      {publicacion?.comentarios?.map((comentario, index) => (
-        <TarjetaComentarioPublicacion key={index} comentario={comentario} />
-      ))}
+      <View>
+        <VerticalDivider style="top-0 left-12 w-[2px]" />
+        {publicacion?.comentarios?.map((comentario, index) => (
+          <TarjetaComentarioPublicacion comentario={comentario} key={index} />
+        ))}
 
-      {!isAddingComent && (
-        <View style={tw``}>
-          <BotonAgregarComentario handleClick={() => setIsAddingComent(true)} />
-        </View>
-      )}
+        {!isAddingComent && (
+          <View style={tw``}>
+            <BotonAgregarComentario
+              handleClick={() => setIsAddingComent(true)}
+            />
+          </View>
+        )}
 
-      {isAddingComent && (
-        <View style={tw`pt-2`}>
-          <InputAgregarComentario
-            onSend={() => setIsAddingComent(!isAddingComent)}
-            nombreUsuario={`${user?.first_name} ${user?.last_name}`}
-            tokenUsuario={authToken || ''}
-            tokenPublicacion={publicacion?.token || ''}
-          />
-        </View>
-      )}
+        {isAddingComent && (
+          <View style={tw`pt-2`}>
+            <InputAgregarComentario
+              onSend={() => setIsAddingComent(!isAddingComent)}
+              nombreUsuario={`${user?.first_name} ${user?.last_name}`}
+              tokenUsuario={authToken || ''}
+              tokenPublicacion={publicacion?.token || ''}
+            />
+          </View>
+        )}
+      </View>
     </View>
   )
 }

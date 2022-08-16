@@ -24,6 +24,14 @@ import ConsejoDetalle from './ConsejoDetalle'
 import Publicaciones from './Publicaciones'
 import DetallePublicacion from './DetallePublicacion'
 import PublicacionFormulario from './PublicacionFormulario'
+import RutasFormulario from './RutasFormulario'
+import DetalleRuta from './DetalleRuta'
+import InicioRastreo from './InicioRastreo'
+import RastreoUbicacion from '../components/templates/RastreoRutas/RastreoUbicacion'
+import RutaIncompleta from './RutaIncompleta'
+import FinalRuta from './FinalRuta'
+import PerfilFormulario from './PerfilFormulario'
+// import SafeHomeModal from '../components/organismos/SafeHomeModal'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -31,16 +39,17 @@ const Drawer = createDrawerNavigator()
 const Main = () => {
   const { authToken } = useSelector((state: RootState) => state.user)
   const { setUser, isLoading } = useAuthentication()
+  // const [showSafeHome, setShowSafeHome] = useState(false)
 
   useEffect(() => {
-    let mounted = true
-    if (mounted) {
-      setUser()
-    }
-    return () => {
-      mounted = false
-    }
+    setUser()
   }, [])
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setShowSafeHome(true)
+  //   }, 3000)
+  // }, [])
 
   const AuthStack = () => {
     return (
@@ -71,10 +80,17 @@ const Main = () => {
         <Stack.Screen name="Publicaciones" component={Publicaciones} />
         <Stack.Screen name="NovedadFormulario" component={NovedadFormulario} />
         <Stack.Screen name="ConsejoFormulario" component={ConsejoFormulario} />
+        <Stack.Screen name="DetalleRuta" component={DetalleRuta} />
+        <Stack.Screen name="InicioRastreo" component={InicioRastreo} />
+        <Stack.Screen name="RastreoUbicacion" component={RastreoUbicacion} />
+        <Stack.Screen name="RutaIncompleta" component={RutaIncompleta} />
+        <Stack.Screen name="FinalRuta" component={FinalRuta} />
+        <Stack.Screen name="PerfilFormulario" component={PerfilFormulario} />
         <Stack.Screen
           name="PublicacionFormulario"
           component={PublicacionFormulario}
         />
+        <Stack.Screen name="RutasFormulario" component={RutasFormulario} />
         <Stack.Screen
           name="Inicio"
           component={Inicio}
@@ -116,7 +132,14 @@ const Main = () => {
     <Spinner />
   ) : (
     <NavigationContainer>
-      {authToken ? <MainStack /> : <AuthStack />}
+      {authToken ? (
+        <>
+          {/* <SafeHomeModal visible={showSafeHome} setVisible={setShowSafeHome} /> */}
+          <MainStack />
+        </>
+      ) : (
+        <AuthStack />
+      )}
     </NavigationContainer>
   )
 }

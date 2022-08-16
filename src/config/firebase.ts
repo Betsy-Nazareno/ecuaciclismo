@@ -4,6 +4,7 @@ import { getStorage } from 'firebase/storage'
 const firebaseConfig = {
   apiKey: 'AIzaSyBUskTxCtQT-9L3Ih2ES5Zh9PnrcvNB2lc',
   authDomain: 'omega-keep-354005.firebaseapp.com',
+  databaseURL: 'https://omega-keep-354005-default-rtdb.firebaseio.com',
   projectId: 'omega-keep-354005',
   storageBucket: 'omega-keep-354005.appspot.com',
   messagingSenderId: '492631611294',

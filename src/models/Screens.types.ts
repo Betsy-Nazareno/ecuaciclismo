@@ -1,6 +1,7 @@
 import { Consejo } from './Consejo.model'
 import { NovedadInterface } from './Novedad.model'
 import { Publicacion } from './Publicaciones.model'
+import { Ruta } from './Rutas'
 
 export type RootStackParamList = {
   Inicio: { reload: boolean } | undefined
@@ -14,6 +15,13 @@ export type RootStackParamList = {
   DetalleNovedad: { data: NovedadInterface } | undefined
   DetallePublicacion: { token: string } | undefined
   PublicacionFormulario: { data: Publicacion } | undefined
+  RutasFormulario: { ruta: Ruta } | undefined
+  DetalleRuta: { token: string } | undefined
+  InicioRastreo: undefined
+  RastreoUbicacion: undefined
+  RutaIncompleta: undefined
+  FinalRuta: undefined
+  PerfilFormulario: undefined
 }
 
 export type Screens =
@@ -28,6 +36,13 @@ export type Screens =
   | 'DetalleNovedad'
   | 'DetallePublicacion'
   | 'PublicacionFormulario'
+  | 'RutasFormulario'
+  | 'DetalleRuta'
+  | 'InicioRastreo'
+  | 'RastreoUbicacion'
+  | 'RutaIncompleta'
+  | 'FinalRuta'
+  | 'PerfilFormulario'
 
 export type RootDrawerParamList = {
   HomeStack: undefined

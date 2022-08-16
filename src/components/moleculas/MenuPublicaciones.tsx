@@ -1,7 +1,6 @@
 import * as React from 'react'
 import tw from 'twrnc'
 import { View, Image, Pressable } from 'react-native'
-import OpcionesMenu from '../atomos/OpcionesMenu'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../models/Screens.types'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,6 +9,7 @@ import { setPublicacionHasModified } from '../../redux/publicacion'
 import { eliminarPublicacion } from '../../lib/services/publicaciones.services'
 import { Publicacion } from '../../models/Publicaciones.model'
 import ConfirmationModal from '../organismos/ConfirmationModal'
+import OpcionesMenuPulicaciones from '../atomos/OpcionesMenuPublicaciones'
 
 interface MenuPublicacionesProps {
   userToken: string
@@ -76,7 +76,7 @@ const MenuPublicaciones = ({ publicacion }: MenuPublicacionesProps) => {
           />
         </Pressable>
         {displayMenu && (
-          <OpcionesMenu
+          <OpcionesMenuPulicaciones
             setDisplay={setDisplayMenu}
             canEdit={canEdit}
             handleEdit={handleEdit}

@@ -14,6 +14,7 @@ interface SectionTitleProps {
   hasUpdates?: boolean
   hasButton?: boolean
   buttonIcon?: ImageSourcePropType
+  iconDimension?: number
   handleClickButton?: () => void
 }
 
@@ -24,6 +25,7 @@ const SectionTitle = ({
   buttonIcon,
   styleText = '',
   background = true,
+  iconDimension = 18,
   isRestricted = true,
   handleClickButton,
 }: SectionTitleProps) => {
@@ -53,6 +55,7 @@ const SectionTitle = ({
               <RoundedButtonIcon
                 handleClick={() => handleClickButton?.()}
                 src={buttonIcon}
+                dimension={iconDimension}
               />
             </AdminValidator>
           ) : (
@@ -60,6 +63,7 @@ const SectionTitle = ({
               <RoundedButtonIcon
                 handleClick={() => handleClickButton?.()}
                 src={buttonIcon}
+                dimension={iconDimension}
               />
             </View>
           )}

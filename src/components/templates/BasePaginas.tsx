@@ -14,13 +14,19 @@ interface Props {
   children: ReactNode | ReactNode[]
   stickyIndexes?: number[]
   handleRefresh?: () => void
+  backgroundColor?: string
 }
 
 const wait = (timeout: number) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 
-const BasePaginas = ({ children, stickyIndexes, handleRefresh }: Props) => {
+const BasePaginas = ({
+  children,
+  stickyIndexes,
+  backgroundColor,
+  handleRefresh,
+}: Props) => {
   const [refreshing, setRefreshing] = React.useState(false)
 
   const onRefresh = () => {
@@ -40,7 +46,11 @@ const BasePaginas = ({ children, stickyIndexes, handleRefresh }: Props) => {
   })
 
   return (
-    <View style={tw`relative h-full ${BACKGROUND_COLORS.BLUE_LIGHTER}`}>
+    <View
+      style={tw`relative h-full ${
+        backgroundColor || BACKGROUND_COLORS.BLUE_LIGHTER
+      }`}
+    >
       <StatusBar backgroundColor={'#2D84C4'} />
       <ScrollView
         scrollEventThrottle={16}

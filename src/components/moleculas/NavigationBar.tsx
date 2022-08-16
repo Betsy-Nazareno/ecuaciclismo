@@ -5,7 +5,12 @@ import { ButtonTab } from '../atomos/ButtonTab'
 
 const NavigationBar = () => {
   return (
-    <View style={tw`w-full border-t-2 border-solid border-gray-200 bg-white`}>
+    <View
+      style={[
+        tw`w-full border-solid border-gray-200 bg-white`,
+        { borderWidth: 1 },
+      ]}
+    >
       <View style={tw`flex flex-row justify-between p-[2%]`}>
         <ButtonTab screen="Inicio">
           <Image
