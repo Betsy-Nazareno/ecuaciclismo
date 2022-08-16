@@ -5,13 +5,12 @@ import { CustomText } from '../atomos/CustomText'
 import { TEXT_COLORS } from '../../utils/constants'
 import Ruler from '../atomos/Ruler'
 import { ScrollView } from 'react-native-gesture-handler'
-import { User } from '../../models/User'
 import DetalleUsuarioColaboracion from '../moleculas/DetalleUsuarioColaboracion'
 
 interface ParticipantesRutaModalProps {
   visible: boolean
   setVisible: (visible: boolean) => void
-  participantes: Partial<User>[]
+  participantes: any
 }
 
 const ParticipantesRutaModal = ({
@@ -52,7 +51,7 @@ const ParticipantesRutaModal = ({
           <Ruler style="w-11/12 mx-auto" />
           <View style={tw`h-52`}>
             <ScrollView>
-              {participantes.map((user, index) => (
+              {participantes.map((user: any, index: number) => (
                 <DetalleUsuarioColaboracion user={user} key={index} />
               ))}
             </ScrollView>

@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../components/atomos/Navbar'
 import Inicio from './Inicio'
 import Rutas from './Rutas'
@@ -31,7 +31,7 @@ import RastreoUbicacion from '../components/templates/RastreoRutas/RastreoUbicac
 import RutaIncompleta from './RutaIncompleta'
 import FinalRuta from './FinalRuta'
 import PerfilFormulario from './PerfilFormulario'
-import SafeHomeModal from '../components/organismos/SafeHomeModal'
+// import SafeHomeModal from '../components/organismos/SafeHomeModal'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -39,17 +39,17 @@ const Drawer = createDrawerNavigator()
 const Main = () => {
   const { authToken } = useSelector((state: RootState) => state.user)
   const { setUser, isLoading } = useAuthentication()
-  const [showSafeHome, setShowSafeHome] = useState(false)
+  // const [showSafeHome, setShowSafeHome] = useState(false)
 
   useEffect(() => {
     setUser()
   }, [])
 
-  useEffect(() => {
-    setTimeout(() => {
-      setShowSafeHome(true)
-    }, 3000)
-  }, [])
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setShowSafeHome(true)
+  //   }, 3000)
+  // }, [])
 
   const AuthStack = () => {
     return (
@@ -132,8 +132,14 @@ const Main = () => {
     <Spinner />
   ) : (
     <NavigationContainer>
-      <SafeHomeModal visible={showSafeHome} setVisible={setShowSafeHome} />
-      {authToken ? <MainStack /> : <AuthStack />}
+      {authToken ? (
+        <>
+          {/* <SafeHomeModal visible={showSafeHome} setVisible={setShowSafeHome} /> */}
+          <MainStack />
+        </>
+      ) : (
+        <AuthStack />
+      )}
     </NavigationContainer>
   )
 }

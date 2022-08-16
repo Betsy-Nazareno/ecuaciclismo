@@ -1,41 +1,23 @@
 import * as React from 'react'
-import { View, Image, Pressable } from 'react-native'
 import tw from 'twrnc'
+import { Image, Pressable, View } from 'react-native'
+import { CustomText } from './CustomText'
 import { TEXT_COLORS } from '../../utils/constants'
 import Ruler from './Ruler'
-import { CustomText } from './CustomText'
 
-interface MenuProps {
+interface OpcionesMenuRutasProps {
   handleEdit: () => void
-  handleDelete: () => void
-  handlePin: () => void
-  pinLabel: string
+  handleCancelar: () => void
 }
 
-const OpcionesMenu = ({
+const OpcionesMenuRutas = ({
   handleEdit,
-  handleDelete,
-  handlePin,
-  pinLabel,
-}: MenuProps) => {
+  handleCancelar,
+}: OpcionesMenuRutasProps) => {
   return (
     <View
       style={tw`absolute top-6 right-4 bg-white z-40 py-1 rounded-lg shadow-md w-44`}
     >
-      <Pressable onPress={handlePin}>
-        <View style={tw`flex flex-row items-center py-4 px-8`}>
-          <Image
-            source={require('../../../assets/pin_icon.png')}
-            style={{ width: 20, height: 20, marginRight: 16 }}
-          />
-          <CustomText style={`${TEXT_COLORS.DARK_BLUE} font-semibold text-sm`}>
-            {pinLabel}
-          </CustomText>
-        </View>
-      </Pressable>
-
-      <Ruler style="w-11/12 mx-auto" />
-
       <Pressable onPress={handleEdit}>
         <View style={tw`flex flex-row items-center py-4 px-8`}>
           <Image
@@ -47,17 +29,16 @@ const OpcionesMenu = ({
           </CustomText>
         </View>
       </Pressable>
-
       <Ruler style="w-11/12 mx-auto" />
 
-      <Pressable onPress={handleDelete}>
+      <Pressable onPress={handleCancelar}>
         <View style={tw`flex flex-row items-center py-4 px-8 `}>
           <Image
-            source={require('../../../assets/bin_icon.png')}
+            source={require('../../../assets/cancelar_icon.png')}
             style={{ width: 17, height: 17, marginRight: 16 }}
           />
           <CustomText style={`${TEXT_COLORS.DARK_BLUE} font-semibold text-sm`}>
-            Eliminar
+            Cancelar
           </CustomText>
         </View>
       </Pressable>
@@ -65,4 +46,4 @@ const OpcionesMenu = ({
   )
 }
 
-export default OpcionesMenu
+export default OpcionesMenuRutas

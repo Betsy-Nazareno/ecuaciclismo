@@ -12,6 +12,7 @@ export interface Consejo {
   username?: string
   token?: string
   reacciones?: ReaccionesInterface
+  fijado?: boolean
 }
 
 export type TypeImage =

@@ -25,6 +25,8 @@ import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import { setRutaHasModified } from '../../../redux/ruta'
 import RutaColaboracionesModal from '../../organismos/RutaColaboracionesModal'
+import MenuRutas from '../../moleculas/MenuRutas'
+import RutaDescripcion from './RutaDescripcion'
 
 const getInformacionPorEstado = (estado: string, inscrito: boolean) => {
   if (inscrito) {
@@ -95,6 +97,7 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
     'Cancelada',
     'Finalizada',
     'Sin Cupos',
+    'Cancelada',
   ]
 
   React.useEffect(() => {
@@ -128,7 +131,8 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
   const sendRegistro = async () => {
     setIsLoading(true)
     if (authToken) {
-      if (!ruta?.inscrito) await inscribirUsuarioEnRuta(authToken, token)
+      if (!ruta?.inscrito)
+        await inscribirUsuarioEnRuta(authToken, token, colaboraciones)
       else await cancelarInscripcionUsuario(authToken, token)
     }
     dispatch(setRutaHasModified({ rutaHasModified: !rutaHasModified }))
@@ -162,28 +166,37 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
     <View style={tw`px-2 mb-4`}>
       {showModal && (
         <RutaColaboracionesModal
-          colaboraciones={ruta.colaboraciones as any}
+          colaboraciones={ruta.colaboracionesValues as any}
           visible={showModal}
           setVisible={setShowModal}
           handleAdd={handleAddColaboraciones}
           inscribirUser={sendRegistro}
         />
       )}
-      <RutaDetalleHeader
-        nombre={ruta?.nombre}
-        tiposRuta={ruta?.tipoRuta}
-        estado={estado}
-        aprobada={ruta.aprobado || false}
-      />
+      <View style={tw`relative`}>
+        <RutaDetalleHeader
+          nombre={ruta?.nombre}
+          tiposRuta={ruta?.tipoRutaValues}
+          estado={estado}
+          aprobada={ruta.aprobado || false}
+          motivoCancelacion={ruta.motivo_cancelacion}
+        />
+        {estado !== 'En Curso' ? (
+          <View style={tw`absolute right-4 top-8`}>
+            <MenuRutas ruta={ruta} />
+          </View>
+        ) : null}
+      </View>
       <RutaInformacion
         fecha={ruta?.fecha_inicio as Date}
         lugar={ruta.lugar}
         cupos={ruta.cupos_disponibles || 0}
         registrados={ruta.participantes?.length || 0}
       />
+      <RutaDescripcion descripcion={ruta?.descripcion} />
       <RutaFotos fotos={ruta.fotos} />
       <RutaMapView ubicacion={ruta.ubicacion} />
-      <RutasRequisitos requisitos={ruta.requisitos} />
+      <RutasRequisitos requisitos={ruta.requisitosValues} />
       <RutasParticipantes participantes={ruta.participantes || []} />
       {ruta.aprobado ? (
         isLoading ? (

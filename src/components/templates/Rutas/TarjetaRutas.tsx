@@ -45,8 +45,9 @@ const TarjetaRutas = ({ ruta }: TarjetaRutasProps) => {
       case ESTADOS_RUTA.DISPONIBLE:
         return BACKGROUND_COLORS.SKY_BLUE
       case ESTADOS_RUTA.CANCELADA:
-      case ESTADOS_RUTA.FINALIZADA:
         return `bg-black bg-opacity-40`
+      case ESTADOS_RUTA.FINALIZADA:
+        return `bg-black bg-opacity-70`
       case ESTADOS_RUTA.SIN_CUPOS:
         return BACKGROUND_COLORS.ORANGE
       default:
