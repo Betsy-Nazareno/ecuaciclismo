@@ -4,8 +4,6 @@ import { Modal, Pressable, Text, View } from 'react-native'
 import { BACKGROUND_COLORS, TEXT_COLORS } from '../../utils/constants'
 import { CustomText } from '../atomos/CustomText'
 import Ruler from '../atomos/Ruler'
-import { catalogs } from '../../models/Rutas'
-import TextCheck from '../atomos/TextCheck'
 import ButtonPrimary from '../atomos/ButtonPrimary'
 import Input from '../moleculas/Input'
 

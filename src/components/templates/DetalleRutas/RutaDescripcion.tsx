@@ -1,6 +1,6 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { Text, View, StyleSheet, Image } from 'react-native'
+import { Text } from 'react-native'
 import TitleWithDivider from '../../moleculas/TitleWithDivider'
 import RoundedWhiteBaseTemplate from '../../organismos/RoundedWhiteBaseTemplate'
 import { TEXT_COLORS } from '../../../utils/constants'

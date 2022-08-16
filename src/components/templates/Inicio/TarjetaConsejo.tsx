@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View, ImageSourcePropType, Text, Image } from 'react-native'
+import { View, ImageSourcePropType, Image } from 'react-native'
 import tw from 'twrnc'
 import { Consejo } from '../../../models/Consejo.model'
 import InformacionUsuario from '../../atomos/InformacionUsuario'

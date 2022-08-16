@@ -5,7 +5,6 @@ import { CustomText } from '../atomos/CustomText'
 import { TEXT_COLORS } from '../../utils/constants'
 import Ruler from '../atomos/Ruler'
 import { ScrollView } from 'react-native-gesture-handler'
-import { User } from '../../models/User'
 import DetalleUsuarioColaboracion from '../moleculas/DetalleUsuarioColaboracion'
 
 interface ParticipantesRutaModalProps {

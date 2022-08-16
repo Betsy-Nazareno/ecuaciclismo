@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../components/atomos/Navbar'
 import Inicio from './Inicio'
 import Rutas from './Rutas'
@@ -31,7 +31,7 @@ import RastreoUbicacion from '../components/templates/RastreoRutas/RastreoUbicac
 import RutaIncompleta from './RutaIncompleta'
 import FinalRuta from './FinalRuta'
 import PerfilFormulario from './PerfilFormulario'
-import SafeHomeModal from '../components/organismos/SafeHomeModal'
+// import SafeHomeModal from '../components/organismos/SafeHomeModal'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()

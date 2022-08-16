@@ -2,7 +2,6 @@ import * as React from 'react'
 import tw from 'twrnc'
 import { Image, Pressable, Text, View } from 'react-native'
 import DetalleUsuario from './DetalleUsuario'
-import { User } from '../../models/User'
 
 interface DetalleUsuarioColaboracionProps {
   user: any

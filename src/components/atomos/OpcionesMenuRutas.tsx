@@ -1,6 +1,6 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { Image, Pressable, Text, View } from 'react-native'
+import { Image, Pressable, View } from 'react-native'
 import { CustomText } from './CustomText'
 import { TEXT_COLORS } from '../../utils/constants'
 import Ruler from './Ruler'
