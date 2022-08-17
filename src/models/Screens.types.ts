@@ -17,8 +17,8 @@ export type RootStackParamList = {
   PublicacionFormulario: { data: Publicacion } | undefined
   RutasFormulario: { ruta: Ruta } | undefined
   DetalleRuta: { token: string } | undefined
-  InicioRastreo: undefined
-  RastreoUbicacion: undefined
+  InicioRastreo: { ruta: Ruta } | undefined
+  RastreoUbicacion: { ruta: Ruta } | undefined
   RutaIncompleta: undefined
   FinalRuta: undefined
   PerfilFormulario: undefined

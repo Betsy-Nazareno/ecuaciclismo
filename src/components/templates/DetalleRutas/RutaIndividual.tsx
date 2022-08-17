@@ -175,11 +175,12 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
       )}
       <View style={tw`relative`}>
         <RutaDetalleHeader
-          nombre={ruta?.nombre}
-          tiposRuta={ruta?.tipoRutaValues}
+          ruta={ruta}
+          // nombre={ruta?.nombre}
+          // tiposRuta={ruta?.tipoRutaValues}
           estado={estado}
-          aprobada={ruta.aprobado || false}
-          motivoCancelacion={ruta.motivo_cancelacion}
+          // aprobada={ruta.aprobado || false}
+          // motivoCancelacion={ruta.motivo_cancelacion}
         />
         {estado !== 'En Curso' ? (
           <View style={tw`absolute right-4 top-8`}>

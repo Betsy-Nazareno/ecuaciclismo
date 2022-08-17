@@ -2,6 +2,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native'
 import * as React from 'react'
 import { Image, Text, View } from 'react-native'
 import tw from 'twrnc'
+import { Ruta } from '../../../models/Rutas'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import {
   BACKGROUND_COLORS,
@@ -14,9 +15,22 @@ import { CustomText } from '../../atomos/CustomText'
 import HeaderRoundedContainer from '../../moleculas/HeaderRoundedContainer'
 import RoundedWhiteBaseTemplate from '../../organismos/RoundedWhiteBaseTemplate'
 
-const RastreoMain = () => {
+interface RastreoMainProp {
+  ruta: Ruta
+}
+
+const RastreoMain = ({ ruta }: RastreoMainProp) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
+
+  const getDatesRange = () => {
+    // const { fecha_inicio, fecha_fin } = ruta || {}
+    // const inicio = `${fecha_inicio?.getHours()} : ${fecha_inicio?.getMinutes()}`
+    // const fin = `${fecha_fin?.getHours()} : ${fecha_fin?.getMinutes()}`
+    // return inicio + '-' + fin
+    return '9:00 - 10:00'
+  }
+
   return (
     <View style={tw`px-2`}>
       <HeaderRoundedContainer>
@@ -24,12 +38,12 @@ const RastreoMain = () => {
           style={`text-3xl ${TEXT_COLORS.DARK_BLUE}`}
           containerProps={{ textAlign: 'center' }}
         >
-          Ruta Salinas
+          {ruta?.nombre}
         </CustomText>
 
         <View style={tw`w-9/12 mx-auto mt-8`}>
           <Text style={tw`${TEXT_COLORS.DARK_GRAY} text-center text-base`}>
-            Duración 9:00 - 11:00 AM
+            Duración {getDatesRange()}
           </Text>
           <Text style={tw`${TEXT_COLORS.DARK_GRAY} text-center text-base`}>
             (Aproximadamente 2 horas)
@@ -37,7 +51,7 @@ const RastreoMain = () => {
         </View>
         <View style={tw`w-9/12 mx-auto mt-4 mb-2`}>
           <Text style={tw`${TEXT_COLORS.DARK_GRAY} text-center text-base`}>
-            24 Participates registrados
+            {ruta?.participantes?.length || 0} Participates registrados
           </Text>
         </View>
       </HeaderRoundedContainer>
@@ -58,7 +72,9 @@ const RastreoMain = () => {
             label="Iniciar Ruta"
             style={`w-full ${BACKGROUND_COLORS.PRIMARY_BLUE} rounded-xl`}
             icon={require('../../../../assets/rastreo_icon.png')}
-            handleClick={() => navigation.navigate('RastreoUbicacion')}
+            handleClick={() =>
+              navigation.navigate('RastreoUbicacion', { ruta })
+            }
           />
         </View>
       </RoundedWhiteBaseTemplate>

@@ -27,10 +27,10 @@ import PublicacionFormulario from './PublicacionFormulario'
 import RutasFormulario from './RutasFormulario'
 import DetalleRuta from './DetalleRuta'
 import InicioRastreo from './InicioRastreo'
-import RastreoUbicacion from '../components/templates/RastreoRutas/RastreoUbicacion'
 import RutaIncompleta from './RutaIncompleta'
 import FinalRuta from './FinalRuta'
 import PerfilFormulario from './PerfilFormulario'
+import RastreoLocation from './RastreoLocation'
 // import SafeHomeModal from '../components/organismos/SafeHomeModal'
 
 const Stack = createNativeStackNavigator()
@@ -82,7 +82,7 @@ const Main = () => {
         <Stack.Screen name="ConsejoFormulario" component={ConsejoFormulario} />
         <Stack.Screen name="DetalleRuta" component={DetalleRuta} />
         <Stack.Screen name="InicioRastreo" component={InicioRastreo} />
-        <Stack.Screen name="RastreoUbicacion" component={RastreoUbicacion} />
+        <Stack.Screen name="RastreoUbicacion" component={RastreoLocation} />
         <Stack.Screen name="RutaIncompleta" component={RutaIncompleta} />
         <Stack.Screen name="FinalRuta" component={FinalRuta} />
         <Stack.Screen name="PerfilFormulario" component={PerfilFormulario} />

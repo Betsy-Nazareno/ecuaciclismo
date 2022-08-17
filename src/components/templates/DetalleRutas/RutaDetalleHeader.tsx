@@ -9,7 +9,7 @@ import LinkedBadges from '../../moleculas/LinkedBadges'
 import { BACKGROUND_COLORS } from '../../../utils/constants'
 import Badge from '../../moleculas/Badge'
 import Gap from '../../atomos/Gap'
-import { EstadoRuta } from '../../../models/Rutas'
+import { EstadoRuta, Ruta } from '../../../models/Rutas'
 
 export const ESTADO_RUTA = {
   CURSO: 'En Curso',
@@ -20,18 +20,22 @@ export const ESTADO_RUTA = {
   CANCELADA: 'Cancelada',
 }
 interface RutaDetalleHeaderProps {
-  nombre: string
-  tiposRuta: any
+  // nombre: string
+  // tiposRuta: any
+  // estado: EstadoRuta
+  // aprobada: boolean
+  // motivoCancelacion?: string
+  ruta: Ruta
   estado: EstadoRuta
-  aprobada: boolean
-  motivoCancelacion?: string
 }
 const RutaDetalleHeader = ({
-  nombre,
-  tiposRuta,
+  // nombre,
+  // tiposRuta,
+  // estado,
+  // aprobada,
+  // motivoCancelacion,
+  ruta,
   estado,
-  aprobada,
-  motivoCancelacion,
 }: RutaDetalleHeaderProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
@@ -53,6 +57,14 @@ const RutaDetalleHeader = ({
         return BACKGROUND_COLORS.PRIMARY_BLUE
     }
   }
+
+  const {
+    nombre,
+    tipoRutaValues: tiposRuta,
+    aprobado = false,
+    motivo_cancelacion: motivoCancelacion,
+    participantes,
+  } = ruta
   return (
     <HeaderRoundedContainer>
       <View style={tw`mx-4`}>
@@ -60,16 +72,18 @@ const RutaDetalleHeader = ({
           text={nombre}
           styleText="text-3xl"
           background={false}
-          hasButton={aprobada && estado === ESTADO_RUTA.CURSO}
+          hasButton={aprobado && estado === ESTADO_RUTA.CURSO}
           isRestricted={false}
           buttonIcon={require('../../../../assets/rastreo_icon.png')}
           iconDimension={22}
-          handleClickButton={() => navigation.navigate('InicioRastreo')}
+          handleClickButton={() =>
+            navigation.navigate('InicioRastreo', { ruta })
+          }
         />
       </View>
       <View style={tw`py-5`}>
-        <LinkedBadges etiquetas={tiposRuta} tipo="rounded">
-          {aprobada ? (
+        <LinkedBadges etiquetas={tiposRuta as any} tipo="rounded">
+          {aprobado ? (
             <Gap px="1">
               <Badge
                 name={'estado'}

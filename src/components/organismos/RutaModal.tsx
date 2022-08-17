@@ -11,9 +11,16 @@ import SecondaryButton from '../atomos/SecondaryButton'
 interface RutaModalProps {
   visible: boolean
   setVisible: (visible: boolean) => void
+  participantes: any
+  nombre: string
 }
 
-const RutaModal = ({ visible, setVisible }: RutaModalProps) => {
+const RutaModal = ({
+  visible,
+  setVisible,
+  participantes,
+  nombre,
+}: RutaModalProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
@@ -33,7 +40,7 @@ const RutaModal = ({ visible, setVisible }: RutaModalProps) => {
               style={`${TEXT_COLORS.DARK_BLUE} text-2xl`}
               containerProps={{ textAlign: 'center' }}
             >
-              Ruta Salinas
+              {nombre}
             </CustomText>
 
             <Pressable
@@ -56,7 +63,7 @@ const RutaModal = ({ visible, setVisible }: RutaModalProps) => {
               style={{ width: 15, height: 15, marginRight: 16 }}
             />
             <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-base`}>
-              2 horas restantes
+              2 horas estimadas
             </Text>
           </View>
 
@@ -66,7 +73,7 @@ const RutaModal = ({ visible, setVisible }: RutaModalProps) => {
               style={{ width: 20, height: 20, marginRight: 6 }}
             />
             <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-base`}>
-              24 Ciclistas en ruta
+              {participantes?.length || 0} Ciclistas en ruta
             </Text>
           </View>
 

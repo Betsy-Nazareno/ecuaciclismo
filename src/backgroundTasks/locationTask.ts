@@ -1,5 +1,5 @@
 import * as TaskManager from 'expo-task-manager'
-import { getDatabase, ref, set } from 'firebase/database'
+import { getDatabase, push, ref, set } from 'firebase/database'
 
 const TASK_NAME = 'BACKGROUND_LOCATION_TASK'
 
@@ -23,13 +23,17 @@ export const configureBgTask = ({
       const [location] = locations || []
       const db = getDatabase()
       if (location) {
-        setSelfLocation(location)
-        const reference = ref(db, 'users/' + userToken)
-        set(reference, {
+        // setSelfLocation(location)
+        const referenceLocation = ref(db, 'users/' + userToken + '/location')
+        const referenceSpeed = ref(db, 'users/' + userToken + '/speed')
+
+        const { coords } = location
+        set(referenceLocation, {
           foto,
-          longitude: location.coords?.longitude,
-          latitude: location.coords?.latitude,
+          longitude: coords?.longitude,
+          latitude: coords?.latitude,
         })
+        push(referenceSpeed, coords?.speed)
       }
     }
   })
