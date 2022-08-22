@@ -85,6 +85,7 @@ export const FOLDERS_STORAGE = {
   RUTAS: 'rutas',
   PUBLICACIONES: 'publicaciones',
   NOVEDADES: 'novedades',
+  USUARIOS: 'usuarios',
 }
 
 export const MIME_TYPES = {
@@ -140,4 +141,16 @@ export const etiquetasRutas = [
     value: 'sin_cupo',
     nombre: 'Sin Cupo',
   },
+]
+
+export const generosCatalog = [
+  { nombre: 'Femenino', value: 'Femenino' },
+  { nombre: 'Masculino', value: 'Masculino' },
+  { nombre: 'Otro', value: 'Otro' },
+]
+
+export const nivelesCatalog = [
+  { nombre: 'Nivel Básico', value: 'Nivel Básico' },
+  { nombre: 'Nivel Intermedio', value: 'Nivel Intermedio' },
+  { nombre: 'Nivel Avanzado', value: 'Nivel Avanzado' },
 ]

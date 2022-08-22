@@ -14,7 +14,6 @@ import {
   RootDrawerParamList,
   ScreensDrawer,
 } from '../../../models/Screens.types'
-import ContenedorPaginasDetalle from '../ContenedorPaginasDetalle'
 
 interface TarjetaConsejoHistoricoProps {
   consejo: Consejo
@@ -27,24 +26,23 @@ const TarjetaConsejoHistorico = ({ consejo }: TarjetaConsejoHistoricoProps) => {
     <Pressable
       onPress={() => navigation.navigate('ConsejoDetalle', { consejo })}
     >
-      <ContenedorPaginasDetalle
-        borderRight
-        colorBorder="#6a7bd2"
-        borderWidth={8}
-        styleProps="mt-1"
+      <View
+        style={[
+          tw`bg-white mt-2 h-24 flex flex-row items-center overflow-hidden rounded-xl`,
+          styles.borderSide,
+        ]}
       >
-        <View style={[tw`flex flex-row items-center py-2`, styles.container]}>
-          {consejo.imagen ? (
-            <Image
-              source={{ uri: consejo.imagen } as ImageSourcePropType}
-              style={{ width: 50, height: 50, borderRadius: 20 / 2 }}
-            />
-          ) : null}
-          <View style={tw`pl-3 pr-12`}>
-            <Text style={styles.text}>{consejo.informacion} </Text>
-          </View>
+        {consejo.imagen ? (
+          <Image
+            source={{ uri: consejo.imagen } as ImageSourcePropType}
+            style={{ width: 90, height: 95, borderBottomRightRadius: 90 / 2 }}
+          />
+        ) : null}
+
+        <View style={tw`pl-3 pr-12 w-10/12`}>
+          <Text style={styles.text}>{consejo.informacion} </Text>
         </View>
-      </ContenedorPaginasDetalle>
+      </View>
     </Pressable>
   )
 }
@@ -61,5 +59,16 @@ const styles = StyleSheet.create({
     height: 40,
     lineHeight: 20,
     color: '#0C3248',
+  },
+  borderSide: {
+    borderBottomColor: '#DFDFF0',
+    borderBottomWidth: 1,
+    borderLeftColor: '#DFDFF0',
+    borderLeftWidth: 1,
+    borderTopColor: '#DFDFF0',
+    borderTopWidth: 1,
+    borderRadius: 14,
+    borderRightColor: '#6a7bd2',
+    borderRightWidth: 6,
   },
 })

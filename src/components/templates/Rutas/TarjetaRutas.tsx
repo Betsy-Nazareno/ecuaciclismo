@@ -14,6 +14,8 @@ import { EstadoRuta, Ruta } from '../../../models/Rutas'
 import ImageScaleColor from '../../moleculas/ImageScaleColor'
 import { getEstadoRuta } from '../../../utils/parseRouteState'
 import BandaEstadoRuta from '../../atomos/BandaEstadoRuta'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../redux/store'
 
 interface TarjetaRutasProps {
   ruta: Ruta
@@ -21,6 +23,7 @@ interface TarjetaRutasProps {
 const TarjetaRutas = ({ ruta }: TarjetaRutasProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
+  const { user } = useSelector((state: RootState) => state.user)
 
   const getColor = (estado: EstadoRuta) => {
     switch (estado) {
@@ -72,7 +75,11 @@ const TarjetaRutas = ({ ruta }: TarjetaRutasProps) => {
 
   const getFecha = (fecha: string) => {
     if (!fecha) return
-    return `${fecha}`
+    const date = new Date(fecha)
+    const dia = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+    const minutos = date.getMinutes()
+    const hora = `${date.getHours()}:${minutos === 0 ? '00' : minutos}`
+    return `${dia} ${hora}`
   }
 
   const getImagenPrincipal = () => {
@@ -115,22 +122,26 @@ const TarjetaRutas = ({ ruta }: TarjetaRutasProps) => {
             <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-semibold`}>
               {getFecha(ruta.fecha_inicio as any)}
             </Text>
-            <Text style={tw`${TEXT_COLORS.DARK_BLUE} `}>Nivel básico</Text>
           </Gap>
 
           {inscrito && (
             <View style={tw`flex flex-row`}>
               <Image
-                source={require('../../../../assets/lorena.jpg')}
+                source={
+                  user?.foto
+                    ? { uri: user?.foto }
+                    : require('../../../../assets/lorena.jpg')
+                }
                 style={{
                   width: 25,
                   height: 25,
                   borderRadius: 100 / 2,
                 }}
+                resizeMode="contain"
               />
               <Text style={tw`${TEXT_COLORS.DARK_BLUE} pl-2`}>
                 Tú
-                {participantesRutas.length > 2
+                {participantesRutas.length > 1
                   ? `y  ${participantesRutas?.length} ciclistas más`
                   : ''}
               </Text>

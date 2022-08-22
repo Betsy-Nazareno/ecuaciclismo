@@ -23,6 +23,7 @@ interface InputProps {
   stylesProp?: string
   stylesInput?: string
   textAlignVertical?: 'auto' | 'top' | 'bottom' | 'center' | undefined
+  textAlignHorizontal?: 'center' | 'left' | 'right' | undefined
   value?: string | number
   setValue?: (value: string) => void
 }
@@ -36,6 +37,7 @@ const Input = ({
   multiline = false,
   numberOfLines = 1,
   textAlignVertical = 'center',
+  textAlignHorizontal = 'left',
   stylesInput,
   value,
   setValue,
@@ -56,6 +58,7 @@ const Input = ({
             tw`${stylesInput || ''}`,
           ]}
           textAlignVertical={textAlignVertical}
+          textAlign={textAlignHorizontal}
           textContentType={type}
           placeholder={placeholder}
           onFocus={() => setIsFocus(true)}

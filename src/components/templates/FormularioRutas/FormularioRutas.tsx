@@ -17,6 +17,7 @@ import SelectCreatableBatches from '../../moleculas/SelectCreatableBatches'
 import {
   editarRuta,
   getColaboracionesRutas,
+  getGruposEncuentro,
   getRequisitos,
   getTiposRuta,
   guardarRuta,
@@ -32,6 +33,7 @@ import {
 } from '../../../lib/services/notifications.services'
 import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
 import { capitalize } from '../../../utils/capitalizeText'
+import FormularioRutasGrupos from './FormularioRutasGrupos'
 
 interface FormularioRutasProp {
   rutaProp: Ruta
@@ -42,6 +44,7 @@ const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
   const [requisitosCatalog, setRequisitosCatalog] = React.useState([])
   const [tiposRutaCatalog, setTiposRutaCatalog] = React.useState([])
   const [colaboracionesCatalog, setColaboracionesCatalog] = React.useState([])
+  const [grupos, setGrupos] = React.useState([])
   const { sendPushNotification } = usePermissionsNotifications()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
@@ -72,6 +75,7 @@ const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
     fecha_inicio: converterDates(rutaProp?.fecha_inicio) || undefined,
     fecha_fin: converterDates(rutaProp?.fecha_fin) || undefined,
     descripcion: rutaProp?.descripcion || '',
+    grupos_encuentro: rutaProp?.grupos_encuentro || [],
     colaboraciones: rutaProp?.colaboraciones || [],
   }
 
@@ -81,6 +85,7 @@ const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
         setRequisitosCatalog(await getRequisitos(authToken))
         setTiposRutaCatalog(await getTiposRuta(authToken))
         setColaboracionesCatalog(await getColaboracionesRutas(authToken))
+        setGrupos(await getGruposEncuentro(authToken))
       }
     })()
   }, [])
@@ -97,7 +102,7 @@ const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
     })
   }
 
-  const sendNotificationToUsers = async () => {
+  const sendNotificationEditRutaToUsers = async () => {
     if (!authToken) return
     const tokens = await getCiclistasToken(authToken)
     await sendPushNotification({
@@ -107,17 +112,29 @@ const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
     })
   }
 
+  const sendNotificationNewRutaToUsers = async () => {
+    if (!authToken) return
+    const tokens = await getCiclistasToken(authToken)
+    await sendPushNotification({
+      tokens,
+      title: 'Nueva ruta planificada',
+      body: `${rutaProp.nombre} ha sido planificada para la comunidad. ¡Únete al recorrido!`,
+    })
+  }
+
   const handleSubmit = async (prop: Ruta) => {
     setIsLoading(true)
     if (authToken) {
       if (rutaProp && rutaProp.token) {
         await editarRuta(authToken, prop, rutaProp.token)
-        // await sendNotificationToUsers()
+        await sendNotificationEditRutaToUsers()
       } else {
         await guardarRuta(authToken, prop)
       }
       if (!user?.admin) {
-        // await sendNotificationToAdmins()
+        await sendNotificationToAdmins()
+      } else {
+        await sendNotificationNewRutaToUsers()
       }
     }
     setIsLoading(false)
@@ -131,7 +148,7 @@ const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
         message="¡Planifica actividades para la comunidad!"
         srcImage={require('../../../../assets/ruta_icon.png')}
       />
-      <Formik
+      <Formik<Ruta>
         initialValues={initialValues}
         validationSchema={RutasValidationSchema}
         onSubmit={handleSubmit}
@@ -286,6 +303,8 @@ const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
                 setValue={(value) => setFieldValue('lugar', value)}
               />
             </FieldFormulario>
+
+            <FormularioRutasGrupos grupos={grupos} field="grupos_encuentro" />
 
             <FieldFormulario>
               <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { Text, View, StyleSheet, Modal, Pressable } from 'react-native'
+import { Text, View, Modal, Pressable } from 'react-native'
 import { CustomText } from '../atomos/CustomText'
 import { BACKGROUND_COLORS, TEXT_COLORS } from '../../utils/constants'
 import Ruler from '../atomos/Ruler'
@@ -10,14 +10,14 @@ import { RootStackParamList, Screens } from '../../models/Screens.types'
 
 interface RutaFinalRastreoModalProps {
   visible: boolean
+  token: string
   setVisible: (visible: boolean) => void
-  deleteUser: () => void
 }
 
 const RutaFinalRastreoModal = ({
   visible,
+  token,
   setVisible,
-  deleteUser,
 }: RutaFinalRastreoModalProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
@@ -68,8 +68,7 @@ const RutaFinalRastreoModal = ({
             label="Continuar"
             style={`${BACKGROUND_COLORS.PRIMARY_BLUE} bg-opacity-80 py-2 rounded-3xl`}
             handleClick={() => {
-              navigation.navigate('FinalRuta')
-              deleteUser()
+              navigation.navigate('FinalRuta', { tokenRuta: token })
               setVisible(false)
             }}
           />

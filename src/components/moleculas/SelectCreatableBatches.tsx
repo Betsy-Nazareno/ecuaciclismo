@@ -30,6 +30,7 @@ const SelectCreatableBatches = ({
   const renderBadge = (value: string) => {
     const badge = values.find((etiqueta) => etiqueta.value === value)
     const { value: valor, nombre } = badge || {}
+    if (!valor) return null
     return (
       <Gap px="1" py="1" key={valor}>
         <View style={tw`relative`}>

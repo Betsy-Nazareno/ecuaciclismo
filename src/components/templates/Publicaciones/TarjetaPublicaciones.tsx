@@ -3,7 +3,7 @@ import { Text, View, Image, Pressable } from 'react-native'
 import tw from 'twrnc'
 import { CustomText } from '../../atomos/CustomText'
 import TarjetaTemplate from '../../organismos/RoundedWhiteBaseTemplate'
-import { TEXT_COLORS } from '../../../utils/constants'
+import { TEXT_COLORS, WIDTH_DIMENSIONS } from '../../../utils/constants'
 import LinkedBadges from '../../moleculas/LinkedBadges'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
@@ -27,7 +27,7 @@ const TarjetaPublicaciones = ({ publicacion }: TarjetaPublicacionesProps) => {
     return (
       <Image
         source={{ uri: main?.link }}
-        style={{ width: 80, height: 80, borderRadius: 40 / 2 }}
+        style={{ width: WIDTH_DIMENSIONS * 0.88, height: 100 }}
       />
     )
   }
@@ -39,7 +39,7 @@ const TarjetaPublicaciones = ({ publicacion }: TarjetaPublicacionesProps) => {
 
     return (
       <VideoPlayer
-        style={{ width: 80, height: 80 }}
+        style={{ width: WIDTH_DIMENSIONS * 0.88, height: 100 }}
         videoProps={{
           source: { uri: main.link },
           resizeMode: 'contain' as ResizeMode,
@@ -53,7 +53,11 @@ const TarjetaPublicaciones = ({ publicacion }: TarjetaPublicacionesProps) => {
     return (
       <Image
         source={require('../../../../assets/publicacion_default_icon.png')}
-        style={{ width: 80, height: 80, borderRadius: 40 / 2 }}
+        style={{
+          width: WIDTH_DIMENSIONS * 0.88,
+          height: 100,
+          borderRadius: 40 / 2,
+        }}
       />
     )
   }
@@ -74,17 +78,28 @@ const TarjetaPublicaciones = ({ publicacion }: TarjetaPublicacionesProps) => {
           <CustomText style={`${TEXT_COLORS.DARK_BLUE}`}>
             {publicacion.titulo}
           </CustomText>
-          <View style={tw`py-3 flex flex-row`}>
-            <View style={tw`w-3/12`}>{portadaPrincipal}</View>
-            <View style={tw`w-10/12 pr-3`}>
-              <View style={tw`w-full h-9`}>
-                <LinkedBadges etiquetas={publicacion.etiquetasResult || []} />
-              </View>
-              <View style={tw`pl-6 pr-4 pt-1 w-11/12`}>
-                <Text numberOfLines={2}>{publicacion.descripcion}</Text>
-              </View>
+          <View style={tw`my-3 w-full relative`}>
+            {portadaPrincipal}
+            <View style={tw`absolute bottom-1 -left-4`}>
+              <LinkedBadges
+                etiquetas={publicacion.etiquetasResult || []}
+                tipo="transparent"
+              />
             </View>
           </View>
+
+          <View style={tw`w-full pb-6`}>
+            <View style={tw`px-3 pt-1`}>
+              <Text numberOfLines={2}>{publicacion.descripcion}</Text>
+            </View>
+          </View>
+
+          <Pressable style={tw`absolute top-1 -right-2 px-4 py-2`}>
+            <Image
+              source={require('../../../../assets/tag_icon.png')}
+              style={{ width: 15, height: 15 }}
+            />
+          </Pressable>
 
           <View style={tw`absolute bottom-0 right-2`}>
             <Text style={tw`${TEXT_COLORS.DARK_GRAY} capitalize text-xs`}>

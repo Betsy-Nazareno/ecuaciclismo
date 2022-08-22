@@ -6,17 +6,20 @@ interface SelectInputProps {
   values: Etiqueta[]
   placeholder: string
   setValuesSelected: (value: string) => void
+  selectedValue?: string
 }
 
 const SelectInput = ({
   values,
   setValuesSelected,
   placeholder,
+  selectedValue,
 }: SelectInputProps) => {
   return (
     <Picker
       onValueChange={(itemValue) => setValuesSelected(itemValue as string)}
       mode="dropdown"
+      selectedValue={selectedValue}
     >
       <Picker.Item label={placeholder} style={{ color: '#767676' }} />
       {values.map((item) => {

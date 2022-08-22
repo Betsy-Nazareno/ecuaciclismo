@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { DocumentResult } from 'expo-document-picker'
-import { catalogs, Ruta } from '../../models/Rutas'
+import { catalogs, GrupoEncuentro, HitosRuta, Ruta } from '../../models/Rutas'
 import { isDocumentResultType } from '../../utils/ckeckTypes'
 import { FOLDERS_STORAGE } from '../../utils/constants'
 import { guardarArchivo } from '../googleCloudStorage'
@@ -61,6 +61,24 @@ export const getColaboracionesRutas = async (authToken: string) => {
   }
 }
 
+export const getGruposEncuentro = async (authToken: string) => {
+  try {
+    const response = await axios({
+      method: 'GET',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/get_grupos_encuentro/',
+      headers: { Authorization: 'Token ' + authToken },
+    })
+    const grupos = response.data?.data || []
+    const finalGrupos = grupos.map((grupo: catalogs) => ({
+      nombre: grupo.nombre,
+      value: grupo.token,
+    }))
+    return finalGrupos
+  } catch (e) {
+    console.error(e)
+  }
+}
+
 export const getAllRutas = async (authToken: string) => {
   try {
     const response = await axios({
@@ -85,12 +103,22 @@ export const guardarRuta = async (authToken: string, ruta: Ruta) => {
         fotos,
         fecha_inicio: ruta.fecha_inicio?.toISOString().split('.')[0],
         fecha_fin: ruta.fecha_fin?.toISOString().split('.')[0],
+        puntosencuentro: converterLugarEncuentro(ruta?.grupos_encuentro),
       },
       headers: { Authorization: 'Token ' + authToken },
     })
   } catch (e) {
     console.error(e)
   }
+}
+
+const converterLugarEncuentro = (grupos: GrupoEncuentro[] | undefined) => {
+  return (
+    grupos?.map((grupo) => ({
+      token: grupo.grupo,
+      lugar: grupo.lugar_encuentro,
+    })) || []
+  )
 }
 
 export const editarRuta = async (
@@ -109,6 +137,7 @@ export const editarRuta = async (
         fotos,
         fecha_inicio: ruta.fecha_inicio?.toISOString().split('.')[0],
         fecha_fin: ruta.fecha_fin?.toISOString().split('.')[0],
+        puntosencuentro: converterLugarEncuentro(ruta?.grupos_encuentro),
       },
       headers: { Authorization: 'Token ' + authToken },
     })
@@ -156,6 +185,7 @@ const converterRuta = (ruta: any) => {
     requisitosValues: requisitos,
     tipoRuta: parseTipos,
     tipoRutaValues: tipoRuta,
+    grupos_encuentro: ruta?.puntosencuentros,
   }
 }
 
@@ -260,6 +290,84 @@ export const cancelarRutas = async (
       method: 'POST',
       url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/cancelar_ruta/',
       data: { token: tokenRuta, motivo_cancelacion: motivo },
+      headers: {
+        Authorization: 'Token ' + authToken,
+        'Content-Type': 'application/json',
+      },
+    })
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const finalizarRutaAdmin = async (
+  tokenRuta: string,
+  authToken: string
+) => {
+  try {
+    await axios({
+      method: 'POST',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/finalizar_ruta/',
+      data: { token_ruta: tokenRuta },
+      headers: {
+        Authorization: 'Token ' + authToken,
+        'Content-Type': 'application/json',
+      },
+    })
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const finalizarRastreo = async (
+  hitos: HitosRuta,
+  authToken: string,
+  tokenRuta: string
+) => {
+  try {
+    await axios({
+      method: 'POST',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/finalizar_rastreo/',
+      data: { token_ruta: tokenRuta, ...hitos },
+      headers: {
+        Authorization: 'Token ' + authToken,
+        'Content-Type': 'application/json',
+      },
+    })
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const getDatosRastreoById = async (
+  tokenRuta: string,
+  authToken: string
+) => {
+  try {
+    const response = await axios({
+      method: 'POST',
+      data: { token_ruta: tokenRuta },
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/get_informacion_individual_ruta/',
+      headers: { Authorization: 'Token ' + authToken },
+    })
+    const [hitos] = response.data?.data
+    return hitos
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const enviarComentariosRuta = async (
+  stars: number,
+  comentario: string,
+  authToken: string,
+  tokenRuta: string
+) => {
+  try {
+    await axios({
+      method: 'POST',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/adicional_rastreo/',
+      data: { token_ruta: tokenRuta, estrellas: stars, comentario },
       headers: {
         Authorization: 'Token ' + authToken,
         'Content-Type': 'application/json',

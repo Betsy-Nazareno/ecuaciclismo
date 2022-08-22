@@ -20,23 +20,10 @@ export const ESTADO_RUTA = {
   CANCELADA: 'Cancelada',
 }
 interface RutaDetalleHeaderProps {
-  // nombre: string
-  // tiposRuta: any
-  // estado: EstadoRuta
-  // aprobada: boolean
-  // motivoCancelacion?: string
   ruta: Ruta
   estado: EstadoRuta
 }
-const RutaDetalleHeader = ({
-  // nombre,
-  // tiposRuta,
-  // estado,
-  // aprobada,
-  // motivoCancelacion,
-  ruta,
-  estado,
-}: RutaDetalleHeaderProps) => {
+const RutaDetalleHeader = ({ ruta, estado }: RutaDetalleHeaderProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
@@ -57,22 +44,25 @@ const RutaDetalleHeader = ({
         return BACKGROUND_COLORS.PRIMARY_BLUE
     }
   }
-
   const {
     nombre,
     tipoRutaValues: tiposRuta,
     aprobado = false,
     motivo_cancelacion: motivoCancelacion,
-    participantes,
   } = ruta
   return (
     <HeaderRoundedContainer>
-      <View style={tw`mx-4`}>
+      <View style={tw`mx-4 mr-8`}>
         <SectionTitle
           text={nombre}
           styleText="text-3xl"
           background={false}
-          hasButton={aprobado && estado === ESTADO_RUTA.CURSO}
+          hasButton={
+            aprobado && estado === ESTADO_RUTA.CURSO && ruta?.inscrito
+              ? true
+              : false
+          }
+          // hasButton={false}
           isRestricted={false}
           buttonIcon={require('../../../../assets/rastreo_icon.png')}
           iconDimension={22}

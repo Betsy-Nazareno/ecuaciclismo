@@ -28,7 +28,7 @@ const ParticipantesFotoMiniatura = ({
       {usersDisplay?.map((ciclista, index) => {
         const foto = ciclista.foto
           ? { uri: ciclista.foto }
-          : require('../../../assets/lorena.jpg')
+          : require('../../../assets/user.png')
         return (
           <Image
             key={index}
@@ -39,6 +39,7 @@ const ParticipantesFotoMiniatura = ({
               borderRadius: 100 / 2,
               marginLeft: -10,
             }}
+            resizeMode="contain"
           />
         )
       })}

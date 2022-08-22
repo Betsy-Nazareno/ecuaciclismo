@@ -1,15 +1,12 @@
 import * as React from 'react'
-import { Image, View } from 'react-native'
-import tw from 'twrnc'
+import BaseDrawerPaginas from '../components/templates/BasePaginasDrawer'
+import ComunidadAndRoles from '../components/templates/Comunidad/ComunidadAndRoles'
 
 const Comunidad = () => {
   return (
-    <View style={tw`mx-auto mt-[30%]`}>
-      <Image
-        source={require('../../assets/wip3.png')}
-        style={{ width: 256, height: 256 }}
-      />
-    </View>
+    <BaseDrawerPaginas>
+      <ComunidadAndRoles />
+    </BaseDrawerPaginas>
   )
 }
 

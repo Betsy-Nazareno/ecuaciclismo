@@ -32,6 +32,7 @@ const TarjetaConsejo = ({ consejoProp }: TarjetaConsejoProps) => {
         <InformacionUsuario
           firstName={consejo?.first_name || ''}
           lastName={consejo?.last_name || ''}
+          foto={consejo?.foto}
         />
         <View style={tw`flex flex-row`}>
           {consejo?.fijado ? (

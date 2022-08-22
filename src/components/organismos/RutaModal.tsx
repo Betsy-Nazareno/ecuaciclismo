@@ -13,6 +13,9 @@ interface RutaModalProps {
   setVisible: (visible: boolean) => void
   participantes: any
   nombre: string
+  horasEstimadas: number
+  tokenRuta?: string
+  handleAbandonar: () => void
 }
 
 const RutaModal = ({
@@ -20,6 +23,9 @@ const RutaModal = ({
   setVisible,
   participantes,
   nombre,
+  horasEstimadas,
+  tokenRuta,
+  handleAbandonar,
 }: RutaModalProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
@@ -63,7 +69,7 @@ const RutaModal = ({
               style={{ width: 15, height: 15, marginRight: 16 }}
             />
             <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-base`}>
-              2 horas estimadas
+              {horasEstimadas} horas estimadas
             </Text>
           </View>
 
@@ -82,7 +88,12 @@ const RutaModal = ({
           <SecondaryButton
             label="Abandonar Ruta"
             style="w-9/12 mx-auto"
-            handleClick={() => navigation.navigate('RutaIncompleta')}
+            handleClick={() => {
+              handleAbandonar()
+              navigation.navigate('RutaIncompleta', {
+                tokenRuta: tokenRuta || '',
+              })
+            }}
           />
         </View>
       </View>

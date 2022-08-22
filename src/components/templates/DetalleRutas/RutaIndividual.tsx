@@ -27,6 +27,8 @@ import { setRutaHasModified } from '../../../redux/ruta'
 import RutaColaboracionesModal from '../../organismos/RutaColaboracionesModal'
 import MenuRutas from '../../moleculas/MenuRutas'
 import RutaDescripcion from './RutaDescripcion'
+import RutaPuntosEncuentro from './RutaPuntosEncuentro'
+import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
 
 const getInformacionPorEstado = (estado: string, inscrito: boolean) => {
   if (inscrito) {
@@ -81,7 +83,7 @@ interface RutaIndividualProps {
 }
 
 const RutaIndividual = ({ token }: RutaIndividualProps) => {
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken, user } = useSelector((state: RootState) => state.user)
   const [isLoading, setIsLoading] = React.useState(false)
   const [ruta, setRuta] = React.useState<Ruta>()
   const [showModal, setShowModal] = React.useState(false)
@@ -92,14 +94,14 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
   const estado = getEstadoRuta(ruta?.estado || { prioridad: 5 })
   const propsByState = getInformacionPorEstado(estado, ruta?.inscrito || false)
+  const { sendPushNotification } = usePermissionsNotifications()
   const statesNoAllowed: EstadoRuta[] = [
     'En Curso',
     'Cancelada',
     'Finalizada',
-    'Sin Cupos',
     'Cancelada',
   ]
-
+  console.log(ruta)
   React.useEffect(() => {
     ;(async () => {
       if (authToken && token) {
@@ -108,11 +110,30 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
     })()
   }, [rutaHasModified])
 
+  const sendNotificationRutaAprobada = async () => {
+    if (!authToken || !ruta?.token_notificacion) return
+    await sendPushNotification({
+      tokens: [ruta?.token_notificacion],
+      title: 'Tu ruta ha sido aprobada',
+      body: `${user?.first_name} ${user?.last_name} ha aprobado la ruta que propusiste para la comunidad.`,
+    })
+  }
+
+  const sendNotificationRutaRechazada = async () => {
+    if (!authToken || !ruta?.token_notificacion) return
+    await sendPushNotification({
+      tokens: [ruta?.token_notificacion],
+      title: 'Tu ruta ha sido rechazada',
+      body: `${user?.first_name} ${user?.last_name} ha rechazado la solicitudd de la ruta ${ruta?.nombre}`,
+    })
+  }
+
   const handleAprobar = async () => {
     setIsLoading(true)
     if (authToken) {
       await aprobarRuta(authToken, token)
       dispatch(setRutaHasModified({ rutaHasModified: !rutaHasModified }))
+      await sendNotificationRutaAprobada()
       navigation.navigate('Rutas')
     }
     setIsLoading(false)
@@ -123,6 +144,7 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
     if (authToken) {
       await eliminarRuta(authToken, token)
       dispatch(setRutaHasModified({ rutaHasModified: !rutaHasModified }))
+      await sendNotificationRutaRechazada()
       navigation.navigate('Rutas')
     }
     setIsLoading(false)
@@ -131,9 +153,11 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
   const sendRegistro = async () => {
     setIsLoading(true)
     if (authToken) {
-      if (!ruta?.inscrito)
+      if (!ruta?.inscrito && estado !== 'Sin Cupos') {
         await inscribirUsuarioEnRuta(authToken, token, colaboraciones)
-      else await cancelarInscripcionUsuario(authToken, token)
+      } else {
+        await cancelarInscripcionUsuario(authToken, token)
+      }
     }
     dispatch(setRutaHasModified({ rutaHasModified: !rutaHasModified }))
     setIsLoading(false)
@@ -164,7 +188,7 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
     <View></View>
   ) : (
     <View style={tw`px-2 mb-4`}>
-      {showModal && (
+      {showModal ? (
         <RutaColaboracionesModal
           colaboraciones={ruta.colaboracionesValues as any}
           visible={showModal}
@@ -172,21 +196,12 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
           handleAdd={handleAddColaboraciones}
           inscribirUser={sendRegistro}
         />
-      )}
+      ) : null}
       <View style={tw`relative`}>
-        <RutaDetalleHeader
-          ruta={ruta}
-          // nombre={ruta?.nombre}
-          // tiposRuta={ruta?.tipoRutaValues}
-          estado={estado}
-          // aprobada={ruta.aprobado || false}
-          // motivoCancelacion={ruta.motivo_cancelacion}
-        />
-        {estado !== 'En Curso' ? (
-          <View style={tw`absolute right-4 top-8`}>
-            <MenuRutas ruta={ruta} />
-          </View>
-        ) : null}
+        <RutaDetalleHeader ruta={ruta} estado={estado} />
+        <View style={tw`absolute right-4 top-8`}>
+          <MenuRutas ruta={ruta} />
+        </View>
       </View>
       <RutaInformacion
         fecha={ruta?.fecha_inicio as Date}
@@ -197,6 +212,9 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
       <RutaDescripcion descripcion={ruta?.descripcion} />
       <RutaFotos fotos={ruta.fotos} />
       <RutaMapView ubicacion={ruta.ubicacion} />
+      {ruta.grupos_encuentro && ruta.grupos_encuentro.length > 0 ? (
+        <RutaPuntosEncuentro grupos={ruta.grupos_encuentro || []} />
+      ) : null}
       <RutasRequisitos requisitos={ruta.requisitosValues} />
       <RutasParticipantes participantes={ruta.participantes || []} />
       {ruta.aprobado ? (

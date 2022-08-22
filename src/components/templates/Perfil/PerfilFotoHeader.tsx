@@ -1,48 +1,91 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { View, Image } from 'react-native'
+import { View, Image, Text } from 'react-native'
 import {
+  FOLDERS_STORAGE,
   HEIGHT_DIMENSIONS,
   TEXT_COLORS,
   WIDTH_DIMENSIONS,
 } from '../../../utils/constants'
-import RoundedButtonIcon from '../../atomos/RoundedButtonIcon'
 import { CustomText } from '../../atomos/CustomText'
-import { NavigationProp, useNavigation } from '@react-navigation/native'
-import { RootStackParamList, Screens } from '../../../models/Screens.types'
+import { capitalize } from '../../../utils/capitalizeText'
+import * as DocumentPicker from 'expo-document-picker'
+import RoundedGalleryButton from '../../moleculas/RoundedGalleryButton'
+import { User } from '../../../models/User'
+import { guardarArchivo } from '../../../lib/googleCloudStorage'
 
-const PerfilFotoHeader = () => {
-  const navigation =
-    useNavigation<NavigationProp<RootStackParamList, Screens>>()
+interface PerfilFotoHeaderProps {
+  isAdmin: boolean
+  email?: string
+  nombre?: string
+  apellido?: string
+  foto?: string
+  onUpdate: (user: Partial<User>) => void
+}
+
+const PerfilFotoHeader = ({
+  isAdmin,
+  email,
+  nombre,
+  apellido,
+  foto,
+  onUpdate,
+}: PerfilFotoHeaderProps) => {
+  const [admin, setAdmin] = React.useState(false)
+
+  React.useEffect(() => {
+    setAdmin(isAdmin)
+  }, [isAdmin])
+
+  const changePhoto = async (file: DocumentPicker.DocumentResult) => {
+    if (file.type === 'cancel') {
+      return
+    }
+    const path = await guardarArchivo(
+      FOLDERS_STORAGE.USUARIOS,
+      file.name,
+      file.uri
+    )
+    onUpdate({ foto: path })
+  }
+
   return (
     <>
       <View style={tw`relative mb-6`}>
         <Image
-          source={require('../../../../assets/lorena.jpg')}
-          style={{ width: WIDTH_DIMENSIONS, height: HEIGHT_DIMENSIONS * 0.6 }}
+          source={
+            foto
+              ? { uri: foto }
+              : require('../../../../assets/user_placeholder.png')
+          }
+          style={{
+            width: WIDTH_DIMENSIONS,
+            height: HEIGHT_DIMENSIONS * 0.7,
+            backgroundColor: 'white',
+          }}
           resizeMode="cover"
         />
-        <RoundedButtonIcon
-          src={require('../../../../assets/edit_white_icon.png')}
-          handleClick={() => navigation.navigate('PerfilFormulario')}
-          style="absolute -bottom-6 right-2 w-12 h-12"
-          dimension={27}
-        />
+
+        <View style={tw`absolute -bottom-6 right-2 `}>
+          <RoundedGalleryButton handleImage={changePhoto} />
+        </View>
       </View>
 
       <CustomText
         containerProps={{ textAlign: 'center' }}
         style={`text-3xl ${TEXT_COLORS.DARK_BLUE}`}
       >
-        Lorena Miranda
+        {capitalize(nombre || '')} {capitalize(apellido || '')}
       </CustomText>
+
+      <Text style={tw`text-center text-black opacity-40`}>{email || ''}</Text>
 
       <View style={tw`mt-1`}>
         <CustomText
           containerProps={{ textAlign: 'center' }}
           style={`text-xl ${TEXT_COLORS.ORANGE}`}
         >
-          Ciclista
+          {admin ? 'Administrador' : 'Ciclista'}
         </CustomText>
       </View>
     </>

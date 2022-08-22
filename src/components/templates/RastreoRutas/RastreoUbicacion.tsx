@@ -14,10 +14,17 @@ import RutaModal from '../../organismos/RutaModal'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
 import { configureBgTask } from '../../../backgroundTasks/locationTask'
-import { getDatabase, ref, onValue, set, remove } from 'firebase/database'
+import { getDatabase, ref, onValue, set, remove, get } from 'firebase/database'
 import { Ruta } from '../../../models/Rutas'
-import { getDistance } from 'geolib'
 import RutaFinalRastreoModal from '../../organismos/RutaFinalRastreoModal'
+import {
+  calcularDistancia,
+  calcularKcalorias,
+  calcularTiempoRecorrido,
+  calcularVelocidadPromedio,
+  getHorasEstimadas,
+} from '../../../utils/rastreoCalculations'
+import { finalizarRastreo } from '../../../lib/services/rutas.services'
 
 const TASK_NAME = 'BACKGROUND_LOCATION_TASK'
 
@@ -31,7 +38,7 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
   const [infParticipantes, setinfParticipantes] = React.useState<any>([])
   const [showModal, setShowModal] = React.useState(false)
   const [showFinalModal, setShowFinalModal] = React.useState(false)
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken, user } = useSelector((state: RootState) => state.user)
 
   React.useEffect(() => {
     ;(async () => {
@@ -59,7 +66,9 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
     if (authToken) {
       configureBgTask({
         userToken: authToken,
-        foto: 'https://firebasestorage.googleapis.com/v0/b/omega-keep-354005.appspot.com/o/users%2Florena.jpg?alt=media&token=3c535d29-7063-463c-899f-4d4a3c2eb5f8',
+        foto:
+          user?.foto ||
+          'https://firebasestorage.googleapis.com/v0/b/omega-keep-354005.appspot.com/o/usuarios%2Fuser.png?alt=media&token=646d4b60-b175-4ff1-85a0-25493710df24',
         setSelfLocation: (location) => setLocation(location),
       })
     }
@@ -91,85 +100,89 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
   React.useEffect(() => {
     if (location && ruta.ubicacion && !location.retorno) {
       const { coordinateY } = ruta.ubicacion || {}
-      const distance = getDistance(
-        {
-          latitude: location?.coords?.latitude,
-          lng: location?.coords?.longitude,
-        },
-        { latitude: coordinateY.latitude, longitude: coordinateY.longitude }
-      )
-      // console.log(distance)
-      if (distance < 20) {
-        // console.log('ey, llegaste')
-        //Finalizar ruta
+      const distance = calcularDistancia(location?.coords, coordinateY)
+      if (distance < 2) {
         const db = getDatabase()
         const reference = ref(db, 'users/' + authToken + '/retorno')
         set(reference, true)
       }
-      // console.log(distance)
     }
   }, [location])
 
   React.useEffect(() => {
-    if (location && location.retorno && ruta.ubicacion) {
-      const { coordinateX } = ruta.ubicacion || {}
-      const distance = getDistance(
-        {
-          latitude: location?.coords?.latitude,
-          lng: location?.coords?.longitude,
-        },
-        { latitude: coordinateX?.latitude, longitude: coordinateX?.longitude }
-      )
-
-      if (distance < 300) {
-        if (TaskManager.isTaskDefined(TASK_NAME)) {
-          Location.stopLocationUpdatesAsync(TASK_NAME)
+    ;(async () => {
+      if (location && location.retorno && ruta.ubicacion) {
+        const { coordinateX } = ruta.ubicacion || {}
+        const distance = calcularDistancia(location?.coords, coordinateX)
+        if (distance < 2) {
+          await stopTracking()
+          setShowFinalModal(true)
         }
-        setShowFinalModal(true)
-        //calcular velocidad, km y kcalorias y enviar a la db
       }
-    }
+    })()
   }, [location])
 
-  const deleteUserFromRTDB = async () => {
-    const db = getDatabase()
-    const reference = ref(db, 'users/' + authToken)
-    remove(reference)
+  const stopTracking = async () => {
+    if (TaskManager.isTaskDefined(TASK_NAME)) {
+      Location.stopLocationUpdatesAsync(TASK_NAME)
+    }
+    const hitos = await getHitosRuta()
+    if (authToken && ruta.token) {
+      await finalizarRastreo(hitos, authToken, ruta.token)
+    }
   }
 
-  // console.log(getFinalSpeed())
-  // const startForegroundUpdate = async () => {
-  //   const location = await Location.getCurrentPositionAsync({})
-  //   setinitialLocation(location)
+  const getHitosRuta = async () => {
+    const db = getDatabase()
+    const reference = ref(db, 'users/' + authToken)
+    const snapshot = await get(reference)
+    const values = snapshot.val()
+    const kilometros = (values?.distance?.distance || 0) / 1000
 
-  //   await Location.watchPositionAsync(
-  //     { accuracy: 5, distanceInterval: 1 },
-  //     (location) => {
-  //       setLocation(location)
-  //     }
-  //   )
-  // }
+    const velocidad = calcularVelocidadPromedio(
+      Object.values(values?.speed || {})
+    )
 
-  //Cuando el usuario finalice la ruta=> eliminarlo de la rtdb, calcularle sus vainas
+    const horas = calcularTiempoRecorrido(
+      Object.values(values?.timestamp || {})
+    )
+
+    const kilocalorias = calcularKcalorias(horas, 90)
+    remove(reference)
+    return { kilometros, velocidad, kilocalorias, horas }
+  }
+
   const startBackgroundLocation = async () => {
     if (TaskManager.isTaskDefined(TASK_NAME)) {
       await Location.startLocationUpdatesAsync(TASK_NAME, {
-        accuracy: 5,
-        timeInterval: 5000,
+        accuracy: 1,
+        timeInterval: 5,
         showsBackgroundLocationIndicator: true,
-        distanceInterval: 5000,
+        distanceInterval: 1,
         foregroundService: {
-          notificationTitle: 'Tracking your location',
-          notificationBody: "Let's rock and roll",
+          notificationTitle: 'Rastreando tu ubicación',
+          notificationBody:
+            'Estamos accediendo a tu ubicación para medir tu rendimiento en la ruta.',
           notificationColor: '#008000',
         },
       })
     }
   }
 
+  //Útil para que el enfoque inicial del mapa sea siempre Guayaquil
+  const initialRegion = {
+    latitude: -2.1453021140388437,
+    latitudeDelta: 0.2568955895381215,
+    longitude: -79.93498552590609,
+    longitudeDelta: 0.13138934969902039,
+  }
+
   return (
     <View style={tw`relative`}>
-      <MapView style={{ width: WIDTH_DIMENSIONS, height: HEIGHT_DIMENSIONS }}>
+      <MapView
+        style={{ width: WIDTH_DIMENSIONS, height: HEIGHT_DIMENSIONS }}
+        initialRegion={initialRegion}
+      >
         <Marker
           coordinate={{
             longitude: ruta?.ubicacion?.coordinateY?.longitude,
@@ -208,13 +221,19 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
           setVisible={setShowModal}
           participantes={ruta?.participantes}
           nombre={ruta?.nombre || ''}
+          handleAbandonar={stopTracking}
+          tokenRuta={ruta?.token}
+          horasEstimadas={getHorasEstimadas(
+            ruta?.fecha_inicio,
+            ruta?.fecha_fin
+          )}
         />
       )}
       {showFinalModal && (
         <RutaFinalRastreoModal
+          token={ruta?.token || ''}
           visible={showFinalModal}
           setVisible={setShowFinalModal}
-          deleteUser={deleteUserFromRTDB}
         />
       )}
     </View>

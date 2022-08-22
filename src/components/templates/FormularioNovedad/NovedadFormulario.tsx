@@ -1,7 +1,7 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { Formik } from 'formik'
 import * as React from 'react'
-import { Text, ScrollView } from 'react-native'
+import { Text, ScrollView, ImageSourcePropType } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { agregarNovedad } from '../../../lib/services/novedades.services'
@@ -92,6 +92,7 @@ const PublicidadFormulario = () => {
                 <GalleryButton
                   field="imagen"
                   icono={require('../../../../assets/gallery_icon.png')}
+                  imagen={values.imagen as ImageSourcePropType}
                 />
               </FieldFormulario>
             </FieldFormulario>

@@ -2,131 +2,157 @@ import * as React from 'react'
 import tw from 'twrnc'
 import { Image, Text, View } from 'react-native'
 import { CustomText } from '../../atomos/CustomText'
-import {
-  BACKGROUND_COLORS,
-  TEXT_COLORS,
-  WIDTH_DIMENSIONS,
-} from '../../../utils/constants'
+import { TEXT_COLORS } from '../../../utils/constants'
 import RoundedWhiteBaseTemplate from '../../organismos/RoundedWhiteBaseTemplate'
-import Input from '../../moleculas/Input'
 import Ruler from '../../atomos/Ruler'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../redux/store'
+import {
+  enviarComentariosRuta,
+  getDatosRastreoById,
+} from '../../../lib/services/rutas.services'
+import { HitosRuta } from '../../../models/Rutas'
+import { capitalize } from '../../../utils/capitalizeText'
+import HeaderRoundedContainer from '../../moleculas/HeaderRoundedContainer'
+import Hito from '../../moleculas/Hito'
+import { getAdminTokens } from '../../../lib/services/notifications.services'
+import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { RootStackParamList, Screens } from '../../../models/Screens.types'
+import FeedbackRuta from '../../moleculas/FeedbackRuta'
 
-const ReporteFinalRuta = () => {
+interface ReporteFinalRutaProps {
+  tokenRuta: string
+}
+
+const ReporteFinalRuta = ({ tokenRuta }: ReporteFinalRutaProps) => {
+  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const [hitosRuta, setHitosRuta] = React.useState<HitosRuta>()
+  const [comentario, setComentario] = React.useState('')
+  const [stars, setStars] = React.useState(0)
+  const [isLoading, setIsLoading] = React.useState(false)
+  const { sendPushNotification } = usePermissionsNotifications()
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, Screens>>()
+
+  React.useEffect(() => {
+    ;(async () => {
+      if (authToken) {
+        const datosRastreo = await getDatosRastreoById(tokenRuta, authToken)
+        setHitosRuta(datosRastreo)
+        setStars(datosRastreo?.estrellas || 0)
+        setComentario(datosRastreo?.comentario || '')
+      }
+    })()
+  }, [])
+
+  const sendNotificationComentariosToAdmins = async () => {
+    if (!authToken) return
+    const tokens = await getAdminTokens(authToken)
+    await sendPushNotification({
+      tokens,
+      title: `Nuevos comentarios en ruta ${hitosRuta?.nombre}`,
+      body: `${capitalize(hitosRuta?.first_name)} ${capitalize(
+        hitosRuta?.last_name
+      )} ha comentado esta ruta`,
+    })
+  }
+
+  const sendFeedback = async () => {
+    setIsLoading(true)
+    if (authToken) {
+      await enviarComentariosRuta(stars, comentario, authToken, tokenRuta)
+    }
+    await sendNotificationComentariosToAdmins()
+    navigation.navigate('Rutas')
+    setIsLoading(false)
+  }
+
+  // const cantEdit = () => {
+  //   return (hitosRuta?.estrellas && hitosRuta?.estrellas > 0) || false
+  // }
+
   return (
-    <View style={tw`pt-6 flex flex-col items-center`}>
-      <CustomText
-        style={`${TEXT_COLORS.DARK_BLUE} text-2xl`}
-        containerProps={{ textAlign: 'center' }}
-      >
-        ¡Felicidades Lorena!
-      </CustomText>
-      <View style={tw`relative`}>
-        <Image
-          source={require('../../../../assets/lorena.jpg')}
-          style={{
-            width: 200,
-            height: 200,
-            borderRadius: 1000 / 2,
-            borderWidth: 12,
-            borderColor: '#fff',
-            marginVertical: 12,
-          }}
-        />
-        <Image
-          source={require('../../../../assets/lazo.png')}
-          style={{
-            width: 50,
-            height: 90,
-            position: 'absolute',
-            bottom: 0,
-            right: 0,
-          }}
-          resizeMode="contain"
-        />
-      </View>
-
-      <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-xl`}>
-        Tus hitos en Ruta Salinas{' '}
-      </Text>
-
-      <View style={tw`w-10/12 mt-4`}>
-        <RoundedWhiteBaseTemplate shadow={false}>
-          <View style={tw`flex flex-row items-center pl-4`}>
-            <Image
-              source={require('../../../../assets/reloj_icon.png')}
-              style={{
-                width: 30,
-                height: 30,
-                marginRight: 24,
-              }}
-            />
-            <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-semibold text-base`}>
-              2 horas de recorrido
-            </Text>
-          </View>
-        </RoundedWhiteBaseTemplate>
-      </View>
-
-      <View style={tw`w-10/12 mt-2`}>
-        <RoundedWhiteBaseTemplate shadow={false}>
-          <View style={tw`flex flex-row items-center pl-4`}>
-            <Image
-              source={require('../../../../assets/rastreo_ruta_icon.png')}
-              style={{
-                width: 30,
-                height: 30,
-                marginRight: 24,
-              }}
-            />
-            <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-semibold text-base`}>
-              215 Km pedaleados
-            </Text>
-          </View>
-        </RoundedWhiteBaseTemplate>
-      </View>
-
-      <View style={tw`w-10/12 mt-2`}>
-        <RoundedWhiteBaseTemplate shadow={false}>
-          <View style={tw`flex flex-row items-center pl-4`}>
-            <Image
-              source={require('../../../../assets/velocidad_icon.png')}
-              style={{
-                width: 30,
-                height: 30,
-                marginRight: 24,
-              }}
-            />
-            <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-semibold text-base`}>
-              Velocidad 14 km/h
-            </Text>
-          </View>
-        </RoundedWhiteBaseTemplate>
-      </View>
-
-      <Ruler style={`w-7/12 mt-6 ${BACKGROUND_COLORS.GRAY}`} />
-
-      <View style={tw`mt-4 flex flex-col items-center`}>
-        <Text
-          style={tw`${TEXT_COLORS.DARK_BLUE} text-xl text-center font-semibold`}
+    <View style={tw`px-4`}>
+      <HeaderRoundedContainer>
+        <CustomText
+          style={`${TEXT_COLORS.DARK_BLUE} text-2xl`}
+          containerProps={{ textAlign: 'center' }}
         >
-          ¿Qué te pareció esta ruta?
+          ¡Felicidades {capitalize(user?.first_name || '')}!
+        </CustomText>
+        <View style={tw`relative mx-auto`}>
+          <Image
+            source={
+              user?.foto
+                ? { uri: user?.foto }
+                : require('../../../../assets/user.png')
+            }
+            style={{
+              width: 200,
+              height: 200,
+              borderRadius: 1000 / 2,
+              borderWidth: 12,
+              borderColor: '#fff',
+              marginVertical: 12,
+            }}
+            resizeMode="contain"
+          />
+          <Image
+            source={require('../../../../assets/lazo.png')}
+            style={{
+              width: 50,
+              height: 90,
+              position: 'absolute',
+              bottom: 0,
+              right: 0,
+            }}
+            resizeMode="contain"
+          />
+        </View>
+
+        <Text
+          style={tw`${TEXT_COLORS.DARK_BLUE} font-semibold text-xl text-center`}
+        >
+          Tus hitos en {hitosRuta?.nombre}
         </Text>
-        <Image
-          source={require('../../../../assets/estrella.png')}
-          style={{
-            width: WIDTH_DIMENSIONS * 0.6,
-            height: 25,
-            marginVertical: 6,
-          }}
-          resizeMode="contain"
+
+        <View style={tw`w-10/12 mt-4 mx-auto mb-4`}>
+          <Hito
+            label={`${hitosRuta?.horas} horas de recorrido`}
+            image={require('../../../../assets/reloj.png')}
+          />
+
+          <Ruler style={`w-7/12 mx-auto bg-[#f4f4f4]`} />
+          <Hito
+            label={`${hitosRuta?.kilometros?.toFixed(1)} Km pedaleados`}
+            image={require('../../../../assets/rastreo_ruta_icon.png')}
+          />
+          <Ruler style={`w-7/12 mx-auto bg-[#f4f4f4]`} />
+          <Hito
+            label={`Velocidad ${hitosRuta?.velocidad?.toFixed(1)} km/h`}
+            image={require('../../../../assets/velocidad_icon.png')}
+          />
+          <Ruler style={`w-7/12 mx-auto bg-[#f4f4f4]`} />
+          <Hito
+            label={`${hitosRuta?.kilocalorias?.toFixed(
+              1
+            )} kilocalorias quemadas`}
+            image={require('../../../../assets/calorias.png')}
+          />
+        </View>
+      </HeaderRoundedContainer>
+
+      <RoundedWhiteBaseTemplate shadow={false}>
+        <FeedbackRuta
+          stars={stars}
+          setStars={setStars}
+          comentario={comentario}
+          setComentario={setComentario}
+          isLoading={isLoading}
+          sendFeedback={sendFeedback}
         />
-        <Input
-          type="none"
-          stylesInput={'bg-white'}
-          placeholder="Dejanos un comentario"
-          stylesProp="w-full"
-        />
-      </View>
+      </RoundedWhiteBaseTemplate>
     </View>
   )
 }

@@ -4,6 +4,8 @@ import * as React from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
 import tw from 'twrnc'
+import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
+import { getAllTokens } from '../../../lib/services/notifications.services'
 import {
   agregarPublicacion,
   editarPublicacion,
@@ -13,6 +15,7 @@ import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import { setPublicacionHasModified } from '../../../redux/publicacion'
 import { RootState } from '../../../redux/store'
 import { PublicacionValidationSchema } from '../../../schemas/PublicacionSchema'
+import { capitalize } from '../../../utils/capitalizeText'
 import HeaderScreen from '../../moleculas/HeaderScreen'
 import PublicacionContenido from './PublicacionContenidoFormulario'
 
@@ -24,12 +27,13 @@ const PublicacionFormularioTemplate = ({
   publicacionProp,
 }: PublicacionFormularioProps) => {
   const [isLoading, setIsLoading] = React.useState(false)
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken, user } = useSelector((state: RootState) => state.user)
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
   const { publicacionHasModified } = useSelector(
     (state: RootState) => state.publicacion
   )
+  const { sendPushNotification } = usePermissionsNotifications()
   const dispatch = useDispatch()
 
   const initialValues = {
@@ -38,6 +42,18 @@ const PublicacionFormularioTemplate = ({
     descripcion: publicacionProp?.descripcion || '',
     multimedia: publicacionProp?.multimedia || [],
     audios: publicacionProp?.audios || [],
+  }
+
+  const sendNotificationPublicacion = async () => {
+    if (!authToken) return
+    const tokens = await getAllTokens(authToken)
+    await sendPushNotification({
+      tokens,
+      title: 'Nueva publicación',
+      body: `${capitalize(
+        user?.first_name
+      )} ha agregado una nueva publicación para la comunidad. ¡Ven a revisarlo!`,
+    })
   }
 
   const handleSubmit = async (publicacion: Publicacion) => {
@@ -52,6 +68,7 @@ const PublicacionFormularioTemplate = ({
         publicacionHasModified: !publicacionHasModified,
       })
     )
+    await sendNotificationPublicacion()
     setIsLoading(false)
     navigation.navigate('Publicaciones')
   }

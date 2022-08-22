@@ -10,6 +10,7 @@ import {
   TEXT_COLORS,
   WIDTH_DIMENSIONS,
 } from '../../../utils/constants'
+import { getHorasEstimadas } from '../../../utils/rastreoCalculations'
 import ButtonPrimary from '../../atomos/ButtonPrimary'
 import { CustomText } from '../../atomos/CustomText'
 import HeaderRoundedContainer from '../../moleculas/HeaderRoundedContainer'
@@ -24,11 +25,12 @@ const RastreoMain = ({ ruta }: RastreoMainProp) => {
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
   const getDatesRange = () => {
-    // const { fecha_inicio, fecha_fin } = ruta || {}
-    // const inicio = `${fecha_inicio?.getHours()} : ${fecha_inicio?.getMinutes()}`
-    // const fin = `${fecha_fin?.getHours()} : ${fecha_fin?.getMinutes()}`
-    // return inicio + '-' + fin
-    return '9:00 - 10:00'
+    const { fecha_inicio, fecha_fin } = ruta || {}
+    const dateStart = new Date(fecha_inicio || '')
+    const dateEnd = new Date(fecha_fin || '')
+    const inicio = `${dateStart?.getHours()}:${dateStart?.getMinutes()}`
+    const fin = `${dateEnd?.getHours()}:${dateEnd?.getMinutes()}`
+    return inicio + ' - ' + fin
   }
 
   return (
@@ -46,7 +48,8 @@ const RastreoMain = ({ ruta }: RastreoMainProp) => {
             Duración {getDatesRange()}
           </Text>
           <Text style={tw`${TEXT_COLORS.DARK_GRAY} text-center text-base`}>
-            (Aproximadamente 2 horas)
+            (Aproximadamente{' '}
+            {getHorasEstimadas(ruta.fecha_inicio, ruta.fecha_fin)} horas)
           </Text>
         </View>
         <View style={tw`w-9/12 mx-auto mt-4 mb-2`}>

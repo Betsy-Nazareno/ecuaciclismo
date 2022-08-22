@@ -12,6 +12,8 @@ import {
   setRutasFeed,
   setRutasPropuestas,
 } from '../../../redux/ruta'
+import { setEtiquetas } from '../../../redux/rutasBusqueda'
+import WithoutResults from '../../moleculas/WithoutResults'
 
 const RutasFeed = () => {
   const { authToken } = useSelector((state: RootState) => state.user)
@@ -26,11 +28,15 @@ const RutasFeed = () => {
         const rutasPropuestas = response.filter((ruta) => !ruta.aprobado)
         const rutaspublicadas = response.filter((ruta) => ruta.aprobado)
         dispatch(setRutasFeed({ rutasFeed: rutaspublicadas }))
-        dispatch(setRutasPropuestas({ rutasPropuestas }))
         dispatch(setAllRutas({ allRutas: rutaspublicadas }))
+        dispatch(setRutasPropuestas({ rutasPropuestas }))
       }
     })()
   }, [rutaHasModified])
+
+  React.useEffect(() => {
+    dispatch(setEtiquetas({ name: '' }))
+  }, [])
 
   const rutas = rutasFeed
     ?.slice()
@@ -40,9 +46,11 @@ const RutasFeed = () => {
     <View style={tw`px-2`}>
       <RutasFeedHeader />
       <View style={tw`py-2`}>
-        {rutas?.map((ruta, index) => (
-          <TarjetaRutas ruta={ruta} key={index} />
-        ))}
+        {rutas && rutas?.length <= 0 ? (
+          <WithoutResults styles="pt-12" />
+        ) : (
+          rutas?.map((ruta, index) => <TarjetaRutas ruta={ruta} key={index} />)
+        )}
       </View>
     </View>
   )

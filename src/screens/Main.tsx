@@ -31,7 +31,7 @@ import RutaIncompleta from './RutaIncompleta'
 import FinalRuta from './FinalRuta'
 import PerfilFormulario from './PerfilFormulario'
 import RastreoLocation from './RastreoLocation'
-// import SafeHomeModal from '../components/organismos/SafeHomeModal'
+import SafeView from '../components/organismos/SafeView'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -39,17 +39,10 @@ const Drawer = createDrawerNavigator()
 const Main = () => {
   const { authToken } = useSelector((state: RootState) => state.user)
   const { setUser, isLoading } = useAuthentication()
-  // const [showSafeHome, setShowSafeHome] = useState(false)
 
   useEffect(() => {
     setUser()
   }, [])
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setShowSafeHome(true)
-  //   }, 3000)
-  // }, [])
 
   const AuthStack = () => {
     return (
@@ -134,7 +127,7 @@ const Main = () => {
     <NavigationContainer>
       {authToken ? (
         <>
-          {/* <SafeHomeModal visible={showSafeHome} setVisible={setShowSafeHome} /> */}
+          <SafeView />
           <MainStack />
         </>
       ) : (

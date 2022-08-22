@@ -19,9 +19,9 @@ export type RootStackParamList = {
   DetalleRuta: { token: string } | undefined
   InicioRastreo: { ruta: Ruta } | undefined
   RastreoUbicacion: { ruta: Ruta } | undefined
-  RutaIncompleta: undefined
-  FinalRuta: undefined
-  PerfilFormulario: undefined
+  RutaIncompleta: { tokenRuta: string } | undefined
+  FinalRuta: { tokenRuta: string } | undefined
+  PerfilFormulario: { data: any } | undefined
 }
 
 export type Screens =
