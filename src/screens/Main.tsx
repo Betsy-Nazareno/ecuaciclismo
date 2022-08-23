@@ -27,11 +27,11 @@ import PublicacionFormulario from './PublicacionFormulario'
 import RutasFormulario from './RutasFormulario'
 import DetalleRuta from './DetalleRuta'
 import InicioRastreo from './InicioRastreo'
-import RastreoUbicacion from '../components/templates/RastreoRutas/RastreoUbicacion'
 import RutaIncompleta from './RutaIncompleta'
 import FinalRuta from './FinalRuta'
 import PerfilFormulario from './PerfilFormulario'
-// import SafeHomeModal from '../components/organismos/SafeHomeModal'
+import RastreoLocation from './RastreoLocation'
+import SafeView from '../components/organismos/SafeView'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -39,17 +39,10 @@ const Drawer = createDrawerNavigator()
 const Main = () => {
   const { authToken } = useSelector((state: RootState) => state.user)
   const { setUser, isLoading } = useAuthentication()
-  // const [showSafeHome, setShowSafeHome] = useState(false)
 
   useEffect(() => {
     setUser()
   }, [])
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setShowSafeHome(true)
-  //   }, 3000)
-  // }, [])
 
   const AuthStack = () => {
     return (
@@ -82,7 +75,7 @@ const Main = () => {
         <Stack.Screen name="ConsejoFormulario" component={ConsejoFormulario} />
         <Stack.Screen name="DetalleRuta" component={DetalleRuta} />
         <Stack.Screen name="InicioRastreo" component={InicioRastreo} />
-        <Stack.Screen name="RastreoUbicacion" component={RastreoUbicacion} />
+        <Stack.Screen name="RastreoUbicacion" component={RastreoLocation} />
         <Stack.Screen name="RutaIncompleta" component={RutaIncompleta} />
         <Stack.Screen name="FinalRuta" component={FinalRuta} />
         <Stack.Screen name="PerfilFormulario" component={PerfilFormulario} />
@@ -124,6 +117,7 @@ const Main = () => {
         <Drawer.Screen name="ConsejoDetalle" component={ConsejoDetalle} />
         <Drawer.Screen name="DetalleNovedad" component={DetalleNovedad} />
         <Drawer.Screen name="Novedades" component={Novedades} />
+        <Drawer.Screen name="Inicio" component={Inicio} />
       </Drawer.Navigator>
     )
   }
@@ -134,7 +128,7 @@ const Main = () => {
     <NavigationContainer>
       {authToken ? (
         <>
-          {/* <SafeHomeModal visible={showSafeHome} setVisible={setShowSafeHome} /> */}
+          <SafeView />
           <MainStack />
         </>
       ) : (

@@ -45,3 +45,9 @@ export const getAdminTokens = async (token: string) => {
     console.error(e)
   }
 }
+
+export const getAllTokens = async (token: string) => {
+  const adminTokens = await getAdminTokens(token)
+  const ciclistasTokens = await getCiclistasToken(token)
+  return [...adminTokens, ...ciclistasTokens]
+}

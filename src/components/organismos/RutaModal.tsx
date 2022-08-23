@@ -11,9 +11,22 @@ import SecondaryButton from '../atomos/SecondaryButton'
 interface RutaModalProps {
   visible: boolean
   setVisible: (visible: boolean) => void
+  participantes: any
+  nombre: string
+  horasEstimadas: number
+  tokenRuta?: string
+  handleAbandonar: () => void
 }
 
-const RutaModal = ({ visible, setVisible }: RutaModalProps) => {
+const RutaModal = ({
+  visible,
+  setVisible,
+  participantes,
+  nombre,
+  horasEstimadas,
+  tokenRuta,
+  handleAbandonar,
+}: RutaModalProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
@@ -33,7 +46,7 @@ const RutaModal = ({ visible, setVisible }: RutaModalProps) => {
               style={`${TEXT_COLORS.DARK_BLUE} text-2xl`}
               containerProps={{ textAlign: 'center' }}
             >
-              Ruta Salinas
+              {nombre}
             </CustomText>
 
             <Pressable
@@ -56,7 +69,7 @@ const RutaModal = ({ visible, setVisible }: RutaModalProps) => {
               style={{ width: 15, height: 15, marginRight: 16 }}
             />
             <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-base`}>
-              2 horas restantes
+              {horasEstimadas} horas estimadas
             </Text>
           </View>
 
@@ -66,7 +79,7 @@ const RutaModal = ({ visible, setVisible }: RutaModalProps) => {
               style={{ width: 20, height: 20, marginRight: 6 }}
             />
             <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-base`}>
-              24 Ciclistas en ruta
+              {participantes?.length || 0} Ciclistas en ruta
             </Text>
           </View>
 
@@ -75,7 +88,12 @@ const RutaModal = ({ visible, setVisible }: RutaModalProps) => {
           <SecondaryButton
             label="Abandonar Ruta"
             style="w-9/12 mx-auto"
-            handleClick={() => navigation.navigate('RutaIncompleta')}
+            handleClick={() => {
+              handleAbandonar()
+              navigation.navigate('RutaIncompleta', {
+                tokenRuta: tokenRuta || '',
+              })
+            }}
           />
         </View>
       </View>

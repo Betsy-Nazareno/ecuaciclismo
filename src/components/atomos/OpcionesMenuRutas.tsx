@@ -8,11 +8,15 @@ import Ruler from './Ruler'
 interface OpcionesMenuRutasProps {
   handleEdit: () => void
   handleCancelar: () => void
+  handleFinalizar: () => void
+  showFinalizar: boolean
 }
 
 const OpcionesMenuRutas = ({
   handleEdit,
   handleCancelar,
+  handleFinalizar,
+  showFinalizar,
 }: OpcionesMenuRutasProps) => {
   return (
     <View
@@ -42,6 +46,26 @@ const OpcionesMenuRutas = ({
           </CustomText>
         </View>
       </Pressable>
+
+      {showFinalizar ? (
+        <>
+          <Ruler style="w-11/12 mx-auto" />
+
+          <Pressable onPress={handleFinalizar}>
+            <View style={tw`flex flex-row items-center py-4 px-8 `}>
+              <Image
+                source={require('../../../assets/stop.png')}
+                style={{ width: 17, height: 17, marginRight: 16 }}
+              />
+              <CustomText
+                style={`${TEXT_COLORS.DARK_BLUE} font-semibold text-sm`}
+              >
+                Finalizar
+              </CustomText>
+            </View>
+          </Pressable>
+        </>
+      ) : null}
     </View>
   )
 }

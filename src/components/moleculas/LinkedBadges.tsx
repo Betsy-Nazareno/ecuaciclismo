@@ -6,10 +6,11 @@ import Badge from './Badge'
 import Gap from '../atomos/Gap'
 import { BACKGROUND_COLORS } from '../../utils/constants'
 import RoundedBadge from './RoundedBadge'
+import TransparentBadge from './TransparentBadge'
 
 interface LinkedBadgesProps {
   etiquetas: Etiqueta[]
-  tipo?: 'rounded' | 'standard'
+  tipo?: 'rounded' | 'standard' | 'transparent'
   children?: React.ReactNode | React.ReactNode[]
 }
 
@@ -36,6 +37,8 @@ const LinkedBadges = ({
               />
             ) : tipo === 'rounded' ? (
               <RoundedBadge label={etiqueta.nombre} styles="bg-white" />
+            ) : tipo === 'transparent' ? (
+              <TransparentBadge label={etiqueta.nombre} />
             ) : (
               <></>
             )}

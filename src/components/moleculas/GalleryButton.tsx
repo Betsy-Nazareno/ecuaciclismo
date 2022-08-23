@@ -7,7 +7,6 @@ import {
   Image,
   TouchableHighlight,
 } from 'react-native'
-import { Consejo } from '../../models/Consejo.model'
 import * as DocumentPicker from 'expo-document-picker'
 import tw from 'twrnc'
 import { DOCUMENT_RESULT_TYPES, TEXT_COLORS } from '../../utils/constants'
@@ -16,11 +15,11 @@ import { FieldError } from '../atomos/FieldError'
 interface GalleryButtonProps {
   field: string
   icono?: ImageSourcePropType
+  imagen?: ImageSourcePropType
 }
 
-const GalleryButton = ({ icono, field }: GalleryButtonProps) => {
-  const { values, setFieldValue } = useFormikContext<Consejo>()
-  const imagen = values.imagen as ImageSourcePropType
+const GalleryButton = ({ icono, field, imagen }: GalleryButtonProps) => {
+  const { setFieldValue } = useFormikContext<any>()
 
   const getFile = async () => {
     const file = await DocumentPicker.getDocumentAsync()

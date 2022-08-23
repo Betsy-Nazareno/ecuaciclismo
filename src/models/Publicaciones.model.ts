@@ -23,6 +23,8 @@ export interface Publicacion {
   ultimo_cambio?: string
   comentarios?: Comentario[]
   reacciones?: ReaccionesInterface
+  foto?: string //Foto del usuario
+  token_notificacion?: string //Token notificación del usuario q hizo la publicacion
 }
 
 export interface Comentario {

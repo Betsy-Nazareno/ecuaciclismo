@@ -8,9 +8,36 @@ import {
   TEXT_COLORS,
   WIDTH_DIMENSIONS,
 } from '../../../utils/constants'
-import Input from '../../moleculas/Input'
+import RoundedWhiteBaseTemplate from '../../organismos/RoundedWhiteBaseTemplate'
+import FeedbackRuta from '../../moleculas/FeedbackRuta'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../redux/store'
+import { enviarComentariosRuta } from '../../../lib/services/rutas.services'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { RootStackParamList, Screens } from '../../../models/Screens.types'
 
-const ReporteRutaIncompleta = () => {
+interface Props {
+  tokenRuta: string
+}
+
+const ReporteRutaIncompleta = ({ tokenRuta }: Props) => {
+  const [comentario, setComentario] = React.useState('')
+  const [stars, setStars] = React.useState(0)
+  const [isLoading, setIsLoading] = React.useState(false)
+  const { authToken } = useSelector((state: RootState) => state.user)
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, Screens>>()
+
+  const sendFeedback = async () => {
+    setIsLoading(true)
+    if (authToken) {
+      await enviarComentariosRuta(stars, comentario, authToken, tokenRuta)
+    }
+    // await sendNotificationComentariosToAdmins()
+    navigation.navigate('Rutas')
+    setIsLoading(false)
+  }
+
   return (
     <View style={tw`px-2`}>
       <HeaderRoundedContainer>
@@ -21,7 +48,7 @@ const ReporteRutaIncompleta = () => {
           ¡Sigue así!
         </CustomText>
 
-        <View style={tw`flex flex-col items-center`}>
+        <View style={tw`flex flex-col items-center mt-4`}>
           <Image
             source={require('../../../../assets/ruta_incompleta_icon.png')}
             style={{
@@ -45,28 +72,16 @@ const ReporteRutaIncompleta = () => {
         </View>
       </HeaderRoundedContainer>
 
-      <View style={tw`mt-4 flex flex-col items-center`}>
-        <Text
-          style={tw`${TEXT_COLORS.DARK_BLUE} text-xl text-center font-semibold`}
-        >
-          ¿Qué te pareció esta ruta?
-        </Text>
-        <Image
-          source={require('../../../../assets/estrella.png')}
-          style={{
-            width: WIDTH_DIMENSIONS * 0.6,
-            height: 25,
-            marginVertical: 6,
-          }}
-          resizeMode="contain"
+      <RoundedWhiteBaseTemplate shadow={false}>
+        <FeedbackRuta
+          stars={stars}
+          setStars={setStars}
+          comentario={comentario}
+          setComentario={setComentario}
+          isLoading={isLoading}
+          sendFeedback={sendFeedback}
         />
-        <Input
-          type="none"
-          stylesInput={'bg-white'}
-          placeholder="Dejanos un comentario"
-          stylesProp="w-9/12"
-        />
-      </View>
+      </RoundedWhiteBaseTemplate>
     </View>
   )
 }

@@ -17,11 +17,11 @@ export type RootStackParamList = {
   PublicacionFormulario: { data: Publicacion } | undefined
   RutasFormulario: { ruta: Ruta } | undefined
   DetalleRuta: { token: string } | undefined
-  InicioRastreo: undefined
-  RastreoUbicacion: undefined
-  RutaIncompleta: undefined
-  FinalRuta: undefined
-  PerfilFormulario: undefined
+  InicioRastreo: { ruta: Ruta } | undefined
+  RastreoUbicacion: { ruta: Ruta } | undefined
+  RutaIncompleta: { tokenRuta: string } | undefined
+  FinalRuta: { tokenRuta: string } | undefined
+  PerfilFormulario: { data: any } | undefined
 }
 
 export type Screens =
@@ -52,6 +52,7 @@ export type RootDrawerParamList = {
   ConsejoDetalle: { consejo: Consejo } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
   Publicaciones: undefined
+  Inicio: undefined
 }
 
 export type ScreensDrawer =
@@ -61,3 +62,4 @@ export type ScreensDrawer =
   | 'Novedades'
   | 'DetalleNovedad'
   | 'Publicaciones'
+  | 'Inicio'

@@ -16,10 +16,32 @@ export const useAuthentication = () => {
         'https://ecuaciclismoapp.pythonanywhere.com/api/token-auth/',
         data
       )
-      const { first_name, last_name, email, username, token, admin, foto } =
-        response.data || {}
+      const {
+        first_name,
+        last_name,
+        email,
+        username,
+        token,
+        admin,
+        foto,
+        genero,
+        peso,
+        edad,
+        nivel,
+      } = response.data || {}
 
-      const user = { first_name, last_name, email, username, admin, foto }
+      const user = {
+        first_name,
+        last_name,
+        email,
+        username,
+        admin,
+        foto,
+        genero,
+        peso,
+        edad,
+        nivel,
+      }
 
       dispatch(
         iniciarSesion({
