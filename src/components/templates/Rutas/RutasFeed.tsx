@@ -1,6 +1,6 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import RutasFeedHeader from './RutasFeedHeader'
 import TarjetaRutas from './TarjetaRutas'
 import { useDispatch, useSelector } from 'react-redux'

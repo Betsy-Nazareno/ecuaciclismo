@@ -23,7 +23,7 @@ import PerfilRutasRecorridas from './PerfilRutasRecorridas'
 
 const PerfilRoot = () => {
   const { deleteUserStore } = useAuthentication()
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.user)
   const [hasRefresh, setHasRefresh] = React.useState(false)
   const [detalleUser, setDetalleUser] = React.useState<Partial<User>>({})
   const navigation =
