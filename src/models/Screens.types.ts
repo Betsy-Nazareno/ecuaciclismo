@@ -52,6 +52,7 @@ export type RootDrawerParamList = {
   ConsejoDetalle: { consejo: Consejo } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
   Publicaciones: undefined
+  Inicio: undefined
 }
 
 export type ScreensDrawer =
@@ -61,3 +62,4 @@ export type ScreensDrawer =
   | 'Novedades'
   | 'DetalleNovedad'
   | 'Publicaciones'
+  | 'Inicio'

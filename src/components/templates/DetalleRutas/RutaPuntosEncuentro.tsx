@@ -20,7 +20,7 @@ const RutaPuntosEncuentro = ({ grupos }: RutaPuntosEncuentroProps) => {
           />
           <Text>
             {grupo.nombre}
-            {': '} {grupo.lugar}
+            {': '} {grupo.lugar_encuentro}
           </Text>
         </Gap>
       ))}

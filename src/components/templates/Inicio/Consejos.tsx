@@ -5,12 +5,13 @@ import TarjetaConsejo from './TarjetaConsejo'
 import { BACKGROUND_COLORS } from '../../../utils/constants'
 import { obtenerConsejosActuales } from '../../../lib/services/consejos.services'
 import { RootState } from '../../../redux/store'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Consejo } from '../../../models/Consejo.model'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import SectionTitle from '../../moleculas/SectionTitle'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import EmptyTarjetaConsejo from '../../organismos/EmptyTarjetaConsejo'
+import { setActiveScreen } from '../../../redux/screens'
 
 const Consejos = () => {
   const { authToken } = useSelector((state: RootState) => state.user)
@@ -19,6 +20,7 @@ const Consejos = () => {
   const [isLoading, setIsLoading] = React.useState(true)
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
+  const dispatch = useDispatch()
 
   React.useEffect(() => {
     let isMounted = true
@@ -29,6 +31,7 @@ const Consejos = () => {
         setIsLoading(false)
       })()
     }
+    dispatch(setActiveScreen({ activeScreen: 'Inicio' }))
     return () => {
       isMounted = false
     }

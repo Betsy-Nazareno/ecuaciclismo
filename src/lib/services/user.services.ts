@@ -148,13 +148,12 @@ export const cambiarPermiso = async (
   adminToken: string
 ) => {
   try {
-    const response = await axios({
+    await axios({
       method: 'POST',
       url: 'https://ecuaciclismoapp.pythonanywhere.com/api/usuario/setear_admin/',
       data: { token_usuario: usuarioToken, admin: isAdmin },
       headers: { Authorization: 'Token ' + adminToken },
     })
-    console.log(response.data)
   } catch (e) {
     console.error(e)
   }

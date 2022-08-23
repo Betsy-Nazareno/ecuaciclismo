@@ -16,7 +16,7 @@ const TarjetaComentarioPublicacion = ({
     <RoundedWhiteBaseTemplate shadow={false}>
       <View style={tw`flex flex-row items-center`}>
         <View style={tw`relative px-2 w-2/12 `}>
-          <View style={tw`z-40 py-4`}>
+          <View style={tw`z-40 py-2`}>
             <Image
               source={
                 comentario.foto

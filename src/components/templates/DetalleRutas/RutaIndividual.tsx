@@ -29,6 +29,9 @@ import MenuRutas from '../../moleculas/MenuRutas'
 import RutaDescripcion from './RutaDescripcion'
 import RutaPuntosEncuentro from './RutaPuntosEncuentro'
 import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
+import EmptyDetalleRuta from '../../organismos/EmptyDetalleRuta'
+import AdminValidator from '../AdminValidator'
+import RutaComentarios from './RutaComentarios'
 
 const getInformacionPorEstado = (estado: string, inscrito: boolean) => {
   if (inscrito) {
@@ -87,6 +90,7 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
   const [isLoading, setIsLoading] = React.useState(false)
   const [ruta, setRuta] = React.useState<Ruta>()
   const [showModal, setShowModal] = React.useState(false)
+  const [refresh, setRefresh] = React.useState(false)
   const [colaboraciones, setColaboraciones] = React.useState<string[]>([])
   const { rutaHasModified } = useSelector((state: RootState) => state.ruta)
   const dispatch = useDispatch()
@@ -101,14 +105,14 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
     'Finalizada',
     'Cancelada',
   ]
-  console.log(ruta)
+
   React.useEffect(() => {
     ;(async () => {
       if (authToken && token) {
         setRuta(await getRutaById(authToken, token))
       }
     })()
-  }, [rutaHasModified])
+  }, [rutaHasModified, refresh])
 
   const sendNotificationRutaAprobada = async () => {
     if (!authToken || !ruta?.token_notificacion) return
@@ -185,7 +189,7 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
   }
 
   return !ruta ? (
-    <View></View>
+    <EmptyDetalleRuta />
   ) : (
     <View style={tw`px-2 mb-4`}>
       {showModal ? (
@@ -200,7 +204,7 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
       <View style={tw`relative`}>
         <RutaDetalleHeader ruta={ruta} estado={estado} />
         <View style={tw`absolute right-4 top-8`}>
-          <MenuRutas ruta={ruta} />
+          <MenuRutas ruta={ruta} onRefresh={() => setRefresh(!refresh)} />
         </View>
       </View>
       <RutaInformacion
@@ -215,8 +219,14 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
       {ruta.grupos_encuentro && ruta.grupos_encuentro.length > 0 ? (
         <RutaPuntosEncuentro grupos={ruta.grupos_encuentro || []} />
       ) : null}
-      <RutasRequisitos requisitos={ruta.requisitosValues} />
+      {ruta.requisitosValues && ruta.requisitosValues?.length > 0 ? (
+        <RutasRequisitos requisitos={ruta.requisitosValues} />
+      ) : null}
       <RutasParticipantes participantes={ruta.participantes || []} />
+
+      <AdminValidator>
+        <RutaComentarios participantes={ruta.participantes || []} />
+      </AdminValidator>
       {ruta.aprobado ? (
         isLoading ? (
           <Spinner />

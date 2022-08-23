@@ -68,10 +68,6 @@ const ReporteFinalRuta = ({ tokenRuta }: ReporteFinalRutaProps) => {
     setIsLoading(false)
   }
 
-  // const cantEdit = () => {
-  //   return (hitosRuta?.estrellas && hitosRuta?.estrellas > 0) || false
-  // }
-
   return (
     <View style={tw`px-4`}>
       <HeaderRoundedContainer>

@@ -1,13 +1,13 @@
 import * as React from 'react'
 import tw from 'twrnc'
 import { Image, Switch, Text, View } from 'react-native'
-import { DatosBasicosUser } from './ListaComunidad'
 import { CustomText } from '../../atomos/CustomText'
 import { TEXT_COLORS } from '../../../utils/constants'
 import Gap from '../../atomos/Gap'
 import { capitalize } from '../../../utils/capitalizeText'
 import AdminValidator from '../AdminValidator'
 import { cambiarPermiso } from '../../../lib/services/user.services'
+import { DatosBasicosUser } from './ComunidadAndRoles'
 
 interface TarjetaUsuarioProps {
   usuario: DatosBasicosUser

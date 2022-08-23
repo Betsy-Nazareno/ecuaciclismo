@@ -77,12 +77,8 @@ const FormularioRutasGrupos = ({
       >
         {(props: any) => (
           <>
-            <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
-              Puntos de Encuentro
-            </Text>
-
             <Text
-              style={tw`${TEXT_COLORS.DARK_BLUE} font-normal text-sm pl-2 mt-4`}
+              style={tw`${TEXT_COLORS.DARK_BLUE} font-normal text-sm pl-2 mt-2`}
             >
               Grupos
             </Text>
@@ -112,7 +108,7 @@ const FormularioRutasGrupos = ({
               <ButtonPrimary
                 label="Agregar"
                 handleClick={props?.submitForm}
-                style={`${BACKGROUND_COLORS.DARK_BLUE} text-white rounded-3xl py-1 `}
+                style={`${BACKGROUND_COLORS.DARK_BLUE} text-white rounded-3xl py-1`}
               />
             </View>
           </>

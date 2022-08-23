@@ -16,6 +16,7 @@ import { getEstadoRuta } from '../../../utils/parseRouteState'
 import BandaEstadoRuta from '../../atomos/BandaEstadoRuta'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
+import { getFecha } from '../../../utils/parseDates'
 
 interface TarjetaRutasProps {
   ruta: Ruta
@@ -73,15 +74,6 @@ const TarjetaRutas = ({ ruta }: TarjetaRutasProps) => {
     }
   }
 
-  const getFecha = (fecha: string) => {
-    if (!fecha) return
-    const date = new Date(fecha)
-    const dia = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
-    const minutos = date.getMinutes()
-    const hora = `${date.getHours()}:${minutos === 0 ? '00' : minutos}`
-    return `${dia} ${hora}`
-  }
-
   const getImagenPrincipal = () => {
     const [main] = ruta.fotos || []
     if (!main) return null
@@ -98,6 +90,7 @@ const TarjetaRutas = ({ ruta }: TarjetaRutasProps) => {
   const color = aprobado ? getColor(estadoRuta) : BACKGROUND_COLORS.BLUE_LIGHTER
   const bandColor = getBandColor(estadoRuta)
   const imageScale = aprobado ? getImageScale(estadoRuta) : 'none'
+  const participantes = participantesRutas.length
   return (
     <Pressable
       onPress={() =>
@@ -141,8 +134,10 @@ const TarjetaRutas = ({ ruta }: TarjetaRutasProps) => {
               />
               <Text style={tw`${TEXT_COLORS.DARK_BLUE} pl-2`}>
                 Tú
-                {participantesRutas.length > 1
-                  ? `y  ${participantesRutas?.length} ciclistas más`
+                {participantes > 1
+                  ? ` y ${participantes - 1} ${
+                      participantes - 1 > 1 ? 'ciclistas' : 'ciclista'
+                    } más`
                   : ''}
               </Text>
             </View>

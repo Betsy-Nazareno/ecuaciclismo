@@ -18,9 +18,10 @@ import { getEstadoRuta } from '../../utils/parseRouteState'
 
 interface MenuRutasProps {
   ruta: Ruta
+  onRefresh: () => void
 }
 
-const MenuRutas = ({ ruta }: MenuRutasProps) => {
+const MenuRutas = ({ ruta, onRefresh }: MenuRutasProps) => {
   const [motivo, setMotivo] = React.useState('')
   const [displayMenu, setDisplayMenu] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
@@ -48,6 +49,8 @@ const MenuRutas = ({ ruta }: MenuRutasProps) => {
     if (authToken && ruta.token) {
       await finalizarRutaAdmin(ruta.token, authToken)
     }
+    setDisplayMenu(false)
+    onRefresh()
   }
 
   return (

@@ -35,7 +35,7 @@ const TarjetaConsejoHistorico = ({ consejo }: TarjetaConsejoHistoricoProps) => {
         {consejo.imagen ? (
           <Image
             source={{ uri: consejo.imagen } as ImageSourcePropType}
-            style={{ width: 90, height: 95, borderBottomRightRadius: 90 / 2 }}
+            style={{ width: 90, height: 95 }}
           />
         ) : null}
 

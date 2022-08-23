@@ -1,6 +1,6 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { ScrollView, Text } from 'react-native'
+import { ScrollView, Text, View } from 'react-native'
 import HeaderScreen from '../../moleculas/HeaderScreen'
 import { Formik } from 'formik'
 import { RutasValidationSchema } from '../../../schemas/RutasValidationSchema'
@@ -9,7 +9,6 @@ import Input from '../../moleculas/Input'
 import { BACKGROUND_COLORS, TEXT_COLORS } from '../../../utils/constants'
 import SelectCreatableList from '../../moleculas/SelectCreatableList'
 import GalleryMultiImages from '../../organismos/GalleryMultiImages'
-import FieldFechaHora from '../../moleculas/FieldFechaHora'
 import MapViewSelectUbication from '../../moleculas/MapViewSelectUbication'
 import Spinner from '../../atomos/Spinner'
 import SecondaryButton from '../../atomos/SecondaryButton'
@@ -22,18 +21,25 @@ import {
   getTiposRuta,
   guardarRuta,
 } from '../../../lib/services/rutas.services'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
 import { Ruta } from '../../../models/Rutas'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import {
   getAdminTokens,
+  getAllTokens,
   getCiclistasToken,
 } from '../../../lib/services/notifications.services'
 import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
 import { capitalize } from '../../../utils/capitalizeText'
 import FormularioRutasGrupos from './FormularioRutasGrupos'
+import Gap from '../../atomos/Gap'
+import SmallFieldFecha from '../../moleculas/SmallFieldFecha'
+import ArrowDivider from '../../atomos/ArrowDivider'
+import FieldTitle from '../../atomos/FieldTitle'
+import CustomSwitch from '../../atomos/CustomSwitch'
+import { setRutaHasModified } from '../../../redux/ruta'
 
 interface FormularioRutasProp {
   rutaProp: Ruta
@@ -44,7 +50,13 @@ const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
   const [requisitosCatalog, setRequisitosCatalog] = React.useState([])
   const [tiposRutaCatalog, setTiposRutaCatalog] = React.useState([])
   const [colaboracionesCatalog, setColaboracionesCatalog] = React.useState([])
+  const [hasRequirements, setHasRequirements] = React.useState(false)
+  const [hasCollaborations, setHasCollaborations] = React.useState(false)
+  const [hasGroups, setHasGroups] = React.useState(false)
+  const [cuposLimitados, setCuposLimitados] = React.useState(false)
   const [grupos, setGrupos] = React.useState([])
+  const { rutaHasModified } = useSelector((state: RootState) => state.ruta)
+  const dispatch = useDispatch()
   const { sendPushNotification } = usePermissionsNotifications()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
@@ -90,6 +102,17 @@ const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
     })()
   }, [])
 
+  React.useEffect(() => {
+    if (rutaProp) {
+      setCuposLimitados(!!rutaProp.cupos_disponibles)
+      setHasRequirements(!!(rutaProp.requisitos.length > 0))
+      setHasCollaborations(!!(rutaProp.colaboraciones.length > 0))
+      setHasGroups(
+        !!(rutaProp.grupos_encuentro && rutaProp.grupos_encuentro?.length > 0)
+      )
+    }
+  }, [rutaProp])
+
   const sendNotificationToAdmins = async () => {
     if (!authToken) return
     const tokens = await getAdminTokens(authToken)
@@ -108,36 +131,37 @@ const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
     await sendPushNotification({
       tokens,
       title: 'Ruta Modificada',
-      body: `Se han modificado los detalles de la ruta ${rutaProp.nombre}. Por favor, revisa esta actividad`,
+      body: `Se han modificado los detalles de la ruta ${rutaProp?.nombre}. Por favor, revisa esta actividad`,
     })
   }
 
-  const sendNotificationNewRutaToUsers = async () => {
+  const sendNotificationNewRutaToUsers = async (nombre: string) => {
     if (!authToken) return
-    const tokens = await getCiclistasToken(authToken)
+    const tokens = await getAllTokens(authToken)
     await sendPushNotification({
       tokens,
       title: 'Nueva ruta planificada',
-      body: `${rutaProp.nombre} ha sido planificada para la comunidad. ¡Únete al recorrido!`,
+      body: `${nombre} ha sido planificada para la comunidad. ¡Únete al recorrido!`,
     })
   }
 
   const handleSubmit = async (prop: Ruta) => {
     setIsLoading(true)
     if (authToken) {
-      if (rutaProp && rutaProp.token) {
+      if (rutaProp && rutaProp.token && rutaProp.nombre) {
         await editarRuta(authToken, prop, rutaProp.token)
         await sendNotificationEditRutaToUsers()
-      } else {
-        await guardarRuta(authToken, prop)
+        return
       }
+      await guardarRuta(authToken, prop)
       if (!user?.admin) {
         await sendNotificationToAdmins()
       } else {
-        await sendNotificationNewRutaToUsers()
+        await sendNotificationNewRutaToUsers(prop.nombre)
       }
     }
     setIsLoading(false)
+    dispatch(setRutaHasModified({ rutaHasModified: !rutaHasModified }))
     navigation.navigate('Rutas')
   }
 
@@ -156,127 +180,71 @@ const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
         {({ handleSubmit, values, setFieldValue }) => (
           <>
             <FieldFormulario>
-              <Input
-                text="Nombre"
-                type="none"
-                name="nombre"
-                placeholder="Nombre de la ruta..."
-                value={values.nombre}
-                setValue={(value) => setFieldValue('nombre', value)}
-              />
-            </FieldFormulario>
+              <Gap py="2">
+                <Input
+                  text="Nombre"
+                  type="none"
+                  name="nombre"
+                  placeholder="Nombre de la ruta..."
+                  value={values.nombre}
+                  setValue={(value) => setFieldValue('nombre', value)}
+                />
+              </Gap>
 
-            <FieldFormulario>
-              <Input
-                multiline
-                numberOfLines={4}
-                textAlignVertical="top"
-                text="Descripcion"
-                type="none"
-                name="descripcion"
-                placeholder="Agrega una descripción del evento..."
-                value={values.descripcion}
-                setValue={(value) => setFieldValue('descripcion', value)}
-              />
-            </FieldFormulario>
+              <Gap py="2">
+                <Input
+                  text="Lugar"
+                  type="none"
+                  name="lugar"
+                  placeholder="Añade una referencia del punto de partida..."
+                  value={values.lugar}
+                  setValue={(value) => setFieldValue('lugar', value)}
+                />
+              </Gap>
 
-            <FieldFormulario>
-              <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
-                Tipo de Ruta
-              </Text>
-              <SelectCreatableBatches
-                values={tiposRutaCatalog}
-                selectedValues={values.tipoRuta}
-                setValuesSelected={(tipo) => {
-                  const exists = values.tipoRuta.find(
-                    (type: any) => type === tipo
-                  )
-                  if (!exists) {
+              <Gap py="2">
+                <Text
+                  style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}
+                >
+                  Tipo de Ruta
+                </Text>
+                <SelectCreatableBatches
+                  values={tiposRutaCatalog}
+                  selectedValues={values.tipoRuta}
+                  setValuesSelected={(tipo) => {
+                    const exists = values.tipoRuta.find(
+                      (type: any) => type === tipo
+                    )
+                    if (!exists) {
+                      setFieldValue('tipoRuta', [
+                        ...(values.tipoRuta || []),
+                        tipo,
+                      ])
+                    }
+                  }}
+                  deleteValue={(tipo) => {
                     setFieldValue('tipoRuta', [
-                      ...(values.tipoRuta || []),
-                      tipo,
+                      ...(values.tipoRuta || []).filter((m: any) => m !== tipo),
                     ])
-                  }
-                }}
-                deleteValue={(tipo) => {
-                  setFieldValue('tipoRuta', [
-                    ...(values.tipoRuta || []).filter((m: any) => m !== tipo),
-                  ])
-                }}
-                placeholder="Montaña, Carretera..."
-                field={'tiposRuta'}
-              />
-            </FieldFormulario>
+                  }}
+                  placeholder="Montaña, Carretera..."
+                  field={'tiposRuta'}
+                />
+              </Gap>
 
-            <FieldFormulario>
-              <Text
-                style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2 pb-4`}
-              >
-                Requisitos
-              </Text>
-              <SelectCreatableList
-                field="requisitos"
-                placeholder="Insumos, Nivel de ciclista..."
-                values={requisitosCatalog}
-                selectedValues={values.requisitos}
-                setValuesSelected={(valor) => {
-                  const exists = values.requisitos.find(
-                    (requisito) => requisito === valor
-                  )
-                  if (!exists) {
-                    setFieldValue('requisitos', [
-                      ...(values.requisitos || []),
-                      valor,
-                    ])
-                  }
-                }}
-                deleteValue={(valor) => {
-                  setFieldValue('requisitos', [
-                    ...(values.requisitos || []).filter((m) => m !== valor),
-                  ])
-                }}
-              />
-            </FieldFormulario>
-
-            <FieldFormulario>
-              <Text
-                style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2 pb-4`}
-              >
-                Colaboraciones de los ciclistas
-              </Text>
-              <SelectCreatableList
-                field="colaboraciones"
-                placeholder="Gasas, Alcohol..."
-                values={colaboracionesCatalog}
-                selectedValues={values.colaboraciones}
-                setValuesSelected={(valor) => {
-                  const exists = values.colaboraciones.find(
-                    (colaboracion) => colaboracion === valor
-                  )
-                  if (!exists) {
-                    setFieldValue('colaboraciones', [
-                      ...(values.colaboraciones || []),
-                      valor,
-                    ])
-                  }
-                }}
-                deleteValue={(valor) => {
-                  setFieldValue('colaboraciones', [
-                    ...(values.colaboraciones || []).filter((m) => m !== valor),
-                  ])
-                }}
-              />
-            </FieldFormulario>
-
-            <FieldFormulario>
-              <Input
-                text="Cupos disponibles"
-                type="none"
-                name="cupos"
-                placeholder="Cantidad de participantes admitidos..."
-                value={values.cupos_disponibles}
-                setValue={(value) => setFieldValue('cupos_disponibles', value)}
-              />
+              <Gap py="2">
+                <Input
+                  multiline
+                  numberOfLines={4}
+                  textAlignVertical="top"
+                  text="Descripcion del evento"
+                  type="none"
+                  name="descripcion"
+                  placeholder="Agrega una descripción del evento..."
+                  value={values.descripcion}
+                  setValue={(value) => setFieldValue('descripcion', value)}
+                />
+              </Gap>
             </FieldFormulario>
 
             <FieldFormulario>
@@ -294,36 +262,140 @@ const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
             </FieldFormulario>
 
             <FieldFormulario>
-              <Input
-                text="Lugar"
-                type="none"
-                name="lugar"
-                placeholder="Añade una referencia del punto de partida..."
-                value={values.lugar}
-                setValue={(value) => setFieldValue('lugar', value)}
-              />
+              <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
+                Horario Planificado
+              </Text>
+
+              <View style={tw`flex flex-row justify-between items-center mx-8`}>
+                <View style={tw`flex flex-col justify-between items-center`}>
+                  <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-sm my-2`}>
+                    Fecha de Inicio
+                  </Text>
+                  <SmallFieldFecha
+                    fecha={values.fecha_inicio}
+                    setFecha={(value) => setFieldValue('fecha_inicio', value)}
+                  />
+                </View>
+                <ArrowDivider />
+                <View style={tw`flex flex-col justify-between items-center`}>
+                  <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-sm my-2`}>
+                    Fecha de Fin
+                  </Text>
+                  <SmallFieldFecha
+                    fecha={values.fecha_fin}
+                    setFecha={(value) => setFieldValue('fecha_fin', value)}
+                  />
+                </View>
+              </View>
             </FieldFormulario>
 
-            <FormularioRutasGrupos grupos={grupos} field="grupos_encuentro" />
-
             <FieldFormulario>
-              <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
-                Fecha de inicio
-              </Text>
-              <FieldFechaHora
-                fecha={values.fecha_inicio}
-                setFecha={(value) => setFieldValue('fecha_inicio', value)}
-              />
-            </FieldFormulario>
+              <Gap py="0">
+                <View style={tw`flex flex-row items-center justify-between `}>
+                  <FieldTitle text="Cupos Limitados" />
+                  <CustomSwitch
+                    handleClick={() => setCuposLimitados(!cuposLimitados)}
+                    active={cuposLimitados}
+                  />
+                </View>
+                {cuposLimitados ? (
+                  <Input
+                    type="none"
+                    name="cupos"
+                    placeholder="Cantidad de participantes admitidos..."
+                    value={values.cupos_disponibles}
+                    setValue={(value) =>
+                      setFieldValue('cupos_disponibles', value)
+                    }
+                  />
+                ) : null}
+              </Gap>
 
-            <FieldFormulario>
-              <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
-                Fecha de finalización
-              </Text>
-              <FieldFechaHora
-                fecha={values.fecha_fin}
-                setFecha={(value) => setFieldValue('fecha_fin', value)}
-              />
+              <Gap py="2">
+                <View style={tw`flex flex-row items-center justify-between `}>
+                  <FieldTitle text="Requisitos para participar" />
+                  <CustomSwitch
+                    handleClick={() => setHasRequirements(!hasRequirements)}
+                    active={hasRequirements}
+                  />
+                </View>
+
+                {hasRequirements ? (
+                  <SelectCreatableList
+                    field="requisitos"
+                    placeholder="Insumos, Nivel de ciclista..."
+                    values={requisitosCatalog}
+                    selectedValues={values.requisitos}
+                    setValuesSelected={(valor) => {
+                      const exists = values.requisitos.find(
+                        (requisito) => requisito === valor
+                      )
+                      if (!exists) {
+                        setFieldValue('requisitos', [
+                          ...(values.requisitos || []),
+                          valor,
+                        ])
+                      }
+                    }}
+                    deleteValue={(valor) => {
+                      setFieldValue('requisitos', [
+                        ...(values.requisitos || []).filter((m) => m !== valor),
+                      ])
+                    }}
+                  />
+                ) : null}
+              </Gap>
+
+              <Gap py="2">
+                <View style={tw`flex flex-row items-center justify-between`}>
+                  <FieldTitle text="Colaboraciones de los ciclistas" />
+                  <CustomSwitch
+                    handleClick={() => setHasCollaborations(!hasCollaborations)}
+                    active={hasCollaborations}
+                  />
+                </View>
+                {hasCollaborations ? (
+                  <SelectCreatableList
+                    field="colaboraciones"
+                    placeholder="Gasas, Alcohol..."
+                    values={colaboracionesCatalog}
+                    selectedValues={values.colaboraciones}
+                    setValuesSelected={(valor) => {
+                      const exists = values.colaboraciones.find(
+                        (colaboracion) => colaboracion === valor
+                      )
+                      if (!exists) {
+                        setFieldValue('colaboraciones', [
+                          ...(values.colaboraciones || []),
+                          valor,
+                        ])
+                      }
+                    }}
+                    deleteValue={(valor) => {
+                      setFieldValue('colaboraciones', [
+                        ...(values.colaboraciones || []).filter(
+                          (m) => m !== valor
+                        ),
+                      ])
+                    }}
+                  />
+                ) : null}
+              </Gap>
+
+              <View style={tw`flex flex-row items-center justify-between`}>
+                <FieldTitle text="Puntos de encuentro" />
+                <CustomSwitch
+                  handleClick={() => setHasGroups(!hasGroups)}
+                  active={hasGroups}
+                />
+              </View>
+
+              {hasGroups ? (
+                <FormularioRutasGrupos
+                  grupos={grupos}
+                  field="grupos_encuentro"
+                />
+              ) : null}
             </FieldFormulario>
 
             <FieldFormulario>

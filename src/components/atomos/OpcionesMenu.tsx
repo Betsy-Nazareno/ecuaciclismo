@@ -20,7 +20,7 @@ const OpcionesMenu = ({
 }: MenuProps) => {
   return (
     <View
-      style={tw`absolute top-6 right-4 bg-white z-40 py-1 rounded-lg shadow-md w-44`}
+      style={tw`absolute top-6 right-4 bg-white z-40 py-1 rounded-lg shadow-md w-44 z-40`}
     >
       <Pressable onPress={handlePin}>
         <View style={tw`flex flex-row items-center py-4 px-8`}>

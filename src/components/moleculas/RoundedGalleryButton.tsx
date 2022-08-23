@@ -2,7 +2,7 @@ import * as React from 'react'
 import { View, Image, TouchableHighlight } from 'react-native'
 import * as DocumentPicker from 'expo-document-picker'
 import tw from 'twrnc'
-import { DOCUMENT_RESULT_TYPES } from '../../utils/constants'
+import { BACKGROUND_COLORS, DOCUMENT_RESULT_TYPES } from '../../utils/constants'
 
 interface RoundedGalleryButtonProps {
   handleImage: (file: DocumentPicker.DocumentResult) => void
@@ -24,11 +24,11 @@ const RoundedGalleryButton = ({ handleImage }: RoundedGalleryButtonProps) => {
       style={{ borderRadius: 100 / 2 }}
     >
       <View
-        style={tw`h-16 w-16 rounded-full flex items-center justify-center bg-gray-400`}
+        style={tw`h-14 w-14 rounded-full flex items-center justify-center ${BACKGROUND_COLORS.PRIMARY_BLUE}`}
       >
         <Image
           source={require('../../../assets/add-photo.png')}
-          style={{ width: 35, height: 35 }}
+          style={{ width: 30, height: 30 }}
         />
       </View>
     </TouchableHighlight>

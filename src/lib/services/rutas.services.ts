@@ -177,6 +177,11 @@ const converterRuta = (ruta: any) => {
   const parseTipos = tipoRuta.map((tipo: any) => {
     return tipo.token
   })
+  const parseGrupos = ruta?.puntosencuentros?.map((item: any) => ({
+    grupo: item.token,
+    lugar_encuentro: item.lugar,
+    nombre: item.nombre,
+  }))
   return {
     ...ruta,
     colaboraciones: parseColaboraciones,
@@ -185,7 +190,7 @@ const converterRuta = (ruta: any) => {
     requisitosValues: requisitos,
     tipoRuta: parseTipos,
     tipoRutaValues: tipoRuta,
-    grupos_encuentro: ruta?.puntosencuentros,
+    grupos_encuentro: parseGrupos,
   }
 }
 

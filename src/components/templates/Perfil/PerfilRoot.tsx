@@ -60,10 +60,10 @@ const PerfilRoot = () => {
   return (
     <View style={tw`pb-12`}>
       <PerfilFotoHeader
-        isAdmin={user?.admin || false}
-        nombre={user?.first_name}
-        apellido={user?.last_name}
-        email={user?.email}
+        isAdmin={!detalleUser?.admin}
+        nombre={detalleUser?.first_name}
+        apellido={detalleUser?.last_name}
+        email={detalleUser?.email}
         foto={detalleUser?.foto}
         onUpdate={handleUpdates}
       />

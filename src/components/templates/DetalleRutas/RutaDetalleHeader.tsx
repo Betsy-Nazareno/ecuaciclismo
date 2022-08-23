@@ -62,7 +62,6 @@ const RutaDetalleHeader = ({ ruta, estado }: RutaDetalleHeaderProps) => {
               ? true
               : false
           }
-          // hasButton={false}
           isRestricted={false}
           buttonIcon={require('../../../../assets/rastreo_icon.png')}
           iconDimension={22}

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { View } from 'react-native'
+import { Text, View } from 'react-native'
 import RutasFeedHeader from './RutasFeedHeader'
 import TarjetaRutas from './TarjetaRutas'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,10 +14,12 @@ import {
 } from '../../../redux/ruta'
 import { setEtiquetas } from '../../../redux/rutasBusqueda'
 import WithoutResults from '../../moleculas/WithoutResults'
+import EmptyTarjetaPublicacion from '../../organismos/EmptyTarjetaPublicacion'
 
 const RutasFeed = () => {
   const { authToken } = useSelector((state: RootState) => state.user)
   const { rutasFeed } = useSelector((state: RootState) => state.ruta)
+  const [isRending, setIsRending] = React.useState(true)
   const dispatch = useDispatch()
   const { rutaHasModified } = useSelector((state: RootState) => state.ruta)
 
@@ -30,6 +32,7 @@ const RutasFeed = () => {
         dispatch(setRutasFeed({ rutasFeed: rutaspublicadas }))
         dispatch(setAllRutas({ allRutas: rutaspublicadas }))
         dispatch(setRutasPropuestas({ rutasPropuestas }))
+        setIsRending(false)
       }
     })()
   }, [rutaHasModified])
@@ -46,7 +49,13 @@ const RutasFeed = () => {
     <View style={tw`px-2`}>
       <RutasFeedHeader />
       <View style={tw`py-2`}>
-        {rutas && rutas?.length <= 0 ? (
+        {isRending ? (
+          <>
+            <EmptyTarjetaPublicacion />
+            <EmptyTarjetaPublicacion />
+            <EmptyTarjetaPublicacion />
+          </>
+        ) : rutas && rutas?.length <= 0 ? (
           <WithoutResults styles="pt-12" />
         ) : (
           rutas?.map((ruta, index) => <TarjetaRutas ruta={ruta} key={index} />)
