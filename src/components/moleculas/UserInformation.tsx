@@ -12,8 +12,13 @@ const UserInformation = () => {
     <View style={tw`flex flex-row`}>
       <View style={tw`mr-4`}>
         <Image
-          source={require('../../../assets/user.png')}
+          source={
+            user?.foto
+              ? { uri: user?.foto }
+              : require('../../../assets/user.png')
+          }
           style={{ width: 40, height: 45, borderRadius: 400 / 2 }}
+          resizeMode="contain"
         />
       </View>
       <View>

@@ -1,14 +1,15 @@
 import * as React from 'react'
-import { Image, View } from 'react-native'
 import tw from 'twrnc'
+import { View } from 'react-native'
+import ComunidadAndRoles from '../components/templates/Comunidad/ComunidadAndRoles'
+import { BACKGROUND_COLORS } from '../utils/constants'
+import { StatusBar } from 'expo-status-bar'
 
 const Comunidad = () => {
   return (
-    <View style={tw`mx-auto mt-[30%]`}>
-      <Image
-        source={require('../../assets/wip3.png')}
-        style={{ width: 256, height: 256 }}
-      />
+    <View style={tw`relative h-full ${BACKGROUND_COLORS.BLUE_LIGHTER}`}>
+      <StatusBar backgroundColor={'#2D84C4'} />
+      <ComunidadAndRoles />
     </View>
   )
 }

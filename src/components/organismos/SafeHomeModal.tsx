@@ -3,13 +3,30 @@ import tw from 'twrnc'
 import { Image, Modal, Pressable, Text, View } from 'react-native'
 import { CustomText } from '../atomos/CustomText'
 import { TEXT_COLORS, WIDTH_DIMENSIONS } from '../../utils/constants'
+import { confirmarSafeInHome } from '../../lib/services/user.services'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/store'
 
 interface SafeHomeModalProps {
   visible: boolean
+  datosRuta: any
   setVisible: (visible: boolean) => void
 }
 
-const SafeHomeModal = ({ visible, setVisible }: SafeHomeModalProps) => {
+const SafeHomeModal = ({
+  visible,
+  setVisible,
+  datosRuta,
+}: SafeHomeModalProps) => {
+  const { authToken } = useSelector((state: RootState) => state.user)
+
+  const handleConfirmation = async (answer: boolean) => {
+    if (authToken) {
+      await confirmarSafeInHome(authToken, datosRuta.token_ruta, answer)
+      setVisible(!visible)
+    }
+  }
+
   return (
     <Modal
       visible={visible}
@@ -57,13 +74,15 @@ const SafeHomeModal = ({ visible, setVisible }: SafeHomeModalProps) => {
           </View>
           <View style={tw`w-10/12 mx-auto `}>
             <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-xl`}>
-              ¡Los miembros de la comunidad están esperando tu confirmación!
+              ¡Los miembros de la comunidad están esperando tu confirmación
+              después de la ruta{' '}
+              <Text style={tw`font-semibold`}>{datosRuta?.nombre}</Text>!
             </Text>
           </View>
           <View style={tw`flex flex-row w-10/12 mx-auto pt-12`}>
             <Pressable
               style={tw`flex flex-row items-center px-8`}
-              onPress={() => setVisible(!visible)}
+              onPress={() => handleConfirmation(true)}
             >
               <Image
                 source={require('../../../assets/correct.png')}
@@ -75,7 +94,7 @@ const SafeHomeModal = ({ visible, setVisible }: SafeHomeModalProps) => {
 
             <Pressable
               style={tw`flex flex-row items-center px-8`}
-              onPress={() => setVisible(!visible)}
+              onPress={() => handleConfirmation(false)}
             >
               <Image
                 source={require('../../../assets/failed.png')}

@@ -30,9 +30,9 @@ const SideMenu = (props: DrawerContentComponentProps) => {
         <View>
           <OptionSideMenu
             label="Inicio"
-            name="HomeStack"
+            name="Inicio"
             source={require('../../../assets/home_blue_icon.png')}
-            handleClick={() => handleClick('HomeStack')}
+            handleClick={() => handleClick('Inicio')}
           />
           <Ruler style="w-11/12 bg-[#e6e6e6] mx-auto" />
         </View>

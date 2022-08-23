@@ -11,7 +11,7 @@ const ItemLi = ({ text }: ItemLiProps) => {
   return (
     <View style={tw`flex flex-row flex-wrap items-center`}>
       <View
-        style={tw`w-3 h-3 rounded-full mr-2 ${BACKGROUND_COLORS.DARK_BLUE}`}
+        style={tw`w-2 h-2 rounded-full mr-2 ${BACKGROUND_COLORS.DARK_BLUE}`}
       />
       <Text style={tw`${TEXT_COLORS.DARK_BLUE}`}>{text}</Text>
     </View>

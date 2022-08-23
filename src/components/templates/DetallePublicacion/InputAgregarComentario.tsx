@@ -8,11 +8,18 @@ import RoundedButtonIcon from '../../atomos/RoundedButtonIcon'
 import tw from 'twrnc'
 import FieldFormulario from '../../moleculas/FieldFormulario'
 import { agregarComentarioPublicacion } from '../../../lib/services/publicaciones.services'
+import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../redux/store'
+import { capitalize } from '../../../utils/capitalizeText'
 
 interface InputAgregarComentarioProps {
   nombreUsuario: string
   tokenUsuario: string
   tokenPublicacion: string
+  fotoUsuario?: string
+  tokenNotificacion?: string
+  tituloPublicacion?: string
   onSend: () => void
 }
 
@@ -20,9 +27,25 @@ const InputAgregarComentario = ({
   nombreUsuario,
   tokenUsuario,
   tokenPublicacion,
+  fotoUsuario,
+  tokenNotificacion,
+  tituloPublicacion,
   onSend,
 }: InputAgregarComentarioProps) => {
+  const { user } = useSelector((state: RootState) => state.user)
   const [comentario, setComentario] = React.useState('')
+  const { sendPushNotification } = usePermissionsNotifications()
+
+  const sendNotificacionComentario = async () => {
+    if (!tokenUsuario || !tokenNotificacion) return
+    await sendPushNotification({
+      tokens: [tokenNotificacion],
+      title: 'Nuevos comentarios',
+      body: `${capitalize(user?.first_name)} ${capitalize(
+        user?.last_name
+      )} ha comentado tu publicación: ${tituloPublicacion}`,
+    })
+  }
 
   const sendComentario = async () => {
     if (tokenUsuario && tokenPublicacion && comentario) {
@@ -31,6 +54,7 @@ const InputAgregarComentario = ({
         tokenPublicacion,
         comentario
       )
+      await sendNotificacionComentario()
       onSend()
     }
   }
@@ -39,7 +63,11 @@ const InputAgregarComentario = ({
     <RoundedWhiteBaseTemplate shadow={false}>
       <View style={tw`relative px-2`}>
         <View style={tw`pt-3 z-40`}>
-          <DetalleUsuario hasDate={false} nombre={nombreUsuario} />
+          <DetalleUsuario
+            hasDate={false}
+            nombre={nombreUsuario}
+            foto={fotoUsuario}
+          />
         </View>
         <View style={tw`bg-white z-40 mt-4`}>
           <FieldFormulario>

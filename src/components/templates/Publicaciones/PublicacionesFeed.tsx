@@ -61,7 +61,6 @@ const PublicacionesFeed = () => {
         return date.getTime() === fechaCreacion.getTime()
       })
     }
-
     setFilteredPublicaciones(publicacionesFiltradas)
   }, [text, buildFiltros])
 

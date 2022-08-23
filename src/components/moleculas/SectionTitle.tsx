@@ -35,7 +35,7 @@ const SectionTitle = ({
         background ? BACKGROUND_COLORS.BLUE_LIGHTER : ''
       }`}
     >
-      <View style={tw`flex flex-row`}>
+      <View style={tw`flex flex-row w-11/12`}>
         {background && <View style={tw`h-full w-[2px] bg-blue-500 mr-2`} />}
         <CustomText
           style={`text-2xl font-bold ${TEXT_COLORS.DARK_BLUE} ${styleText}`}

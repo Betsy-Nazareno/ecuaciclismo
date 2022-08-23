@@ -75,7 +75,7 @@ const PublicacionDetalle = ({ token }: PublicacionProps) => {
                 height: 250,
                 backgroundColor: '#fff',
               }}
-              resizeMode="cover"
+              resizeMode="contain"
             />
           )
         case MIME_TYPES.VIDEO:
@@ -148,6 +148,7 @@ const PublicacionDetalle = ({ token }: PublicacionProps) => {
     })
     return items.filter((item) => item)
   }
+
   return isRending ? (
     <EmptyPublicacionDetalle />
   ) : (
@@ -171,10 +172,11 @@ const PublicacionDetalle = ({ token }: PublicacionProps) => {
             <DetallePublicador
               nombre={`${publicacion?.first_name} ${publicacion?.last_name}`}
               fecha={publicacion?.ultimo_cambio}
+              foto={publicacion?.foto}
             />
           </View>
 
-          <View style={tw` mt-6`}>
+          <View style={tw`mt-6`}>
             <Carousel
               swipe
               isLooped
@@ -205,7 +207,7 @@ const PublicacionDetalle = ({ token }: PublicacionProps) => {
               {displayDocuments(publicacion?.multimediaResult || [])}
             </View>
 
-            <View style={tw`mx-auto my-4`}>
+            <View style={tw`mx-auto my-2`}>
               <Reacciones item={publicacion} type="Publicacion" />
             </View>
           </View>
@@ -233,6 +235,9 @@ const PublicacionDetalle = ({ token }: PublicacionProps) => {
               nombreUsuario={`${user?.first_name} ${user?.last_name}`}
               tokenUsuario={authToken || ''}
               tokenPublicacion={publicacion?.token || ''}
+              tokenNotificacion={publicacion?.token_notificacion}
+              fotoUsuario={user?.foto}
+              tituloPublicacion={publicacion?.titulo}
             />
           </View>
         )}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import BasePaginas from '../components/templates/BasePaginas'
 import Consejos from '../components/templates/Inicio/Consejos'
 import BannerPublicidad from '../components/templates/Inicio/BannerPublicidad'
@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
 import { setHasModified } from '../redux/consejo'
 import { setNovedadHasModified } from '../redux/novedad'
+import { setActiveScreen } from '../redux/screens'
 
 const Inicio = () => {
   const navigation =
@@ -24,6 +25,10 @@ const Inicio = () => {
     dispatch(setHasModified({ hasModified: !hasModified }))
     dispatch(setNovedadHasModified({ novedadHasModified: !novedadHasModified }))
   }
+
+  useEffect(() => {
+    dispatch(setActiveScreen({ activeScreen: 'Inicio' }))
+  }, [])
 
   return (
     <BasePaginas stickyIndexes={[1]} handleRefresh={onRefresh}>

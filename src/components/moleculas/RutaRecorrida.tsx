@@ -13,15 +13,22 @@ import { RootStackParamList, Screens } from '../../models/Screens.types'
 interface RutaRecorridaProps {
   style?: string
   icon: ImageSourcePropType
+  token: string
+  nombre: string
 }
 
-const RutaRecorrida = ({ icon, style = '' }: RutaRecorridaProps) => {
+const RutaRecorrida = ({
+  icon,
+  style = '',
+  token,
+  nombre,
+}: RutaRecorridaProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
   return (
     <TouchableHighlight
       style={tw`relative ${style}`}
-      onPress={() => navigation.navigate('FinalRuta')}
+      onPress={() => navigation.navigate('FinalRuta', { tokenRuta: token })}
     >
       <>
         <Image
@@ -33,7 +40,7 @@ const RutaRecorrida = ({ icon, style = '' }: RutaRecorridaProps) => {
           style={tw`absolute bottom-0 bg-black w-full bg-opacity-50 py-1 pl-2`}
         >
           <Text style={tw`text-white font-bold text-xs`} numberOfLines={1}>
-            Ruta salinas
+            {nombre}
           </Text>
         </View>
       </>

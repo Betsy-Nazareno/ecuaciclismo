@@ -55,7 +55,7 @@ const MenuConsejoDia = ({ consejo }: MenuConsejoDiaProps) => {
   return (
     <AdminValidator>
       <Pressable onPress={() => setDisplayMenu(!displayMenu)}>
-        <View style={tw`mt-2 w-6 -mr-2`}>
+        <View style={tw`mt-2 w-6 -mr-2 z-40`}>
           <Image
             source={require('../../../assets/menu_icon.png')}
             style={{ height: 20, width: 12 }}

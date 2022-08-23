@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-// import { useFonts } from 'expo-font'
 import { Text, TextStyle } from 'react-native'
 import tw from 'twrnc'
 import * as Font from 'expo-font'

@@ -1,36 +1,55 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { Text, View, Image } from 'react-native'
+import { Text, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import HeaderScreen from '../../moleculas/HeaderScreen'
 import { Formik } from 'formik'
 import FieldFormulario from '../../moleculas/FieldFormulario'
 import Input from '../../moleculas/Input'
-import { BACKGROUND_COLORS, TEXT_COLORS } from '../../../utils/constants'
+import {
+  BACKGROUND_COLORS,
+  generosCatalog,
+  nivelesCatalog,
+  TEXT_COLORS,
+} from '../../../utils/constants'
 import GalleryButton from '../../moleculas/GalleryButton'
 import Gap from '../../atomos/Gap'
 import Ruler from '../../atomos/Ruler'
-import FieldFechaHora from '../../moleculas/FieldFechaHora'
 import SelectCreatableBatches from '../../moleculas/SelectCreatableBatches'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
 import { getTiposRuta } from '../../../lib/services/rutas.services'
 import SecondaryButton from '../../atomos/SecondaryButton'
-import SelectInput from '../../atomos/SelectInput'
+import RoundedSelectInput from '../../../../RoudedSelectInput'
+import RoundedGallery from '../../moleculas/RoundedGallery'
+import { usuarioValidationSchema } from '../../../schemas/usuarioValidationSchema'
+import { enviarDatosUsuarios } from '../../../lib/services/user.services'
+import Spinner from '../../atomos/Spinner'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { RootStackParamList, Screens } from '../../../models/Screens.types'
 
-const PerfilForm = () => {
+const PerfilForm = ({ datosPerfil }: any) => {
   const [tiposRuta, setTiposRuta] = React.useState([])
   const { authToken } = useSelector((state: RootState) => state.user)
+  const [isLoading, setIsLoading] = React.useState(false)
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, Screens>>()
+
   const initialValues = {
-    first_name: '',
-    last_name: '',
-    foto: undefined,
-    email: '',
-    username: '',
-    celular: '',
-    fecha_nacimiento: undefined,
-    genero: '',
-    rutas_interes: [],
+    nombre: datosPerfil?.first_name || '',
+    apellido: datosPerfil?.last_name || '',
+    edad: datosPerfil?.edad || undefined,
+    usuario: datosPerfil?.username || '',
+    foto: datosPerfil?.foto || undefined,
+    email: datosPerfil?.email || '',
+    genero: datosPerfil?.genero || '',
+    tipo: datosPerfil?.tipo || '',
+    marca: datosPerfil?.marca || '',
+    codigo: datosPerfil?.codigo || '',
+    foto_bicicleta: datosPerfil?.foto_bicicleta || '',
+    peso: datosPerfil?.peso || undefined,
+    nivel: datosPerfil?.nivel || '',
+    rutas_interes: datosPerfil?.rutas_interes || [],
   }
 
   React.useEffect(() => {
@@ -38,6 +57,15 @@ const PerfilForm = () => {
       authToken && setTiposRuta(await getTiposRuta(authToken))
     })()
   }, [])
+
+  const handleSubmit = async (props: any) => {
+    setIsLoading(true)
+    if (authToken) {
+      await enviarDatosUsuarios(authToken, props)
+    }
+    navigation.navigate('Perfil')
+    setIsLoading(false)
+  }
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={tw`px-2 mb-8`}>
@@ -49,26 +77,26 @@ const PerfilForm = () => {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={() => {
-          return
-        }}
+        validationSchema={usuarioValidationSchema}
+        onSubmit={handleSubmit}
       >
         {({ handleSubmit, values, setFieldValue }) => (
           <>
             <FieldFormulario>
-              <View style={tw`w-full flex items-center my-2 relative`}>
-                <Image
-                  source={require('../../../../assets/lorena.jpg')}
-                  style={{ width: 200, height: 200, borderRadius: 200 / 2 }}
-                />
-              </View>
+              <RoundedGallery
+                field="foto"
+                icono={require('../../../../assets/gallery_icon.png')}
+                handleChange={(value) => setFieldValue('foto', value)}
+                foto={values.foto}
+              />
+
               <Gap py="1">
                 <Input
                   text="Nombre"
                   type="none"
-                  name="first_name"
-                  value={values.first_name}
-                  setValue={(value) => setFieldValue('first_name', value)}
+                  name="nombre"
+                  value={values.nombre}
+                  setValue={(value) => setFieldValue('nombre', value)}
                   placeholder="Nombre..."
                 />
               </Gap>
@@ -76,55 +104,19 @@ const PerfilForm = () => {
                 <Input
                   text="Apellido"
                   type="none"
-                  name="last_name"
-                  value={values.first_name}
-                  setValue={(value) => setFieldValue('last_name', value)}
+                  name="apellido"
+                  value={values.apellido}
+                  setValue={(value) => setFieldValue('apellido', value)}
                   placeholder="Apellido..."
                 />
               </Gap>
 
-              <Ruler style="w-10/12 mx-auto bg-[#e6e6e6] my-4" />
-
-              <Gap py="1">
-                <Text
-                  style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2 pb-1`}
-                >
-                  Fecha de nacimiento
-                </Text>
-                <FieldFechaHora
-                  fecha={undefined}
-                  setFecha={() => {
-                    return
-                  }}
-                  placeholder="YY-MM-DD"
-                />
-              </Gap>
-
-              {/* <Gap py="1">
-                <Text
-                  style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}
-                >
-                  Género
-                </Text>
-                <SelectCreatableBatches
-                  values={[
-                    { value: 'femenino', nombre: 'Femenino' },
-                    { nombre: 'Masculino', value: 'masculino' },
-                    { nombre: 'Otro', value: 'otro' },
-                  ]}
-                  selectedValues={[]}
-                  setValuesSelected={() => {}}
-                  deleteValue={() => {}}
-                  placeholder="Femenino, Masculino, Otros..."
-                  field={'etiquetas'}
-                />
-              </Gap> */}
               <Gap py="3">
                 <Input
                   text="Correo Electrónico"
                   type="none"
                   name="email"
-                  value={values.first_name}
+                  value={values.email}
                   setValue={(value) => setFieldValue('email', value)}
                   placeholder="alguien@ejemplo.com"
                 />
@@ -132,13 +124,61 @@ const PerfilForm = () => {
 
               <Gap py="3">
                 <Input
-                  text="Teléfono"
-                  type="telephoneNumber"
-                  name="telefono"
-                  value={values.first_name}
-                  setValue={(value) => setFieldValue('email', value)}
-                  placeholder="+593 "
+                  text="Usuario"
+                  type="none"
+                  name="usuario"
+                  value={values.usuario}
+                  setValue={(value) => setFieldValue('usuario', value)}
+                  placeholder="username"
                 />
+              </Gap>
+
+              <Ruler style="w-10/12 mx-auto bg-[#e6e6e6] my-4" />
+
+              <Gap py="1">
+                <Input
+                  text="Edad"
+                  type="none"
+                  name="edad"
+                  value={values.edad}
+                  setValue={(value) => setFieldValue('edad', value)}
+                  placeholder="Edad..."
+                />
+              </Gap>
+
+              <Gap py="1">
+                <Text
+                  style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}
+                >
+                  Género
+                </Text>
+                <RoundedSelectInput
+                  values={generosCatalog}
+                  setValuesSelected={(value) => setFieldValue('genero', value)}
+                  placeholder="Femenino, Masculino..."
+                  selectedValue={values.genero}
+                />
+              </Gap>
+
+              <Gap py="3">
+                <Text
+                  style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}
+                >
+                  Peso
+                </Text>
+                <Input
+                  type="none"
+                  name="peso"
+                  value={values.peso}
+                  setValue={(value) => setFieldValue('peso', value)}
+                  placeholder="120kg..."
+                />
+                <Text
+                  style={tw`font-normal text-xs pl-2 text-black text-opacity-40`}
+                >
+                  Es imporantante que agregues tu peso para poder calcular las
+                  calorías quemadas durante tus rutas
+                </Text>
               </Gap>
 
               <Ruler style="w-10/12 mx-auto bg-[#e6e6e6] my-4" />
@@ -153,7 +193,7 @@ const PerfilForm = () => {
                   values={tiposRuta}
                   selectedValues={values.rutas_interes}
                   setValuesSelected={(tipo) => {
-                    const exists = values.rutas_interes.find(
+                    const exists = values.rutas_interes?.find(
                       (type: any) => type === tipo
                     )
                     if (!exists) {
@@ -181,26 +221,13 @@ const PerfilForm = () => {
                 >
                   Nivel
                 </Text>
-                <View
-                  style={{
-                    borderWidth: 1,
-                    borderColor: '#e6e6e6',
-                    borderStyle: 'solid',
-                    borderRadius: 10,
-                  }}
-                >
-                  <SelectInput
-                    values={[
-                      { nombre: 'Nivel Básico', value: 'basico' },
-                      { nombre: 'Nivel Intermedio', value: 'intermedio' },
-                      { nombre: 'Nivel Avanzado', value: 'avanzado' },
-                    ]}
-                    setValuesSelected={() => {
-                      return
-                    }}
-                    placeholder="Básico, Intermedio, Avanzado..."
-                  />
-                </View>
+
+                <RoundedSelectInput
+                  values={nivelesCatalog}
+                  setValuesSelected={(value) => setFieldValue('nivel', value)}
+                  placeholder="Básico, Intermedio..."
+                  selectedValue={values.nivel}
+                />
               </Gap>
 
               <Ruler style="w-10/12 mx-auto bg-[#e6e6e6] my-4" />
@@ -213,37 +240,50 @@ const PerfilForm = () => {
                 </Text>
                 <Input
                   type="none"
-                  name="email"
-                  value={values.first_name}
-                  setValue={(value) => setFieldValue('email', value)}
+                  name="tipo"
+                  value={values.tipo}
+                  setValue={(value) => setFieldValue('tipo', value)}
                   placeholder="Tipo..."
                 />
                 <Input
                   type="none"
-                  name="email"
-                  value={values.first_name}
-                  setValue={(value) => setFieldValue('email', value)}
+                  name="marca"
+                  value={values.marca}
+                  setValue={(value) => setFieldValue('marca', value)}
                   placeholder="Marca..."
                 />
                 <Input
                   type="none"
-                  name="email"
-                  value={values.first_name}
-                  setValue={(value) => setFieldValue('email', value)}
+                  name="codigo"
+                  value={values.codigo}
+                  setValue={(value) => setFieldValue('codigo', value)}
                   placeholder="Código..."
                 />
                 <FieldFormulario>
                   <GalleryButton
-                    field="imagen"
+                    field="foto_bicicleta"
                     icono={require('../../../../assets/gallery_icon.png')}
+                    imagen={
+                      typeof values.foto_bicicleta === 'string'
+                        ? values.foto_bicicleta
+                          ? { uri: values.foto_bicicleta }
+                          : undefined
+                        : values.foto_bicicleta
+                    }
                   />
                 </FieldFormulario>
               </Gap>
-              <SecondaryButton
-                label="Guardar"
-                handleClick={handleSubmit}
-                style={`${BACKGROUND_COLORS.PRIMARY_BLUE} w-6/12 mx-auto mt-6`}
-              />
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                <View style={tw`w-6/12 mx-auto mt-6`}>
+                  <SecondaryButton
+                    label="Guardar"
+                    handleClick={handleSubmit}
+                    style={BACKGROUND_COLORS.PRIMARY_BLUE}
+                  />
+                </View>
+              )}
             </FieldFormulario>
           </>
         )}

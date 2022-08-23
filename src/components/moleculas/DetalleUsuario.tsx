@@ -7,19 +7,22 @@ interface DetalleUsuarioProps {
   hasDate?: boolean
   fecha?: string
   nombre: string
+  foto?: string
 }
 
 const DetalleUsuario = ({
   hasDate = true,
   nombre,
   fecha,
+  foto,
 }: DetalleUsuarioProps) => {
   return (
     <View style={tw`flex flex-row items-center`}>
       <View style={tw`mr-4`}>
         <Image
-          source={require('../../../assets/user.png')}
+          source={foto ? { uri: foto } : require('../../../assets/user.png')}
           style={{ width: 40, height: 45, borderRadius: 400 / 2 }}
+          resizeMode="contain"
         />
       </View>
 

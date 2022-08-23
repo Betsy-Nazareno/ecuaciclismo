@@ -6,17 +6,20 @@ import { TEXT_COLORS } from '../../utils/constants'
 interface InformacionUsuarioProps {
   firstName: string
   lastName: string
+  foto?: string
 }
 
 const InformacionUsuario = ({
   firstName,
   lastName,
+  foto,
 }: InformacionUsuarioProps) => {
   return (
     <View style={tw`flex flex-row pb-2`}>
       <Image
-        source={require('../../../assets/user.png')}
+        source={foto ? { uri: foto } : require('../../../assets/user.png')}
         style={{ width: 40, height: 45, borderRadius: 400 / 2 }}
+        resizeMode="contain"
       />
       <View style={tw`ml-[4%] mt-[1%]`}>
         <Text

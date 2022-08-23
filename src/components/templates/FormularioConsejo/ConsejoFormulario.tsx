@@ -23,6 +23,7 @@ import tw from 'twrnc'
 import { getCiclistasToken } from '../../../lib/services/notifications.services'
 import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
 import { capitalize } from '../../../utils/capitalizeText'
+
 interface ConsejoFormularioProps {
   consejoProp?: Consejo
 }
@@ -99,6 +100,7 @@ const ConsejoForm = ({ consejoProp }: ConsejoFormularioProps) => {
                 <GalleryButton
                   field="imagen"
                   icono={require('../../../../assets/gallery_icon.png')}
+                  imagen={values.imagen as ImageSourcePropType}
                 />
               </FieldFormulario>
             </FieldFormulario>

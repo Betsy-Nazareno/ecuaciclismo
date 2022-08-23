@@ -24,9 +24,14 @@ export const Auth = createSlice({
       state.user = null
       state.authToken = null
     },
+    actualizarUsuario: (state, action: PayloadAction<any>) => {
+      if (state.user) {
+        state.user.foto = action.payload.foto
+      }
+    },
   },
 })
 
-export const { iniciarSesion, cerrarSesion } = Auth.actions
+export const { iniciarSesion, cerrarSesion, actualizarUsuario } = Auth.actions
 
 export default Auth.reducer

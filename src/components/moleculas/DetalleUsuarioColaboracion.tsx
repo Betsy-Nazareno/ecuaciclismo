@@ -17,19 +17,22 @@ const DetalleUsuarioColaboracion = ({
         <DetalleUsuario
           nombre={`${user.first_name} ${user.last_name}`}
           hasDate={false}
+          foto={user.foto}
         />
-        <Pressable onPress={() => setDisplay(!display)}>
-          <Image
-            source={require('../../../assets/chevron-abajo.png')}
-            style={{
-              width: 20,
-              height: 20,
-              ...(display
-                ? { transform: [{ rotateY: '190deg' }, { scaleY: -1 }] }
-                : {}),
-            }}
-          />
-        </Pressable>
+        {user.colaboraciones?.length > 0 ? (
+          <Pressable onPress={() => setDisplay(!display)}>
+            <Image
+              source={require('../../../assets/chevron-abajo.png')}
+              style={{
+                width: 20,
+                height: 20,
+                ...(display
+                  ? { transform: [{ rotateY: '190deg' }, { scaleY: -1 }] }
+                  : {}),
+              }}
+            />
+          </Pressable>
+        ) : null}
       </View>
       {display && (
         <View style={tw`ml-16`}>

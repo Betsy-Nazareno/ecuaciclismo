@@ -51,6 +51,7 @@ const ConsejoDetalleTemplate = ({ consejo }: ConsejoDetalleProps) => {
           <InformacionUsuario
             firstName={consejo?.first_name || ''}
             lastName={consejo?.last_name || ''}
+            foto={consejo?.foto}
           />
         </View>
 

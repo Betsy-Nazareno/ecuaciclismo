@@ -27,6 +27,7 @@ const SelectCreatableList = ({
   const renderItem = (value: string) => {
     const item = values.find((requisito) => requisito.value === value)
     const { value: valor, nombre } = item || {}
+    if (!valor) return null
     return (
       <View key={valor}>
         <ItemCheckList text={nombre || ''} />

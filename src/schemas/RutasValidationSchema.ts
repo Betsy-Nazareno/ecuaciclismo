@@ -14,9 +14,6 @@ export const RutasValidationSchema = Yup.object({
     )
     .required('Por favor, ingresa el nombre de la ruta'),
   cupos_disponibles: Yup.number()
-    .required(
-      'Por favor, ingresa la cantidad de cupos disponibles para esta ruta'
-    )
     .max(RUTAS.MAX_CUPOS, 'Ingresa una cantidad de cupos valida')
     .min(RUTAS.MIN_CUPOS, 'Esta ruta debe tener al menos un participante'),
 

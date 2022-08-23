@@ -8,7 +8,6 @@ interface ImageScaleColorProps {
 }
 
 const ImageScaleColor = ({ scale, image }: ImageScaleColorProps) => {
-  // const app = new PIXI.Application({ "" });
   const getTintColor = () => {
     switch (scale) {
       case 'gray':

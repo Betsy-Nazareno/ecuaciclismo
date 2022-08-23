@@ -39,6 +39,13 @@ export interface Ruta {
   participantes?: Partial<User>[]
   aprobado?: boolean
   motivo_cancelacion?: string
+  grupos_encuentro?: GrupoEncuentro[]
+  token_notificacion?: string //Token de notificación del usuario que propuso la ruta :)
+}
+
+export interface GrupoEncuentro {
+  grupo: string
+  lugar_encuentro: string
 }
 
 export interface Estado {
@@ -59,4 +66,18 @@ export interface catalogs {
   nombre: string
   token?: string
   value?: string
+}
+
+export interface HitosRuta {
+  kilometros: number
+  kilocalorias: number
+  velocidad: number
+  horas: number
+  comentario?: string
+  estrellas?: number
+  first_name?: string
+  last_name?: string
+  foto?: string
+  username?: string
+  nombre?: string
 }

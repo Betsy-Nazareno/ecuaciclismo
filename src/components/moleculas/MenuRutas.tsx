@@ -9,19 +9,25 @@ import OpcionesMenuRutas from '../atomos/OpcionesMenuRutas'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../models/Screens.types'
 import { setRutaHasModified } from '../../redux/ruta'
-import { cancelarRutas } from '../../lib/services/rutas.services'
+import {
+  cancelarRutas,
+  finalizarRutaAdmin,
+} from '../../lib/services/rutas.services'
 import RutaCancelarModal from '../organismos/RutaCancelarModal'
+import { getEstadoRuta } from '../../utils/parseRouteState'
 
 interface MenuRutasProps {
   ruta: Ruta
+  onRefresh: () => void
 }
 
-const MenuRutas = ({ ruta }: MenuRutasProps) => {
+const MenuRutas = ({ ruta, onRefresh }: MenuRutasProps) => {
   const [motivo, setMotivo] = React.useState('')
   const [displayMenu, setDisplayMenu] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const { authToken } = useSelector((state: RootState) => state.user)
   const { rutaHasModified } = useSelector((state: RootState) => state.ruta)
+  const estado = getEstadoRuta(ruta?.estado)
   const dispatch = useDispatch()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
@@ -37,6 +43,14 @@ const MenuRutas = ({ ruta }: MenuRutasProps) => {
       await cancelarRutas(authToken, ruta.token, motivo)
     }
     setDisplayMenu(false)
+  }
+
+  const finalizarRuta = async () => {
+    if (authToken && ruta.token) {
+      await finalizarRutaAdmin(ruta.token, authToken)
+    }
+    setDisplayMenu(false)
+    onRefresh()
   }
 
   return (
@@ -62,6 +76,8 @@ const MenuRutas = ({ ruta }: MenuRutasProps) => {
         <OpcionesMenuRutas
           handleEdit={changeScreen}
           handleCancelar={() => setShowModal(true)}
+          handleFinalizar={finalizarRuta}
+          showFinalizar={estado === 'En Curso'}
         />
       )}
     </AdminValidator>

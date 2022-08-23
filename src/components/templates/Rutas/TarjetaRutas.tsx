@@ -14,6 +14,9 @@ import { EstadoRuta, Ruta } from '../../../models/Rutas'
 import ImageScaleColor from '../../moleculas/ImageScaleColor'
 import { getEstadoRuta } from '../../../utils/parseRouteState'
 import BandaEstadoRuta from '../../atomos/BandaEstadoRuta'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../redux/store'
+import { getFecha } from '../../../utils/parseDates'
 
 interface TarjetaRutasProps {
   ruta: Ruta
@@ -21,6 +24,7 @@ interface TarjetaRutasProps {
 const TarjetaRutas = ({ ruta }: TarjetaRutasProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
+  const { user } = useSelector((state: RootState) => state.user)
 
   const getColor = (estado: EstadoRuta) => {
     switch (estado) {
@@ -70,11 +74,6 @@ const TarjetaRutas = ({ ruta }: TarjetaRutasProps) => {
     }
   }
 
-  const getFecha = (fecha: string) => {
-    if (!fecha) return
-    return `${fecha}`
-  }
-
   const getImagenPrincipal = () => {
     const [main] = ruta.fotos || []
     if (!main) return null
@@ -91,6 +90,7 @@ const TarjetaRutas = ({ ruta }: TarjetaRutasProps) => {
   const color = aprobado ? getColor(estadoRuta) : BACKGROUND_COLORS.BLUE_LIGHTER
   const bandColor = getBandColor(estadoRuta)
   const imageScale = aprobado ? getImageScale(estadoRuta) : 'none'
+  const participantes = participantesRutas.length
   return (
     <Pressable
       onPress={() =>
@@ -115,23 +115,29 @@ const TarjetaRutas = ({ ruta }: TarjetaRutasProps) => {
             <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-semibold`}>
               {getFecha(ruta.fecha_inicio as any)}
             </Text>
-            <Text style={tw`${TEXT_COLORS.DARK_BLUE} `}>Nivel básico</Text>
           </Gap>
 
           {inscrito && (
             <View style={tw`flex flex-row`}>
               <Image
-                source={require('../../../../assets/lorena.jpg')}
+                source={
+                  user?.foto
+                    ? { uri: user?.foto }
+                    : require('../../../../assets/lorena.jpg')
+                }
                 style={{
                   width: 25,
                   height: 25,
                   borderRadius: 100 / 2,
                 }}
+                resizeMode="contain"
               />
               <Text style={tw`${TEXT_COLORS.DARK_BLUE} pl-2`}>
                 Tú
-                {participantesRutas.length > 2
-                  ? `y  ${participantesRutas?.length} ciclistas más`
+                {participantes > 1
+                  ? ` y ${participantes - 1} ${
+                      participantes - 1 > 1 ? 'ciclistas' : 'ciclista'
+                    } más`
                   : ''}
               </Text>
             </View>

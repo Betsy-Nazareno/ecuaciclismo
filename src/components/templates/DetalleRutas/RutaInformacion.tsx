@@ -4,6 +4,7 @@ import { Text, View, Image } from 'react-native'
 import TitleWithDivider from '../../moleculas/TitleWithDivider'
 import RoundedWhiteBaseTemplate from '../../organismos/RoundedWhiteBaseTemplate'
 import { TEXT_COLORS } from '../../../utils/constants'
+import { getFecha } from '../../../utils/parseDates'
 
 interface RutaInformacionProps {
   fecha: Date
@@ -37,7 +38,9 @@ const RutaInformacion = ({
           />
         </View>
         <View style={tw`w-11/12 ml-4`}>
-          <Text style={tw`${TEXT_COLORS.DARK_BLUE}`}>{fecha}</Text>
+          <Text style={tw`${TEXT_COLORS.DARK_BLUE}`}>
+            {getFecha(fecha as any)}
+          </Text>
           <Text style={tw`${TEXT_COLORS.DARK_BLUE}`}>{lugar}</Text>
         </View>
       </View>
