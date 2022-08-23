@@ -11,7 +11,9 @@
         "expo-notifications",
         {
           "icon": "./assets/adaptive-icon.png",
-          "sounds": ["./assets/sounds/bellnotification.wav"]
+          "sounds": [
+            "./assets/sounds/bellnotification.wav"
+          ]
         }
       ]
     ],
@@ -23,15 +25,21 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "config": {
         "googleMapsApiKey": "AIzaSyDMi7l9iptdGvFXZ4FgkBlmFquHvzZxpmU"
       },
       "infoPlist": {
-        "UIBackgroundModes": ["location", "fetch"]
-      }
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ]
+      },
+      "bundleIdentifier": "com.ecuaciclismo.ecuaciclismo"
     },
     "android": {
       "config": {
