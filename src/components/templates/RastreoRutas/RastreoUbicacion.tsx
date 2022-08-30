@@ -147,7 +147,7 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
       Object.values(values?.timestamp || {})
     )
 
-    const kilocalorias = calcularKcalorias(horas, 90)
+    const kilocalorias = calcularKcalorias(horas, user?.peso || 0)
     remove(reference)
     return { kilometros, velocidad, kilocalorias, horas }
   }

@@ -11,9 +11,10 @@ import { BACKGROUND_COLORS } from '../../utils/constants'
 interface Props {
   children: ReactNode
   screen: Screens
+  param?: any
 }
 
-export const ButtonTab = ({ children, screen }: Props) => {
+export const ButtonTab = ({ children, screen, param }: Props) => {
   const { activeScreen } = useSelector((state: RootState) => state.screens)
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
@@ -21,7 +22,11 @@ export const ButtonTab = ({ children, screen }: Props) => {
 
   const handleChangeScreen = () => {
     dispatch(setActiveScreen({ activeScreen: screen }))
-    navigation.navigate(screen)
+    if (param) {
+      navigation.navigate(screen, param)
+    } else {
+      navigation.navigate(screen)
+    }
   }
 
   const isActiveScreen = () => screen === activeScreen
@@ -29,7 +34,7 @@ export const ButtonTab = ({ children, screen }: Props) => {
     <Pressable onPress={handleChangeScreen} style={tw`w-1/4`}>
       <View>
         <View style={tw`flex flex-col items-center`}>{children}</View>
-        <View style={tw`mt-[4%] h-1 w-5/12 mx-auto`}>
+        <View style={tw`mt-[4%] h-1 w-8/12 mx-auto`}>
           {isActiveScreen() && (
             <View
               style={tw`rounded-3xl ${BACKGROUND_COLORS.ORANGE} w-full h-full`}

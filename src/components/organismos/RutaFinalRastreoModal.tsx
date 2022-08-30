@@ -7,6 +7,8 @@ import Ruler from '../atomos/Ruler'
 import ButtonPrimary from '../atomos/ButtonPrimary'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../models/Screens.types'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/store'
 
 interface RutaFinalRastreoModalProps {
   visible: boolean
@@ -19,6 +21,7 @@ const RutaFinalRastreoModal = ({
   token,
   setVisible,
 }: RutaFinalRastreoModalProps) => {
+  const { user } = useSelector((state: RootState) => state.user)
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
   return (
@@ -68,7 +71,10 @@ const RutaFinalRastreoModal = ({
             label="Continuar"
             style={`${BACKGROUND_COLORS.PRIMARY_BLUE} bg-opacity-80 py-2 rounded-3xl`}
             handleClick={() => {
-              navigation.navigate('FinalRuta', { tokenRuta: token })
+              navigation.navigate('FinalRuta', {
+                tokenRuta: token,
+                tokenUsuario: user?.id_usuario || '',
+              })
               setVisible(false)
             }}
           />

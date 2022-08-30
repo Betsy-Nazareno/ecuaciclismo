@@ -36,7 +36,7 @@ const BasePaginas = ({
   }
 
   const AnimatedNavbar = new Animated.Value(0)
-  const NAVBAR_MAX_HEIGHT = 50
+  const NAVBAR_MAX_HEIGHT = 65
   const NAVBAR_MIN_HEIGHT = 0
 
   const animateNavbarHeight = AnimatedNavbar.interpolate({

@@ -103,7 +103,7 @@ const BarraFiltrosRutas = () => {
     const fecha = new Date(date)
     fecha.setHours(0, 0, 0, 0)
     const filteredRutas = rutasFeed?.filter((ruta) => {
-      const [fechac] = (ruta.fecha_inicio as any)?.split(' ')
+      const [fechac] = (ruta.fecha_inicio as any)?.split('T')
       const fechaCreacion = new Date(fechac)
       fechaCreacion.setUTCHours(5)
       return fecha.getTime() === fechaCreacion.getTime()

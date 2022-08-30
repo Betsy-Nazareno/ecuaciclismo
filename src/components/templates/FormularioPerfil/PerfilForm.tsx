@@ -30,7 +30,7 @@ import { RootStackParamList, Screens } from '../../../models/Screens.types'
 
 const PerfilForm = ({ datosPerfil }: any) => {
   const [tiposRuta, setTiposRuta] = React.useState([])
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken, user } = useSelector((state: RootState) => state.user)
   const [isLoading, setIsLoading] = React.useState(false)
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
@@ -40,6 +40,7 @@ const PerfilForm = ({ datosPerfil }: any) => {
     apellido: datosPerfil?.last_name || '',
     edad: datosPerfil?.edad || undefined,
     usuario: datosPerfil?.username || '',
+    telefono: datosPerfil?.telefono || '',
     foto: datosPerfil?.foto || undefined,
     email: datosPerfil?.email || '',
     genero: datosPerfil?.genero || '',
@@ -63,7 +64,8 @@ const PerfilForm = ({ datosPerfil }: any) => {
     if (authToken) {
       await enviarDatosUsuarios(authToken, props)
     }
-    navigation.navigate('Perfil')
+    navigation.navigate('Perfil', { userToken: user?.id_usuario || '' })
+
     setIsLoading(false)
   }
 
@@ -122,7 +124,7 @@ const PerfilForm = ({ datosPerfil }: any) => {
                 />
               </Gap>
 
-              <Gap py="3">
+              <Gap py="1">
                 <Input
                   text="Usuario"
                   type="none"
@@ -130,6 +132,17 @@ const PerfilForm = ({ datosPerfil }: any) => {
                   value={values.usuario}
                   setValue={(value) => setFieldValue('usuario', value)}
                   placeholder="username"
+                />
+              </Gap>
+
+              <Gap py="3">
+                <Input
+                  text="Telefono"
+                  type="telephoneNumber"
+                  name="telefono"
+                  value={values.telefono}
+                  setValue={(value) => setFieldValue('telefono', value)}
+                  placeholder="telefono"
                 />
               </Gap>
 

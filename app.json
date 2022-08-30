@@ -31,7 +31,8 @@
       },
       "infoPlist": {
         "UIBackgroundModes": ["location", "fetch"]
-      }
+      },
+      "bundleIdentifier": "com.ecuaciclismo.ecuaciclismo"
     },
     "android": {
       "config": {

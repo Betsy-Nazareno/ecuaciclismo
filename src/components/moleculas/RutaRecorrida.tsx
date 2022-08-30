@@ -15,12 +15,14 @@ interface RutaRecorridaProps {
   icon: ImageSourcePropType
   token: string
   nombre: string
+  userToken: string
 }
 
 const RutaRecorrida = ({
   icon,
   style = '',
   token,
+  userToken,
   nombre,
 }: RutaRecorridaProps) => {
   const navigation =
@@ -28,7 +30,12 @@ const RutaRecorrida = ({
   return (
     <TouchableHighlight
       style={tw`relative ${style}`}
-      onPress={() => navigation.navigate('FinalRuta', { tokenRuta: token })}
+      onPress={() =>
+        navigation.navigate('FinalRuta', {
+          tokenRuta: token,
+          tokenUsuario: userToken,
+        })
+      }
     >
       <>
         <Image

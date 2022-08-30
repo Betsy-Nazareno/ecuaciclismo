@@ -5,6 +5,7 @@ export interface User {
   last_name: string
   foto: string
   email: string
+  telefono?: string
   username: string
   celular?: string
   edad?: number
@@ -18,11 +19,13 @@ export interface User {
   foto_bicicleta?: string
   etiquetas?: catalogs[]
   rutas?: any
+  id_usuario?: string
 }
 
 export interface Login {
   email: string
   password: string
+  token_notificacion: string
 }
 
 export interface Registro {
