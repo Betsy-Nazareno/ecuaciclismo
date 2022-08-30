@@ -13,6 +13,7 @@ import * as DocumentPicker from 'expo-document-picker'
 import RoundedGalleryButton from '../../moleculas/RoundedGalleryButton'
 import { User } from '../../../models/User'
 import { guardarArchivo } from '../../../lib/googleCloudStorage'
+import UserValidator from '../UserValidator'
 
 interface PerfilFotoHeaderProps {
   isAdmin: boolean
@@ -20,6 +21,8 @@ interface PerfilFotoHeaderProps {
   nombre?: string
   apellido?: string
   foto?: string
+  idUser: string
+  telefono?: string
   onUpdate: (user: Partial<User>) => void
 }
 
@@ -29,10 +32,11 @@ const PerfilFotoHeader = ({
   nombre,
   apellido,
   foto,
+  idUser,
+  telefono,
   onUpdate,
 }: PerfilFotoHeaderProps) => {
   const [admin, setAdmin] = React.useState(false)
-
   React.useEffect(() => {
     setAdmin(isAdmin)
   }, [isAdmin])
@@ -66,9 +70,11 @@ const PerfilFotoHeader = ({
           resizeMode="cover"
         />
 
-        <View style={tw`absolute -bottom-6 right-2 `}>
-          <RoundedGalleryButton handleImage={changePhoto} />
-        </View>
+        <UserValidator userToken={idUser}>
+          <View style={tw`absolute -bottom-6 right-2 `}>
+            <RoundedGalleryButton handleImage={changePhoto} />
+          </View>
+        </UserValidator>
       </View>
 
       <CustomText
@@ -78,8 +84,15 @@ const PerfilFotoHeader = ({
         {capitalize(nombre || '')} {capitalize(apellido || '')}
       </CustomText>
 
-      <Text style={tw`text-center text-black opacity-40`}>{email || ''}</Text>
-
+      <Text style={tw`text-center text-black opacity-40`}>
+        {email || ''}
+        {telefono ? (
+          <Text style={tw`text-center text-black opacity-40`}>
+            {' - '}
+            {telefono}
+          </Text>
+        ) : null}
+      </Text>
       <View style={tw`mt-1`}>
         <CustomText
           containerProps={{ textAlign: 'center' }}

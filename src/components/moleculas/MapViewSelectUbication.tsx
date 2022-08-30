@@ -20,10 +20,10 @@ interface MapViewSelectUbicationProps {
 }
 
 const initialRegion = {
-  latitude: -2.149282084602415,
-  latitudeDelta: 0.011448660773058617,
-  longitude: -79.88920910283923,
-  longitudeDelta: 0.008098594844341278,
+  latitude: -2.1453021140388437,
+  latitudeDelta: 0.2568955895381215,
+  longitude: -79.93498552590609,
+  longitudeDelta: 0.13138934969902039,
 }
 
 const MapViewSelectUbication = ({
@@ -66,17 +66,6 @@ const MapViewSelectUbication = ({
           }
           image={{ uri: uri_meta_icon }}
         />
-        {/* <Marker
-          draggable={select}
-          coordinate={value?.coordinateY}
-          onDragEnd={(e) =>
-            setField?.(field || '', {
-              ...value,
-              coordinateY: e.nativeEvent.coordinate,
-            })
-          }
-          // image={{ uri: uri_meta_icon }}
-        /> */}
       </MapView>
     </View>
   )

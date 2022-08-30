@@ -346,12 +346,13 @@ export const finalizarRastreo = async (
 
 export const getDatosRastreoById = async (
   tokenRuta: string,
-  authToken: string
+  authToken: string,
+  userId: string
 ) => {
   try {
     const response = await axios({
       method: 'POST',
-      data: { token_ruta: tokenRuta },
+      data: { token_ruta: tokenRuta, token_usuario: userId },
       url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/get_informacion_individual_ruta/',
       headers: { Authorization: 'Token ' + authToken },
     })

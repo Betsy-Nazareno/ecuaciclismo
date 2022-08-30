@@ -123,7 +123,7 @@ const TarjetaRutas = ({ ruta }: TarjetaRutasProps) => {
                 source={
                   user?.foto
                     ? { uri: user?.foto }
-                    : require('../../../../assets/lorena.jpg')
+                    : require('../../../../assets/user.png')
                 }
                 style={{
                   width: 25,

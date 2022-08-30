@@ -1,9 +1,13 @@
 import React from 'react'
-import { Image, View } from 'react-native'
+import { Image, Text, View } from 'react-native'
+import { useSelector } from 'react-redux'
 import tw from 'twrnc'
+import { RootState } from '../../redux/store'
+import { TEXT_COLORS } from '../../utils/constants'
 import { ButtonTab } from '../atomos/ButtonTab'
 
 const NavigationBar = () => {
+  const { user } = useSelector((state: RootState) => state.user)
   return (
     <View
       style={[
@@ -17,6 +21,9 @@ const NavigationBar = () => {
             source={require('../../../assets/home_active_icon.png')}
             style={{ width: 25, height: 25 }}
           />
+          <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-xs font-bold`}>
+            Inicio
+          </Text>
         </ButtonTab>
 
         <ButtonTab screen="Publicaciones">
@@ -24,6 +31,9 @@ const NavigationBar = () => {
             source={require('../../../assets/publicaciones_icon.png')}
             style={{ width: 28, height: 28 }}
           />
+          <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-xs font-bold`}>
+            Publicaciones
+          </Text>
         </ButtonTab>
 
         <ButtonTab screen="Rutas">
@@ -31,13 +41,20 @@ const NavigationBar = () => {
             source={require('../../../assets/ubicacion_icon.png')}
             style={{ width: 30, height: 25 }}
           />
+          <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-xs font-bold`}>
+            Rutas
+          </Text>
         </ButtonTab>
 
-        <ButtonTab screen="Perfil">
+        <ButtonTab screen="Perfil" param={{ userToken: user?.id_usuario }}>
           <Image
             source={require('../../../assets/ciclista_icon.png')}
             style={{ width: 25, height: 25 }}
           />
+
+          <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-xs font-bold`}>
+            Perfil
+          </Text>
         </ButtonTab>
       </View>
     </View>

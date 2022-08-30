@@ -1,7 +1,7 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import * as React from 'react'
 import { View } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { useAuthentication } from '../../../hooks/useAuthentication'
 import {
@@ -20,39 +20,47 @@ import PerfilInformacionBicicleta from './PerfilInformacionBicicleta'
 import PerfilInformacionPersonal from './PerfilInformacionPersonal'
 import PerfilRutasInteres from './PerfilRutasInteres'
 import PerfilRutasRecorridas from './PerfilRutasRecorridas'
+import UserValidator from '../UserValidator'
+import { actualizarUsuario } from '../../../redux/user'
 
-const PerfilRoot = () => {
+interface PerfilRootProps {
+  userToken: string
+}
+
+const PerfilRoot = ({ userToken }: PerfilRootProps) => {
   const { deleteUserStore } = useAuthentication()
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken, refreshUser } = useSelector(
+    (state: RootState) => state.user
+  )
   const [hasRefresh, setHasRefresh] = React.useState(false)
   const [detalleUser, setDetalleUser] = React.useState<Partial<User>>({})
+  const dispatch = useDispatch()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
   React.useEffect(() => {
     ;(async () => {
       if (authToken) {
-        const detalle = await getDetalleUsuario(authToken)
+        const detalle = await getDetalleUsuario(authToken, userToken)
         setDetalleUser(detalle)
       }
     })()
-  }, [hasRefresh])
+  }, [userToken, hasRefresh, refreshUser])
 
   const handleUpdates = async (updatedFields: Partial<User>) => {
     const data = { ...detalleUser, ...updatedFields }
-    if (authToken) {
-      await updateUser(authToken, data)
-      const result = await SecureStore.getItemAsync('user')
-      if (result) {
-        const data = JSON.parse(result)
-        await SecureStore.setItemAsync(
-          'user',
-          JSON.stringify({
-            token: data.token,
-            user: { ...data.user, foto: updatedFields.foto },
-          })
-        )
-      }
+
+    await updateUser(userToken, data)
+    const result = await SecureStore.getItemAsync('user')
+    if (result) {
+      const data = JSON.parse(result)
+      await SecureStore.setItemAsync(
+        'user',
+        JSON.stringify({
+          token: data.token,
+          user: { ...data.user, foto: updatedFields.foto },
+        })
+      )
     }
     setHasRefresh(!hasRefresh)
   }
@@ -60,12 +68,14 @@ const PerfilRoot = () => {
   return (
     <View style={tw`pb-12`}>
       <PerfilFotoHeader
-        isAdmin={!detalleUser?.admin}
+        isAdmin={!!detalleUser?.admin}
         nombre={detalleUser?.first_name}
         apellido={detalleUser?.last_name}
         email={detalleUser?.email}
         foto={detalleUser?.foto}
+        telefono={detalleUser?.telefono}
         onUpdate={handleUpdates}
+        idUser={userToken}
       />
       <Ruler style={`w-11/12 mx-auto ${BACKGROUND_COLORS.GRAY} my-4`} />
 
@@ -89,29 +99,31 @@ const PerfilRoot = () => {
 
       <Ruler style={`w-11/12 mx-auto ${BACKGROUND_COLORS.GRAY} my-4`} />
 
-      <PerfilRutasRecorridas rutas={detalleUser?.rutas} />
+      <PerfilRutasRecorridas rutas={detalleUser?.rutas} userToken={userToken} />
       <Ruler style={`${BACKGROUND_COLORS.GRAY} mt-4`} />
 
-      <View style={tw`w-full pl-4`}>
-        <OpcionPerfil
-          icon={require('../../../../assets/chevron-abajo.png')}
-          handlePress={() =>
-            navigation.navigate('PerfilFormulario', { data: detalleUser })
-          }
-          text="Editar datos del perfil"
-          transform
-        />
+      <UserValidator userToken={userToken}>
+        <View style={tw`w-full pl-4`}>
+          <OpcionPerfil
+            icon={require('../../../../assets/chevron-abajo.png')}
+            handlePress={() =>
+              navigation.navigate('PerfilFormulario', { data: detalleUser })
+            }
+            text="Editar datos del perfil"
+            transform
+          />
 
-        <Ruler style={`-ml-4 ${BACKGROUND_COLORS.GRAY}`} />
+          <Ruler style={`-ml-4 ${BACKGROUND_COLORS.GRAY}`} />
 
-        <OpcionPerfil
-          icon={require('../../../../assets/logout.png')}
-          handlePress={() => deleteUserStore()}
-          text="Cerrar sesión"
-        />
+          <OpcionPerfil
+            icon={require('../../../../assets/logout.png')}
+            handlePress={() => deleteUserStore()}
+            text="Cerrar sesión"
+          />
 
-        <Ruler style={`-ml-4 ${BACKGROUND_COLORS.GRAY}`} />
-      </View>
+          <Ruler style={`-ml-4 ${BACKGROUND_COLORS.GRAY}`} />
+        </View>
+      </UserValidator>
     </View>
   )
 }

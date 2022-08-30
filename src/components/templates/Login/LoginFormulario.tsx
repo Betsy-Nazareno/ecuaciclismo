@@ -18,6 +18,7 @@ import {
 import ErrorMessage from '../../atomos/ErrorMessage'
 import { Login } from '../../../models/User'
 import Spinner from '../../atomos/Spinner'
+import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
 interface Prop {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>
 }
@@ -26,11 +27,14 @@ const LoginFormulario = ({ navigation }: Prop) => {
   const { initUser } = useAuthentication()
   const [isLoading, setIsLoading] = React.useState(false)
   const [failedLogin, setFailedLogin] = React.useState(false)
+  const { registerForPushNotificationsAsync } = usePermissionsNotifications()
 
   const login = async (props: Login) => {
     try {
       setIsLoading(true)
-      await initUser(props)
+      const token_notificacion =
+        (await registerForPushNotificationsAsync()) || ''
+      await initUser({ ...props, token_notificacion })
     } catch (e) {
       setFailedLogin(true)
       setIsLoading(false)
@@ -48,7 +52,7 @@ const LoginFormulario = ({ navigation }: Prop) => {
       </View>
       <View style={tw`mt-[5px]`}>
         <Formik
-          initialValues={{ email: '', password: '' }}
+          initialValues={{ email: '', password: '', token_notificacion: '' }}
           validationSchema={loginValidationSchema}
           onSubmit={login}
         >
@@ -69,6 +73,7 @@ const LoginFormulario = ({ navigation }: Prop) => {
                 name="password"
                 value={values.password}
                 setValue={(value) => setFieldValue('password', value)}
+                secureTextEntry={true}
               />
               {failedLogin && (
                 <ErrorMessage message="Usuario o contraseña incorrectos" />

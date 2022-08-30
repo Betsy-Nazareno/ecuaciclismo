@@ -5,11 +5,16 @@ import { BACKGROUND_COLORS } from '../../utils/constants'
 
 interface Props {
   children: ReactNode | ReactNode[]
+  backgroundColor?: string
 }
 
-const BaseDrawerPaginas = ({ children }: Props) => {
+const BaseDrawerPaginas = ({ children, backgroundColor }: Props) => {
   return (
-    <View style={tw`relative h-full ${BACKGROUND_COLORS.BLUE_LIGHTER}`}>
+    <View
+      style={tw`relative h-full ${
+        backgroundColor || BACKGROUND_COLORS.BLUE_LIGHTER
+      }`}
+    >
       <StatusBar backgroundColor={'#2D84C4'} />
       <ScrollView showsVerticalScrollIndicator={false}>{children}</ScrollView>
     </View>

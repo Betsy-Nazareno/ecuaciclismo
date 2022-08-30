@@ -16,6 +16,7 @@ export const useAuthentication = () => {
         'https://ecuaciclismoapp.pythonanywhere.com/api/token-auth/',
         data
       )
+
       const {
         first_name,
         last_name,
@@ -28,6 +29,7 @@ export const useAuthentication = () => {
         peso,
         edad,
         nivel,
+        id_usuario,
       } = response.data || {}
 
       const user = {
@@ -41,6 +43,7 @@ export const useAuthentication = () => {
         peso,
         edad,
         nivel,
+        id_usuario,
       }
 
       dispatch(

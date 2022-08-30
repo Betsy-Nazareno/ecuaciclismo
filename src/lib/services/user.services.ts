@@ -54,10 +54,14 @@ export const confirmarSafeInHome = async (
   }
 }
 
-export const getDetalleUsuario = async (authToken: string) => {
+export const getDetalleUsuario = async (
+  authToken: string,
+  userToken: string
+) => {
   try {
     const response = await axios({
-      method: 'GET',
+      method: 'POST',
+      data: { token_usuario: userToken },
       url: 'https://ecuaciclismoapp.pythonanywhere.com/api/usuario/get_detalle_usuario/',
       headers: { Authorization: 'Token ' + authToken },
     })
@@ -71,7 +75,7 @@ export const getDetalleUsuario = async (authToken: string) => {
 const converterUsuario = (user: any) => {
   return {
     ...user,
-    rutas_interes: user.etiquetas.map((etiqueta: any) => etiqueta.token),
+    rutas_interes: user?.etiquetas.map((etiqueta: any) => etiqueta.token) || [],
   }
 }
 

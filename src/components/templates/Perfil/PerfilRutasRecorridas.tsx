@@ -8,9 +8,10 @@ import RutaRecorrida from '../../moleculas/RutaRecorrida'
 
 interface Props {
   rutas: { link: string; token: string; nombre: string }[]
+  userToken: string
 }
 
-const PerfilRutasRecorridas = ({ rutas }: Props) => {
+const PerfilRutasRecorridas = ({ rutas, userToken }: Props) => {
   return (
     <View style={tw`mx-4 mt-2`}>
       <CustomText style={TEXT_COLORS.PRIMARY_BLUE}>Mis Rutas</CustomText>
@@ -23,6 +24,7 @@ const PerfilRutasRecorridas = ({ rutas }: Props) => {
                 icon={{ uri: ruta.link }}
                 token={ruta.token}
                 nombre={ruta.nombre}
+                userToken={userToken}
               />
             </Gap>
           ))
