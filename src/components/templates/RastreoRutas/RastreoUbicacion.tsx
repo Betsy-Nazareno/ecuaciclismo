@@ -101,7 +101,7 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
     if (location && ruta.ubicacion && !location.retorno) {
       const { coordinateY } = ruta.ubicacion || {}
       const distance = calcularDistancia(location?.coords, coordinateY)
-      if (distance < 2) {
+      if (distance < 20) {
         const db = getDatabase()
         const reference = ref(db, 'users/' + authToken + '/retorno')
         set(reference, true)
@@ -114,7 +114,7 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
       if (location && location.retorno && ruta.ubicacion) {
         const { coordinateX } = ruta.ubicacion || {}
         const distance = calcularDistancia(location?.coords, coordinateX)
-        if (distance < 2) {
+        if (distance < 20) {
           await stopTracking()
           setShowFinalModal(true)
         }
