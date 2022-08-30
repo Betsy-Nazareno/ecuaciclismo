@@ -9,9 +9,13 @@ interface RutaIncompletaProps {
 }
 
 const RutaIncompleta = ({ route }: RutaIncompletaProps) => {
+  const { tokenRuta = '', tokenUsuario = '' } = route.params || {}
   return (
     <BasePaginas>
-      <ReporteRutaIncompleta tokenRuta={route.params?.tokenRuta as string} />
+      <ReporteRutaIncompleta
+        tokenRuta={tokenRuta}
+        tokenUsuario={tokenUsuario}
+      />
     </BasePaginas>
   )
 }

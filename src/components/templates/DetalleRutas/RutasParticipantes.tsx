@@ -14,12 +14,19 @@ interface RutasParticipantesProps {
 
 const RutasParticipantes = ({ participantes }: RutasParticipantesProps) => {
   const [showModal, setShowModal] = React.useState(false)
+  const [listaParticipantes, setlistaParticipantes] =
+    React.useState(participantes)
+
+  React.useEffect(() => {
+    setlistaParticipantes(participantes)
+  }, [participantes])
+
   return (
     <>
       <RoundedWhiteBaseTemplate shadow={false}>
         <TitleWithDivider label="Participantes" />
         <Pressable style={tw`mx-4 my-2`} onPress={() => setShowModal(true)}>
-          {participantes.length > 0 ? (
+          {listaParticipantes.length > 0 ? (
             <ParticipantesFotoMiniatura ciclistas={participantes} />
           ) : (
             <Text

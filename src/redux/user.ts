@@ -4,11 +4,13 @@ import { User, UserSession } from '../models/User'
 interface UserSlice {
   user: User | null
   authToken: string | null
+  refreshUser: boolean
 }
 
 const initialState: UserSlice = {
   user: null,
   authToken: null,
+  refreshUser: false,
 }
 
 export const Auth = createSlice({
@@ -25,9 +27,7 @@ export const Auth = createSlice({
       state.authToken = null
     },
     actualizarUsuario: (state, action: PayloadAction<any>) => {
-      if (state.user) {
-        state.user.foto = action.payload.foto
-      }
+      state.refreshUser = action.payload.refreshUser
     },
   },
 })

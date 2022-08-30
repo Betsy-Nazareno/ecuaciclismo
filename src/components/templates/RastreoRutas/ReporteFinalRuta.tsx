@@ -23,9 +23,13 @@ import FeedbackRuta from '../../moleculas/FeedbackRuta'
 
 interface ReporteFinalRutaProps {
   tokenRuta: string
+  tokenUsuario: string
 }
 
-const ReporteFinalRuta = ({ tokenRuta }: ReporteFinalRutaProps) => {
+const ReporteFinalRuta = ({
+  tokenRuta,
+  tokenUsuario,
+}: ReporteFinalRutaProps) => {
   const { authToken, user } = useSelector((state: RootState) => state.user)
   const [hitosRuta, setHitosRuta] = React.useState<HitosRuta>()
   const [comentario, setComentario] = React.useState('')
@@ -37,8 +41,12 @@ const ReporteFinalRuta = ({ tokenRuta }: ReporteFinalRutaProps) => {
 
   React.useEffect(() => {
     ;(async () => {
-      if (authToken) {
-        const datosRastreo = await getDatosRastreoById(tokenRuta, authToken)
+      if (authToken && user?.id_usuario) {
+        const datosRastreo = await getDatosRastreoById(
+          tokenRuta,
+          authToken,
+          tokenUsuario
+        )
         setHitosRuta(datosRastreo)
         setStars(datosRastreo?.estrellas || 0)
         setComentario(datosRastreo?.comentario || '')
@@ -67,21 +75,32 @@ const ReporteFinalRuta = ({ tokenRuta }: ReporteFinalRutaProps) => {
     navigation.navigate('Rutas')
     setIsLoading(false)
   }
-
+  console.log(hitosRuta)
+  const readOnly = tokenUsuario !== user?.id_usuario
   return (
     <View style={tw`px-4`}>
       <HeaderRoundedContainer>
-        <CustomText
-          style={`${TEXT_COLORS.DARK_BLUE} text-2xl`}
-          containerProps={{ textAlign: 'center' }}
-        >
-          ¡Felicidades {capitalize(user?.first_name || '')}!
-        </CustomText>
+        {!readOnly ? (
+          <CustomText
+            style={`${TEXT_COLORS.DARK_BLUE} text-2xl`}
+            containerProps={{ textAlign: 'center' }}
+          >
+            ¡Felicidades {capitalize(hitosRuta?.first_name || '')}!
+          </CustomText>
+        ) : (
+          <CustomText
+            style={`${TEXT_COLORS.DARK_BLUE} text-2xl`}
+            containerProps={{ textAlign: 'center' }}
+          >
+            Los hitos de {capitalize(hitosRuta?.first_name || '')} en{' '}
+            {hitosRuta?.nombre || ''}
+          </CustomText>
+        )}
         <View style={tw`relative mx-auto`}>
           <Image
             source={
               user?.foto
-                ? { uri: user?.foto }
+                ? { uri: hitosRuta?.foto }
                 : require('../../../../assets/user.png')
             }
             style={{
@@ -107,15 +126,16 @@ const ReporteFinalRuta = ({ tokenRuta }: ReporteFinalRutaProps) => {
           />
         </View>
 
-        <Text
-          style={tw`${TEXT_COLORS.DARK_BLUE} font-semibold text-xl text-center`}
-        >
-          Tus hitos en {hitosRuta?.nombre}
-        </Text>
-
+        {!readOnly ? (
+          <Text
+            style={tw`${TEXT_COLORS.DARK_BLUE} font-semibold text-xl text-center`}
+          >
+            Tus hitos en {hitosRuta?.nombre}
+          </Text>
+        ) : null}
         <View style={tw`w-10/12 mt-4 mx-auto mb-4`}>
           <Hito
-            label={`${hitosRuta?.horas} horas de recorrido`}
+            label={`${hitosRuta?.horas?.toFixed(2)} horas de recorrido`}
             image={require('../../../../assets/reloj.png')}
           />
 
@@ -147,6 +167,7 @@ const ReporteFinalRuta = ({ tokenRuta }: ReporteFinalRutaProps) => {
           setComentario={setComentario}
           isLoading={isLoading}
           sendFeedback={sendFeedback}
+          isReadOnly={readOnly}
         />
       </RoundedWhiteBaseTemplate>
     </View>

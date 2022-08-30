@@ -47,7 +47,7 @@ const PublicacionDetalle = ({ token }: PublicacionProps) => {
       }
       setIsRending(false)
     })()
-  }, [isAddingComent])
+  }, [isAddingComent, token])
 
   const onClickDownload = async (link: string) => {
     const downloadResumable = FileSystem.createDownloadResumable(

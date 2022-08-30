@@ -6,6 +6,7 @@ import { TEXT_COLORS, WIDTH_DIMENSIONS } from '../../utils/constants'
 import { confirmarSafeInHome } from '../../lib/services/user.services'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
+import { capitalize } from '../../utils/capitalizeText'
 
 interface SafeHomeModalProps {
   visible: boolean
@@ -18,7 +19,7 @@ const SafeHomeModal = ({
   setVisible,
   datosRuta,
 }: SafeHomeModalProps) => {
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken, user } = useSelector((state: RootState) => state.user)
 
   const handleConfirmation = async (answer: boolean) => {
     if (authToken) {
@@ -54,7 +55,7 @@ const SafeHomeModal = ({
               style={`${TEXT_COLORS.ORANGE} text-3xl`}
               containerProps={{ textAlign: 'center' }}
             >
-              ¡Hola, Lorena!
+              ¡Hola, {capitalize(user?.first_name || '')}!
             </CustomText>
             <CustomText
               style={`${TEXT_COLORS.DARK_BLUE} text-3xl`}

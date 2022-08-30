@@ -54,11 +54,7 @@ const ComunidadAndRoles = () => {
       <SectionTitle text="Comunidad" />
       <View style={tw`my-4`}>
         {comunidad?.map((ciclista) => (
-          <TarjetaUsuario
-            key={ciclista.token_usuario}
-            usuario={ciclista}
-            authToken={authToken || ''}
-          />
+          <TarjetaUsuario key={ciclista.token_usuario} usuario={ciclista} />
         ))}
       </View>
     </ScrollView>

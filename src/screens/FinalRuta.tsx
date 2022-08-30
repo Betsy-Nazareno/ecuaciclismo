@@ -9,9 +9,10 @@ interface FinalRutaProps {
 }
 
 const FinalRuta = ({ route }: FinalRutaProps) => {
+  const { tokenRuta = '', tokenUsuario = '' } = route.params || {}
   return (
     <BasePaginas>
-      <ReporteFinalRuta tokenRuta={route.params?.tokenRuta as string} />
+      <ReporteFinalRuta tokenRuta={tokenRuta} tokenUsuario={tokenUsuario} />
     </BasePaginas>
   )
 }

@@ -18,13 +18,14 @@ import { RootStackParamList, Screens } from '../../../models/Screens.types'
 
 interface Props {
   tokenRuta: string
+  tokenUsuario: string
 }
 
-const ReporteRutaIncompleta = ({ tokenRuta }: Props) => {
+const ReporteRutaIncompleta = ({ tokenRuta, tokenUsuario }: Props) => {
   const [comentario, setComentario] = React.useState('')
   const [stars, setStars] = React.useState(0)
   const [isLoading, setIsLoading] = React.useState(false)
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken, user } = useSelector((state: RootState) => state.user)
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
@@ -33,7 +34,6 @@ const ReporteRutaIncompleta = ({ tokenRuta }: Props) => {
     if (authToken) {
       await enviarComentariosRuta(stars, comentario, authToken, tokenRuta)
     }
-    // await sendNotificationComentariosToAdmins()
     navigation.navigate('Rutas')
     setIsLoading(false)
   }
@@ -80,6 +80,7 @@ const ReporteRutaIncompleta = ({ tokenRuta }: Props) => {
           setComentario={setComentario}
           isLoading={isLoading}
           sendFeedback={sendFeedback}
+          isReadOnly={tokenUsuario !== user?.id_usuario}
         />
       </RoundedWhiteBaseTemplate>
     </View>

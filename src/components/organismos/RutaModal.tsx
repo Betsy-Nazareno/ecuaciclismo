@@ -1,8 +1,10 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import * as React from 'react'
 import { Text, Modal, View, Pressable, Image } from 'react-native'
+import { useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { RootStackParamList, Screens } from '../../models/Screens.types'
+import { RootState } from '../../redux/store'
 import { TEXT_COLORS } from '../../utils/constants'
 import { CustomText } from '../atomos/CustomText'
 import Ruler from '../atomos/Ruler'
@@ -27,6 +29,7 @@ const RutaModal = ({
   tokenRuta,
   handleAbandonar,
 }: RutaModalProps) => {
+  const { user } = useSelector((state: RootState) => state.user)
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
@@ -92,6 +95,7 @@ const RutaModal = ({
               handleAbandonar()
               navigation.navigate('RutaIncompleta', {
                 tokenRuta: tokenRuta || '',
+                tokenUsuario: user?.id_usuario || '',
               })
             }}
           />

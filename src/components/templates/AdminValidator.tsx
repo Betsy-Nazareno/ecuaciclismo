@@ -10,19 +10,8 @@ interface AdminValidatorProps {
 
 const AdminValidator = ({ children, stylesProp }: AdminValidatorProps) => {
   const { user } = useSelector((state: RootState) => state.user)
-  const [isAdmin, setIsAdmin] = React.useState(false)
 
-  React.useEffect(() => {
-    let isMounted = true
-    if (isMounted) {
-      setIsAdmin(user?.admin || false)
-    }
-    return () => {
-      isMounted = false
-    }
-  }, [])
-
-  return isAdmin ? (
+  return user?.admin ? (
     <View style={tw`${stylesProp || ''}`}>{children}</View>
   ) : null
 }

@@ -151,13 +151,13 @@ const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
       if (rutaProp && rutaProp.token && rutaProp.nombre) {
         await editarRuta(authToken, prop, rutaProp.token)
         await sendNotificationEditRutaToUsers()
-        return
-      }
-      await guardarRuta(authToken, prop)
-      if (!user?.admin) {
-        await sendNotificationToAdmins()
       } else {
-        await sendNotificationNewRutaToUsers(prop.nombre)
+        await guardarRuta(authToken, prop)
+        if (!user?.admin) {
+          await sendNotificationToAdmins()
+        } else {
+          await sendNotificationNewRutaToUsers(prop.nombre)
+        }
       }
     }
     setIsLoading(false)

@@ -9,7 +9,7 @@ export type RootStackParamList = {
   Registro: undefined
   Rutas: undefined
   Publicaciones: undefined
-  Perfil: undefined
+  Perfil: { userToken: string } | undefined
   ConsejoFormulario: { consejo: Consejo } | undefined
   NovedadFormulario: { publicidad: NovedadInterface } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
@@ -19,8 +19,8 @@ export type RootStackParamList = {
   DetalleRuta: { token: string } | undefined
   InicioRastreo: { ruta: Ruta } | undefined
   RastreoUbicacion: { ruta: Ruta } | undefined
-  RutaIncompleta: { tokenRuta: string } | undefined
-  FinalRuta: { tokenRuta: string } | undefined
+  RutaIncompleta: { tokenRuta: string; tokenUsuario: string } | undefined
+  FinalRuta: { tokenRuta: string; tokenUsuario: string } | undefined
   PerfilFormulario: { data: any } | undefined
 }
 
@@ -49,10 +49,12 @@ export type RootDrawerParamList = {
   HistorialConsejos: undefined
   Comunidad: undefined
   Novedades: undefined
+  Perfil: { userToken: string } | undefined
   ConsejoDetalle: { consejo: Consejo } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
   Publicaciones: undefined
   Inicio: undefined
+  Contactenos: undefined
 }
 
 export type ScreensDrawer =
@@ -63,3 +65,5 @@ export type ScreensDrawer =
   | 'DetalleNovedad'
   | 'Publicaciones'
   | 'Inicio'
+  | 'Perfil'
+  | 'Contactenos'

@@ -11,6 +11,7 @@ interface FeedbackRutaProps {
   stars: number
   setStars: (value: number) => void
   comentario: string
+  isReadOnly: boolean
   setComentario: (value: string) => void
   isLoading: boolean
   sendFeedback: () => void
@@ -22,8 +23,10 @@ const FeedbackRuta = ({
   comentario,
   setComentario,
   isLoading,
+  isReadOnly,
   sendFeedback,
 }: FeedbackRutaProps) => {
+  console.log(isReadOnly)
   return (
     <View style={tw`mt-4 flex flex-col items-center`}>
       <Text
@@ -32,7 +35,7 @@ const FeedbackRuta = ({
         ¿Qué te pareció esta ruta?
       </Text>
 
-      <RatingStars stars={stars} setStars={setStars} />
+      <RatingStars stars={stars} setStars={setStars} readonly={isReadOnly} />
       <Input
         multiline
         numberOfLines={4}
@@ -44,17 +47,20 @@ const FeedbackRuta = ({
         stylesInput={'bg-white'}
         placeholder="¡Dejanos un comentario!"
         stylesProp="w-full"
+        editable={!isReadOnly}
       />
       <View style={tw`my-2`}>
-        {isLoading ? (
-          <Spinner />
-        ) : (
-          <ButtonPrimary
-            label="¡Enviar comentario!"
-            style={`${BACKGROUND_COLORS.DARK_BLUE} py-2 px-12 rounded-3xl`}
-            handleClick={sendFeedback}
-          />
-        )}
+        {!isReadOnly ? (
+          isLoading ? (
+            <Spinner />
+          ) : (
+            <ButtonPrimary
+              label="¡Enviar comentario!"
+              style={`${BACKGROUND_COLORS.DARK_BLUE} py-2 px-12 rounded-3xl`}
+              handleClick={sendFeedback}
+            />
+          )
+        ) : null}
       </View>
     </View>
   )

@@ -25,6 +25,8 @@ interface InputProps {
   textAlignVertical?: 'auto' | 'top' | 'bottom' | 'center' | undefined
   textAlignHorizontal?: 'center' | 'left' | 'right' | undefined
   value?: string | number
+  secureTextEntry?: boolean
+  editable?: boolean
   setValue?: (value: string) => void
 }
 
@@ -40,6 +42,8 @@ const Input = ({
   textAlignHorizontal = 'left',
   stylesInput,
   value,
+  secureTextEntry = false,
+  editable = true,
   setValue,
 }: InputProps) => {
   const [isFocus, setIsFocus] = React.useState(false)
@@ -67,6 +71,8 @@ const Input = ({
           multiline={multiline}
           numberOfLines={numberOfLines}
           value={value ? `${value}` : ''}
+          secureTextEntry={secureTextEntry}
+          editable={editable}
         />
       </View>
       {name && <ErrorMessage name={name} render={FieldError} />}

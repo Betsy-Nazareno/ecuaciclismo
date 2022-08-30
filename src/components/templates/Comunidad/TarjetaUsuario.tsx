@@ -1,6 +1,6 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { Image, Switch, Text, View } from 'react-native'
+import { Image, Pressable, Switch, Text, View } from 'react-native'
 import { CustomText } from '../../atomos/CustomText'
 import { TEXT_COLORS } from '../../../utils/constants'
 import Gap from '../../atomos/Gap'
@@ -8,14 +8,20 @@ import { capitalize } from '../../../utils/capitalizeText'
 import AdminValidator from '../AdminValidator'
 import { cambiarPermiso } from '../../../lib/services/user.services'
 import { DatosBasicosUser } from './ComunidadAndRoles'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../redux/store'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { RootStackParamList, Screens } from '../../../models/Screens.types'
 
 interface TarjetaUsuarioProps {
   usuario: DatosBasicosUser
-  authToken: string
 }
 
-const TarjetaUsuario = ({ usuario, authToken }: TarjetaUsuarioProps) => {
+const TarjetaUsuario = ({ usuario }: TarjetaUsuarioProps) => {
   const [admin, setAdmin] = React.useState(!!usuario.admin)
+  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
   const changeRole = async (value: boolean) => {
     if (authToken) {
@@ -23,9 +29,15 @@ const TarjetaUsuario = ({ usuario, authToken }: TarjetaUsuarioProps) => {
       setAdmin(value)
     }
   }
+
+  const handlePress = () => {
+    if (!user?.admin) return
+    navigation.navigate('Perfil', { userToken: usuario.token_usuario })
+  }
   return (
-    <View
+    <Pressable
       style={tw`bg-white rounded-xl w-full my-1 py-2 flex flex-row justify-between`}
+      onPress={handlePress}
     >
       <View style={tw`flex flex-row items-center`}>
         <Image
@@ -58,7 +70,7 @@ const TarjetaUsuario = ({ usuario, authToken }: TarjetaUsuarioProps) => {
           value={admin}
         />
       </AdminValidator>
-    </View>
+    </Pressable>
   )
 }
 
