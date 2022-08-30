@@ -1,7 +1,7 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import * as React from 'react'
 import { View } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { useAuthentication } from '../../../hooks/useAuthentication'
 import {
@@ -21,7 +21,6 @@ import PerfilInformacionPersonal from './PerfilInformacionPersonal'
 import PerfilRutasInteres from './PerfilRutasInteres'
 import PerfilRutasRecorridas from './PerfilRutasRecorridas'
 import UserValidator from '../UserValidator'
-import { actualizarUsuario } from '../../../redux/user'
 
 interface PerfilRootProps {
   userToken: string
@@ -34,7 +33,6 @@ const PerfilRoot = ({ userToken }: PerfilRootProps) => {
   )
   const [hasRefresh, setHasRefresh] = React.useState(false)
   const [detalleUser, setDetalleUser] = React.useState<Partial<User>>({})
-  const dispatch = useDispatch()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
