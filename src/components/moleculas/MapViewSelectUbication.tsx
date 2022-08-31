@@ -1,6 +1,6 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { ScrollView, TextInput, View } from 'react-native'
+import { View } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 import {
   uri_meta_icon,
