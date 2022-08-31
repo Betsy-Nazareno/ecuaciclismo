@@ -16,22 +16,29 @@ import GalleryButton from '../../moleculas/GalleryButton'
 import Gap from '../../atomos/Gap'
 import Ruler from '../../atomos/Ruler'
 import SelectCreatableBatches from '../../moleculas/SelectCreatableBatches'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
 import { getTiposRuta } from '../../../lib/services/rutas.services'
 import SecondaryButton from '../../atomos/SecondaryButton'
 import RoundedSelectInput from '../../../../RoudedSelectInput'
 import RoundedGallery from '../../moleculas/RoundedGallery'
 import { usuarioValidationSchema } from '../../../schemas/usuarioValidationSchema'
-import { enviarDatosUsuarios } from '../../../lib/services/user.services'
+import {
+  enviarDatosUsuarios,
+  parseLocalUser,
+} from '../../../lib/services/user.services'
 import Spinner from '../../atomos/Spinner'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
+import { setUserHasRefresh, updateLocalUser } from '../../../redux/user'
+import * as SecureStore from 'expo-secure-store'
 
 const PerfilForm = ({ datosPerfil }: any) => {
   const [tiposRuta, setTiposRuta] = React.useState([])
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
+  const { user, refreshUser } = useSelector((state: RootState) => state.user)
   const [isLoading, setIsLoading] = React.useState(false)
+  const dispatch = useDispatch()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
@@ -64,6 +71,16 @@ const PerfilForm = ({ datosPerfil }: any) => {
     if (authToken) {
       await enviarDatosUsuarios(authToken, props)
     }
+    const localUser = { ...props, id_usuario: user?.id_usuario }
+    dispatch(updateLocalUser({ user: localUser }))
+    dispatch(setUserHasRefresh({ refreshUser: !refreshUser }))
+    await SecureStore.setItemAsync(
+      'user',
+      JSON.stringify({
+        token: authToken,
+        user: parseLocalUser(localUser),
+      })
+    )
     navigation.navigate('Perfil', { userToken: user?.id_usuario || '' })
 
     setIsLoading(false)

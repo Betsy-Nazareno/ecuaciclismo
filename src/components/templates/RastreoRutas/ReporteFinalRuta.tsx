@@ -30,7 +30,8 @@ const ReporteFinalRuta = ({
   tokenRuta,
   tokenUsuario,
 }: ReporteFinalRutaProps) => {
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
+  const { user } = useSelector((state: RootState) => state.user)
   const [hitosRuta, setHitosRuta] = React.useState<HitosRuta>()
   const [comentario, setComentario] = React.useState('')
   const [stars, setStars] = React.useState(0)
@@ -75,7 +76,7 @@ const ReporteFinalRuta = ({
     navigation.navigate('Rutas')
     setIsLoading(false)
   }
-  console.log(hitosRuta)
+
   const readOnly = tokenUsuario !== user?.id_usuario
   return (
     <View style={tw`px-4`}>

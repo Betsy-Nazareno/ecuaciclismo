@@ -24,7 +24,7 @@ interface NovedadIndividualProps {
 
 const NovedadIndividual = ({ data }: NovedadIndividualProps) => {
   const { nombre, celular, direccion } = data || {}
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
   const [isLoading, setIsLoading] = React.useState(false)
   const { novedadHasModified } = useSelector(
     (state: RootState) => state.novedad

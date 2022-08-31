@@ -25,7 +25,8 @@ const ReporteRutaIncompleta = ({ tokenRuta, tokenUsuario }: Props) => {
   const [comentario, setComentario] = React.useState('')
   const [stars, setStars] = React.useState(0)
   const [isLoading, setIsLoading] = React.useState(false)
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
+  const { user } = useSelector((state: RootState) => state.user)
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 

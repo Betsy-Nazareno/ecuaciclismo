@@ -12,7 +12,7 @@ interface ListConsejosHistoricosProps {
 }
 
 const ListaConsejosHistoricos = ({ text }: ListConsejosHistoricosProps) => {
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
   const [consejos, setConsejos] = React.useState([])
   const [filteredConsejos, setFilterdConsejos] = React.useState([])
 

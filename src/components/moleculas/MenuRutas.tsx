@@ -25,7 +25,7 @@ const MenuRutas = ({ ruta, onRefresh }: MenuRutasProps) => {
   const [motivo, setMotivo] = React.useState('')
   const [displayMenu, setDisplayMenu] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
   const { rutaHasModified } = useSelector((state: RootState) => state.ruta)
   const estado = getEstadoRuta(ruta?.estado)
   const dispatch = useDispatch()

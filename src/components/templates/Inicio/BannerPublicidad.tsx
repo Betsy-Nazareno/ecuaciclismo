@@ -9,7 +9,7 @@ import EmptyNovedad from '../../organismos/EmptyNovedad'
 import Novedad from './Novedad'
 
 const BannerNovedad = () => {
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
   const { novedadHasModified } = useSelector(
     (state: RootState) => state.novedad
   )

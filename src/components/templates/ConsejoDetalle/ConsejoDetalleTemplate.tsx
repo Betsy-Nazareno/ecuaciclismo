@@ -24,7 +24,7 @@ interface ConsejoDetalleProps {
 }
 
 const ConsejoDetalleTemplate = ({ consejo }: ConsejoDetalleProps) => {
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
   const { hasModified } = useSelector((state: RootState) => state.consejo)
   const [isLoading, setIsLoading] = React.useState(false)
   const navigation =

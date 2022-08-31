@@ -14,7 +14,7 @@ import EmptyTarjetaConsejo from '../../organismos/EmptyTarjetaConsejo'
 import { setActiveScreen } from '../../../redux/screens'
 
 const Consejos = () => {
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
   const { hasModified } = useSelector((state: RootState) => state.consejo)
   const [listaConsejos, setListaConsejos] = React.useState<Consejo[]>([])
   const [isLoading, setIsLoading] = React.useState(true)

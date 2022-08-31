@@ -29,7 +29,8 @@ interface ConsejoFormularioProps {
 }
 
 const ConsejoForm = ({ consejoProp }: ConsejoFormularioProps) => {
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
+  const { user } = useSelector((state: RootState) => state.user)
   const { hasModified } = useSelector((state: RootState) => state.consejo)
   const { sendPushNotification } = usePermissionsNotifications()
   const [isLoading, setIsLoading] = React.useState(false)

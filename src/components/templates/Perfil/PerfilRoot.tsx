@@ -1,11 +1,12 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import * as React from 'react'
 import { View } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { useAuthentication } from '../../../hooks/useAuthentication'
 import {
   getDetalleUsuario,
+  parseLocalUser,
   updateUser,
 } from '../../../lib/services/user.services'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
@@ -21,6 +22,7 @@ import PerfilInformacionPersonal from './PerfilInformacionPersonal'
 import PerfilRutasInteres from './PerfilRutasInteres'
 import PerfilRutasRecorridas from './PerfilRutasRecorridas'
 import UserValidator from '../UserValidator'
+import { updateLocalUser } from '../../../redux/user'
 
 interface PerfilRootProps {
   userToken: string
@@ -28,11 +30,11 @@ interface PerfilRootProps {
 
 const PerfilRoot = ({ userToken }: PerfilRootProps) => {
   const { deleteUserStore } = useAuthentication()
-  const { authToken, refreshUser } = useSelector(
-    (state: RootState) => state.user
-  )
+  const { authToken } = useSelector((state: RootState) => state.sesion)
+  const { user, refreshUser } = useSelector((state: RootState) => state.user)
   const [hasRefresh, setHasRefresh] = React.useState(false)
   const [detalleUser, setDetalleUser] = React.useState<Partial<User>>({})
+  const dispatch = useDispatch()
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
@@ -43,23 +45,16 @@ const PerfilRoot = ({ userToken }: PerfilRootProps) => {
         setDetalleUser(detalle)
       }
     })()
-  }, [userToken, hasRefresh, refreshUser])
+  }, [userToken, hasRefresh, user, refreshUser])
 
   const handleUpdates = async (updatedFields: Partial<User>) => {
-    const data = { ...detalleUser, ...updatedFields }
-
-    await updateUser(userToken, data)
-    const result = await SecureStore.getItemAsync('user')
-    if (result) {
-      const data = JSON.parse(result)
-      await SecureStore.setItemAsync(
-        'user',
-        JSON.stringify({
-          token: data.token,
-          user: { ...data.user, foto: updatedFields.foto },
-        })
-      )
-    }
+    const data = { ...detalleUser, ...updatedFields, id_usuario: userToken }
+    await updateUser(authToken || '', data)
+    dispatch(updateLocalUser({ user: data }))
+    await SecureStore.setItemAsync(
+      'user',
+      JSON.stringify({ token: authToken, user: parseLocalUser(data as User) })
+    )
     setHasRefresh(!hasRefresh)
   }
 

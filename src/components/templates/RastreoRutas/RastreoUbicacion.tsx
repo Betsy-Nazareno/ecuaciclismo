@@ -38,7 +38,8 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
   const [infParticipantes, setinfParticipantes] = React.useState<any>([])
   const [showModal, setShowModal] = React.useState(false)
   const [showFinalModal, setShowFinalModal] = React.useState(false)
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
+  const { user } = useSelector((state: RootState) => state.user)
 
   React.useEffect(() => {
     ;(async () => {

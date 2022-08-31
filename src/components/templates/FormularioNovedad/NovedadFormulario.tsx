@@ -20,7 +20,7 @@ import HeaderScreen from '../../moleculas/HeaderScreen'
 
 const PublicidadFormulario = () => {
   const [isLoading, setIsLoading] = React.useState(false)
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
   const { novedadHasModified } = useSelector(
     (state: RootState) => state.novedad
   )

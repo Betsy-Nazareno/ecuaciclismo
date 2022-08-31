@@ -1,9 +1,10 @@
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { cerrarSesion, iniciarSesion } from '../redux/user'
 import * as SecureStore from 'expo-secure-store'
 import { Login } from '../models/User'
 import { useState } from 'react'
+import { cerrarSesion, iniciarSesion } from '../redux/sesion'
+import { deleteUser, storeUser } from '../redux/user'
 
 export const useAuthentication = () => {
   const dispatch = useDispatch()
@@ -46,12 +47,8 @@ export const useAuthentication = () => {
         id_usuario,
       }
 
-      dispatch(
-        iniciarSesion({
-          token,
-          user,
-        })
-      )
+      dispatch(storeUser({ user }))
+      dispatch(iniciarSesion({ token, email }))
 
       await SecureStore.setItemAsync('user', JSON.stringify({ token, user }))
     } catch (e) {
@@ -63,12 +60,8 @@ export const useAuthentication = () => {
     const result = await SecureStore.getItemAsync('user')
     if (result) {
       const data = JSON.parse(result)
-      dispatch(
-        iniciarSesion({
-          token: data.token,
-          user: data.user,
-        })
-      )
+      dispatch(storeUser({ user: data.user }))
+      dispatch(iniciarSesion({ token: data.token, email: data.user.email }))
     }
     setIsLoading(false)
   }
@@ -76,6 +69,7 @@ export const useAuthentication = () => {
   const deleteUserStore = async () => {
     await SecureStore.deleteItemAsync('user')
     dispatch(cerrarSesion())
+    dispatch(deleteUser())
   }
 
   return { initUser, setUser, deleteUserStore, isLoading }

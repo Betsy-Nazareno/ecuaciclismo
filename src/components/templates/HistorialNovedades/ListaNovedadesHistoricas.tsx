@@ -12,7 +12,7 @@ interface ListaNovedadesHistoricasProps {
 }
 
 const ListaNovedadesHistoricas = ({ text }: ListaNovedadesHistoricasProps) => {
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
   const [novedades, setNovedades] = React.useState<NovedadInterface[]>([])
   const [filteredNovedades, setFilteredNovedades] = React.useState<
     NovedadInterface[]

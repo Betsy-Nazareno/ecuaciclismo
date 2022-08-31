@@ -20,7 +20,7 @@ const wait = (timeout: number) => {
 }
 
 const ComunidadAndRoles = () => {
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
   const [comunidad, setComunidad] = React.useState<DatosBasicosUser[]>()
   const [refreshing, setRefreshing] = React.useState(false)
 

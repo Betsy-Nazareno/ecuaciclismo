@@ -17,7 +17,7 @@ import WithoutResults from '../../moleculas/WithoutResults'
 import EmptyTarjetaPublicacion from '../../organismos/EmptyTarjetaPublicacion'
 
 const RutasFeed = () => {
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
   const { rutasFeed } = useSelector((state: RootState) => state.ruta)
   const [isRending, setIsRending] = React.useState(true)
   const dispatch = useDispatch()

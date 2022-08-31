@@ -8,10 +8,12 @@ import publicacionBusqueda from './publicacionBusqueda'
 import publicacionReducer from './publicacion'
 import BusquedaRutas from './rutasBusqueda'
 import Rutas from './ruta'
+import sesionReducer from './sesion'
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    sesion: sesionReducer,
     consejo: consejoReducer,
     screens: screensReducer,
     drawerTabs: drawerTabsReducer,

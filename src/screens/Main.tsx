@@ -38,7 +38,7 @@ const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
 
 const Main = () => {
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
   const { setUser, isLoading } = useAuthentication()
 
   useEffect(() => {

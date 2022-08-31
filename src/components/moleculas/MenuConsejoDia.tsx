@@ -21,7 +21,7 @@ interface MenuConsejoDiaProps {
 
 const MenuConsejoDia = ({ consejo }: MenuConsejoDiaProps) => {
   const [displayMenu, setDisplayMenu] = React.useState(false)
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
   const { hasModified } = useSelector((state: RootState) => state.consejo)
   const dispatch = useDispatch()
   const navigation =

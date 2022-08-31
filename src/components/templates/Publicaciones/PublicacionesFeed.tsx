@@ -11,7 +11,7 @@ import PublicacionesFeedHeader from './PublicacionesFeedHeader'
 import TarjetaPublicaciones from './TarjetaPublicaciones'
 
 const PublicacionesFeed = () => {
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
   const [publicaciones, setPublicaciones] = React.useState<Publicacion[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
   const { publicacionHasModified } = useSelector(

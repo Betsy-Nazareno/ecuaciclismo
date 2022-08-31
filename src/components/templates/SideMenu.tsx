@@ -69,7 +69,7 @@ const SideMenu = (props: DrawerContentComponentProps) => {
 
         <View>
           <OptionSideMenu
-            label="Contactenos"
+            label="Contáctenos"
             name="Contactenos"
             source={require('../../../assets/contactenos.png')}
             handleClick={() => handleClick('Contactenos')}

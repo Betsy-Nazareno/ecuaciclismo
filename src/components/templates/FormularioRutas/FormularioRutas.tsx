@@ -45,7 +45,8 @@ interface FormularioRutasProp {
   rutaProp: Ruta
 }
 const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
+  const { user } = useSelector((state: RootState) => state.user)
   const [isLoading, setIsLoading] = React.useState(false)
   const [requisitosCatalog, setRequisitosCatalog] = React.useState([])
   const [tiposRutaCatalog, setTiposRutaCatalog] = React.useState([])
@@ -166,7 +167,11 @@ const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
   }
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={tw`px-2 mb-8`}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={tw`px-2 mb-8`}
+      keyboardShouldPersistTaps={'handled'}
+    >
       <HeaderScreen
         title="Rutas"
         message="¡Planifica actividades para la comunidad!"
@@ -400,7 +405,7 @@ const FormularioRutas = ({ rutaProp }: FormularioRutasProp) => {
 
             <FieldFormulario>
               <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
-                Ubicacion
+                Recorrido
               </Text>
               <MapViewSelectUbication
                 select

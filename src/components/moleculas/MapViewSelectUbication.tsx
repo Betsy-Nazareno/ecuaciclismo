@@ -1,14 +1,14 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { View } from 'react-native'
+import { ScrollView, TextInput, View } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 import {
   uri_meta_icon,
   uri_rastreo_icon,
   WIDTH_DIMENSIONS,
 } from '../../utils/constants'
-// import MapViewDirections from 'react-native-maps-directions'
 import { RutaCoordinadas } from '../../models/Rutas'
+import SearchLocation from './SearchLocation'
 
 interface MapViewSelectUbicationProps {
   field?: string
@@ -36,14 +36,33 @@ const MapViewSelectUbication = ({
 }: MapViewSelectUbicationProps) => {
   return (
     <View style={tw`mt-4`}>
+      {select ? (
+        <>
+          <SearchLocation
+            setCoordinates={(coordinates) =>
+              setField?.(field || '', {
+                ...value,
+                coordinateX: coordinates,
+              })
+            }
+            placeholder="Origen"
+            iconSrc={require('../../../assets/origen_icon.png')}
+            dimensionIcon={20}
+          />
+          <SearchLocation
+            setCoordinates={(coordinates) =>
+              setField?.(field || '', {
+                ...value,
+                coordinateY: coordinates,
+              })
+            }
+            placeholder="Destino"
+            iconSrc={require('../../../assets/destino_icon.png')}
+            dimensionIcon={20}
+          />
+        </>
+      ) : null}
       <MapView style={{ width, height }} initialRegion={initialRegion}>
-        {/* <MapViewDirections
-          origin={value?.coordinateX}
-          destination={value?.coordinateY}
-          apikey="AIzaSyDMi7l9iptdGvFXZ4FgkBlmFquHvzZxpmU"
-          strokeWidth={4}
-          strokeColor="#0C3248"
-        /> */}
         <Marker
           draggable={select}
           coordinate={value?.coordinateX}

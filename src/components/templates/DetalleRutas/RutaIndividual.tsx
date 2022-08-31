@@ -86,7 +86,8 @@ interface RutaIndividualProps {
 }
 
 const RutaIndividual = ({ token }: RutaIndividualProps) => {
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
+  const { user } = useSelector((state: RootState) => state.user)
   const [isLoading, setIsLoading] = React.useState(false)
   const [ruta, setRuta] = React.useState<Ruta>()
   const [showModal, setShowModal] = React.useState(false)

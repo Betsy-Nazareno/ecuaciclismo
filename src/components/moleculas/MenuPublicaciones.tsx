@@ -21,7 +21,7 @@ const MenuPublicaciones = ({ publicacion }: MenuPublicacionesProps) => {
   const [canEdit, setCanEdit] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const [confirmationDelete, setConfirmationDelete] = React.useState(false)
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
   const { publicacionHasModified } = useSelector(
     (state: RootState) => state.publicacion
   )

@@ -35,7 +35,8 @@ interface PublicacionProps {
   token: string
 }
 const PublicacionDetalle = ({ token }: PublicacionProps) => {
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
+  const { user } = useSelector((state: RootState) => state.user)
   const [isAddingComent, setIsAddingComent] = React.useState(false)
   const [publicacion, setPublicacion] = React.useState<Publicacion>()
   const [isRending, setIsRending] = React.useState(true)

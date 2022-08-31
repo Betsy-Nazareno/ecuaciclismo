@@ -5,6 +5,22 @@ import { isDocumentResultType } from '../../utils/ckeckTypes'
 import { FOLDERS_STORAGE } from '../../utils/constants'
 import { guardarArchivo } from '../googleCloudStorage'
 
+export const parseLocalUser = (data: User): Partial<User> => {
+  return {
+    first_name: data.first_name,
+    last_name: data.last_name,
+    email: data.email,
+    username: data.username,
+    admin: data.admin,
+    foto: data.foto,
+    genero: data.genero,
+    peso: data.peso,
+    edad: data.edad,
+    nivel: data.nivel,
+    id_usuario: data.id_usuario,
+  }
+}
+
 export const createUser = async (data: Registro, tokenNotification: string) => {
   try {
     await axios({

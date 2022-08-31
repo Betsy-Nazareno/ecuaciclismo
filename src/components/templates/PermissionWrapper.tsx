@@ -11,7 +11,8 @@ const PermissionWrapper = ({
   tokenUserOwnerPublication,
   children,
 }: PermissionWrapperProps) => {
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
+  const { user } = useSelector((state: RootState) => state.user)
 
   const isOwner = tokenUserOwnerPublication === authToken
   const isAdmin = user?.admin

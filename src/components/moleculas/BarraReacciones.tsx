@@ -31,7 +31,7 @@ const initValues = {
 const Reacciones = ({ item, type }: ReaccionesProps) => {
   const [pulsedReactions, setPulsedReactions] =
     React.useState<ReaccionesInterface>(initValues)
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
 
   React.useEffect(() => {
     setPulsedReactions(item?.reacciones || {})

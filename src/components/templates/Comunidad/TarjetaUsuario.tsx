@@ -19,7 +19,8 @@ interface TarjetaUsuarioProps {
 
 const TarjetaUsuario = ({ usuario }: TarjetaUsuarioProps) => {
   const [admin, setAdmin] = React.useState(!!usuario.admin)
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
+  const { user } = useSelector((state: RootState) => state.user)
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 

@@ -7,7 +7,7 @@ import SafeHomeModal from './SafeHomeModal'
 const SafeView = () => {
   const [showSafeHome, setShowSafeHome] = React.useState(false)
   const [ruta, setruta] = React.useState({})
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
 
   React.useEffect(() => {
     ;(async () => {

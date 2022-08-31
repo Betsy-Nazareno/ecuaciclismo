@@ -28,7 +28,8 @@ const PublicacionFormularioTemplate = ({
 }: PublicacionFormularioProps) => {
   const [isLoading, setIsLoading] = React.useState(false)
   const [publicacionProp, setpublicacionProp] = React.useState<Publicacion>()
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.sesion)
+  const { user } = useSelector((state: RootState) => state.user)
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
   const { publicacionHasModified } = useSelector(
