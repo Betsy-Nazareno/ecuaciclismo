@@ -21,7 +21,9 @@ const NavigationBar = () => {
             source={require('../../../assets/home_active_icon.png')}
             style={{ width: 25, height: 25 }}
           />
-          <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-xs font-bold`}>
+          <Text
+            style={tw`${TEXT_COLORS.DARK_BLUE} text-[10px] text-opacity-80 font-bold`}
+          >
             Inicio
           </Text>
         </ButtonTab>
@@ -31,7 +33,9 @@ const NavigationBar = () => {
             source={require('../../../assets/publicaciones_icon.png')}
             style={{ width: 28, height: 28 }}
           />
-          <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-xs font-bold`}>
+          <Text
+            style={tw`${TEXT_COLORS.DARK_BLUE} text-[10px] text-opacity-80 font-bold`}
+          >
             Publicaciones
           </Text>
         </ButtonTab>
@@ -41,7 +45,9 @@ const NavigationBar = () => {
             source={require('../../../assets/ubicacion_icon.png')}
             style={{ width: 30, height: 25 }}
           />
-          <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-xs font-bold`}>
+          <Text
+            style={tw`${TEXT_COLORS.DARK_BLUE} text-[10px] text-opacity-80 font-bold`}
+          >
             Rutas
           </Text>
         </ButtonTab>
@@ -52,7 +58,9 @@ const NavigationBar = () => {
             style={{ width: 25, height: 25 }}
           />
 
-          <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-xs font-bold`}>
+          <Text
+            style={tw`${TEXT_COLORS.DARK_BLUE} text-opacity-80 text-[10px] font-bold`}
+          >
             Perfil
           </Text>
         </ButtonTab>

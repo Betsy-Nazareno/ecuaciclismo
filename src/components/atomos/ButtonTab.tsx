@@ -34,7 +34,7 @@ export const ButtonTab = ({ children, screen, param }: Props) => {
     <Pressable onPress={handleChangeScreen} style={tw`w-1/4`}>
       <View>
         <View style={tw`flex flex-col items-center`}>{children}</View>
-        <View style={tw`mt-[4%] h-1 w-8/12 mx-auto`}>
+        <View style={tw`mt-[4%] h-1 w-6/12 mx-auto`}>
           {isActiveScreen() && (
             <View
               style={tw`rounded-3xl ${BACKGROUND_COLORS.ORANGE} w-full h-full`}

@@ -1,6 +1,6 @@
 import { RouteProp } from '@react-navigation/native'
 import * as React from 'react'
-import BasePaginas from '../components/templates/BasePaginas'
+import BasePaginasSecundarias from '../components/templates/BasePaginasSecundarias'
 import ReporteFinalRuta from '../components/templates/RastreoRutas/ReporteFinalRuta'
 import { RootStackParamList } from '../models/Screens.types'
 
@@ -11,9 +11,9 @@ interface FinalRutaProps {
 const FinalRuta = ({ route }: FinalRutaProps) => {
   const { tokenRuta = '', tokenUsuario = '' } = route.params || {}
   return (
-    <BasePaginas>
+    <BasePaginasSecundarias>
       <ReporteFinalRuta tokenRuta={tokenRuta} tokenUsuario={tokenUsuario} />
-    </BasePaginas>
+    </BasePaginasSecundarias>
   )
 }
 
