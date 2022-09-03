@@ -12,16 +12,17 @@ export const getCiclistasToken = async (token: string) => {
       headers: { Authorization: 'Token ' + token },
     })
     const arrayTokens = response.data?.data || []
-    const tokensFiltered = arrayTokens?.filter(
-      (token: TokenNotificacion) => token.token_notificacion
-    )
-    return (
-      tokensFiltered?.map(
-        (token: TokenNotificacion) => token.token_notificacion
-      ) || []
-    )
+    const tokensFiltered: string[] = []
+    arrayTokens?.forEach((token: TokenNotificacion) => {
+      const tokenNotificacion = token.token_notificacion
+      if (tokenNotificacion && !tokensFiltered.includes(tokenNotificacion)) {
+        tokensFiltered.push(tokenNotificacion)
+      }
+    })
+    return tokensFiltered
   } catch (e) {
     console.error(e)
+    return []
   }
 }
 
@@ -33,16 +34,17 @@ export const getAdminTokens = async (token: string) => {
       headers: { Authorization: 'Token ' + token },
     })
     const arrayTokens = response.data?.data || []
-    const tokensFiltered = arrayTokens?.filter(
-      (token: TokenNotificacion) => token.token_notificacion
-    )
-    return (
-      tokensFiltered?.map(
-        (token: TokenNotificacion) => token.token_notificacion
-      ) || []
-    )
+    const tokensFiltered: string[] = []
+    arrayTokens?.forEach((token: TokenNotificacion) => {
+      const tokenNotificacion = token.token_notificacion
+      if (tokenNotificacion && !tokensFiltered.includes(tokenNotificacion)) {
+        tokensFiltered.push(tokenNotificacion)
+      }
+    })
+    return tokensFiltered
   } catch (e) {
     console.error(e)
+    return []
   }
 }
 

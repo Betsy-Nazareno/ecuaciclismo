@@ -2,11 +2,17 @@ import * as React from 'react'
 import tw from 'twrnc'
 import { Image, Modal, Pressable, Text, View } from 'react-native'
 import { CustomText } from '../atomos/CustomText'
-import { TEXT_COLORS, WIDTH_DIMENSIONS } from '../../utils/constants'
+import {
+  HEIGHT_DIMENSIONS,
+  TEXT_COLORS,
+  WIDTH_DIMENSIONS,
+} from '../../utils/constants'
 import { confirmarSafeInHome } from '../../lib/services/user.services'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { capitalize } from '../../utils/capitalizeText'
+import { getAdminTokens } from '../../lib/services/notifications.services'
+import { usePermissionsNotifications } from '../../hooks/usePermissionsNotifications'
 
 interface SafeHomeModalProps {
   visible: boolean
@@ -21,11 +27,25 @@ const SafeHomeModal = ({
 }: SafeHomeModalProps) => {
   const { authToken } = useSelector((state: RootState) => state.sesion)
   const { user } = useSelector((state: RootState) => state.user)
+  const { sendPushNotification } = usePermissionsNotifications()
 
-  const handleConfirmation = async (answer: boolean) => {
+  const sendNotificationToAdmins = async () => {
+    if (!authToken) return
+    const tokens = await getAdminTokens(authToken)
+    await sendPushNotification({
+      tokens,
+      title: '¡Ciclista Seguro!',
+      body: `${capitalize(user?.first_name)} ${capitalize(
+        user?.last_name
+      )} ha llegado a casa`,
+    })
+  }
+
+  const handleConfirmation = async (safe: boolean) => {
     if (authToken) {
-      await confirmarSafeInHome(authToken, datosRuta.token_ruta, answer)
+      await confirmarSafeInHome(authToken, datosRuta.token_ruta, safe)
       setVisible(!visible)
+      if (safe) await sendNotificationToAdmins()
     }
   }
 
@@ -51,37 +71,37 @@ const SafeHomeModal = ({
               </Text>
             </View>
           </Pressable>
-          <View style={tw``}>
+          <View>
             <CustomText
-              style={`${TEXT_COLORS.ORANGE} text-3xl`}
+              style={`${TEXT_COLORS.ORANGE} text-2xl`}
               containerProps={{ textAlign: 'center' }}
             >
               ¡Hola, {capitalize(user?.first_name || '')}!
             </CustomText>
             <CustomText
-              style={`${TEXT_COLORS.DARK_BLUE} text-3xl`}
+              style={`${TEXT_COLORS.DARK_BLUE} text-2xl`}
               containerProps={{ textAlign: 'center', padding: 12 }}
             >
               ¿Haz llegado a casa?
             </CustomText>
           </View>
           <View style={tw`mx-auto py-8`}>
-            <View style={tw`bg-white rounded-full px-8 shadow-sm`}>
+            <View style={tw`px-8`}>
               <Image
                 source={require('../../../assets/house.png')}
-                style={{ width: WIDTH_DIMENSIONS * 0.5 }}
+                style={{ height: HEIGHT_DIMENSIONS * 0.25 }}
                 resizeMode="contain"
               />
             </View>
           </View>
-          <View style={tw`w-10/12 mx-auto `}>
-            <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-xl`}>
+          <View style={tw`w-10/12 mx-auto mb-8`}>
+            <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-lg`}>
               ¡Los miembros de la comunidad están esperando tu confirmación
               después de la ruta{' '}
               <Text style={tw`font-semibold`}>{datosRuta?.nombre}</Text>!
             </Text>
           </View>
-          <View style={tw`flex flex-row w-10/12 mx-auto pt-12`}>
+          <View style={tw`flex flex-row w-10/12 mx-auto pt-[4%]`}>
             <Pressable
               style={tw`flex flex-row items-center px-8`}
               onPress={() => handleConfirmation(true)}

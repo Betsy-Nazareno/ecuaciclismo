@@ -76,9 +76,9 @@ const TarjetaRutas = ({ ruta }: TarjetaRutasProps) => {
 
   const getImagenPrincipal = () => {
     const [main] = ruta.fotos || []
-    if (!main) return null
+    if (!main) return require('../../../../assets/ruta_placeholder.png')
 
-    return main?.link
+    return { uri: main?.link }
   }
 
   const {
@@ -101,10 +101,7 @@ const TarjetaRutas = ({ ruta }: TarjetaRutasProps) => {
       <View
         style={tw`rounded-xl flex flex-row items-center py-2 px-4 ${color}`}
       >
-        <ImageScaleColor
-          scale={imageScale}
-          image={{ uri: getImagenPrincipal() }}
-        />
+        <ImageScaleColor scale={imageScale} image={getImagenPrincipal()} />
 
         <View style={tw`pl-5 pt-2`}>
           <CustomText style={`${TEXT_COLORS.DARK_BLUE}`}>

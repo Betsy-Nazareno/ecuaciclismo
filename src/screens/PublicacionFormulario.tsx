@@ -11,7 +11,7 @@ interface Props {
 const PublicacionFormulario = ({ route }: Props) => {
   return (
     <BasePaginasSecundarias>
-      <PublicacionFormularioTemplate Prop={route.params?.data} />
+      <PublicacionFormularioTemplate publicacionProp={route.params?.data} />
     </BasePaginasSecundarias>
   )
 }

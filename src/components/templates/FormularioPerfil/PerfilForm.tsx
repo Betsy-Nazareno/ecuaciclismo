@@ -71,7 +71,14 @@ const PerfilForm = ({ datosPerfil }: any) => {
     if (authToken) {
       await enviarDatosUsuarios(authToken, props)
     }
-    const localUser = { ...props, id_usuario: user?.id_usuario }
+    const localUser = {
+      ...props,
+      id_usuario: user?.id_usuario,
+      last_name: props.apellido,
+      first_name: props.nombre,
+      admin: user?.admin,
+    }
+
     dispatch(updateLocalUser({ user: localUser }))
     dispatch(setUserHasRefresh({ refreshUser: !refreshUser }))
     await SecureStore.setItemAsync(

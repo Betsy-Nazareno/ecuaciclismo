@@ -8,6 +8,7 @@ import { CustomText } from '../atomos/CustomText'
 
 const UserInformation = () => {
   const { user } = useSelector((state: RootState) => state.user)
+
   return (
     <View style={tw`flex flex-row`}>
       <View style={tw`mr-4`}>
@@ -25,7 +26,6 @@ const UserInformation = () => {
         <CustomText
           style={`font-bold text-white text-lg capitalize`}
         >{`${user?.first_name} ${user?.last_name}`}</CustomText>
-
         <CustomText style={`font-bold ${TEXT_COLORS.ORANGE} text-sm`}>
           {user?.admin ? 'Administrador' : 'Ciclista'}
         </CustomText>

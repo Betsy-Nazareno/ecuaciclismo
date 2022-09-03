@@ -20,7 +20,7 @@ const RutaFotos = ({ fotos }: any) => {
             borderRadius: 20 / 2,
           }}
         >
-          {fotos?.map((foto: any, index: number) => (
+          {fotos.map((foto: any, index: number) => (
             <Image
               key={index}
               source={{ uri: foto.link }}

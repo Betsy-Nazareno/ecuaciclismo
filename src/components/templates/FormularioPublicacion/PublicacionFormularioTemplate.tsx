@@ -20,14 +20,13 @@ import HeaderScreen from '../../moleculas/HeaderScreen'
 import PublicacionContenido from './PublicacionContenidoFormulario'
 
 interface PublicacionFormularioProps {
-  Prop?: Publicacion
+  publicacionProp?: Publicacion
 }
 
 const PublicacionFormularioTemplate = ({
-  Prop,
+  publicacionProp,
 }: PublicacionFormularioProps) => {
   const [isLoading, setIsLoading] = React.useState(false)
-  const [publicacionProp, setpublicacionProp] = React.useState<Publicacion>()
   const { authToken } = useSelector((state: RootState) => state.sesion)
   const { user } = useSelector((state: RootState) => state.user)
   const navigation =
@@ -37,10 +36,6 @@ const PublicacionFormularioTemplate = ({
   )
   const { sendPushNotification } = usePermissionsNotifications()
   const dispatch = useDispatch()
-
-  React.useEffect(() => {
-    setpublicacionProp(Prop)
-  }, [])
 
   const initialValues = {
     titulo: publicacionProp?.titulo || '',
@@ -74,7 +69,7 @@ const PublicacionFormularioTemplate = ({
         publicacionHasModified: !publicacionHasModified,
       })
     )
-    await sendNotificationPublicacion()
+    // await sendNotificationPublicacion()
     setIsLoading(false)
     navigation.navigate('Publicaciones')
   }

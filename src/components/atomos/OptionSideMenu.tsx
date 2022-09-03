@@ -6,7 +6,7 @@ import { RootState } from '../../redux/store'
 import { BACKGROUND_COLORS, TEXT_COLORS } from '../../utils/constants'
 
 interface OptionSideMenuProps {
-  source: ImageSourcePropType
+  source?: ImageSourcePropType
   label: string
   name: string
   handleClick?: () => void
@@ -27,9 +27,11 @@ const OptionSideMenu = ({
             style={tw`h-full ${BACKGROUND_COLORS.ORANGE} w-1 rounded-lg mr-2`}
           />
         )}
-        <View style={tw`pr-2`}>
-          <Image source={source} style={{ width: 30, height: 30 }} />
-        </View>
+        {source ? (
+          <View style={tw`pr-2`}>
+            <Image source={source} style={{ width: 30, height: 30 }} />
+          </View>
+        ) : null}
         <View>
           <Text style={tw`text-base ${TEXT_COLORS.DARK_BLUE}`}>{label}</Text>
         </View>

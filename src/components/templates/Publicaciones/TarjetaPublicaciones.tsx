@@ -10,6 +10,7 @@ import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import { Publicacion } from '../../../models/Publicaciones.model'
 import VideoPlayer from 'expo-video-player'
 import { ResizeMode } from 'expo-av'
+import Reacciones from '../../moleculas/BarraReacciones'
 
 interface TarjetaPublicacionesProps {
   publicacion: Publicacion
@@ -78,6 +79,9 @@ const TarjetaPublicaciones = ({ publicacion }: TarjetaPublicacionesProps) => {
           <CustomText style={`${TEXT_COLORS.DARK_BLUE}`}>
             {publicacion.titulo}
           </CustomText>
+          <Text style={tw`${TEXT_COLORS.DARK_GRAY} capitalize text-xs mt-1`}>
+            {publicacion.first_name} {publicacion.last_name}
+          </Text>
           <View style={tw`my-3 w-full relative`}>
             {portadaPrincipal}
             <View style={tw`absolute bottom-1 -left-4`}>
@@ -88,7 +92,7 @@ const TarjetaPublicaciones = ({ publicacion }: TarjetaPublicacionesProps) => {
             </View>
           </View>
 
-          <View style={tw`w-full pb-6`}>
+          <View style={tw`w-full pb-4`}>
             <View style={tw`px-3 pt-1`}>
               <Text numberOfLines={2}>{publicacion.descripcion}</Text>
             </View>
@@ -101,12 +105,15 @@ const TarjetaPublicaciones = ({ publicacion }: TarjetaPublicacionesProps) => {
             />
           </Pressable>
 
-          <View style={tw`absolute bottom-0 right-2`}>
+          <View style={tw`mx-auto `}>
+            <Reacciones item={publicacion} type="Publicacion" />
+          </View>
+          {/* <View style={tw`absolute bottom-0 right-2`}>
             <Text style={tw`${TEXT_COLORS.DARK_GRAY} capitalize text-xs`}>
               {publicacion.first_name} {publicacion.last_name}{' '}
               {publicacion.ultimo_cambio}
             </Text>
-          </View>
+          </View> */}
         </View>
       </TarjetaTemplate>
     </Pressable>

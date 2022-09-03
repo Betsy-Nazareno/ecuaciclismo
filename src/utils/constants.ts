@@ -98,29 +98,54 @@ export const MIME_TYPES = {
 
 export const etiquetasPublicaciones = [
   {
-    value: 'recomendaciones',
-    nombre: 'Recomendaciones',
-    icon: require('../../assets/recomendacion_icon.png'),
+    value: 'sociales',
+    nombre: 'Sociales',
+    icon: require('../../assets/sociales_icon.png'),
   },
   {
-    value: 'salud',
-    nombre: 'Salud',
-    icon: require('../../assets/salud_icon.png'),
+    value: 'amigos',
+    nombre: 'Entre Amigos',
+    icon: require('../../assets/amigos_icon.png'),
   },
   {
-    value: 'felicitaciones',
-    nombre: 'Felicitaciones',
-    icon: require('../../assets/celebracion_icon.png'),
+    value: 'ciclopaseo',
+    nombre: 'Ciclopaseo',
+    icon: require('../../assets/ciclopaseo_icon.png'),
   },
   {
-    value: 'peligro',
-    nombre: 'Peligro',
-    icon: require('../../assets/peligro_icon.png'),
+    value: 'cumpleanios',
+    nombre: 'Cumpleaños',
+    icon: require('../../assets/cumpleanios_icon.png'),
   },
   {
-    value: 'noticias',
-    nombre: 'Noticias',
-    icon: require('../../assets/peligro_icon.png'),
+    value: 'travesia',
+    nombre: 'Travesia',
+    icon: require('../../assets/travesia_icon.png'),
+  },
+  {
+    value: 'aventura',
+    nombre: 'Aventura',
+    icon: require('../../assets/aventura.png'),
+  },
+  {
+    value: 'novedades',
+    nombre: 'Novedades',
+    icon: require('../../assets/novedad_icon.png'),
+  },
+  {
+    value: 'entrenamiento',
+    nombre: 'Entrenamiento',
+    icon: require('../../assets/entrenamiento_icon.png'),
+  },
+  {
+    value: 'paseo',
+    nombre: 'Paseo',
+    icon: require('../../assets/paseo_icon.png'),
+  },
+  {
+    value: 'competencia',
+    nombre: 'Competencia',
+    icon: require('../../assets/competencia_icon.png'),
   },
 ]
 

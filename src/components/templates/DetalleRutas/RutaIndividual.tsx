@@ -215,7 +215,7 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
         registrados={ruta.participantes?.length || 0}
       />
       <RutaDescripcion descripcion={ruta?.descripcion} />
-      <RutaFotos fotos={ruta.fotos} />
+      {ruta.fotos?.length > 0 && <RutaFotos fotos={ruta.fotos} />}
       <RutaMapView ubicacion={ruta.ubicacion} />
       {ruta.grupos_encuentro && ruta.grupos_encuentro.length > 0 ? (
         <RutaPuntosEncuentro grupos={ruta.grupos_encuentro || []} />
