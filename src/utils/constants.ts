@@ -23,6 +23,7 @@ export const BACKGROUND_COLORS = {
   GREEN: 'bg-[#D0FCE3]',
   GREEN_PRIMARY: 'bg-[#5DB075]',
   RED: 'bg-[#B00020]',
+  WHITE: 'bg-[#FFFFFF]',
 }
 
 export const BORDER_COLORS = {
