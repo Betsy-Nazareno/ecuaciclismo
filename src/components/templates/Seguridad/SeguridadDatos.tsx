@@ -25,7 +25,7 @@ const SeguridadDatos = () => {
       <>
 
         <View style={tw`bg-white px-2 pt-15 justify-center items-center`}>
-          <ButtonTab screen="Inicio" activeBackgroundColor={BACKGROUND_COLORS.WHITE}>
+          <ButtonTab screen="Comunidad" activeBackgroundColor={BACKGROUND_COLORS.WHITE}>
             <Image
               source={require('../../../../assets/contacto_seguro_fondo.png')}
               style={{ width: 200, height: 200 }}
