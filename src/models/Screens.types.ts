@@ -55,6 +55,8 @@ export type RootDrawerParamList = {
   Publicaciones: undefined
   Inicio: undefined
   Contactenos: undefined
+  Seguridad: undefined
+
 }
 
 export type ScreensDrawer =
@@ -67,3 +69,6 @@ export type ScreensDrawer =
   | 'Inicio'
   | 'Perfil'
   | 'Contactenos'
+  | 'Seguridad'
+
+  

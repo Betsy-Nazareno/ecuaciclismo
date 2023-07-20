@@ -33,6 +33,7 @@ import PerfilFormulario from './PerfilFormulario'
 import RastreoLocation from './RastreoLocation'
 import SafeView from '../components/organismos/SafeView'
 import Contactaenos from './Contactenos'
+import Seguridad from './Seguridad'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -121,6 +122,7 @@ const Main = () => {
         <Drawer.Screen name="Inicio" component={Inicio} />
         <Drawer.Screen name="Perfil" component={Perfil} />
         <Drawer.Screen name="Contactenos" component={Contactaenos} />
+        <Drawer.Screen name="Seguridad" component={Seguridad} />
       </Drawer.Navigator>
     )
   }
