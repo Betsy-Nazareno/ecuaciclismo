@@ -1,7 +1,6 @@
 import * as React from 'react';
 import tw from 'twrnc';
 import { Text, Image, View } from 'react-native';
-import SectionTitle from '../../moleculas/SectionTitle';
 import { ButtonTab } from '../../atomos/ButtonTab';
 import { TEXT_COLORS, BACKGROUND_COLORS } from '../../../utils/constants';
 
@@ -25,7 +24,7 @@ const SeguridadDatos = () => {
       <>
 
         <View style={tw`bg-white px-2 pt-15 justify-center items-center`}>
-          <ButtonTab screen="Comunidad" activeBackgroundColor={BACKGROUND_COLORS.WHITE}>
+          <ButtonTab screen="ContactosSeguros" activeBackgroundColor={BACKGROUND_COLORS.WHITE}>
             <Image
               source={require('../../../../assets/contacto_seguro_fondo.png')}
               style={{ width: 200, height: 200 }}

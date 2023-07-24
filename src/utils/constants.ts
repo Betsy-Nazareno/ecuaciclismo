@@ -125,6 +125,29 @@ export const etiquetasPublicaciones = [
   },
 ]
 
+export const etiquetasContactos = [
+  {
+    value: 'noVerificados',
+    nombre: 'No verificados',
+  },
+  {
+    value: 'verificados',
+    nombre: 'Verificados',
+  },
+  {
+    value: 'miembros',
+    nombre: 'Miembros',
+  },{
+    value: 'misContactos',
+    nombre: 'Mis contactos',
+  },
+]
+
+export const imagesRoutes = {
+  'green_check': require('../../assets/green_check.png'),
+  'bin_icon': require('../../assets/bin_icon.png'),
+}
+
 export const etiquetasRutas = [
   {
     value: 'inscritas',

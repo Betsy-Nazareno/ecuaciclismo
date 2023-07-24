@@ -22,6 +22,7 @@ export type RootStackParamList = {
   RutaIncompleta: { tokenRuta: string; tokenUsuario: string } | undefined
   FinalRuta: { tokenRuta: string; tokenUsuario: string } | undefined
   PerfilFormulario: { data: any } | undefined
+//  ContactosSeguros: undefined
 }
 
 export type Screens =
@@ -43,6 +44,7 @@ export type Screens =
   | 'RutaIncompleta'
   | 'FinalRuta'
   | 'PerfilFormulario'
+//  | 'ContactosSeguros'
 
 export type RootDrawerParamList = {
   HomeStack: undefined
@@ -55,8 +57,8 @@ export type RootDrawerParamList = {
   Publicaciones: undefined
   Inicio: undefined
   Contactenos: undefined
+  ContactosSeguros: undefined
   Seguridad: undefined
-
 }
 
 export type ScreensDrawer =
@@ -69,6 +71,6 @@ export type ScreensDrawer =
   | 'Inicio'
   | 'Perfil'
   | 'Contactenos'
+  | 'ContactosSeguros'
   | 'Seguridad'
-
   
