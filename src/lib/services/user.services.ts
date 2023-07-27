@@ -146,6 +146,51 @@ export const getComunidad = async (authToken: string) => {
   }
 }
 
+export const getContactosSeguros = async (authToken: string) => {
+  try {
+    const response = await axios({
+      method: 'GET',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/usuario/get_contactos_seguros/',
+      headers: { Authorization: 'Token ' + authToken },
+    })
+    return response?.data?.data || []
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const addContactoSeguro = async (authToken: string, user: number, id: number, name: string, phone: string) => {
+  try {
+    const response = await axios({
+      method: 'POST',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/usuario/agregar_contacto_seguro/',
+      headers: { Authorization: 'Token ' + authToken },
+      data:{
+              isUser: user,
+              user_id: id,
+              nombre: name,
+              celular: phone
+           },
+    })
+    return response?.data?.message || ""
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const deleteContactoSeguro = async (authToken: string) => {
+  try {
+    const response = await axios({
+      method: 'DELETE',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/usuario/delete_contacto_seguro/',
+      data: { token_contacto: authToken },
+    })
+    return response?.data?.message || ""
+  } catch (e) {
+    console.error(e)
+  }
+}
+
 export const cambiarPermiso = async (
   usuarioToken: string,
   isAdmin: boolean,

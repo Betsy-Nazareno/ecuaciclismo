@@ -1,18 +1,18 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import * as React from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import { setText } from '../../../redux/publicacionBusqueda'
 import { RootState } from '../../../redux/store'
-import { etiquetasContactos, TEXT_COLORS, } from '../../../utils/constants'
 import HeaderRoundedContainer from '../../moleculas/HeaderRoundedContainer'
 import SearchBar from '../../moleculas/SearchBar'
 import SectionTitle from '../../moleculas/SectionTitle'
-import BarraFiltrosUsers from '../../organismos/BarraFiltrosUsers'
+import OpcionesAgregarContactoSeguro from '../../atomos/OpcionesAgregarContactoSeguro'
 
 const ContactosHeader = () => {
+  const [displayMenu, setDisplayMenu] = React.useState(false)
   const { text } = useSelector((state: RootState) => state.busqueda)
   const dispatch = useDispatch()
   const navigation =
@@ -25,22 +25,23 @@ const ContactosHeader = () => {
     <>
       <HeaderRoundedContainer>
         <View style={tw`mx-4`}>
-          <SectionTitle
-            hasButton
-            isRestricted={false}
-            text="Contactos Seguros"
-            styleText="text-3xl"
-            background={false}
-          />
+            <SectionTitle
+              hasButton
+              isRestricted={false}
+              text="Contactos Seguros"
+              styleText="text-3xl"
+              background={false}
+              buttonIcon={require('../../../../assets/plus.png')}
+              handleClickButton={() => setDisplayMenu(!displayMenu)}
+            />
+              {displayMenu && (
+                <OpcionesAgregarContactoSeguro
+                  setDisplay={setDisplayMenu}
+                />
+              )}
           <SearchBar text={text} setText={handleText} />
         </View>
-        <BarraFiltrosUsers filtros={etiquetasContactos} />
       </HeaderRoundedContainer>
-      <View style={tw`justify-center items-center`}>
-        <Pressable>
-          <Text style={tw`text-sm mx-auto w-11/12 underline italic font-bold ${TEXT_COLORS.GRAY_PLACEHOLDER}`}>Agregar desde su dispositivo</Text>
-        </Pressable>
-      </View>
     </>
   )
 }

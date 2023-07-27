@@ -1,15 +1,15 @@
 
 import * as React from 'react'
 import BaseDrawerPaginas from '../components/templates/BasePaginasDrawer'
-import SecureContacts from '../components/templates/ContactosSeguros/SecureContacts'
+import ComunityContacts from '../components/templates/ContactosComunidad/ComunityContacts'
 
-const ContactosSeguros = () => {
+const ContactosComunidad = () => {
     return (
       <BaseDrawerPaginas backgroundColor="bg-white">
-        <SecureContacts />
+        <ComunityContacts />
       </BaseDrawerPaginas>
     )
   }
   
-  export default ContactosSeguros
+  export default ContactosComunidad
   

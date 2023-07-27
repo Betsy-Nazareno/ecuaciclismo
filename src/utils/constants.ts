@@ -125,11 +125,26 @@ export const etiquetasPublicaciones = [
   },
 ]
 
-export const etiquetasContactos = [
+export const etiquetasUserTypes = [
   {
-    value: 'noVerificados',
-    nombre: 'No verificados',
+    value: 'No verificado',
+    nombre: 'No verificado',
   },
+  {
+    value: 'Verificado',
+    nombre: 'Verificado',
+  },
+  {
+    value: 'Miembro',
+    nombre: 'Miembro',
+  },
+  {
+    value: 'Administrador',
+    nombre: 'Administrador',
+  },
+]
+
+export const etiquetasComunityContacts = [
   {
     value: 'verificados',
     nombre: 'Verificados',
@@ -137,15 +152,15 @@ export const etiquetasContactos = [
   {
     value: 'miembros',
     nombre: 'Miembros',
-  },{
-    value: 'misContactos',
-    nombre: 'Mis contactos',
   },
 ]
 
+//Images routes for ConfirmationPopUp
 export const imagesRoutes = {
   'green_check': require('../../assets/green_check.png'),
   'bin_icon': require('../../assets/bin_icon.png'),
+  'Miembro': require('../../assets/miembro.png'),
+  'Verificado': require('../../assets/verificado.png'),
 }
 
 export const etiquetasRutas = [

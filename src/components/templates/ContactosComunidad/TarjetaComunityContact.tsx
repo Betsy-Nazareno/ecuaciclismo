@@ -5,21 +5,23 @@ import { CustomText } from '../../atomos/CustomText'
 import { TEXT_COLORS } from '../../../utils/constants'
 import Gap from '../../atomos/Gap'
 import { capitalize } from '../../../utils/capitalizeText'
-import { DatosContactoSeguro } from './SecureContacts'
+import { DatosBasicosUser } from '../Comunidad/ComunidadAndRoles'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
+import NotificationPopUp from '../../organismos/NotificationPopUp'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import ConfirmationPopUp from '../../organismos/ConfirmationPopUp'
-import NotificationPopUp from '../../organismos/NotificationPopUp'
-import { deleteContactoSeguro } from '../../../lib/services/user.services'
+import { addContactoSeguro } from '../../../lib/services/user.services'
 
-interface TarjetaContactoProps {
-  usuario: DatosContactoSeguro
+interface TarjetaComunityContactProps {
+  usuario: DatosBasicosUser
+  isUser: number
   setAction: (value: boolean) => void
 }
 
-const TarjetaContacto = ({ usuario, setAction }: TarjetaContactoProps) => {
+const TarjetaComunityContact = ({ usuario, isUser, setAction }: TarjetaComunityContactProps) => {
+  const [admin, setAdmin] = React.useState(!!usuario.admin)
   const { authToken, user } = useSelector((state: RootState) => state.user)
   const [displayMenu, setDisplayMenu] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
@@ -31,19 +33,20 @@ const TarjetaContacto = ({ usuario, setAction }: TarjetaContactoProps) => {
     setShowModal(true)
   }
 
-  const handleDelete = async () => {
+  const addSecureContact = async() => {
     setShowModal(false)
-    setMessage(await deleteContactoSeguro(usuario.token))
+    let token: string=authToken??''
+    setMessage(await addContactoSeguro(token, isUser, usuario.usuario_id, '', ''))
     if (message=='') {setMessage('Hubo un error, intentalo de nuevo más tarde.')}
     setDisplayMenu(true)
-  }
+  }  
 
   return (
     <>
     <NotificationPopUp
         setVisible={setDisplayMenu}
         visible={displayMenu}
-        imageName='bin_icon'
+        imageName='green_check'
         body={message}
         setConfirmation={setAction}
     />
@@ -51,9 +54,9 @@ const TarjetaContacto = ({ usuario, setAction }: TarjetaContactoProps) => {
     <ConfirmationPopUp
         setVisible={setShowModal}
         visible={showModal}
-        imageName='bin_icon'
-        body={`¿Desea eliminar a ${usuario.nombre} de su lista de contactos seguros?`}
-        setConfirmation={handleDelete}
+        imageName='green_check'
+        body={`¿Desea marcar a ${usuario.first_name} ${usuario.last_name} como contacto seguro?`}
+        setConfirmation={addSecureContact}
     />
 
     <View
@@ -75,18 +78,18 @@ const TarjetaContacto = ({ usuario, setAction }: TarjetaContactoProps) => {
         />
         <Gap px="4">
           <CustomText style={`${TEXT_COLORS.DARK_BLUE}`}>
-            {capitalize(usuario.nombre)}
+            {capitalize(usuario.first_name)} {capitalize(usuario.last_name)}
           </CustomText>
         </Gap>
       </View>
 
-      <View style={tw`flex flex-row right-0 items-center justify-between`}>
+      <View style={tw`flex flex-row right-0 items-center`}>
         <Pressable onPress={handlePress}>
             <Image
-              source={require('../../../../assets/bin_icon.png')}
+              source={require('../../../../assets/agregar-usuario.png')}
               style={{ width: 30, height: 30 }}
             />
-        </Pressable>
+        </Pressable>      
       </View>
 
     </View>
@@ -94,4 +97,4 @@ const TarjetaContacto = ({ usuario, setAction }: TarjetaContactoProps) => {
   )
 }
 
-export default TarjetaContacto
+export default TarjetaComunityContact

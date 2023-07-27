@@ -2,7 +2,7 @@ import * as React from 'react'
 import tw from 'twrnc'
 import { Image, Pressable, Switch, Text, View } from 'react-native'
 import { CustomText } from '../../atomos/CustomText'
-import { TEXT_COLORS } from '../../../utils/constants'
+import { TEXT_COLORS, imagesRoutes, } from '../../../utils/constants'
 import Gap from '../../atomos/Gap'
 import { capitalize } from '../../../utils/capitalizeText'
 import AdminValidator from '../AdminValidator'
@@ -34,6 +34,15 @@ const TarjetaUsuario = ({ usuario }: TarjetaUsuarioProps) => {
     if (!user?.admin) return
     navigation.navigate('Perfil', { userToken: usuario.token_usuario })
   }
+
+  let labels: string[]= Object.keys(imagesRoutes)
+  let indx: number=0
+  let label: string = usuario.tipo ?? ''
+  while(indx<labels.length && label!= labels[indx]){indx++}
+  let val
+  (indx>=labels.length)?
+    (val=require("../../../../assets/failed.png")) : (val = Object.values(imagesRoutes)[indx])
+
   return (
     <Pressable
       style={tw`bg-white rounded-xl w-full my-1 py-2 flex flex-row justify-between`}
@@ -54,15 +63,34 @@ const TarjetaUsuario = ({ usuario }: TarjetaUsuarioProps) => {
           resizeMode="contain"
         />
         <Gap px="4">
-          <CustomText style={`${TEXT_COLORS.DARK_BLUE}`}>
-            {capitalize(usuario.first_name)} {capitalize(usuario.last_name)}
-          </CustomText>
+          <View style={tw`flex flex-row items-center`}>
+            <CustomText style={`${TEXT_COLORS.DARK_BLUE}`}>
+              {capitalize(usuario.first_name)} {capitalize(usuario.last_name)}
+            </CustomText>
+            <View style={{ paddingLeft: 9 }}>
+              {admin ? (
+                <Image
+                  source={require('../../../../assets/admin.png')}
+                  style={{ width: 20, height: 20 }}
+                />
+              ) : (
+                <Image
+                  source={val}
+                  style={{ width: 20, height: 20 }}
+                />
+              )}
+            </View>
+          </View>
+          {admin ? 
+            (<Text style={tw`text-xs text-black text-opacity-40`}>Administrador</Text>) 
+            : (<Text style={tw`text-xs text-black text-opacity-40`}>{label}</Text>)
+          }
         </Gap>
       </View>
       <AdminValidator>
-        {admin ? (
+        {/*admin ? (
           <Text style={tw`text-xs text-black text-opacity-40`}>Admin</Text>
-        ) : null}
+        ) : null*/}
         <Switch
           trackColor={{ false: '#e6e6e6', true: '#81b0ff' }}
           thumbColor="#3FA1EE"

@@ -17,6 +17,7 @@ const SearchBar = ({ text, setText }: SearchBarProps) => {
           stylesInput="bg-white"
           value={text}
           setValue={setText}
+          
         />
         <Pressable style={tw`absolute top-5 right-4`}>
           <View>

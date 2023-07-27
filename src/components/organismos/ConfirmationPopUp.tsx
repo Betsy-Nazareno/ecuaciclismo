@@ -11,26 +11,28 @@ import ButtonPrimary from '../atomos/ButtonPrimary'
 import Ruler from '../atomos/Ruler'
 import UnfocusButton from '../atomos/UnfocusButton'
 
-interface AddContactConfirmationProps {
+interface ConfirmationPopUpProps {
   visible: boolean
   setVisible: (visible: boolean) => void
   setConfirmation: (value: boolean) => void
-  url: string
+  imageName: string
   body: string
 }
 
-const AddContactConfirmation = ({
+const ConfirmationPopUp = ({
   visible,
-  url,
+  imageName,
   body,
   setVisible,
   setConfirmation,
-}: AddContactConfirmationProps) => {
+}: ConfirmationPopUpProps) => {
 
   let labels: string[]= Object.keys(imagesRoutes)
   let indx: number=0
-  while(indx<labels.length && url!= labels[indx]){indx++}  
-  let val = Object.values(imagesRoutes)[indx]
+  while(indx<labels.length && imageName!= labels[indx]){indx++}
+  let val
+  (indx>=labels.length)?
+    (val=require("../../../assets/failed.png")) : (val = Object.values(imagesRoutes)[indx])
 
   return (
     <Modal
@@ -45,10 +47,6 @@ const AddContactConfirmation = ({
       >
         <View style={tw`p-4 bg-white rounded-2xl w-11/12`}>
           <View style={tw`flex flex-row justify-between pb-2 pl-2`}>
-            {/*source={require('../../../assets/green-check.png')}
-               source={{ uri : url}}
-               `../../../assets/${url}`
-            */}
             <View style={tw`flex flex-1 justify-center items-center`}>
                 <Image
                     source={val}
@@ -76,7 +74,6 @@ const AddContactConfirmation = ({
               label="Cancelar"
               style="w-full mr-12"
               handleClick={() => {
-                setConfirmation(false)
                 setVisible(!visible)
               }}
             />
@@ -95,4 +92,4 @@ const AddContactConfirmation = ({
   )
 }
 
-export default AddContactConfirmation
+export default ConfirmationPopUp

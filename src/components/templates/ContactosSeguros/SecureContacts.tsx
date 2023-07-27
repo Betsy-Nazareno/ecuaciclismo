@@ -5,14 +5,17 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
 import TarjetaContacto from './TarjetaContacto'
 import ContactosHeader from './ContactosHeader'
-import { getComunidad } from '../../../lib/services/user.services'
+import { getContactosSeguros } from '../../../lib/services/user.services'
+import EmptyTarjetaContacto from '../../organismos/EmptyTarjetaContacto'
+import WithoutResults from '../../moleculas/WithoutResults'
 
-export interface DatosBasicosUser {
-  admin: boolean
-  first_name: string
-  last_name: string
+export interface DatosContactoSeguro {
+  id: number
+  nombre: string
+  celular?: string
+  token: string
   foto?: string
-  token_usuario: string
+  tipo?: string
 }
 
 const wait = (timeout: number) => {
@@ -21,8 +24,9 @@ const wait = (timeout: number) => {
 
 const SecureContacts = () => {
   const { authToken } = useSelector((state: RootState) => state.user)
-  const [comunidad, setComunidad] = React.useState<DatosBasicosUser[]>()
+  const [contactosSeguros, setContactosSeguros] = React.useState<DatosContactoSeguro[]>([])
   const [refreshing, setRefreshing] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(true)
 
   const onRefresh = async () => {
     setRefreshing(true)
@@ -32,16 +36,28 @@ const SecureContacts = () => {
 
   const getData = async () => {
     if (authToken) {
-      setComunidad(await getComunidad(authToken))
+      setContactosSeguros(await getContactosSeguros(authToken))
     }
     setRefreshing(false)
   }
 
   React.useEffect(() => {
     ;(async () => {
+      setIsLoading(false)
       await getData()
     })()
   }, [])
+
+  const text = useSelector((state: RootState) => state.busqueda.text)
+
+  React.useEffect(() => {
+    if (text.length>0) {
+      setContactosSeguros(contactosSeguros?.filter(
+        (contactoSeguro) =>
+          contactoSeguro.nombre.toLowerCase().includes(text.toLowerCase())
+      ))
+    }else{onRefresh()}
+  }, [text])
 
   return (
     <ScrollView
@@ -53,9 +69,19 @@ const SecureContacts = () => {
     >
       <ContactosHeader />
       <View style={tw`my-4`}>
-        {comunidad?.map((ciclista) => (
-          <TarjetaContacto key={ciclista.token_usuario} usuario={ciclista} />
-        ))}
+        {isLoading ? (
+          <>
+            <EmptyTarjetaContacto />
+            <EmptyTarjetaContacto />
+            <EmptyTarjetaContacto />
+          </>
+          ) : contactosSeguros?.length <= 0 ? (
+            <WithoutResults styles="pt-12" />
+          ) : (
+            contactosSeguros.map((ciclista) => (
+              <TarjetaContacto key={ciclista.token} usuario={ciclista} setAction={onRefresh}/>
+            ))
+        )}
       </View>
     </ScrollView>
   )
