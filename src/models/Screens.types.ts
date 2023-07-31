@@ -10,6 +10,7 @@ export type RootStackParamList = {
   Rutas: undefined
   Publicaciones: undefined
   ContactosComunidad: undefined
+  ContactosCelular: undefined
   Perfil: { userToken: string } | undefined
   ConsejoFormulario: { consejo: Consejo } | undefined
   NovedadFormulario: { publicidad: NovedadInterface } | undefined
@@ -45,6 +46,7 @@ export type Screens =
   | 'FinalRuta'
   | 'PerfilFormulario'
   | 'ContactosComunidad'
+  | 'ContactosCelular'
 
 export type RootDrawerParamList = {
   HomeStack: undefined

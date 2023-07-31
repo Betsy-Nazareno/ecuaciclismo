@@ -73,12 +73,12 @@ const TarjetaUsuario = ({ usuario }: TarjetaUsuarioProps) => {
                   source={require('../../../../assets/admin.png')}
                   style={{ width: 20, height: 20 }}
                 />
-              ) : (
+              ) : (label!=='No verificado' && label!=='') ? (
                 <Image
                   source={val}
                   style={{ width: 20, height: 20 }}
                 />
-              )}
+              ) : null}
             </View>
           </View>
           {admin ? 

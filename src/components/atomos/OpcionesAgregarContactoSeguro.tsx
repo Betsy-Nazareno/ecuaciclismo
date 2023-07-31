@@ -32,7 +32,7 @@ const OpcionesAgregarContactoSeguro = ({
             </CustomText>
         </Pressable>
         <Ruler style="w-11/12 mx-auto" />
-        <Pressable style={tw`pt-2 pb-2`}>
+        <Pressable onPress={() => navigation.navigate('ContactosCelular')} style={tw`pt-2 pb-2`}>
             <CustomText style={`${TEXT_COLORS.DARK_BLUE} font-semibold text-sm`}>
                 Agregar desde su dispositivo
             </CustomText>

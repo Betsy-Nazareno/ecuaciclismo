@@ -50,7 +50,8 @@
         "NOTIFICATIONS",
         "ACCESS_BACKGROUND_LOCATION",
         "ACCESS_COARSE_LOCATION",
-        "ACCESS_FINE_LOCATION"
+        "ACCESS_FINE_LOCATION",
+        "READ_CONTACTS"
       ],
       "useNextNotificationsApi": true
     },

@@ -5,7 +5,7 @@ import { CustomText } from '../../atomos/CustomText'
 import { TEXT_COLORS } from '../../../utils/constants'
 import Gap from '../../atomos/Gap'
 import { capitalize } from '../../../utils/capitalizeText'
-import { DatosBasicosUser } from '../Comunidad/ComunidadAndRoles'
+import { DatosPhoneContact } from './PhoneContacts'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
 import NotificationPopUp from '../../organismos/NotificationPopUp'
@@ -13,13 +13,13 @@ import ConfirmationPopUp from '../../organismos/ConfirmationPopUp'
 import { addContactoSeguro } from '../../../lib/services/user.services'
 
 interface TarjetaComunityContactProps {
-  usuario: DatosBasicosUser
+  usuario: DatosPhoneContact
   isUser: number
   setAction: (value: boolean) => void
 }
 
-const TarjetaComunityContact = ({ usuario, isUser, setAction }: TarjetaComunityContactProps) => {
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+const TarjetaComunityContact = ({ usuario, isUser, setAction }: TarjetaComunityContactProps) => {  
+  const { authToken } = useSelector((state: RootState) => state.user)
   const [displayMenu, setDisplayMenu] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const [message, setMessage] = React.useState<string>('')
@@ -31,9 +31,9 @@ const TarjetaComunityContact = ({ usuario, isUser, setAction }: TarjetaComunityC
   const addSecureContact = async() => {
     setShowModal(false)
     let token: string=authToken??''
-    setMessage(await addContactoSeguro(token, isUser, usuario.usuario_id, '', ''))
+    setMessage(await addContactoSeguro(token, isUser, 0, usuario.nombre, usuario.celular))
     setDisplayMenu(true)
-  }  
+  }
 
   return (
     <>
@@ -49,7 +49,7 @@ const TarjetaComunityContact = ({ usuario, isUser, setAction }: TarjetaComunityC
         setVisible={setShowModal}
         visible={showModal}
         imageName='green_check'
-        body={`¿Desea marcar a ${usuario.first_name} ${usuario.last_name} como contacto seguro?`}
+        body={`¿Desea marcar a ${usuario.nombre} como contacto seguro?`}
         setConfirmation={addSecureContact}
     />
 
@@ -58,11 +58,7 @@ const TarjetaComunityContact = ({ usuario, isUser, setAction }: TarjetaComunityC
     >
       <View style={tw`flex flex-row items-center`}>
         <Image
-          source={
-            usuario.foto
-              ? { uri: usuario.foto }
-              : require('../../../../assets/user.png')
-          }
+          source={require('../../../../assets/user.png')}
           style={{
             width: 60,
             height: 60,
@@ -72,8 +68,9 @@ const TarjetaComunityContact = ({ usuario, isUser, setAction }: TarjetaComunityC
         />
         <Gap px="4">
           <CustomText style={`${TEXT_COLORS.DARK_BLUE}`}>
-            {capitalize(usuario.first_name)} {capitalize(usuario.last_name)}
+            {capitalize(usuario.nombre)}
           </CustomText>
+          <Text style={tw`text-xs text-black text-opacity-40`}>{usuario.celular}</Text>
         </Gap>
       </View>
 

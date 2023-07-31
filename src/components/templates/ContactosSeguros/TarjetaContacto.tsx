@@ -1,15 +1,11 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { Image, Pressable, Text, View } from 'react-native'
+import { Image, Pressable, View } from 'react-native'
 import { CustomText } from '../../atomos/CustomText'
 import { TEXT_COLORS } from '../../../utils/constants'
 import Gap from '../../atomos/Gap'
 import { capitalize } from '../../../utils/capitalizeText'
 import { DatosContactoSeguro } from './SecureContacts'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../../redux/store'
-import { NavigationProp, useNavigation } from '@react-navigation/native'
-import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import ConfirmationPopUp from '../../organismos/ConfirmationPopUp'
 import NotificationPopUp from '../../organismos/NotificationPopUp'
 import { deleteContactoSeguro } from '../../../lib/services/user.services'
@@ -20,12 +16,9 @@ interface TarjetaContactoProps {
 }
 
 const TarjetaContacto = ({ usuario, setAction }: TarjetaContactoProps) => {
-  const { authToken, user } = useSelector((state: RootState) => state.user)
   const [displayMenu, setDisplayMenu] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const [message, setMessage] = React.useState<string>('')
-  const navigation =
-    useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
   const handlePress = () => {
     setShowModal(true)
@@ -34,7 +27,6 @@ const TarjetaContacto = ({ usuario, setAction }: TarjetaContactoProps) => {
   const handleDelete = async () => {
     setShowModal(false)
     setMessage(await deleteContactoSeguro(usuario.token))
-    if (message=='') {setMessage('Hubo un error, intentalo de nuevo más tarde.')}
     setDisplayMenu(true)
   }
 

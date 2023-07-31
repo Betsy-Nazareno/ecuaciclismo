@@ -16,7 +16,7 @@ const wait = (timeout: number) => {
 }
 
 const ComunityContacts = () => {
-  const { authToken } = useSelector((state: RootState) => state.user)
+  const { authToken, user } = useSelector((state: RootState) => state.user)
   const [comunidad, setComunidad] = React.useState<DatosBasicosUser[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
   const [refreshing, setRefreshing] = React.useState(false)
@@ -34,13 +34,20 @@ const ComunityContacts = () => {
       setComunidad(await getComunidad(authToken))
       setContactosSeguros(await getContactosSeguros(authToken))
     }
-    
-    let result: DatosBasicosUser[] = comunidad
-    contactosSeguros.forEach((item: DatosContactoSeguro)=>{
-      result=result.filter((val)=>val.token_usuario !== item.token)
-    })
-    result=result.filter((val)=>val.token_usuario !== authToken)
-    setNoContactosSeguros(result)
+    /*
+    setNoContactosSeguros(
+      comunidad.filter((val) => 
+      (!contactosSeguros.some((item) => item.token === val.token_usuario)) 
+      || (val.token_usuario !== authToken)
+      )
+    )
+    */
+    setNoContactosSeguros(
+      comunidad.filter((val) => 
+      (!contactosSeguros.some((item) => item.nombre === val.first_name+' '+val.last_name)) 
+      && (val.first_name+' '+val.last_name !== user?.first_name+' '+user?.last_name)
+      )
+    )
 
     setRefreshing(false)
     setIsLoading(false)

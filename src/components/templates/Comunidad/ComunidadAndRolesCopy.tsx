@@ -6,6 +6,7 @@ import { RootState } from '../../../redux/store'
 import TarjetaUsuario from './TarjetaUsuario'
 import { getComunidad } from '../../../lib/services/user.services'
 import ComunidadHeader from './ComunidadHeader'
+import { string } from 'yup'
 
 export interface DatosBasicosUser {
   usuario_id:number
