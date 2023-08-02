@@ -6,23 +6,25 @@ import { TEXT_COLORS } from '../../../utils/constants'
 import Gap from '../../atomos/Gap'
 import { capitalize } from '../../../utils/capitalizeText'
 import { DatosPhoneContact } from './PhoneContacts'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
 import NotificationPopUp from '../../organismos/NotificationPopUp'
 import ConfirmationPopUp from '../../organismos/ConfirmationPopUp'
 import { addContactoSeguro } from '../../../lib/services/user.services'
+import { setSecureContactsHasModified } from '../../../redux/SecureContacts'
 
 interface TarjetaComunityContactProps {
   usuario: DatosPhoneContact
   isUser: number
-  setAction: (value: boolean) => void
 }
 
-const TarjetaComunityContact = ({ usuario, isUser, setAction }: TarjetaComunityContactProps) => {  
+const TarjetaComunityContact = ({ usuario, isUser }: TarjetaComunityContactProps) => {  
   const { authToken } = useSelector((state: RootState) => state.user)
   const [displayMenu, setDisplayMenu] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const [message, setMessage] = React.useState<string>('')
+  const { secureContactsHasModified } = useSelector((state: RootState) => state.contactosSeguros)
+  const dispatch = useDispatch()
 
   const handlePress = () => {
     setShowModal(true)
@@ -42,7 +44,7 @@ const TarjetaComunityContact = ({ usuario, isUser, setAction }: TarjetaComunityC
         visible={displayMenu}
         imageName='green_check'
         body={message}
-        setConfirmation={setAction}
+        setConfirmation={()=>dispatch(setSecureContactsHasModified({ secureContactsHasModified: !secureContactsHasModified }))}
     />
 
     <ConfirmationPopUp

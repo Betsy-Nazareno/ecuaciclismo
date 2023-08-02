@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Image, Text, View, Modal, Pressable } from 'react-native'
+import { Image, Text, View, Modal } from 'react-native'
 import tw from 'twrnc'
 import {
   BACKGROUND_COLORS,

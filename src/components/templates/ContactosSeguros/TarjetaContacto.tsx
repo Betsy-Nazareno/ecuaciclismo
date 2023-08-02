@@ -1,24 +1,28 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { Image, Pressable, View } from 'react-native'
+import { Image, Pressable, View, Text } from 'react-native'
 import { CustomText } from '../../atomos/CustomText'
-import { TEXT_COLORS } from '../../../utils/constants'
+import { TEXT_COLORS, imagesRoutes } from '../../../utils/constants'
 import Gap from '../../atomos/Gap'
 import { capitalize } from '../../../utils/capitalizeText'
 import { DatosContactoSeguro } from './SecureContacts'
 import ConfirmationPopUp from '../../organismos/ConfirmationPopUp'
 import NotificationPopUp from '../../organismos/NotificationPopUp'
 import { deleteContactoSeguro } from '../../../lib/services/user.services'
+import { RootState } from '../../../redux/store'
+import { useDispatch, useSelector } from 'react-redux'
+import { setSecureContactsHasModified } from '../../../redux/SecureContacts'
 
-interface TarjetaContactoProps {
+interface TarjetaComunityContactProps {
   usuario: DatosContactoSeguro
-  setAction: (value: boolean) => void
 }
 
-const TarjetaContacto = ({ usuario, setAction }: TarjetaContactoProps) => {
+const TarjetaContacto = ( {usuario} : TarjetaComunityContactProps) => {
   const [displayMenu, setDisplayMenu] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const [message, setMessage] = React.useState<string>('')
+  const { secureContactsHasModified } = useSelector((state: RootState) => state.contactosSeguros)
+  const dispatch = useDispatch()
 
   const handlePress = () => {
     setShowModal(true)
@@ -30,6 +34,21 @@ const TarjetaContacto = ({ usuario, setAction }: TarjetaContactoProps) => {
     setDisplayMenu(true)
   }
 
+  let labels: string[]= Object.keys(imagesRoutes)
+  let indx: number=0
+  let label: string = usuario.tipo ?? ''
+  while(indx<labels.length && label!= labels[indx]){
+    indx++
+  }
+  let val
+  (indx>=labels.length)?
+    (val=require("../../../../assets/failed.png")) : (val = Object.values(imagesRoutes)[indx])
+  
+  if(usuario.isUser === 0){
+    label='not_user'
+    val=require("../../../../assets/cellphone.png")
+  }
+
   return (
     <>
     <NotificationPopUp
@@ -37,7 +56,7 @@ const TarjetaContacto = ({ usuario, setAction }: TarjetaContactoProps) => {
         visible={displayMenu}
         imageName='bin_icon'
         body={message}
-        setConfirmation={setAction}
+        setConfirmation={()=>dispatch(setSecureContactsHasModified({ secureContactsHasModified: !secureContactsHasModified }))}
     />
 
     <ConfirmationPopUp
@@ -66,9 +85,30 @@ const TarjetaContacto = ({ usuario, setAction }: TarjetaContactoProps) => {
           resizeMode="contain"
         />
         <Gap px="4">
-          <CustomText style={`${TEXT_COLORS.DARK_BLUE}`}>
-            {capitalize(usuario.nombre)}
-          </CustomText>
+          <View style={tw`flex flex-row items-center`}>
+            <CustomText style={`${TEXT_COLORS.DARK_BLUE}`}>
+              {capitalize(usuario.nombre)}
+            </CustomText>
+            <View style={{ paddingLeft: 9 }}>
+              {usuario.admin ? (
+                <Image
+                  source={require('../../../../assets/admin.png')}
+                  style={{ width: 20, height: 20 }}
+                />
+              ) : (label!=='No verificado' && label!=='') ? (
+                <Image
+                  source={val}
+                  style={{ width: 20, height: 20 }}
+                />
+              ) : null}
+            </View>
+          </View>
+          {usuario.admin ?
+            (<Text style={tw`text-xs text-black text-opacity-40`}>Administrador</Text>)
+            : (usuario.isUser === 1) ? 
+                (<Text style={tw`text-xs text-black text-opacity-40`}>{label}</Text>)
+                : (<Text style={tw`text-xs text-black text-opacity-40`}>{usuario.celular}</Text>)
+          }
         </Gap>
       </View>
 

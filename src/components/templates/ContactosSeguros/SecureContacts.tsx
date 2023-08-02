@@ -16,6 +16,10 @@ export interface DatosContactoSeguro {
   token: string
   foto?: string
   tipo?: string
+  isUser: number
+  admin: boolean
+  usuario_id: number
+  isPropietary: number
 }
 
 const wait = (timeout: number) => {
@@ -25,38 +29,42 @@ const wait = (timeout: number) => {
 const SecureContacts = () => {
   const { authToken } = useSelector((state: RootState) => state.user)
   const [contactosSeguros, setContactosSeguros] = React.useState<DatosContactoSeguro[]>([])
+  const [filtredContactosSeguros, setFiltredContactosSeguros] = React.useState<DatosContactoSeguro[]>([])
   const [refreshing, setRefreshing] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(true)
+  const { secureContactsHasModified } = useSelector((state: RootState) => state.contactosSeguros)
 
+  React.useEffect(() => {
+    (async () => {
+      await getData()
+      setIsLoading(false)
+    })()
+  }, [secureContactsHasModified])
+  
   const onRefresh = async () => {
     setRefreshing(true)
     await getData()
-    wait(2000).then(() => setRefreshing(false))
+    wait(3000).then(() => setRefreshing(false))
   }
 
   const getData = async () => {
-    if (authToken) {
-      setContactosSeguros(await getContactosSeguros(authToken))
-    }
+    let res: DatosContactoSeguro[] = (await getContactosSeguros(authToken || '')) || []    
+    setContactosSeguros(res)
+    setFiltredContactosSeguros(res)
     setRefreshing(false)
   }
-
-  React.useEffect(() => {
-    ;(async () => {
-      setIsLoading(false)
-      await getData()
-    })()
-  }, [])
 
   const text = useSelector((state: RootState) => state.busqueda.text)
 
   React.useEffect(() => {
-    if (text.length>0) {
-      setContactosSeguros(contactosSeguros?.filter(
+    if (text) {
+      setFiltredContactosSeguros(contactosSeguros?.filter(
         (contactoSeguro) =>
           contactoSeguro.nombre.toLowerCase().includes(text.toLowerCase())
       ))
-    }else{onRefresh()}
+    }else{
+      setFiltredContactosSeguros(contactosSeguros)
+    }
   }, [text])
 
   return (
@@ -75,11 +83,11 @@ const SecureContacts = () => {
             <EmptyTarjetaContacto />
             <EmptyTarjetaContacto />
           </>
-          ) : contactosSeguros?.length <= 0 ? (
+          ) : filtredContactosSeguros?.length <= 0 ? (
             <WithoutResults styles="pt-12" />
           ) : (
-            contactosSeguros.map((ciclista) => (
-              <TarjetaContacto key={ciclista.token} usuario={ciclista} setAction={onRefresh}/>
+            filtredContactosSeguros.map((ciclista) => (
+              <TarjetaContacto key={ciclista.token} usuario={ciclista}/>
             ))
         )}
       </View>

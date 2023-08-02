@@ -54,13 +54,6 @@ const ComunidadAndRoles = () => {
     }
     setRefreshing(false)
   }
-
-  const compareAdmin = (etiqueta: string[], user: DatosBasicosUser) => {
-    if(user.admin && etiqueta.includes('Administrador')){
-      return true
-    }
-    return false
-  }
   
   React.useEffect(() => {
     const etiquetas: string[] = buildFiltros.etiquetas ?? []
@@ -76,7 +69,7 @@ const ComunidadAndRoles = () => {
     }
     if (etiquetas.length > 0) {
       result = result?.filter((user) =>
-        etiquetas.includes(user.tipo??'') || compareAdmin(etiquetas, user)
+        etiquetas.includes(user.tipo??'') || (user.admin && etiquetas.includes('Administrador'))
       )
     }
     setFilteredUsers(result)

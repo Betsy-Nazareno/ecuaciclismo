@@ -144,17 +144,6 @@ export const etiquetasUserTypes = [
   },
 ]
 
-export const etiquetasComunityContacts = [
-  {
-    value: 'verificados',
-    nombre: 'Verificados',
-  },
-  {
-    value: 'miembros',
-    nombre: 'Miembros',
-  },
-]
-
 //Images routes for ConfirmationPopUp
 export const imagesRoutes = {
   'green_check': require('../../assets/green_check.png'),

@@ -22,23 +22,48 @@ const wait = (timeout: number) => {
 
 const PhoneContacts = () => {
   const { authToken, user } = useSelector((state: RootState) => state.user)
-  const [contactos, setContactos] = React.useState<DatosPhoneContact[]>([])
   const [refreshing, setRefreshing] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(true)
-  const [hasPermission, setHasPermission] = React.useState(false);
-  const [contactosSeguros, setContactosSeguros] = React.useState<DatosContactoSeguro[]>([])
+  const [hasPermission, setHasPermission] = React.useState(false)
+  const [contactos, setContactos] = React.useState<DatosPhoneContact[]>([])
+  const [filtredContactos, setFiltredContactos] = React.useState<DatosPhoneContact[]>([])
+  const { secureContactsHasModified } = useSelector((state: RootState) => state.contactosSeguros)
+
+  React.useEffect(() => {
+    (async () => {
+      const { status } = await Contacts.requestPermissionsAsync()
+      setHasPermission(status === 'granted')
+
+      let contactosSeguros: DatosContactoSeguro[] = (await getContactosSeguros(authToken || '')) || []
+      let result: DatosPhoneContact[] = []
+      if(status == 'granted'){
+        const { data } = await Contacts.getContactsAsync({
+          fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
+        })
+        data.forEach((contacto)=>{
+          contacto.phoneNumbers?.forEach((phoneNumber)=>{
+            let n: string = phoneNumber.number ?? ''
+            n = n.replace(/ /gm, '').replace(/-/gm,'')
+            if(!result.some((item) => item.celular === n) && !contactosSeguros.some((val) => val.celular===n)){
+              result.push({nombre: contacto.name ?? '', celular: n})
+            }
+          })
+        })
+      }
+      setContactos(result)
+      setFiltredContactos(result)
+      setIsLoading(false)
+      }
+    )()
+  }, [secureContactsHasModified])
 
   const onRefresh = async () => {
     setRefreshing(true)
     await getData()
-    wait(2000).then(() => setRefreshing(false))
+    wait(3000).then(() => setRefreshing(false))
   }
 
-  const getData = async () => {
-    if (authToken) {
-      setContactosSeguros(await getContactosSeguros(authToken))
-    }
-
+  const getData = async () => {let contactosSeguros: DatosContactoSeguro[] = (await getContactosSeguros(authToken || '')) || []
     let result: DatosPhoneContact[] = []
     if (hasPermission) {
       const { data } = await Contacts.getContactsAsync({
@@ -54,38 +79,24 @@ const PhoneContacts = () => {
       })
     })
     setContactos(result)
+    setFiltredContactos(result)
     setRefreshing(false)
-    setIsLoading(false)
     }
   }
-
-  React.useEffect(() => {
-    (async () => {
-      const { status } = await Contacts.requestPermissionsAsync()
-      setHasPermission(status === 'granted')
-      //getData()
-      onRefresh()
-    })();
-  }, []);
-
+  
   const text = useSelector((state: RootState) => state.busqueda.text)
 
-/*  React.useEffect(() => {
-    if (text.length>0) {
-      setContactosSeguros(contactosSeguros?.filter(
-        (contactoSeguro) =>
-          contactoSeguro.nombre.toLowerCase().includes(text.toLowerCase())
-      ))
-    }else{onRefresh()}
-  }, [text])
-
   React.useEffect(() => {
-    ;(async () => {
-      setIsLoading(false)
-      await getData()
-    })()
-  }, [])
-*/
+    if (text) {
+      setFiltredContactos(contactos?.filter(
+        (contacto) =>
+          contacto.nombre.toLowerCase().includes(text.toLowerCase())
+      ))
+    }else{
+      setFiltredContactos(contactos)
+    }
+  }, [text])
+  
   return (
     <ScrollView
       style={tw`px-2 py-4`}
@@ -102,11 +113,11 @@ const PhoneContacts = () => {
             <EmptyTarjetaContacto />
             <EmptyTarjetaContacto />
           </>
-          ) : contactos?.length <= 0 ? (
+          ) : filtredContactos?.length <= 0 ? (
             <WithoutResults styles="pt-12" />
           ) : (
-            contactos.map((contacto) => (
-              <TarjetaContacto usuario={contacto} isUser={0} setAction={onRefresh}/>
+            filtredContactos.map((contacto) => (
+              <TarjetaContacto usuario={contacto} isUser={0}/>
             ))
         )}
       </View>

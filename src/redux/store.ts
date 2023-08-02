@@ -8,6 +8,7 @@ import publicacionBusqueda from './publicacionBusqueda'
 import publicacionReducer from './publicacion'
 import BusquedaRutas from './rutasBusqueda'
 import Rutas from './ruta'
+import SecureContacts from './SecureContacts'
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     publicacion: publicacionReducer,
     busquedaRutas: BusquedaRutas,
     ruta: Rutas,
+    contactosSeguros: SecureContacts,
   },
 })
 
