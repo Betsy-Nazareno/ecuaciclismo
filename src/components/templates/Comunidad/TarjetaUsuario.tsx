@@ -34,6 +34,18 @@ const TarjetaUsuario = ({ usuario }: TarjetaUsuarioProps) => {
     if (!user?.admin) return
     navigation.navigate('Perfil', { userToken: usuario.token_usuario })
   }
+  let iconSource;
+  if(admin){
+    iconSource = require('../../../../assets/admin.png');
+  }else if (usuario.tipo === 'verificado') {
+    iconSource = require('../../../../assets/verificado.png');
+  } else if (usuario.tipo === 'miembro') {
+    iconSource = require('../../../../assets/miembro.png');
+  } else {
+    // Si el tipo de usuario no es "verificado" ni "miembro", no mostramos ningún icono
+    return null;
+  }
+
   return (
     <Pressable
       style={tw`bg-white rounded-xl w-full my-1 py-2 flex flex-row justify-between`}
@@ -58,6 +70,11 @@ const TarjetaUsuario = ({ usuario }: TarjetaUsuarioProps) => {
             {capitalize(usuario.first_name)} {capitalize(usuario.last_name)}
           </CustomText>
         </Gap>
+        <Gap px="4">
+          <CustomText style={`${TEXT_COLORS.DARK_BLUE}`}>
+            {capitalize(usuario.first_name)} {capitalize(usuario.last_name)}
+          </CustomText>
+        </Gap>
       </View>
       <AdminValidator>
         {admin ? (
@@ -70,6 +87,13 @@ const TarjetaUsuario = ({ usuario }: TarjetaUsuarioProps) => {
           value={admin}
         />
       </AdminValidator>
+      <View style={tw`flex flex-row items-center`}>
+        <Gap px="4">
+            <CustomText style={`${TEXT_COLORS.ORANGE}`}>
+            {admin ? 'Administrador' : usuario.tipo}
+            </CustomText>
+          </Gap>
+      </View>
     </Pressable>
   )
 }

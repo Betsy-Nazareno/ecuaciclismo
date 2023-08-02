@@ -23,11 +23,13 @@ interface PerfilFotoHeaderProps {
   foto?: string
   idUser: string
   telefono?: string
+  tipo?:string
   onUpdate: (user: Partial<User>) => void
 }
 
 const PerfilFotoHeader = ({
   isAdmin,
+  tipo,
   email,
   nombre,
   apellido,
@@ -52,7 +54,17 @@ const PerfilFotoHeader = ({
     )
     onUpdate({ foto: path })
   }
-
+  let iconSource;
+  if(admin){
+    iconSource = require('../../../../assets/admin.png');
+  }else if (tipo === 'verificado') {
+    iconSource = require('../../../../assets/verificado.png');
+  } else if (tipo === 'miembro') {
+    iconSource = require('../../../../assets/miembro.png');
+  } else {
+    // Si el tipo de usuario no es "verificado" ni "miembro", no mostramos ningún icono
+    return null;
+  }
   return (
     <>
       <View style={tw`relative mb-6`}>
@@ -83,7 +95,15 @@ const PerfilFotoHeader = ({
       >
         {capitalize(nombre || '')} {capitalize(apellido || '')}
       </CustomText>
-
+      <Image
+      source={iconSource}
+      style={{
+        width: 60,
+        height: 60,
+        borderRadius: 400 / 2,
+      }}
+      resizeMode="contain"
+      />
       <Text style={tw`text-center text-black opacity-40`}>
         {email || ''}
         {telefono ? (
@@ -98,7 +118,7 @@ const PerfilFotoHeader = ({
           containerProps={{ textAlign: 'center' }}
           style={`text-xl ${TEXT_COLORS.ORANGE}`}
         >
-          {admin ? 'Administrador' : 'Ciclista'}
+          {admin ? 'Administrador' : tipo}
         </CustomText>
       </View>
     </>

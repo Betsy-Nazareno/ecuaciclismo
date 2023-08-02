@@ -5,6 +5,7 @@ import * as Location from 'expo-location'
 import * as TaskManager from 'expo-task-manager'
 import MapView, { Marker } from 'react-native-maps'
 import {
+  BACKGROUND_COLORS,
   HEIGHT_DIMENSIONS,
   uri_meta_icon,
   WIDTH_DIMENSIONS,
@@ -213,6 +214,13 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
         <RoundedButtonIcon
           src={require('../../../../assets/menu_white_icon.png')}
           handleClick={() => setShowModal(true)}
+        />
+      </View>
+      <View style={tw`absolute top-2 right-2`}>
+        <RoundedButtonIcon
+          src={require('../../../../assets/alert_icon.png')}
+          handleClick={() => setShowModal(true)}
+          background = {BACKGROUND_COLORS.RED}
         />
       </View>
       {showModal && (

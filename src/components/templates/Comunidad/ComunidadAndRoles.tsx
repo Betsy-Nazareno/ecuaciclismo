@@ -12,6 +12,7 @@ export interface DatosBasicosUser {
   first_name: string
   last_name: string
   foto?: string
+  tipo?:string
   token_usuario: string
 }
 

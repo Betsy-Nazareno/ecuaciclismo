@@ -11,12 +11,15 @@ import { RootState } from '../redux/store'
 import { setHasModified } from '../redux/consejo'
 import { setNovedadHasModified } from '../redux/novedad'
 import { setActiveScreen } from '../redux/screens'
+import AlertasActivas from './AlertasActivas'
 
 const Inicio = () => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
   const { hasModified } = useSelector((state: RootState) => state.consejo)
   const dispatch = useDispatch()
+  const { authToken } = useSelector((state: RootState) => state.user)
+
   const { novedadHasModified } = useSelector(
     (state: RootState) => state.novedad
   )
@@ -41,6 +44,7 @@ const Inicio = () => {
         />
       </AdminValidator>
       <BannerPublicidad />
+      <AlertasActivas authToken={authToken} />
       <Consejos />
     </BasePaginas>
   )

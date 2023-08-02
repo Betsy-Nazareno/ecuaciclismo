@@ -11,6 +11,7 @@ interface RutaCancelarModalProps {
   visible: boolean
   setVisible: (visible: boolean) => void
   motivo: string
+  mensaje: string
   setMotivo: (text: string) => void
   handleConfirmation: () => void
 }

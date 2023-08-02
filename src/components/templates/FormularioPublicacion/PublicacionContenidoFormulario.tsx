@@ -76,7 +76,7 @@ const PublicacionContenidoFormulario = ({
       ...(etiquetas || []).filter((m) => m !== value),
     ])
   }
-
+  console.log(values.multimedia)
   return (
     <>
       <FieldFormulario>

@@ -34,6 +34,10 @@ import RastreoLocation from './RastreoLocation'
 import SafeView from '../components/organismos/SafeView'
 import Contactaenos from './Contactenos'
 import Seguridad from './Seguridad'
+import Alertas from './Alertas'
+import DetalleAlerta from './DetalleAlerta'
+import AlertaFormulario from './AlertaFormulario'
+import MapViewScreen from './MapViewScreen'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -81,10 +85,7 @@ const Main = () => {
         <Stack.Screen name="RutaIncompleta" component={RutaIncompleta} />
         <Stack.Screen name="FinalRuta" component={FinalRuta} />
         <Stack.Screen name="PerfilFormulario" component={PerfilFormulario} />
-        <Stack.Screen
-          name="PublicacionFormulario"
-          component={PublicacionFormulario}
-        />
+        <Stack.Screen name="PublicacionFormulario" component={PublicacionFormulario}/>
         <Stack.Screen name="RutasFormulario" component={RutasFormulario} />
         <Stack.Screen
           name="Inicio"
@@ -95,7 +96,11 @@ const Main = () => {
           name="DetallePublicacion"
           component={DetallePublicacion}
         />
-      </Stack.Navigator>
+        <Stack.Screen name="Alertas" component={Alertas} />
+        <Stack.Screen name="DetalleAlerta" component={DetalleAlerta} />
+        <Stack.Screen name="AlertaFormulario" component={AlertaFormulario}/>
+        <Stack.Screen name="MapView" component={MapViewScreen} />
+        </Stack.Navigator>
     )
   }
 

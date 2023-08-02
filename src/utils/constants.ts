@@ -24,6 +24,7 @@ export const BACKGROUND_COLORS = {
   GREEN_PRIMARY: 'bg-[#5DB075]',
   RED: 'bg-[#B00020]',
   WHITE: 'bg-[#FFFFFF]',
+  YELLOW: 'bg-[#FFD700]',
 }
 
 export const BORDER_COLORS = {
@@ -49,11 +50,17 @@ export const ESTADOS_RUTA = {
   SIN_CUPOS: 'Sin Cupos',
   EN_CURSO: 'En Curso',
 }
-
+export const ESTADOS_ALERTA = {
+  CANCELADA: 'Cancelada',
+  ATENDIDA: 'Atendida',
+  EN_CURSO: 'En curso',
+}
 export const uri_rastreo_icon =
   'https://firebasestorage.googleapis.com/v0/b/omega-keep-354005.appspot.com/o/rutas%2Fbicicleta_marker.png?alt=media&token=ee9540cd-54cf-401a-822d-6b1920fc5102'
 export const uri_meta_icon =
   'https://firebasestorage.googleapis.com/v0/b/omega-keep-354005.appspot.com/o/rutas%2Fmeta.png?alt=media&token=5da6553c-e489-4e89-9614-ce23276d04df'
+export const uri_perfil_icon =
+'https://firebasestorage.googleapis.com/v0/b/omega-keep-354005.appspot.com/o/usuarios%2Fuser.png?alt=media&token=646d4b60-b175-4ff1-85a0-25493710df24'
 
 export const CONSEJO_MAX_LENGTH = 100
 export const PASSWORD = {
@@ -87,6 +94,8 @@ export const FOLDERS_STORAGE = {
   PUBLICACIONES: 'publicaciones',
   NOVEDADES: 'novedades',
   USUARIOS: 'usuarios',
+  ALERTAS: 'alertas',
+  LUGARES: 'lugares',
 }
 
 export const MIME_TYPES = {
@@ -122,6 +131,45 @@ export const etiquetasPublicaciones = [
     value: 'noticias',
     nombre: 'Noticias',
     icon: require('../../assets/peligro_icon.png'),
+  },
+]
+export const tipoAlertas=[
+  {
+    value: 'tubo bajo',
+    nombre: 'Tubo bajo',
+
+  },
+  {
+    value: 'accidente',
+    nombre: 'Accidente',
+  },
+  {
+    value: 'robo',
+    nombre: 'Robo',
+  },
+
+]
+
+export const tiposUsuarios = [
+  {
+    value: 'Contactos seguros',
+    nombre: 'Contactos seguros',
+
+  },
+  {
+    value: 'Verificados',
+    nombre: 'Verificados',
+  },
+  {
+    value: 'Miembros',
+    nombre: 'Miembros',
+  },
+]
+export const etiquetasAlertas=[
+  {
+    value: 'mis alertas',
+    nombre: 'Alertas enviadas',
+    icon: require('../../assets/my_alert_white.png'),
   },
 ]
 

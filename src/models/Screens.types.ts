@@ -1,3 +1,4 @@
+import { Alerta } from './Alertas'
 import { Consejo } from './Consejo.model'
 import { NovedadInterface } from './Novedad.model'
 import { Publicacion } from './Publicaciones.model'
@@ -14,14 +15,18 @@ export type RootStackParamList = {
   NovedadFormulario: { publicidad: NovedadInterface } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
   DetallePublicacion: { token: string } | undefined
+
   PublicacionFormulario: { data: Publicacion } | undefined
   RutasFormulario: { ruta: Ruta } | undefined
   DetalleRuta: { token: string } | undefined
+  DetalleAlerta:{token: string} | undefined
   InicioRastreo: { ruta: Ruta } | undefined
   RastreoUbicacion: { ruta: Ruta } | undefined
   RutaIncompleta: { tokenRuta: string; tokenUsuario: string } | undefined
   FinalRuta: { tokenRuta: string; tokenUsuario: string } | undefined
   PerfilFormulario: { data: any } | undefined
+  Alertas: undefined
+  AlertaFormulario: { data: Alerta } | undefined
 }
 
 export type Screens =
@@ -38,11 +43,14 @@ export type Screens =
   | 'PublicacionFormulario'
   | 'RutasFormulario'
   | 'DetalleRuta'
+  | 'DetalleAlerta'
   | 'InicioRastreo'
   | 'RastreoUbicacion'
   | 'RutaIncompleta'
   | 'FinalRuta'
   | 'PerfilFormulario'
+  | 'Alertas'
+  | 'AlertaFormulario'
 
 export type RootDrawerParamList = {
   HomeStack: undefined
