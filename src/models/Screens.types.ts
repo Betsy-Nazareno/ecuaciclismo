@@ -10,6 +10,8 @@ export type RootStackParamList = {
   Registro: undefined
   Rutas: undefined
   Publicaciones: undefined
+  ContactosComunidad: undefined
+  ContactosCelular: undefined
   Perfil: { userToken: string } | undefined
   ConsejoFormulario: { consejo: Consejo } | undefined
   NovedadFormulario: { publicidad: NovedadInterface } | undefined
@@ -49,6 +51,8 @@ export type Screens =
   | 'RutaIncompleta'
   | 'FinalRuta'
   | 'PerfilFormulario'
+  | 'ContactosComunidad'
+  | 'ContactosCelular'
   | 'Alertas'
   | 'AlertaFormulario'
 
@@ -63,8 +67,8 @@ export type RootDrawerParamList = {
   Publicaciones: undefined
   Inicio: undefined
   Contactenos: undefined
+  ContactosSeguros: undefined
   Seguridad: undefined
-
 }
 
 export type ScreensDrawer =
@@ -77,6 +81,6 @@ export type ScreensDrawer =
   | 'Inicio'
   | 'Perfil'
   | 'Contactenos'
+  | 'ContactosSeguros'
   | 'Seguridad'
-
   

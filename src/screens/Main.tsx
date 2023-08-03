@@ -33,6 +33,9 @@ import PerfilFormulario from './PerfilFormulario'
 import RastreoLocation from './RastreoLocation'
 import SafeView from '../components/organismos/SafeView'
 import Contactaenos from './Contactenos'
+import ContactosSeguros from './ContactosSeguros'
+import ContactosComunidad from './ContactosComunidad'
+import ContactosCelular from './ContactosCelular'
 import Seguridad from './Seguridad'
 import Alertas from './Alertas'
 import DetalleAlerta from './DetalleAlerta'
@@ -127,6 +130,9 @@ const Main = () => {
         <Drawer.Screen name="Inicio" component={Inicio} />
         <Drawer.Screen name="Perfil" component={Perfil} />
         <Drawer.Screen name="Contactenos" component={Contactaenos} />
+        <Drawer.Screen name="ContactosSeguros" component={ContactosSeguros} />
+        <Drawer.Screen name="ContactosComunidad" component={ContactosComunidad} />
+        <Drawer.Screen name="ContactosCelular" component={ContactosCelular} />
         <Drawer.Screen name="Seguridad" component={Seguridad} />
       </Drawer.Navigator>
     )

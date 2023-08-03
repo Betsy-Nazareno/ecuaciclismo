@@ -173,6 +173,33 @@ export const etiquetasAlertas=[
   },
 ]
 
+export const etiquetasUserTypes = [
+  {
+    value: 'No verificado',
+    nombre: 'No verificado',
+  },
+  {
+    value: 'Verificado',
+    nombre: 'Verificado',
+  },
+  {
+    value: 'Miembro',
+    nombre: 'Miembro',
+  },
+  {
+    value: 'Administrador',
+    nombre: 'Administrador',
+  },
+]
+
+//Images routes for ConfirmationPopUp
+export const imagesRoutes = {
+  'green_check': require('../../assets/green_check.png'),
+  'bin_icon': require('../../assets/bin_icon.png'),
+  'Miembro': require('../../assets/miembro.png'),
+  'Verificado': require('../../assets/verificado.png'),
+}
+
 export const etiquetasRutas = [
   {
     value: 'inscritas',
