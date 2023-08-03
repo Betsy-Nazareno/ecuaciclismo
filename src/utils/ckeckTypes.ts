@@ -2,6 +2,7 @@ import { Audio } from 'expo-av'
 import { DocumentResult } from 'expo-document-picker'
 import { ImageSourcePropType } from 'react-native'
 import { MultimediaResult } from '../models/Publicaciones.model'
+import { ImagePickerResult } from 'expo-image-picker';
 
 export const isDocumentResultType = (
   file: string | ImageSourcePropType | DocumentResult | MultimediaResult
@@ -15,4 +16,12 @@ export const isAudioRecording = (
 ): file is Audio.Recording => {
   const fi = file as Audio.Recording
   return !!fi._uri
+}
+
+export const isImagePickerResult = (
+  file: ImagePickerResult
+): file is ImagePickerResult => {
+  const fi = file as ImagePickerResult;
+
+  return 'uri' in fi.assets[0] && 'type' in fi.assets[0] && 'width' in fi.assets[0]  ;
 }

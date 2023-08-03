@@ -14,6 +14,7 @@ export interface User {
   genero?: string
   admin?: boolean
   tipo?: string
+  propietary?:boolean
   marca?: string
   codigo?: string
   foto_bicicleta?: string

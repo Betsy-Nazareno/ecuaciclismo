@@ -5,12 +5,11 @@ import { ButtonTab } from '../../atomos/ButtonTab';
 import { TEXT_COLORS, BACKGROUND_COLORS } from '../../../utils/constants';
 
 const SeguridadDatos = () => {
-  const [text, setText] = React.useState('');
   return (
     <View>
       <>
         <View style={tw`bg-white px-5 pt-15 justify-center items-center`}>
-          <ButtonTab screen="Rutas" activeBackgroundColor={BACKGROUND_COLORS.WHITE}>
+          <ButtonTab screen="Alertas" activeBackgroundColor={BACKGROUND_COLORS.WHITE}>
             <Image
               source={require('../../../../assets/alerta_fondo.png')}
               style={{ width: 200, height: 200 }}

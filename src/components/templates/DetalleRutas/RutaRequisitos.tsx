@@ -8,12 +8,16 @@ import { catalogs } from '../../../models/Rutas'
 
 interface RutasRequisitosProps {
   requisitos: any
+  labe?: string
 }
 
-const RutasRequisitos = ({ requisitos }: RutasRequisitosProps) => {
+const RutasRequisitos = ({ 
+  requisitos,
+  labe="Requisitos"
+}: RutasRequisitosProps) => {
   return (
     <RoundedWhiteBaseTemplate shadow={false}>
-      <TitleWithDivider label="Requisitos" />
+      <TitleWithDivider label={labe}/>
       <View style={tw`px-1 py-2`}>
         {requisitos?.map((requisito: catalogs, index: number) => (
           <Gap py="1" styles="flex flex-row items-center" key={index}>

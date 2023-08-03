@@ -1,3 +1,4 @@
+
 import { Estado, EstadoRuta } from '../models/Rutas'
 
 export const getEstadoRuta = (estado: Estado | undefined): EstadoRuta => {
@@ -8,3 +9,4 @@ export const getEstadoRuta = (estado: Estado | undefined): EstadoRuta => {
   if (estado['estado_cancelado']) return 'Cancelada'
   return 'En Curso'
 }
+

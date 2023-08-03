@@ -9,6 +9,8 @@ import publicacionReducer from './publicacion'
 import BusquedaRutas from './rutasBusqueda'
 import Rutas from './ruta'
 import SecureContacts from './SecureContacts'
+import AlertaReducer from './alerta'
+import AlertaBusqueda from './alertaBusqueda'
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +24,8 @@ export const store = configureStore({
     busquedaRutas: BusquedaRutas,
     ruta: Rutas,
     contactosSeguros: SecureContacts,
+    alerta:AlertaReducer,
+    busquedaAlertas:AlertaBusqueda
   },
 })
 

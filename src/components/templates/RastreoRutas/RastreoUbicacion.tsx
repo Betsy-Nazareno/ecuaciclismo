@@ -5,6 +5,7 @@ import * as Location from 'expo-location'
 import * as TaskManager from 'expo-task-manager'
 import MapView, { Marker } from 'react-native-maps'
 import {
+  BACKGROUND_COLORS,
   HEIGHT_DIMENSIONS,
   uri_meta_icon,
   WIDTH_DIMENSIONS,
@@ -25,7 +26,8 @@ import {
   getHorasEstimadas,
 } from '../../../utils/rastreoCalculations'
 import { finalizarRastreo } from '../../../lib/services/rutas.services'
-
+import MenuAlertaRuta from '../../moleculas/MenuAlertaRuta'
+import { useFocusEffect } from '@react-navigation/native';
 const TASK_NAME = 'BACKGROUND_LOCATION_TASK'
 
 interface RastreoUbicacionProps {
@@ -37,6 +39,7 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
   const [errorMsg, setErrorMsg] = React.useState('')
   const [infParticipantes, setinfParticipantes] = React.useState<any>([])
   const [showModal, setShowModal] = React.useState(false)
+  const [showModalAlerta, setShowModalAlerta] = React.useState(false)
   const [showFinalModal, setShowFinalModal] = React.useState(false)
   const { authToken, user } = useSelector((state: RootState) => state.user)
 
@@ -61,7 +64,14 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
       await startBackgroundLocation()
     })()
   }, [])
-
+ useFocusEffect(
+    React.useCallback(() => {
+      setShowModalAlerta(false);
+      return () => {
+        // Código de limpieza si es necesario
+      };
+    }, [])
+  );
   React.useEffect(() => {
     if (authToken) {
       configureBgTask({
@@ -215,6 +225,13 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
           handleClick={() => setShowModal(true)}
         />
       </View>
+      <View style={tw`absolute top-2 right-2`}>
+        <RoundedButtonIcon
+          src={require('../../../../assets/alert_icon.png')}
+          handleClick={() => setShowModalAlerta(!showModalAlerta)}
+          background = {BACKGROUND_COLORS.RED}
+        />
+      </View>
       {showModal && (
         <RutaModal
           visible={showModal}
@@ -229,6 +246,16 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
           )}
         />
       )}
+      {showModalAlerta && (
+        <MenuAlertaRuta 
+          visible={showModalAlerta}
+          setVisible={setShowModalAlerta}
+          ubicacion={ruta?.ubicacion}
+        />
+      )
+
+
+      }
       {showFinalModal && (
         <RutaFinalRastreoModal
           token={ruta?.token || ''}

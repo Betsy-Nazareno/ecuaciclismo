@@ -6,12 +6,14 @@ import { TEXT_COLORS } from '../../utils/constants'
 interface InformacionUsuarioProps {
   firstName: string
   lastName: string
+  type?:string
   foto?: string
 }
 
 const InformacionUsuario = ({
   firstName,
   lastName,
+  type='Administrador',
   foto,
 }: InformacionUsuarioProps) => {
   return (
@@ -28,7 +30,7 @@ const InformacionUsuario = ({
           {`${firstName} ${lastName}`}
         </Text>
         <Text style={tw`text-[11px] ${TEXT_COLORS.DARK_GRAY} font-semibold`}>
-          Administrador
+          {type}
         </Text>
       </View>
     </View>

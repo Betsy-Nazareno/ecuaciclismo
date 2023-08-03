@@ -188,6 +188,7 @@ const RutaIndividual = ({ token }: RutaIndividualProps) => {
     }
   }
 
+
   return !ruta ? (
     <EmptyDetalleRuta />
   ) : (

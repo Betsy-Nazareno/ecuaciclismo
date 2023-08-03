@@ -86,6 +86,7 @@ const TarjetaUsuario = ({ usuario }: TarjetaUsuarioProps) => {
             : (<Text style={tw`text-xs text-black text-opacity-40`}>{label}</Text>)
           }
         </Gap>
+
       </View>
       <AdminValidator>
         {/*admin ? (
@@ -98,6 +99,13 @@ const TarjetaUsuario = ({ usuario }: TarjetaUsuarioProps) => {
           value={admin}
         />
       </AdminValidator>
+      <View style={tw`flex flex-row items-center`}>
+        <Gap px="4">
+            <CustomText style={`${TEXT_COLORS.ORANGE}`}>
+            {admin ? 'Administrador' : usuario.tipo}
+            </CustomText>
+          </Gap>
+      </View>
     </Pressable>
   )
 }
