@@ -23,7 +23,7 @@ interface TarjetaAlertasProps {
 const TarjetaAlertas = ({ alerta }: TarjetaAlertasProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
-  const { user } = useSelector((state: RootState) => state.user)
+  const { authToken, user } = useSelector((state: RootState) => state.user)
 
   return (
     <Pressable
@@ -32,11 +32,14 @@ const TarjetaAlertas = ({ alerta }: TarjetaAlertasProps) => {
     >
       <TarjetaTemplate shadow={false}>
         <View style={tw`flex flex-row justify-between relative`}>
+          
+          { alerta?.token_usuario!=authToken &&(
           <InformacionUsuario
             firstName={alerta?.first_name || ''}
             lastName={alerta?.last_name || ''}
             foto={alerta?.foto}
           />
+          )}
         </View>
         <View style={tw`flex flex-row justify-start ml-8`}>
             <InfoEstado estadoAlerta={alerta.estado} />

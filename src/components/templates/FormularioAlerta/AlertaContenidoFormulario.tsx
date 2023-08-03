@@ -197,9 +197,6 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
             deleteValue={deleteAudio}
           />
         </FieldFormulario>
-        <FieldFormulario>
-          <LocationComponent />
-        </FieldFormulario>
 
       {/* Botón de publicar alerta o Spinner si se está enviando */}
       {isSubmiting ? (

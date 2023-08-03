@@ -14,13 +14,25 @@ import HeaderScreen from "../../moleculas/HeaderScreen";
 import { ScrollView } from "react-native-gesture-handler";
 import { Formik } from "formik";
 import tw from 'twrnc'
+import { RutaCoordinadas } from "../../../models/Alertas";
 
 interface AlertaFormularioProps {
     Prop?: Alerta
+    ubicacion?: RutaCoordinadas
   }
 
   const AlertaFormularioTemplate = ({
     Prop,
+    ubicacion={
+      coordinateX: {
+        latitude: -2.1538019492930163,
+        longitude: -79.88844282925129,
+      },
+      coordinateY: {
+        latitude: -2.1453200715782175,
+        longitude: -79.89056378602983,
+      }
+    }
   }: AlertaFormularioProps) => {
     const [isLoading, setIsLoading] = React.useState(false)
     const [alertaProp, setalertaProp] = React.useState<Alerta>()
@@ -44,16 +56,7 @@ interface AlertaFormularioProps {
       estado: alertaProp?.estado || 'En curso',
       multimedia: alertaProp?.multimedia || [],
       audios: alertaProp?.audios || [],
-      ubicacion: alertaProp?.ubicacion || {
-        coordinateX: {
-          latitude: -2.1538019492930163,
-          longitude: -79.88844282925129,
-        },
-        coordinateY: {
-          latitude: -2.1453200715782175,
-          longitude: -79.89056378602983,
-        },
-      },
+      ubicacion: alertaProp?.ubicacion || ubicacion,
       visibilidad:alertaProp?.visibilidad || [],
       
     }

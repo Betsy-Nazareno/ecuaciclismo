@@ -8,7 +8,6 @@ import { CustomText } from '../atomos/CustomText';
 import { TEXT_COLORS } from '../../utils/constants';
 import PreviewDocuments from './PreviewDocuments';
 import { Alert } from 'react-native';
-import { or } from 'react-native-reanimated';
 
 interface MediaPickerProps {
   field: string

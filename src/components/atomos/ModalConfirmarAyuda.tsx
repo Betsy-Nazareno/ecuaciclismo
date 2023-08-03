@@ -7,7 +7,7 @@ import { RootState } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAlertaHasModified } from '../../redux/alerta';
 import { confirmarAsistencia } from '../../lib/services/alertas.services';
-import { not } from 'react-native-reanimated';
+
 
 interface ModalProps {
     showHelpModal: boolean;
