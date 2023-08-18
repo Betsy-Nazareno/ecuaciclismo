@@ -37,7 +37,6 @@ const ModalConfirmarAyuda = ({ showHelpModal, hideHelpModalHandler,alerta,setAle
             const userIndex = alerta.participantes.findIndex(
                 (participant) => participant.username === user?.username
               );
-              console.log(userIndex);
             if (confirmationAttended && userIndex === -1) {
                 dispatch(
                     setAlertaHasModified({

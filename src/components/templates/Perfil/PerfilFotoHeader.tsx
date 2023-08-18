@@ -57,9 +57,9 @@ const PerfilFotoHeader = ({
   let iconSource;
   if(admin){
     iconSource = require('../../../../assets/admin.png');
-  }else if (tipo === 'verificado') {
+  }else if (tipo === 'Verificado') {
     iconSource = require('../../../../assets/verificado.png');
-  } else if (tipo === 'miembro') {
+  } else if (tipo === 'Miembro') {
     iconSource = require('../../../../assets/miembro.png');
   } else {
     // Si el tipo de usuario no es "verificado" ni "miembro", no mostramos ningún icono
@@ -88,22 +88,27 @@ const PerfilFotoHeader = ({
           </View>
         </UserValidator>
       </View>
+      <View style={tw`flex flex-row justify-center`}>
+        <CustomText
+          containerProps={{ textAlign: 'center' }}
+          style={`text-3xl ${TEXT_COLORS.DARK_BLUE}`}
+        >
+          {capitalize(nombre || '')} {capitalize(apellido || '')}
+        </CustomText>
+        {iconSource!=null && (
+          <Image
+          source={iconSource}
+          style={{
+            width: 35,
+            height: 35,
+            borderRadius: 400 / 2,
+          }}
+          resizeMode="contain"
+          />
+        )}  
 
-      <CustomText
-        containerProps={{ textAlign: 'center' }}
-        style={`text-3xl ${TEXT_COLORS.DARK_BLUE}`}
-      >
-        {capitalize(nombre || '')} {capitalize(apellido || '')}
-      </CustomText>
-      <Image
-      source={iconSource}
-      style={{
-        width: 60,
-        height: 60,
-        borderRadius: 400 / 2,
-      }}
-      resizeMode="contain"
-      />
+      </View>
+
       <Text style={tw`text-center text-black opacity-40`}>
         {email || ''}
         {telefono ? (

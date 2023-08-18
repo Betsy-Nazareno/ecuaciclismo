@@ -35,13 +35,14 @@ const AlertasFeed = () => {
         dispatch(setAlertasEnviadas({ alertasEnviadas }))
         setFilteredAlertas(response)
         setIsRending(false)
+        console.log('AlertasFeed', alertasEnviadas)
       }
     })()
   }, [alertaHasModified])
 
   React.useEffect(() => {
     const { etiquetas = [], fecha } = buildFiltros
-    alertasFiltradas = []
+    let alertasFiltradas = []
     if (text && etiquetas?.length > 0) {
       // Filtrar por texto y etiquetas seleccionadas a la vez
       alertasFiltradas = alertasEnviadas?.filter(

@@ -4,7 +4,6 @@ import { Text, View, Image, Pressable, Modal } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../models/Screens.types'
 import { RutaCoordinadas } from '../../models/Alertas'
-import OpcionesMenuAlertaRuta from '../atomos/OpcionesMenuAlertaRuta'
 import { TEXT_COLORS } from '../../utils/constants'
 import { CustomText } from '../atomos/CustomText'
 import Ruler from '../atomos/Ruler'
@@ -26,7 +25,7 @@ const MenuAlertaRuta = ({visible, ubicacion, setVisible}: MenuPublicacionesProps
   }
 
   const handleCrearAlerta = () => {
-    navigation.navigate('AlertaFormulario', { ubicacion: ubicacion })
+    navigation.navigate('AlertaFormulario', { data: ubicacion })
 
     console.log('ubicacion: ', ubicacion)
     

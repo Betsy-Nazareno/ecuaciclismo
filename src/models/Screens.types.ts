@@ -1,5 +1,6 @@
-import { Alerta } from './Alertas'
+import { Alerta, RutaCoordinadas } from './Alertas'
 import { Consejo } from './Consejo.model'
+import { Lugar } from './Lugares'
 import { NovedadInterface } from './Novedad.model'
 import { Publicacion } from './Publicaciones.model'
 import { Ruta } from './Rutas'
@@ -28,7 +29,8 @@ export type RootStackParamList = {
   FinalRuta: { tokenRuta: string; tokenUsuario: string } | undefined
   PerfilFormulario: { data: any } | undefined
   Alertas: undefined
-  AlertaFormulario: { data: Alerta } | undefined
+  AlertaFormulario: { data: RutaCoordinadas } | undefined
+  LugarFormulario: { longitud: number | 0; latitud:number | 0 } | undefined
 }
 
 export type Screens =
@@ -55,6 +57,7 @@ export type Screens =
   | 'ContactosCelular'
   | 'Alertas'
   | 'AlertaFormulario'
+  | 'LugarFormulario'
 
 export type RootDrawerParamList = {
   HomeStack: undefined
@@ -69,6 +72,7 @@ export type RootDrawerParamList = {
   Contactenos: undefined
   ContactosSeguros: undefined
   Seguridad: undefined
+  Lugares: undefined
 }
 
 export type ScreensDrawer =
@@ -83,4 +87,5 @@ export type ScreensDrawer =
   | 'Contactenos'
   | 'ContactosSeguros'
   | 'Seguridad'
+  | 'Lugares'
   

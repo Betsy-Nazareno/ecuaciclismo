@@ -35,7 +35,6 @@ const PerfilRoot = ({ userToken }: PerfilRootProps) => {
   const [detalleUser, setDetalleUser] = React.useState<Partial<User>>({})
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
-
   React.useEffect(() => {
     ;(async () => {
       if (authToken) {
@@ -62,7 +61,6 @@ const PerfilRoot = ({ userToken }: PerfilRootProps) => {
     }
     setHasRefresh(!hasRefresh)
   }
-
   return (
     <View style={tw`pb-12`}>
       <PerfilFotoHeader
@@ -74,6 +72,7 @@ const PerfilRoot = ({ userToken }: PerfilRootProps) => {
         telefono={detalleUser?.telefono}
         onUpdate={handleUpdates}
         idUser={userToken}
+        tipo={detalleUser?.tipo}
       />
       <Ruler style={`w-11/12 mx-auto ${BACKGROUND_COLORS.GRAY} my-4`} />
 
@@ -89,7 +88,7 @@ const PerfilRoot = ({ userToken }: PerfilRootProps) => {
       <Ruler style={`w-11/12 mx-auto ${BACKGROUND_COLORS.GRAY} my-4`} />
 
       <PerfilInformacionBicicleta
-        tipo={detalleUser?.tipo}
+        tipo={detalleUser?.tipoBicicleta}
         marca={detalleUser?.marca}
         codigo={detalleUser?.codigo}
         foto={detalleUser?.foto_bicicleta}

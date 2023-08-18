@@ -86,6 +86,15 @@ const SideMenu = (props: DrawerContentComponentProps) => {
           />
           <Ruler style="w-11/12 bg-[#e6e6e6] mx-auto" />
         </View>
+        <View>
+          <OptionSideMenu
+            label="Lugares"
+            name="Lugares"
+            source={require('../../../assets/lugares.png')}
+            handleClick={() => handleClick('Lugares')}
+          />
+          <Ruler style="w-11/12 bg-[#e6e6e6] mx-auto" />
+        </View>
 
       </View>
     </DrawerContentScrollView>

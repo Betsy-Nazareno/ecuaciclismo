@@ -10,6 +10,9 @@ export const TEXT_COLORS = {
   DARK_BLUE: 'text-[#0C3248]',
   GREEN_PRIMARY: 'text-[#5DB075]',
   RED: 'text-[#B00020]',
+  WHITE: 'text-[#FFFFFF]',
+  YELLOW: 'text-[#FFD700]',
+
 }
 
 export const BACKGROUND_COLORS = {
@@ -20,11 +23,15 @@ export const BACKGROUND_COLORS = {
   BLUE_LIGHTER: 'bg-[#F2FAFF]',
   GRAY: 'bg-[#DFDFDF]',
   GRAY_PLACEHOLDER: 'bg-[#e6e6e6]',
+  DARK_GRAY: 'bg-[#4C4C4C]',
   GREEN: 'bg-[#D0FCE3]',
   GREEN_PRIMARY: 'bg-[#5DB075]',
+  GREEN_SECONDARY: 'bg-[#38AA59]',
   RED: 'bg-[#B00020]',
   WHITE: 'bg-[#FFFFFF]',
   YELLOW: 'bg-[#FFD700]',
+  WHITE2: 'bg-[#DADADA]',
+
 }
 
 export const BORDER_COLORS = {
@@ -55,6 +62,13 @@ export const ESTADOS_ALERTA = {
   ATENDIDA: 'Atendida',
   EN_CURSO: 'En curso',
 }
+export const TIPOS_LUGARES = {
+  PARQUEADERO: 'parqueadero',
+  CICLOVIA: 'ciclovia',
+  LOCAL: 'local',
+  LOCAL_SEGURO: 'local seguro',
+}
+
 export const uri_rastreo_icon =
   'https://firebasestorage.googleapis.com/v0/b/omega-keep-354005.appspot.com/o/rutas%2Fbicicleta_marker.png?alt=media&token=ee9540cd-54cf-401a-822d-6b1920fc5102'
 export const uri_meta_icon =
@@ -105,6 +119,56 @@ export const MIME_TYPES = {
   PDF: 'application',
   AUDIO: 'audio',
 }
+export const tiposDeLugares = [
+  {
+    value: 'Parqueadero',
+    nombre: 'parqueadero',
+    icon: require('../../assets/parqueadero.png'),
+  },
+  {
+    value: 'Ciclovia',
+    nombre: 'ciclovia',
+    icon: require('../../assets/ciclovia.png'),
+  },
+  {
+    value: 'Local',
+    nombre: 'local',
+    icon: require('../../assets/local.png'),
+  },
+  {
+    value: 'Local Seguro',
+    nombre: 'local seguro',
+    icon: require('../../assets/localSeguro.png'),
+  },
+]
+export const tipoLugar = [
+  {
+    value: 'parqueadero',
+    nombre: 'Parqueadero',
+  },
+  {
+    value: 'ciclovia',
+    nombre: 'Ciclovia',
+  },
+  {
+    value: 'local',
+    nombre: 'Local',
+  },
+]
+export const tipoServicio = [
+  {
+    value: 'Tienda',
+    nombre: 'Tienda',
+  },
+  {
+    value: 'Taller',
+    nombre: 'Taller',
+  },
+  {
+    value: 'Alquiler de bicicletas',
+    nombre: 'Alquiler de bicicletas',
+  },
+]
 
 export const etiquetasPublicaciones = [
   {

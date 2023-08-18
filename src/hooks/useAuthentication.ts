@@ -30,6 +30,7 @@ export const useAuthentication = () => {
         edad,
         nivel,
         id_usuario,
+        tipo,
       } = response.data || {}
 
       const user = {
@@ -44,6 +45,7 @@ export const useAuthentication = () => {
         edad,
         nivel,
         id_usuario,
+        tipo,
       }
 
       dispatch(
