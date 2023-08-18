@@ -4504,11 +4504,12 @@ expo-av@~13.0.3:
   resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-13.0.3.tgz#b624757f3c4f8c35ca83d0485bb20b79b2f9e13d"
   integrity sha512-9SpXOjY2MUK+jCIL68EUro/aHBlbZ3B4cY1nRr2aTPfv/dLD3bXRZNTTtSwOgsHbuKO6XwjHgCoYbd9T0GcE4A==
 
-expo-camera@~13.1.0:
-  version "13.1.0"
-  resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-13.1.0.tgz#e706a8efc78d1891d848ff729730d9d75468d36d"
-  integrity sha512-YD1Gd5nyhk3ekXgVTsTLrhd0Nlug51NI7hjBKq2BOP+X5YyrcZLVarZAXXdc5vgeW73VBYIne1rpX9Q0qJdlrw==
+expo-camera@~12.2.0:
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-12.2.0.tgz#22c01a917e2a753b09bd28c0fdb2385f2444abf8"
+  integrity sha512-+YuVJsG/BdW7US5pkwHPXiFr7Kf37kGR5sgRqT3JzPUJaSkLlmepb/uAAyoYtVe8Zd/vD2H/YrYVTVaX3Xhqrw==
   dependencies:
+    "@expo/config-plugins" "^4.0.14"
     "@koale/useworker" "^4.0.2"
     invariant "^2.2.4"
 
@@ -4535,11 +4536,10 @@ expo-contacts@~11.0.1:
   dependencies:
     uuid "^3.4.0"
 
-expo-device@~4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/expo-device/-/expo-device-4.2.0.tgz#e6a883b6f74d78091d00e3c010f5ee59cdee79e0"
-  integrity sha512-BBeTxMK2GjPRAMib47p4p2h+xEO61NehZ1Pllsbs051BOH3YeUq1+K6w54kLkJnWz+3U28qygZdCrusLwffxog==
-
+expo-device@^4.2.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/expo-device/-/expo-device-4.3.0.tgz#a25257febe8dd18378f556ef61b5ff73ee687a6b"
+  integrity sha512-NRmsEuZVxx0EvD/dHZdng87wDgN9msfyjqp5DbNIyzvMGhxOrGtE/iEivvMyOdQpVotHGK8rBRbFKJzOtYB5lg==
   dependencies:
     ua-parser-js "^0.7.19"
 
