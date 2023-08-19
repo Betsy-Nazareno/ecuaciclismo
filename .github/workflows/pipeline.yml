@@ -3,7 +3,7 @@ name: Deployment to production
 on:
   push:
     branches:
-      - Nuevo
+      - main
 
 jobs:
   checkout-repository:
