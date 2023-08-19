@@ -3,7 +3,8 @@ import {
   DrawerContentScrollView,
 } from '@react-navigation/drawer'
 import * as React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { BACKGROUND_COLORS } from '../../utils/constants'
 import { useDispatch } from 'react-redux'
 import tw from 'twrnc'
 import { ScreensDrawer } from '../../models/Screens.types'
@@ -11,6 +12,7 @@ import { setActiveTab } from '../../redux/drawerTabs'
 import OptionSideMenu from '../atomos/OptionSideMenu'
 import Ruler from '../atomos/Ruler'
 import UserInformation from '../moleculas/UserInformation'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const SideMenu = (props: DrawerContentComponentProps) => {
   const dispatch = useDispatch()
@@ -20,13 +22,22 @@ const SideMenu = (props: DrawerContentComponentProps) => {
     props.navigation.navigate(tab)
   }
 
+  const verifyPendingForm = async (key: string, pending: string, notPending: string) => {
+      try {
+        const jsonValue = await AsyncStorage.getItem(key)
+        jsonValue != null ? handleClick(pending) : handleClick(notPending)
+      } catch (e) {
+        console.error(e)
+      }
+  }
+
   return (
     <DrawerContentScrollView {...props}>
       <View style={[tw`flex flex-row items-center pl-4`, styles.container]}>
         <UserInformation />
       </View>
 
-      <View style={tw`mt-2`}>
+      <View style={tw`mt-2 mb-45`}>
         <View>
           <OptionSideMenu
             label="Inicio"
@@ -95,8 +106,24 @@ const SideMenu = (props: DrawerContentComponentProps) => {
           />
           <Ruler style="w-11/12 bg-[#e6e6e6] mx-auto" />
         </View>
-
       </View>
+
+      <View style={tw`flex flex-col bottom-0 items-center justify-center`}>
+        <Pressable
+          style={tw`${BACKGROUND_COLORS.ORANGE} rounded-3xl p-2 mb-4 w-30 items-center`}
+          onPress={() => verifyPendingForm('registro-local-seguro-key', 'DescargarSubirPDF', 'RegistroLocalSeguro')}
+        >
+          <Text style={tw`font-bold text-white`}>Registrar local</Text>
+        </Pressable>
+
+        <Pressable
+          style={tw`${BACKGROUND_COLORS.ORANGE} rounded-3xl p-2 w-30 items-center`}
+          onPress={()=>handleClick('Seguridad')}
+        >
+          <Text style={tw`font-bold text-white`}>Ser miembro</Text>
+        </Pressable>
+      </View>
+
     </DrawerContentScrollView>
   )
 }

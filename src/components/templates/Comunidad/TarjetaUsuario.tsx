@@ -89,9 +89,6 @@ const TarjetaUsuario = ({ usuario }: TarjetaUsuarioProps) => {
 
       </View>
       <AdminValidator>
-        {/*admin ? (
-          <Text style={tw`text-xs text-black text-opacity-40`}>Admin</Text>
-        ) : null*/}
         <Switch
           trackColor={{ false: '#e6e6e6', true: '#81b0ff' }}
           thumbColor="#3FA1EE"

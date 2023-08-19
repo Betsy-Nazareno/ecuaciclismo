@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { setText } from '../../../redux/publicacionBusqueda'
 import { RootState } from '../../../redux/store'
-import { etiquetasUserTypes, TEXT_COLORS, } from '../../../utils/constants'
+import { comunityContactsLabels } from '../../../utils/constants'
 import HeaderRoundedContainer from '../../moleculas/HeaderRoundedContainer'
 import SearchBar from '../../moleculas/SearchBar'
 import SectionTitle from '../../moleculas/SectionTitle'
@@ -28,7 +28,7 @@ const ComunityContactsHeader = () => {
           />
           <SearchBar text={text} setText={handleText} />
         </View>
-        <BarraFiltrosUsers filtros={etiquetasUserTypes} />
+        <BarraFiltrosUsers filtros={comunityContactsLabels} />
       </HeaderRoundedContainer>
     </>
   )

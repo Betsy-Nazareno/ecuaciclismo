@@ -91,7 +91,7 @@ const TarjetaComunityContact = ({ usuario, isUser }: TarjetaComunityContactProps
                   source={require('../../../../assets/admin.png')}
                   style={{ width: 20, height: 20 }}
                 />
-              ) : (label!=='No verificado' && label!=='') ? (
+              ) : (label!=='') ? (
                 <Image
                   source={val}
                   style={{ width: 20, height: 20 }}
@@ -99,8 +99,8 @@ const TarjetaComunityContact = ({ usuario, isUser }: TarjetaComunityContactProps
               ) : null}
             </View>
           </View>
-          {usuario.admin ? 
-            (<Text style={tw`text-xs text-black text-opacity-40`}>Administrador</Text>) 
+          {usuario.admin ?
+            (<Text style={tw`text-xs text-black text-opacity-40`}>Administrador</Text>)
             : (<Text style={tw`text-xs text-black text-opacity-40`}>{label}</Text>)
           }
         </Gap>

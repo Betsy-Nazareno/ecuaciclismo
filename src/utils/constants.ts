@@ -102,6 +102,14 @@ export const RUTAS = {
   MAX_CUPOS: 9999999,
   MIN_CUPOS: 1,
 }
+
+export const REGISTROLOCALSEGURO = {
+  NOMBRE_MAX_LENGTH: 100,
+  NOMBRE_MIN_LENGTH: 2,
+  DESCRIPCION_CORTA_MAX_LENGTH: 500,
+  DESCRIPCION_CORTA_MIN_LENGTH: 5,
+}
+
 export const FOLDERS_STORAGE = {
   CONSEJOS: 'consejos',
   RUTAS: 'rutas',
@@ -229,11 +237,43 @@ export const tiposUsuarios = [
     nombre: 'Miembros',
   },
 ]
+
 export const etiquetasAlertas=[
   {
     value: 'mis alertas',
     nombre: 'Alertas enviadas',
     icon: require('../../assets/my_alert_white.png'),
+  },
+]
+
+export const serviciosTipos = [
+  {
+    value: 'Tienda',
+    nombre: 'Tienda',
+
+  },
+  {
+    value: 'Taller',
+    nombre: 'Taller',
+  },
+  {
+    value: 'Alquiler de bicicletas',
+    nombre: 'Alquiler de biciletas',
+  },
+]
+
+export const comunityContactsLabels = [
+  {
+    value: 'Verificado',
+    nombre: 'Verificado',
+  },
+  {
+    value: 'Miembro',
+    nombre: 'Miembro',
+  },
+  {
+    value: 'Administrador',
+    nombre: 'Administrador',
   },
 ]
 
@@ -262,6 +302,8 @@ export const imagesRoutes = {
   'bin_icon': require('../../assets/bin_icon.png'),
   'Miembro': require('../../assets/miembro.png'),
   'Verificado': require('../../assets/verificado.png'),
+  'verificacion_envio': require('../../assets/verificacion_envio.png'),
+  'caution': require('../../assets/caution.png'),
 }
 
 export const etiquetasRutas = [

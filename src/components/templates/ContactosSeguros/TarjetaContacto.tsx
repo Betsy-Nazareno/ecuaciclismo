@@ -95,7 +95,7 @@ const TarjetaContacto = ( {usuario} : TarjetaComunityContactProps) => {
                   source={require('../../../../assets/admin.png')}
                   style={{ width: 20, height: 20 }}
                 />
-              ) : (label!=='No verificado' && label!=='') ? (
+              ) : (label!=='') ? (
                 <Image
                   source={val}
                   style={{ width: 20, height: 20 }}
