@@ -14,6 +14,9 @@ export const newPlaceRequest = async (token: string, token_lugar: string, path_P
         })
         return response?.data?.status || ""
     } catch (e) {
+        console.error(e)
+    }
+}
 
 export const new_solicitud_lugar= async (token:string, token_lugar:string , path_pdf?:string) =>{
     try{
