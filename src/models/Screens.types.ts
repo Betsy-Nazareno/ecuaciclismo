@@ -3,6 +3,7 @@ import { Consejo } from './Consejo.model'
 import { NovedadInterface } from './Novedad.model'
 import { Publicacion } from './Publicaciones.model'
 import { Ruta } from './Rutas'
+import { RegistroLocal } from './RegistroLocalSeguro'
 
 export type RootStackParamList = {
   Inicio: { reload: boolean } | undefined
@@ -12,6 +13,10 @@ export type RootStackParamList = {
   Publicaciones: undefined
   ContactosComunidad: undefined
   ContactosCelular: undefined
+  RegistroLocalSeguro: undefined
+  RegistroLocalSeguroRequisitos: { registerType: string } | undefined
+  RegistroLocalSeguroFormulario: { registerType: string; initValues?: RegistroLocal } | undefined
+  DescargarSubirPDF: undefined
   Perfil: { userToken: string } | undefined
   ConsejoFormulario: { consejo: Consejo } | undefined
   NovedadFormulario: { publicidad: NovedadInterface } | undefined
@@ -55,6 +60,10 @@ export type Screens =
   | 'ContactosCelular'
   | 'Alertas'
   | 'AlertaFormulario'
+  | 'RegistroLocalSeguro'
+  | 'RegistroLocalSeguroRequisitos'
+  | 'RegistroLocalSeguroFormulario'
+  | 'DescargarSubirPDF'
 
 export type RootDrawerParamList = {
   HomeStack: undefined

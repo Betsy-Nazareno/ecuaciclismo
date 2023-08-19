@@ -16,6 +16,7 @@ interface MapViewSelectUbicationProps {
   select?: boolean
   height?: number
   width?: number
+  isUnique?:boolean
   setField?: (field: string, ubicacion: RutaCoordinadas) => void
 }
 
@@ -33,6 +34,7 @@ const MapViewSelectUbication = ({
   height = 500,
   width = WIDTH_DIMENSIONS * 0.9,
   select = false,
+  isUnique = false,
 }: MapViewSelectUbicationProps) => {
   return (
     <View style={tw`mt-4`}>
@@ -55,17 +57,19 @@ const MapViewSelectUbication = ({
           }
           image={{ uri: uri_rastreo_icon }}
         />
-        <Marker
-          draggable={select}
-          coordinate={value?.coordinateY}
-          onDragEnd={(e) =>
-            setField?.(field || '', {
-              ...value,
-              coordinateY: e.nativeEvent.coordinate,
-            })
-          }
-          image={{ uri: uri_meta_icon }}
-        />
+        {!isUnique ? (
+          <Marker
+            draggable={select}
+            coordinate={value?.coordinateY}
+            onDragEnd={(e) =>
+              setField?.(field || '', {
+                ...value,
+                coordinateY: e.nativeEvent.coordinate,
+              })
+            }
+            image={{ uri: uri_meta_icon }}
+          />) : null
+        }
       </MapView>
     </View>
   )

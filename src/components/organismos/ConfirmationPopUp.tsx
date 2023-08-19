@@ -64,7 +64,7 @@ const ConfirmationPopUp = ({
           </View>
           <Ruler style={BORDER_COLORS.GRAY} />
           <View style={tw`py-6`}>
-            <Text style={tw`text-sm mx-auto w-11/12 ${TEXT_COLORS.DARK_BLUE}`}>
+            <Text style={tw`text-sm text-justify mx-auto w-11/12 ${TEXT_COLORS.DARK_BLUE}`}>
               {body}
             </Text>
           </View>

@@ -17,6 +17,7 @@ interface SelectCreatableBatchesProps {
   deleteValue: (value: string) => void
   setValuesSelected: (value: string) => void
   field: string
+  activateCancel?: boolean
 }
 
 const SelectCreatableBatches = ({
@@ -26,6 +27,7 @@ const SelectCreatableBatches = ({
   placeholder,
   setValuesSelected,
   deleteValue,
+  activateCancel = true,
 }: SelectCreatableBatchesProps) => {
   const renderBadge = (value: string) => {
     const badge = values.find((etiqueta) => etiqueta.value === value)
@@ -39,7 +41,10 @@ const SelectCreatableBatches = ({
             label={nombre || ''}
             backgroundColor={BACKGROUND_COLORS.ORANGE}
           />
-          <CancelButton handleClick={deleteValue} value={valor || ''} />
+          {activateCancel ?
+            (<CancelButton handleClick={deleteValue} value={valor || ''} />)
+            :null
+          }
         </View>
       </Gap>
     )
