@@ -239,6 +239,7 @@ export const imagesRoutes = {
   'Miembro': require('../../assets/miembro.png'),
   'Verificado': require('../../assets/verificado.png'),
   'verificacion_envio': require('../../assets/verificacion_envio.png'),
+  'caution': require('../../assets/caution.png'),
 }
 
 export const etiquetasRutas = [

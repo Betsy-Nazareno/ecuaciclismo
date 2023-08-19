@@ -11,6 +11,7 @@ import { html } from '../../../../assets/documents/Solicitud_registro_local_segu
 import { printToFileAsync } from 'expo-print'
 import { shareAsync } from 'expo-sharing'
 import ConfirmationPopUp from '../../organismos/ConfirmationPopUp'
+import NotificationPopUp from '../../organismos/NotificationPopUp'
 import SecondaryButton from '../../atomos/SecondaryButton'
 import GalleryMultiImages from '../../organismos/GalleryMultiImages'
 import { BACKGROUND_COLORS, TEXT_COLORS, FOLDERS_STORAGE } from '../../../utils/constants'
@@ -35,9 +36,12 @@ const DescargarPDF = () => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
   const [initValues, setInitValues] = React.useState<RegistroLocalSeguro>()
+  const [displayMenu, setDisplayMenu] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const { sendPushNotification } = usePermissionsNotifications()
+  const [ img, setImg ] = React.useState<string>('')
   const [ text, setText ] = React.useState<string>('')
+  const [ altText, setAltText ] = React.useState<string>('')
 
   
   React.useEffect(() => {
@@ -51,8 +55,8 @@ const DescargarPDF = () => {
       while(jsonValue === null)
         jsonValue = await AsyncStorage.getItem('registro-local-seguro-key')
       setInitValues(JSON.parse(jsonValue))
-      console.log(initValues)
-      console.log('\n\n----------------------------------Descargar PDF-----------------------------------------------\n\n')
+      //console.log(initValues)
+      //console.log('\n\n----------------------------------Descargar PDF-----------------------------------------------\n\n')
     } catch (e) {
       console.error(e)
     }
@@ -125,6 +129,7 @@ const DescargarPDF = () => {
 
   const handleSubmit = async (document: DocumentPicker.DocumentResult) => {
     await getData()
+    setImg('verificacion_envio')
     if(initValues){
       let isBeneficios: number = (initValues?.registerType !== 'Plan gratuito') ? 1 : 0
       let imagen = initValues?.imagen[0] as any
@@ -165,12 +170,13 @@ const DescargarPDF = () => {
   const handleCancel = async () => {
     try {
       await AsyncStorage.removeItem('registro-local-seguro-key')
-      setText('Su registro ha sido cancelado.')
+      setAltText('Su registro ha sido cancelado.')
     } catch(e) {
-      setText('Hubo un error, intentelo más tarde por favor.')
+      setAltText('Hubo un error, intentelo más tarde por favor.')
       console.error(e)
     }
-    setShowModal(true)
+    setShowModal(false)
+    setDisplayMenu(true)
   }
 
   let registerType: string = initValues?.registerType || ''
@@ -182,8 +188,16 @@ const DescargarPDF = () => {
       <ConfirmationPopUp
         setVisible={setShowModal}
         visible={showModal}
-        imageName='verificacion_envio'
-        body={text}
+        imageName= {img}
+        body= {text}
+        setConfirmation={() =>(img === 'caution') ? handleCancel() : navigation.navigate('Inicio')}
+      />
+
+      <NotificationPopUp
+        setVisible={setDisplayMenu}
+        visible={displayMenu}
+        imageName='caution'
+        body={altText}
         setConfirmation={() => navigation.navigate('Inicio')}
       />
 
@@ -252,7 +266,11 @@ const DescargarPDF = () => {
                     <UnfocusButton
                       label="Cancelar"
                       style="w-full mr-18"
-                      handleClick={handleCancel}
+                      handleClick={()=> {
+                        setText('En caso de no haber elegido el plan gratuito, si cancela su registro en este momento y ya ha realizado el pago del registro, no podemos asegurarle que su dinero sea devuelto. ¿Desea proseguir con la cancelación del registro de todas formas?')
+                        setImg('caution')
+                        setShowModal(true)
+                      }}
                     />
                     <SecondaryButton
                       label= 'Enviar solicitud'
