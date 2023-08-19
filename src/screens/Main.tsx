@@ -36,6 +36,10 @@ import Contactaenos from './Contactenos'
 import ContactosSeguros from './ContactosSeguros'
 import ContactosComunidad from './ContactosComunidad'
 import ContactosCelular from './ContactosCelular'
+import RegistroLocalSeguro from './RegistroLocalSeguro'
+import RegistroLocalSeguroRequisitos from './RegistroLocalSeguroRequisitos'
+import RegistroLocalSeguroFormulario from './RegistroLocalSeguroFormulario'
+import DescargarSubirPDF from './DescargarSubirPDF'
 import Seguridad from './Seguridad'
 import Alertas from './Alertas'
 import DetalleAlerta from './DetalleAlerta'
@@ -136,6 +140,10 @@ const Main = () => {
         <Drawer.Screen name="ContactosSeguros" component={ContactosSeguros} />
         <Drawer.Screen name="ContactosComunidad" component={ContactosComunidad} />
         <Drawer.Screen name="ContactosCelular" component={ContactosCelular} />
+        <Drawer.Screen name="RegistroLocalSeguro" component={RegistroLocalSeguro} />
+        <Drawer.Screen name="RegistroLocalSeguroRequisitos" component={RegistroLocalSeguroRequisitos} />
+        <Drawer.Screen name="RegistroLocalSeguroFormulario" component={RegistroLocalSeguroFormulario} />
+        <Drawer.Screen name="DescargarSubirPDF" component={DescargarSubirPDF} />
         <Drawer.Screen name="Seguridad" component={Seguridad} />
         <Drawer.Screen name="Lugares" component={Lugares} />
       </Drawer.Navigator>

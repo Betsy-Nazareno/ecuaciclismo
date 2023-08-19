@@ -1,14 +1,13 @@
 import * as React from 'react'
 import BaseDrawerPaginas from '../components/templates/BasePaginasDrawer'
-import PhoneContacts from '../components/templates/ContactosCelular/PhoneContacts'
+import LocalSeguroRegistro from '../components/templates/RegistroLocalSeguro/LocalSeguroRegistro'
 
-const ContactosCelular = () => {
+const RegistroLocalSeguro = () => {
     return (
       <BaseDrawerPaginas backgroundColor="bg-white">
-        <PhoneContacts />
+        <LocalSeguroRegistro />
       </BaseDrawerPaginas>
     )
   }
   
-  export default ContactosCelular
-  
+  export default RegistroLocalSeguro

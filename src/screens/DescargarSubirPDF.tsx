@@ -1,14 +1,13 @@
 import * as React from 'react'
 import BaseDrawerPaginas from '../components/templates/BasePaginasDrawer'
-import PhoneContacts from '../components/templates/ContactosCelular/PhoneContacts'
+import DescargarPDF from '../components/templates/RegistroLocalSeguro/DescargarPDF'
 
-const ContactosCelular = () => {
+const DescargarSubirPDF = () => {
     return (
       <BaseDrawerPaginas backgroundColor="bg-white">
-        <PhoneContacts />
+        <DescargarPDF />
       </BaseDrawerPaginas>
     )
   }
   
-  export default ContactosCelular
-  
+  export default DescargarSubirPDF

@@ -11,6 +11,7 @@ import Rutas from './ruta'
 import SecureContacts from './SecureContacts'
 import AlertaReducer from './alerta'
 import AlertaBusqueda from './alertaBusqueda'
+import RegistroLocalSeguro from './RegistroLocalSeguro'
 import LugarReducer from './lugar'
 
 export const store = configureStore({
@@ -27,6 +28,7 @@ export const store = configureStore({
     contactosSeguros: SecureContacts,
     alerta:AlertaReducer,
     busquedaAlertas:AlertaBusqueda,
+    registroLocalSeguro: RegistroLocalSeguro,
     lugar: LugarReducer,
   },
 })

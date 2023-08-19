@@ -3,6 +3,7 @@ import {
   ref,
   StorageReference,
   uploadBytes,
+  deleteObject,
 } from 'firebase/storage'
 import { firebaseStorage } from '../config/firebase'
 
@@ -30,4 +31,10 @@ export const guardarArchivo = async (
   await uploadBytes(fileRef, blob)
   const url: string = await getDownloadURL(fileRef)
   return url || ''
+}
+
+export const eliminarArchivo = async (path: string) : Promise<void> =>{
+  const filePath = path
+  const fileRef: StorageReference = ref(firebaseStorage, filePath)
+  await deleteObject(fileRef)
 }
