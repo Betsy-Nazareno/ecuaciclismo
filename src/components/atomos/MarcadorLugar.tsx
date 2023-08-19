@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { View, Image, TouchableOpacity, StyleSheet, Modal, Text } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import React, {  useState } from 'react';
+import { View, Image, StyleSheet} from 'react-native';
+import { Marker } from 'react-native-maps';
 import { BACKGROUND_COLORS, tiposDeLugares } from '../../utils/constants';
 import tw from 'twrnc'
 import { getLugar } from '../../lib/services/lugares.services';

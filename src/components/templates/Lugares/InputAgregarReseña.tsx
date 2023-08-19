@@ -14,8 +14,7 @@ import { new_reseña, update_reseña } from '../../../lib/services/lugares.servi
 import ButtonPrimary from '../../atomos/ButtonPrimary'
 import { BACKGROUND_COLORS } from '../../../utils/constants'
 import UnfocusButton from '../../atomos/UnfocusButton'
-import { Reseña } from '../../../models/Lugares'
-import { set } from 'firebase/database'
+
 
 interface InputAgregarReseñaProps {
   nombreUsuario: string

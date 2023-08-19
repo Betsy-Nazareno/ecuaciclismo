@@ -3,9 +3,7 @@ import { View, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import tw from 'twrnc';
 import {
-    BACKGROUND_COLORS,
     HEIGHT_DIMENSIONS,
-    uri_meta_icon,
     WIDTH_DIMENSIONS,
   } from './../utils/constants';
 interface MapViewScreenProps {
@@ -22,7 +20,6 @@ const MapViewScreen = ({
     longitude, 
     userPhoto, 
     onClose ,
-    onRefresh
 }: MapViewScreenProps) => {
     console.log(latitude,longitude)
     const initialRegion = {

@@ -11,7 +11,7 @@ const PermissionWrapperAlerta = ({
   tokenUserOwnerAlerta,
   children,
 }: PermissionWrapperProps) => {
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken} = useSelector((state: RootState) => state.user)
 
   const isOwner = tokenUserOwnerAlerta === authToken
 

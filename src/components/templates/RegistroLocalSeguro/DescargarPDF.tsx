@@ -29,7 +29,6 @@ import { guardarArchivo, eliminarArchivo } from '../../../lib/googleCloudStorage
 import { getAdminTokens } from '../../../lib/services/notifications.services'
 import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
 import { capitalize } from '../../../utils/capitalizeText'
-import * as FileSystem from 'expo-file-system'
 
 const DescargarPDF = () => {
   const { authToken, user } = useSelector((state: RootState) => state.user)

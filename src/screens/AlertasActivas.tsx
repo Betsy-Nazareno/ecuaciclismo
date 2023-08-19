@@ -6,7 +6,7 @@ import { Alerta } from '../models/Alertas';
 import tw from 'twrnc';
 import { RootStackParamList, Screens } from '../models/Screens.types';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { BACKGROUND_COLORS, TEXT_COLORS } from '../utils/constants';
+import { BACKGROUND_COLORS} from '../utils/constants';
 import { ButtonTab } from '../components/atomos/ButtonTab';
 interface AlertasActivasProps {
   authToken: string;

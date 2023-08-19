@@ -1,10 +1,9 @@
-import { Alerta, RutaCoordinadas } from './Alertas'
+import {  RutaCoordinadas } from './Alertas'
 import { Consejo } from './Consejo.model'
-import { Lugar } from './Lugares'
 import { NovedadInterface } from './Novedad.model'
 import { Publicacion } from './Publicaciones.model'
 import { Ruta } from './Rutas'
-import { RegistroLocal } from './RegistroLocalSeguro'
+import { RegistroLocalSeguro } from './RegistroLocalSeguro'
 
 export type RootStackParamList = {
   Inicio: { reload: boolean } | undefined
@@ -16,7 +15,7 @@ export type RootStackParamList = {
   ContactosCelular: undefined
   RegistroLocalSeguro: undefined
   RegistroLocalSeguroRequisitos: { registerType: string } | undefined
-  RegistroLocalSeguroFormulario: { registerType: string; initValues?: RegistroLocal } | undefined
+  RegistroLocalSeguroFormulario: { registerType: string; initValues?: RegistroLocalSeguro } | undefined
   DescargarSubirPDF: undefined
   Perfil: { userToken: string } | undefined
   ConsejoFormulario: { consejo: Consejo } | undefined

@@ -27,7 +27,7 @@ interface FormularioRegistroLocalSeguroCamposProps {
 
 const FormularioRegistroLocalSeguroCampos = ({ registerType, initialValues, charge }: FormularioRegistroLocalSeguroCamposProps) => {
   const { values, setFieldValue, handleSubmit } = useFormikContext<RegistroLocalSeguro>()
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { user } = useSelector((state: RootState) => state.user)
   const parking = [
     {
         id: 1,

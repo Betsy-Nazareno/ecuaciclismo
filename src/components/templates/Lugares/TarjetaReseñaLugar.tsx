@@ -1,9 +1,7 @@
 import * as React from 'react'
 import { Text, View, Image, StyleSheet} from 'react-native'
-import RoundedWhiteBaseTemplate from '../../organismos/RoundedWhiteBaseTemplate'
 import tw from 'twrnc'
 import { TEXT_COLORS } from '../../../utils/constants'
-import { getTiempoTranscurrido, getTiempoTranscurridoReseña } from '../../../utils/TiempoTranscurrido'
 import { Reseña } from '../../../models/Lugares'
 
 interface TarjetaReseñaLugarProps {
