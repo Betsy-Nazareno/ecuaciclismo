@@ -44,7 +44,8 @@ const PerfilForm = ({ datosPerfil }: any) => {
     foto: datosPerfil?.foto || undefined,
     email: datosPerfil?.email || '',
     genero: datosPerfil?.genero || '',
-    tipo: datosPerfil?.tipo || '',
+    tipoBicicleta: datosPerfil?.tipoBicicleta || '',
+
     marca: datosPerfil?.marca || '',
     codigo: datosPerfil?.codigo || '',
     foto_bicicleta: datosPerfil?.foto_bicicleta || '',
@@ -254,7 +255,7 @@ const PerfilForm = ({ datosPerfil }: any) => {
                 <Input
                   type="none"
                   name="tipo"
-                  value={values.tipo}
+                  value={values.tipoBicicleta}
                   setValue={(value) => setFieldValue('tipo', value)}
                   placeholder="Tipo..."
                 />

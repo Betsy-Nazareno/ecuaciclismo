@@ -1,4 +1,3 @@
-// MapViewScreen.tsx
 import * as React from 'react';
 import { View, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';

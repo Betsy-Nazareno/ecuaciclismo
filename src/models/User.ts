@@ -13,10 +13,11 @@ export interface User {
   peso?: number
   genero?: string
   admin?: boolean
-  tipo?: string
+  tipo: string
   propietary?:boolean
   marca?: string
   codigo?: string
+  tipoBicicleta?: string
   foto_bicicleta?: string
   etiquetas?: catalogs[]
   rutas?: any

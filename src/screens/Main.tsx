@@ -45,6 +45,8 @@ import Alertas from './Alertas'
 import DetalleAlerta from './DetalleAlerta'
 import AlertaFormulario from './AlertaFormulario'
 import MapViewScreen from './MapViewScreen'
+import Lugares from './Lugares'
+import LugarFormulario from './LugarFormulario'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -106,6 +108,7 @@ const Main = () => {
         <Stack.Screen name="Alertas" component={Alertas} />
         <Stack.Screen name="DetalleAlerta" component={DetalleAlerta} />
         <Stack.Screen name="AlertaFormulario" component={AlertaFormulario}/>
+        <Stack.Screen name="LugarFormulario" component={LugarFormulario}/>
         <Stack.Screen name="MapView" component={MapViewScreen} />
         </Stack.Navigator>
     )
@@ -142,6 +145,7 @@ const Main = () => {
         <Drawer.Screen name="RegistroLocalSeguroFormulario" component={RegistroLocalSeguroFormulario} />
         <Drawer.Screen name="DescargarSubirPDF" component={DescargarSubirPDF} />
         <Drawer.Screen name="Seguridad" component={Seguridad} />
+        <Drawer.Screen name="Lugares" component={Lugares} />
       </Drawer.Navigator>
     )
   }

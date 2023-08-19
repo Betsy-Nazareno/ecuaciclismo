@@ -9,7 +9,7 @@ import RoundedBadge from './RoundedBadge'
 import TransparentBadge from './TransparentBadge'
 
 interface LinkedBadgesProps {
-  etiquetas: Etiqueta[]
+  etiquetas: Etiqueta[] 
   tipo?: 'rounded' | 'standard' | 'transparent'
   children?: React.ReactNode | React.ReactNode[]
 }

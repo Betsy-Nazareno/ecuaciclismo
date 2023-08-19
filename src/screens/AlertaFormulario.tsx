@@ -11,7 +11,7 @@ interface Props {
 const AlertaFormulario = ({ route }: Props) => {
   return (
     <BasePaginasSecundarias>
-      <AlertaFormularioTemplate Prop={route.params?.data} />
+      <AlertaFormularioTemplate ubicacion={route.params?.data} />
     </BasePaginasSecundarias>
   )
 }

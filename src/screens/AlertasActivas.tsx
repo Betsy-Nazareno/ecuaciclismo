@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Modal, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
+import Modal from 'react-native-modal';
 import { obtenerAlertasRecibidas } from '../lib/services/alertas.services';
 import { Alerta } from '../models/Alertas';
 import tw from 'twrnc';
-import { RootStackParamList } from '../models/Screens.types';
+import { RootStackParamList, Screens } from '../models/Screens.types';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { BACKGROUND_COLORS, TEXT_COLORS } from '../utils/constants';
 import { ButtonTab } from '../components/atomos/ButtonTab';
@@ -53,11 +54,11 @@ const AlertasActivas = ({ authToken, user }: AlertasActivasProps) => {
 
   // Función para verificar si el usuario tiene alertas en curso
   const hasAlertasEnCurso = () => {
-    if(alertasRecibidas.some((alerta) => alerta.estado === 'En curso') && !showLessInvasiveModal){
+    if(alertasRecibidas?.some((alerta) => alerta.estado === 'En curso') && !showLessInvasiveModal){
         setShowModal(false);
         return true;
     }
-    else if (alertasRecibidas.some((alerta) => alerta.estado === 'En curso')){
+    else if (alertasRecibidas?.some((alerta) => alerta.estado === 'En curso')){
         setShowModal(true);
         return true;
     }
@@ -65,13 +66,23 @@ const AlertasActivas = ({ authToken, user }: AlertasActivasProps) => {
         return false;
     }
   };
+  const goToAlertasScreen = () => {
+    navigation.navigate('Alertas'); // Cambia 'Alertas' al nombre de tu pantalla de Alertas
+  };
 
   return (
     <>
       {/* Primer modal */}
-      <Modal visible={showModal} transparent animationType="slide">
-        <View style={tw`flex-1 justify-end items-center bg-black bg-opacity-50`}>
-            <View
+      <Modal 
+      isVisible={showModal} 
+      animationIn={"slideInUp"} 
+      animationOut={"slideOutDown"} 
+      backdropOpacity={0.5}
+      onBackdropPress={toggleModal}
+      style={tw`mx-0 mt-20 mb-0 justify-end `}
+
+      >
+        <View
             style={{
                 backgroundColor: 'white',
                 padding: 40,
@@ -127,22 +138,22 @@ const AlertasActivas = ({ authToken, user }: AlertasActivasProps) => {
                 </Text>
             </View>
           </ButtonTab>
-            </View>
         </View>
+    
         </Modal>
 
 
       {/* Segundo modal menos invasivo */}
       {showLessInvasiveModal && (
-        <View style={tw`bg-red-500 p-4 items-center`}>
-        {/* Contenido del mensaje */}
-        <Text style={tw`text-white text-base font-semibold mt-2`}>
-          Un usuario te ha enviado una alerta.
-        </Text>
-        <Text style={tw`text-white text-sm mt-2`}>
-          Míralo en la sección de Alertas.
-        </Text>
-      </View>
+        <TouchableOpacity style={tw`bg-red-500 p-4 items-center`} onPress={goToAlertasScreen}>
+          {/* Contenido del mensaje */}
+          <Text style={tw`text-white text-base font-semibold `}>
+            Un usuario te ha enviado una alerta.
+          </Text>
+          <Text style={tw`text-white text-sm mt-1`}>
+            Míralo en la sección de Alertas.
+          </Text>
+        </TouchableOpacity>
       )}
     </>
   );

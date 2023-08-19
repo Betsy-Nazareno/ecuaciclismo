@@ -12,6 +12,7 @@ import SecureContacts from './SecureContacts'
 import AlertaReducer from './alerta'
 import AlertaBusqueda from './alertaBusqueda'
 import RegistroLocalSeguro from './RegistroLocalSeguro'
+import LugarReducer from './lugar'
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
     alerta:AlertaReducer,
     busquedaAlertas:AlertaBusqueda,
     registroLocalSeguro: RegistroLocalSeguro,
+    lugar: LugarReducer,
   },
 })
 

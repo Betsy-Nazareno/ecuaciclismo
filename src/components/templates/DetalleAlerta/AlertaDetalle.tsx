@@ -15,7 +15,7 @@ import BotonAgregarComentario from '../DetallePublicacion/BotonAgregarComentario
 import InputAgregarComentario from './InputAgregarComentario'
 import TarjetaComentarioAlerta from './TarjetaComentarioAlerta'
 import tw from 'twrnc'
-import {Alerta, RutaCoordinadas} from '../../../models/Alertas'
+import {Alerta} from '../../../models/Alertas'
 import { MultimediaResult } from '../../../models/Publicaciones.model'
 import { RootState } from '../../../redux/store'
 import { useSelector } from 'react-redux'
@@ -24,7 +24,6 @@ import VideoPlayer from 'expo-video-player'
 import { ResizeMode } from 'expo-av'
 import NoteVoice from '../../moleculas/NoteVoice'
 import EmptyPublicacionDetalle from '../../organismos/EmptyPublicacionDetalle'
-import PermissionWrapper from '../PermissionWrapper'
 import { getAlertaById } from '../../../lib/services/alertas.services'
 import InfoEstado from '../../moleculas/InfoEstado'
 import Badge from '../../moleculas/Badge'
@@ -34,7 +33,6 @@ import RutasParticipantes from '../DetalleRutas/RutasParticipantes'
 import RutasRequisitos from '../DetalleRutas/RutaRequisitos'
 import TitleWithDivider from '../../moleculas/TitleWithDivider'
 import MenuAlertas from '../../moleculas/MenuAlertas'
-import { useNavigation } from '@react-navigation/native';
 import MapView, { Marker } from 'react-native-maps'
 import ModalConfirmarAyuda from '../../atomos/ModalConfirmarAyuda'
 import PermissionWrapperAlerta from '../PermissionWrapperAlerta'
@@ -57,15 +55,6 @@ const AlertaDetalle = ({ token }: DetallesAlertaProps) => {
         setIsRending(false)
       })()
     }, [isAddingComent, token])
-    const newElement = {
-      "first_name": "Nuevo",
-      "foto": null,
-      "last_name": "Elemento",
-    };
-    
-    // Agregar el nuevo objeto al array
-    //alerta?.participantes.push(newElement);
-    console.log("asistentes:",alerta?.token_usuario);
 
     const diplayImagesAndVideos = (multimediaResult: MultimediaResult[]) => {
         const items = multimediaResult.map((file, index) => {
@@ -131,7 +120,6 @@ const AlertaDetalle = ({ token }: DetallesAlertaProps) => {
         return items.filter((item) => item)
       }
       const isEnCurso = alerta?.estado === 'En curso';
-      const navigation = useNavigation();
       const showHelpModalHandler = () => {
         setShowHelpModal(true);
       };
