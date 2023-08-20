@@ -24,6 +24,10 @@
     "eslint-config-prettier": "^8.5.0",
     "expo": "~45.0.0",
     "expo-av": "~11.2.3",
+<<<<<<< HEAD
+=======
+    "expo-camera": "13.4.2",
+>>>>>>> 5b38c5d81c9c1730b08f7497a394c77a9be3a729
     "expo-contacts": "~10.2.0",
     "expo-device": "~4.2.0",
     "expo-document-picker": "~10.2.1",

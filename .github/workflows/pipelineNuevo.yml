@@ -7,16 +7,16 @@ on:
 
 jobs:
   checkout-repository:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - name: Install Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: 14.15.3
+          node-version: 18.17.1
       - name: Install depedencies
         run: npm install
       - name: Verificar reglas de eslint
