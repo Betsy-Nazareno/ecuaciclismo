@@ -1,6 +1,6 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { Text, View, Image, Pressable, Modal } from 'react-native'
+import {  View, Image, Pressable} from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../models/Screens.types'
 import { RutaCoordinadas } from '../../models/Alertas'
@@ -8,13 +8,13 @@ import { TEXT_COLORS } from '../../utils/constants'
 import { CustomText } from '../atomos/CustomText'
 import Ruler from '../atomos/Ruler'
 
-interface MenuPublicacionesProps {
+interface MenuAlertasProps {
   visible: boolean
   ubicacion: RutaCoordinadas
-  setVisible: (visible: boolean) => void
+  setVisible?: (visible: boolean) => void
 }
 
-const MenuAlertaRuta = ({visible, ubicacion, setVisible}: MenuPublicacionesProps) => {
+const MenuAlertaRuta = ({visible, ubicacion}: MenuAlertasProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
 

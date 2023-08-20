@@ -50,7 +50,7 @@ const LocalSeguroRegistro = () => {
         />
         <View style={tw`flex flex-col justify-center items-center`}>
             <View style={tw`py-4 px-8 justify-center items-center`}>
-                <Text style={tw`text-m text-black text-opacity-40 text-center font-bold`}>
+                <Text style={tw`text-sm text-black text-opacity-40 text-center font-bold`}>
                     Accede a los siguientes beneficios al adquirir el plan anual
                 </Text>
             </View>
@@ -65,6 +65,7 @@ const LocalSeguroRegistro = () => {
                 >
                     {beneficios.map((beneficio) => {
                         return (
+                            // eslint-disable-next-line react/jsx-key
                             <View style={tw`bg-[#0C3248] h-full rounded-lg flex flex-col items-center`}>
                                 <Text style={tw`pt-4 pb-8 text-xl text-white text-center font-bold`}>
                                     {beneficio.title}
@@ -82,6 +83,7 @@ const LocalSeguroRegistro = () => {
             </View>
             {planes.map((plan) => {
                 return (
+                    // eslint-disable-next-line react/jsx-key
                     <Pressable
                         style={tw`rounded-xl w-5/6 my-1 p-2 flex flex-row items-center border border-[#2D84C4]`}
                         onPress={()=>handleCheckboxChange(plan.title, plan.id)}

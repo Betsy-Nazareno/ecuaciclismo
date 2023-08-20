@@ -9,8 +9,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import InputAgregarReseña from "../templates/Lugares/InputAgregarReseña";
 import tw from 'twrnc'
-import ButtonPrimary from "../atomos/ButtonPrimary";
-import { BACKGROUND_COLORS, TEXT_COLORS } from "../../utils/constants";
+import {  TEXT_COLORS } from "../../utils/constants";
 import FieldFormulario from "../moleculas/FieldFormulario";
 import { FlatList } from "react-native-gesture-handler";
 

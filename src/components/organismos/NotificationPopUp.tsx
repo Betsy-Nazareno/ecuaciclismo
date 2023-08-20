@@ -27,10 +27,10 @@ const NotificationPopUp = ({
 }: NotificationPopUpProps) => {
 
   //Buscando ruta de imagen
-  let labels: string[]= Object.keys(imagesRoutes)
-  let indx: number=0
+  const labels: string[]= Object.keys(imagesRoutes)
+  let indx=0
   while(indx<labels.length && imageName!= labels[indx]){indx++}  
-  let val = Object.values(imagesRoutes)[indx]
+  const val = Object.values(imagesRoutes)[indx]
 
   return (
     <Modal

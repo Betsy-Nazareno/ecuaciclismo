@@ -61,7 +61,8 @@
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION",
         "READ_CONTACTS"
-      ]
+      ],
+      "useNextNotificationsApi": true
       },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -3,7 +3,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStackParamList, Screens } from "../../../models/Screens.types";
 import { RootState } from "../../../redux/store";
-import { AlertaValidationSchema } from "../../../schemas/AlertaSchema";
 import HeaderScreen from "../../moleculas/HeaderScreen";
 import { ScrollView } from "react-native-gesture-handler";
 import { Formik } from "formik";
@@ -27,7 +26,7 @@ interface LugarFormularioProps {
   }: LugarFormularioProps) => {
     const [isLoading, setIsLoading] = React.useState(false)
     const [lugarProp, setLugarProp] = React.useState<Lugar>()
-    const { authToken, user } = useSelector((state: RootState) => state.user)
+    const { authToken } = useSelector((state: RootState) => state.user)
     const navigation =
       useNavigation<NavigationProp<RootStackParamList, Screens>>()
     const {lugarHasModified} = useSelector((state: RootState) => state.lugar)

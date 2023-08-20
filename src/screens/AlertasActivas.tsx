@@ -13,7 +13,7 @@ interface AlertasActivasProps {
   user: any;
 }
 
-const AlertasActivas = ({ authToken, user }: AlertasActivasProps) => {
+const AlertasActivas = ({ authToken}: AlertasActivasProps) => {
   const [showModal, setShowModal] = useState(false);
   const [showLessInvasiveModal, setShowLessInvasiveModal] = useState(false);
   const [alertasRecibidas, setAlertasRecibidas] = React.useState<Alerta[]>([]);

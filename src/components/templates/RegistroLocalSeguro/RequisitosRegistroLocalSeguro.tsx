@@ -13,7 +13,7 @@ interface RequisitosRegistroLocalSeguroProps {
 }
 
 const RequisitosRegistroLocalSeguro = ({ registerType }: RequisitosRegistroLocalSeguroProps) => {
-  const bankAccount : string = 'Bco. Pichincha\n105898632'
+  const bankAccount  = 'Bco. Pichincha\n105898632'
   const requisitos = [
     {
         title: 'Depósito',
@@ -59,6 +59,7 @@ const RequisitosRegistroLocalSeguro = ({ registerType }: RequisitosRegistroLocal
             >
                 {requirements.map((requisito) => {
                     return (
+                        // eslint-disable-next-line react/jsx-key
                         <View style={tw`bg-[#0C3248] h-full rounded-lg flex flex-col items-center`}>
                             <Text style={tw`pt-4 pb-8 text-xl text-white text-center font-bold`}>
                                 {requisito.title}

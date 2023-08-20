@@ -34,8 +34,8 @@ const TarjetaContacto = ( {usuario} : TarjetaComunityContactProps) => {
     setDisplayMenu(true)
   }
 
-  let labels: string[]= Object.keys(imagesRoutes)
-  let indx: number=0
+  const labels: string[]= Object.keys(imagesRoutes)
+  let indx=0
   let label: string = usuario.tipo ?? ''
   while(indx<labels.length && label!= labels[indx]){
     indx++

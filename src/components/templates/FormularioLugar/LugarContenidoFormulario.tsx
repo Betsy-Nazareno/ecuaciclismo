@@ -8,9 +8,6 @@ import tw from 'twrnc'
 import Spinner from '../../atomos/Spinner'
 import { BACKGROUND_COLORS, TEXT_COLORS, tipoLugar, tipoServicio } from '../../../utils/constants'
 import SelectInput from '../../atomos/SelectInput'
-
-import { useSelector } from 'react-redux'
-import { RootState } from '../../../redux/store'
 import { Lugar } from '../../../models/Lugares'
 import GalleryButton from '../../moleculas/GalleryButton'
 import UnfocusButton from '../../atomos/UnfocusButton'
@@ -19,7 +16,6 @@ interface LugarFormularioProps {
   onCancel: () => void
 }
 const LugarContenidoFormulario = ({ isSubmiting , onCancel}: LugarFormularioProps) => {
-  const { authToken} = useSelector((state: RootState) => state.user)
   const { values, setFieldValue, handleSubmit } =useFormikContext<Lugar>()
   return (
     <>

@@ -1,8 +1,8 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { Text, View, Image, Pressable } from 'react-native'
+import { Text, View, Pressable } from 'react-native'
 import {
-  BACKGROUND_COLORS, BORDER_COLORS, TEXT_COLORS,
+  BACKGROUND_COLORS,  BORDER_COLORS,  TEXT_COLORS,
 } from '../../../utils/constants'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
@@ -23,7 +23,7 @@ interface TarjetaAlertasProps {
 const TarjetaAlertas = ({ alerta }: TarjetaAlertasProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.user)
 
   return (
     <Pressable
@@ -48,7 +48,7 @@ const TarjetaAlertas = ({ alerta }: TarjetaAlertasProps) => {
                 name={alerta.nombre}
                 label={alerta.nombre}
                 backgroundColor={BACKGROUND_COLORS.WHITE}
-                stylesProp={'border-2 border-solid ${BORDER_COLORS.DARK_BLUE} '}
+                stylesProp={`border-2 border-solid ${BORDER_COLORS.DARK_BLUE}`}
                 styleText={tw`${TEXT_COLORS.DARK_BLUE} `}
               />
             </Gap>

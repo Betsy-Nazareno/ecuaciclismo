@@ -1,9 +1,7 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native'
 import * as React from 'react'
 import { View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import tw from 'twrnc'
-import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import { setText } from '../../../redux/publicacionBusqueda'
 import { RootState } from '../../../redux/store'
 import HeaderRoundedContainer from '../../moleculas/HeaderRoundedContainer'
@@ -15,8 +13,6 @@ const ContactosHeader = () => {
   const [displayMenu, setDisplayMenu] = React.useState(false)
   const { text } = useSelector((state: RootState) => state.busqueda)
   const dispatch = useDispatch()
-  const navigation =
-    useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
   const handleText = (text: string) => {
     dispatch(setText({ text }))

@@ -18,7 +18,7 @@ interface FormularioRegistroLocalSeguroProps {
 const FormularioRegistroLocalSeguro = ({ registerType, initValues }: FormularioRegistroLocalSeguroProps) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList, Screens>>()
 
-  let initialValues: RegistroLocalSeguro = {
+  const initialValues: RegistroLocalSeguro = {
       nombre: initValues?.nombre || "",
       servicio: initValues?.servicio || "",
       descripcion: initValues?.descripcion || "",

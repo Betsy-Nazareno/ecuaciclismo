@@ -26,9 +26,9 @@ const ComunityContacts = () => {
 
   React.useEffect(() => {
     (async () => {
-      let comunidad : DatosBasicosUser[] = (await getComunidad(authToken || '')) || []
-      let contactosSeguros: DatosContactoSeguro[] = (await getContactosSeguros(authToken || '')) || []
-      let result : DatosBasicosUser[] = comunidad.filter((val) =>
+      const comunidad : DatosBasicosUser[] = (await getComunidad(authToken || '')) || []
+      const contactosSeguros: DatosContactoSeguro[] = (await getContactosSeguros(authToken || '')) || []
+      const result : DatosBasicosUser[] = comunidad.filter((val) =>
         (!contactosSeguros.some((item) => item.usuario_id === val.usuario_id))
         && (val.token_usuario!==user?.id_usuario)
         && (val.tipo!=='No verificado')
@@ -47,9 +47,9 @@ const ComunityContacts = () => {
   }
 
   const getData = async () => {
-    let comunidad : DatosBasicosUser[] = (await getComunidad(authToken || '')) || []
-    let contactosSeguros: DatosContactoSeguro[] = (await getContactosSeguros(authToken || '')) || []
-    let result : DatosBasicosUser[] = comunidad.filter((val) =>
+    const comunidad : DatosBasicosUser[] = (await getComunidad(authToken || '')) || []
+    const contactosSeguros: DatosContactoSeguro[] = (await getContactosSeguros(authToken || '')) || []
+    const result : DatosBasicosUser[] = comunidad.filter((val) =>
       (!contactosSeguros.some((item) => item.usuario_id === val.usuario_id))
       && (val.token_usuario!==user?.id_usuario)
     )

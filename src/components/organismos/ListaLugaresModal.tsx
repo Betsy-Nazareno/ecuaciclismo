@@ -23,7 +23,7 @@ const ListaLugaresModal = ({ isVisible, onClose, lugares }: ListaLugaresModalPro
       backdropOpacity={0.5}
       style={tw`flex justify-end m-0`}
     >
-      <View style={tw`modalContent ${BACKGROUND_COLORS.WHITE2} p-4 rounded-tl-2xl rounded-tr-2xl w-80 h-full`}>
+      <View style={tw` ${BACKGROUND_COLORS.WHITE2} p-4 rounded-tl-2xl rounded-tr-2xl w-80 h-full`}>
         {lugares ? (
           <FlatList
             data={lugares}

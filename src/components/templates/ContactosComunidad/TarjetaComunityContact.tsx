@@ -19,7 +19,7 @@ interface TarjetaComunityContactProps {
 }
 
 const TarjetaComunityContact = ({ usuario, isUser }: TarjetaComunityContactProps) => {
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken } = useSelector((state: RootState) => state.user)
   const [displayMenu, setDisplayMenu] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const [message, setMessage] = React.useState<string>('')
@@ -32,14 +32,14 @@ const TarjetaComunityContact = ({ usuario, isUser }: TarjetaComunityContactProps
 
   const addSecureContact = async() => {
     setShowModal(false)
-    let token: string=authToken??''
+    const token: string=authToken??''
     setMessage(await addContactoSeguro(token, isUser, usuario.usuario_id, '', ''))
     setDisplayMenu(true)
   }
 
-  let labels: string[]= Object.keys(imagesRoutes)
-  let indx: number=0
-  let label: string = usuario.tipo ?? ''
+  const labels: string[]= Object.keys(imagesRoutes)
+  let indx=0
+  const label: string = usuario.tipo ?? ''
   while(indx<labels.length && label!= labels[indx]){indx++}
   let val
   (indx>=labels.length)?

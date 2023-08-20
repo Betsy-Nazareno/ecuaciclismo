@@ -27,8 +27,8 @@ const ConfirmationPopUp = ({
   setConfirmation,
 }: ConfirmationPopUpProps) => {
 
-  let labels: string[]= Object.keys(imagesRoutes)
-  let indx: number=0
+  const labels: string[]= Object.keys(imagesRoutes)
+  let indx=0
   while(indx<labels.length && imageName!= labels[indx]){indx++}
   let val
   (indx>=labels.length)?

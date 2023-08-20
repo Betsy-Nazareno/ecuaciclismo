@@ -128,6 +128,7 @@ const FormularioRegistroLocalSeguroCampos = ({ registerType, initialValues, char
             </Text>
             {parking.map((pkng) => {
                     return (
+                        // eslint-disable-next-line react/jsx-key
                         <Pressable style={tw`my-1 p-2 flex flex-row items-center`} onPress={()=>handleCheckboxChange(pkng.val, pkng.id)}>
                             <View
                                 style={tw`rounded-full w-5 h-5 ${(isChecked==pkng.id)? 'bg-[#2D84C4]':'bg-[#D9D9D9] border border-black'}`}

@@ -8,14 +8,14 @@ const LocationComponent = () => {
 
   const getLocationAsync = async () => {
     try {
-      let { status } = await Location.requestForegroundPermissionsAsync();
+      const { status } = await Location.requestForegroundPermissionsAsync();
 
       if (status !== 'granted') {
         setErrorMsg('Permiso de ubicación denegado');
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
+      const location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     } catch (error) {
       setErrorMsg('Error al obtener la ubicación');

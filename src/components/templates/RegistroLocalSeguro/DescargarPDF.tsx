@@ -63,23 +63,23 @@ const DescargarPDF = () => {
 
   const handleDownload = async () => {
     await getData()
-    let fecha = new Date(Date.now())
-    let fecha_registro: string = `${fecha.getDate().toString()}/${(fecha.getMonth()+1).toString()}/${fecha.getFullYear().toString()}`
-    let owner: string = (user?.first_name??'')+' '+(user?.last_name??'')
-    let email: string= user?.email??''
-    let parqueadero: string = (initValues?.parqueadero===1) ? 'Sí' : 'No'
-    let cedula1: string = ''
-    let cedula2: string = ''
-    let payment: string = 'https://raw.githubusercontent.com/Betsy-Nazareno/ecuaciclismo/main/assets/celebracion_icon.png'
+    const fecha = new Date(Date.now())
+    const fecha_registro = `${fecha.getDate().toString()}/${(fecha.getMonth()+1).toString()}/${fecha.getFullYear().toString()}`
+    const owner: string = (user?.first_name??'')+' '+(user?.last_name??'')
+    const email: string= user?.email??''
+    const parqueadero: string = (initValues?.parqueadero===1) ? 'Sí' : 'No'
+    let cedula1 = ''
+    let cedula2 = ''
+    let payment = 'https://raw.githubusercontent.com/Betsy-Nazareno/ecuaciclismo/main/assets/celebracion_icon.png'
 
-    let imagenc1 = initValues?.cedula[0] as any
+    const imagenc1 = initValues?.cedula[0] as any
     await uploadDoc(imagenc1).then(response => cedula1 = response )
     
-    let imagenc2 = initValues?.cedula[1] as any
+    const imagenc2 = initValues?.cedula[1] as any
     await uploadDoc(imagenc2).then(response => cedula2 = response )
 
     if(initValues?.payment && (initValues?.payment.length > 0) && initValues?.registerType !== 'Plan gratuito'){
-      let imagenp = initValues?.payment[0] as any
+      const imagenp = initValues?.payment[0] as any
       await uploadDoc(imagenp).then(response => payment = response )
     }
 
@@ -130,15 +130,15 @@ const DescargarPDF = () => {
     await getData()
     setImg('verificacion_envio')
     if(initValues){
-      let isBeneficios: number = (initValues?.registerType !== 'Plan gratuito') ? 1 : 0
-      let imagen = initValues?.imagen[0] as any
-      let imageLink: string = ''
+      const isBeneficios: number = (initValues?.registerType !== 'Plan gratuito') ? 1 : 0
+      const imagen = initValues?.imagen[0] as any
+      let imageLink = ''
       await uploadDoc(imagen).then(response => imageLink = response )
-      let resp1= await newLocalSeguro(authToken??'', initValues, isBeneficios, imageLink)
+      const resp1= await newLocalSeguro(authToken??'', initValues, isBeneficios, imageLink)
       if(resp1?.status === 'success'){
-        let path_PDF: string = ''
+        let path_PDF = ''
         await uploadDoc(document).then(response => path_PDF = response )
-        let resp2: string= await newPlaceRequest(authToken??'', resp1.token_lugar, path_PDF)
+        const resp2: string= await newPlaceRequest(authToken??'', resp1.token_lugar, path_PDF)
         if(resp2 === 'success'){
           setText("Su solicitud ha sido enviada con exito, un administrador revisará y responderá a su solicitud dentro de los siguientes días. En la sección “Solicitudes” podrá ver el estado y respuesta a su solicitud.")
           try {
@@ -178,9 +178,9 @@ const DescargarPDF = () => {
     setDisplayMenu(true)
   }
 
-  let registerType: string = initValues?.registerType || ''
+  const registerType: string = initValues?.registerType || ''
 
-  let archivo: DocumentPicker.DocumentResult[] = []
+  const archivo: DocumentPicker.DocumentResult[] = []
 
   return (
     <>

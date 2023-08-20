@@ -51,7 +51,7 @@ const ModalConfirmarAyuda = ({ showHelpModal, hideHelpModalHandler,alerta,setAle
                         "username": user?.username,
                         "last_name": user?.last_name,
                       };
-                      let participants= alerta?.participantes;
+                      const participants= alerta?.participantes;
                       participants.push(newElement);
 
                     setAlerta({ ...alerta, participantes: participants });

@@ -32,7 +32,7 @@ const TarjetaComunityContact = ({ usuario, isUser }: TarjetaComunityContactProps
 
   const addSecureContact = async() => {
     setShowModal(false)
-    let token: string=authToken??''
+    const token: string=authToken??''
     setMessage(await addContactoSeguro(token, isUser, 0, usuario.nombre, usuario.celular))
     setDisplayMenu(true)
   }

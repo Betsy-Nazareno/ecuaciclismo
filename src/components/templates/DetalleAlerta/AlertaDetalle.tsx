@@ -7,7 +7,8 @@ import {
   TEXT_COLORS,
   WIDTH_DIMENSIONS,
   uri_perfil_icon,
-  HEIGHT_DIMENSIONS
+  HEIGHT_DIMENSIONS,
+  BORDER_COLORS
 } from '../../../utils/constants'
 import DetalleAlertante from '../../moleculas/DetalleUsuario'
 import VerticalDivider from '../../atomos/VerticalDivider'
@@ -177,7 +178,7 @@ const AlertaDetalle = ({ token }: DetallesAlertaProps) => {
                     name={alerta?.tipo}
                     label={alerta?.tipo}
                     backgroundColor={BACKGROUND_COLORS.WHITE}
-                    stylesProp={'border-2 border-solid ${BORDER_COLORS.DARK_BLUE} '}
+                    stylesProp={`border-2 border-solid ${BORDER_COLORS.DARK_BLUE} `}
                     styleText={tw`${TEXT_COLORS.DARK_BLUE} `}
                     
                   />

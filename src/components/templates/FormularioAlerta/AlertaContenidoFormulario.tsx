@@ -8,7 +8,6 @@ import SelectCreatableBatches from '../../moleculas/SelectCreatableBatches'
 import CreatableAudioRecord from '../../organismos/CreatableAudioRecord'
 import tw from 'twrnc'
 import Spinner from '../../atomos/Spinner'
-import LocationComponent from '../../organismos/LocationComponent';
 import {
   Alerta,
 } from '../../../models/Alertas'

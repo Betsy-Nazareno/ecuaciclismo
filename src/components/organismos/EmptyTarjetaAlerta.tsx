@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import tw from 'twrnc';
 import RoundedWhiteBaseTemplate from './RoundedWhiteBaseTemplate';
-import { BACKGROUND_COLORS } from '../../utils/constants';
 
 const EmptyTarjetaAlerta = () => {
   return (

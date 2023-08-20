@@ -3,6 +3,7 @@ import { Text, View, Image, StyleSheet} from 'react-native'
 import tw from 'twrnc'
 import { TEXT_COLORS } from '../../../utils/constants'
 import { Reseña } from '../../../models/Lugares'
+import { getTiempoTranscurridoReseña } from '../../../utils/TiempoTranscurrido'
 
 interface TarjetaReseñaLugarProps {
     reseña: Reseña

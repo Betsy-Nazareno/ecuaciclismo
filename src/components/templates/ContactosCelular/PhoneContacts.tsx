@@ -21,7 +21,7 @@ const wait = (timeout: number) => {
 }
 
 const PhoneContacts = () => {
-  const { authToken, user } = useSelector((state: RootState) => state.user)
+  const { authToken} = useSelector((state: RootState) => state.user)
   const [refreshing, setRefreshing] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(true)
   const [hasPermission, setHasPermission] = React.useState(false)
@@ -34,8 +34,8 @@ const PhoneContacts = () => {
       const { status } = await Contacts.requestPermissionsAsync()
       setHasPermission(status === 'granted')
 
-      let contactosSeguros: DatosContactoSeguro[] = (await getContactosSeguros(authToken || '')) || []
-      let result: DatosPhoneContact[] = []
+      const contactosSeguros: DatosContactoSeguro[] = (await getContactosSeguros(authToken || '')) || []
+      const result: DatosPhoneContact[] = []
       if(status == 'granted'){
         const { data } = await Contacts.getContactsAsync({
           fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
@@ -63,8 +63,8 @@ const PhoneContacts = () => {
     wait(3000).then(() => setRefreshing(false))
   }
 
-  const getData = async () => {let contactosSeguros: DatosContactoSeguro[] = (await getContactosSeguros(authToken || '')) || []
-    let result: DatosPhoneContact[] = []
+  const getData = async () => {const contactosSeguros: DatosContactoSeguro[] = (await getContactosSeguros(authToken || '')) || []
+    const result: DatosPhoneContact[] = []
     if (hasPermission) {
       const { data } = await Contacts.getContactsAsync({
       fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
@@ -117,6 +117,7 @@ const PhoneContacts = () => {
             <WithoutResults styles="pt-12" />
           ) : (
             filtredContactos.map((contacto) => (
+              // eslint-disable-next-line react/jsx-key
               <TarjetaContacto usuario={contacto} isUser={0}/>
             ))
         )}

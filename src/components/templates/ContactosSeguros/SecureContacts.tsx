@@ -48,7 +48,7 @@ const SecureContacts = () => {
   }
 
   const getData = async () => {
-    let res: DatosContactoSeguro[] = (await getContactosSeguros(authToken || '')) || []    
+    const res: DatosContactoSeguro[] = (await getContactosSeguros(authToken || '')) || []    
     setContactosSeguros(res)
     setFiltredContactosSeguros(res)
     setRefreshing(false)

@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React from 'react';
 import { View, Image, StyleSheet} from 'react-native';
 import { Marker } from 'react-native-maps';
 import { BACKGROUND_COLORS, tiposDeLugares } from '../../utils/constants';
@@ -17,7 +17,6 @@ interface MarcadorLugarProps {
     
 }
 const MarcadorLugar = ({ lugar ,setLugarSeleccionado, setModalInfoVisible,setShouldRefresh,shouldRefresh}:MarcadorLugarProps ) => {
-  const [isModalVisible, setIsModalVisible] = useState(false)
   const [lugarInfo, setLugar] =  React.useState<Lugar>() || undefined;
   const {authToken}= useSelector((state: RootState) => state.user)
 
@@ -38,9 +37,6 @@ const MarcadorLugar = ({ lugar ,setLugarSeleccionado, setModalInfoVisible,setSho
     setShouldRefresh(false);
   };
 
-  const handleCloseModal = () => {
-    setIsModalVisible(false);
-  };
   const getTipo=()=>{
     if (lugar.local_seguro !== undefined && lugar.local_seguro === 1) {
         return 'local seguro';

@@ -30,7 +30,6 @@ const MapaLugares = () => {
   const [isModalVisibleList, setIsModalVisibleList] = useState(false);
   const [modalInfoVisible, setModalInfoVisible] = useState(false);
   const [shouldRefresh, setShouldRefresh] = useState(false);
-  const [isLocationAvailable, setIsLocationAvailable] = useState(false);
   const navigation =useNavigation<NavigationProp<RootStackParamList, Screens>>()
   const [initialRegion, setInitialRegion] = useState({
     latitude: -2.1453021140388437,
@@ -64,7 +63,6 @@ const MapaLugares = () => {
               latitude,
               longitude,
             }));
-            setIsLocationAvailable(true);
           }
         }
       } catch (error) {
