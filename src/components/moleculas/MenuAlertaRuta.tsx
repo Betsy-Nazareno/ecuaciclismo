@@ -26,8 +26,6 @@ const MenuAlertaRuta = ({visible, ubicacion}: MenuAlertasProps) => {
 
   const handleCrearAlerta = () => {
     navigation.navigate('AlertaFormulario', { data: ubicacion })
-
-    console.log('ubicacion: ', ubicacion)
     
   }
 

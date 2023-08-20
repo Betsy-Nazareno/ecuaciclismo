@@ -14,7 +14,7 @@ const TarjetaReseñaLugar= ({
   reseña,
   tipo,
 }: TarjetaReseñaLugarProps) => {
-  console.log(reseña.fecha_creacion)
+ 
   return (
       <View style={[tw`bg-white mx-2 rounded-xl w-90 pt-2 px-2`,styles.borderContainer]}>
         <View style={tw`flex flex-row items-center`}>

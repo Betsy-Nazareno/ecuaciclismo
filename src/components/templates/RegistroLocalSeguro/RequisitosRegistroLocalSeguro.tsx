@@ -3,16 +3,17 @@ import { ScrollView } from 'react-native-gesture-handler'
 import tw from 'twrnc'
 import HeaderScreen from '../../moleculas/HeaderScreen'
 import { View, Text, Image, Pressable } from 'react-native'
-import Carousel from 'react-native-carousel-loop'
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
-import { BACKGROUND_COLORS } from '../../../utils/constants'
+import { BACKGROUND_COLORS, WIDTH_DIMENSIONS } from '../../../utils/constants'
 
 interface RequisitosRegistroLocalSeguroProps {
     registerType: string
 }
 
 const RequisitosRegistroLocalSeguro = ({ registerType }: RequisitosRegistroLocalSeguroProps) => {
+  const [activeSlide, setActiveSlide] = React.useState(0)
   const bankAccount  = 'Bco. Pichincha\n105898632'
   const requisitos = [
     {
@@ -49,37 +50,50 @@ const RequisitosRegistroLocalSeguro = ({ registerType }: RequisitosRegistroLocal
                     Ten en cuenta los siguientes requisitos para registrarte como local seguro
                 </Text>
             </View>
-
-            <Carousel
-                delay={8000}
+            <View style={tw`flex-1 justify-center items-center`}>
+              <Carousel
+                data={requirements}
+                renderItem={({ item }) => (
+                  <View style={tw`bg-[#0C3248] h-full rounded-lg flex flex-col items-center`}>
+                    <Text style={tw`pt-4 pb-8 text-xl text-white text-center font-bold`}>
+                      {item.title}
+                    </Text>
+                    <View style={tw`bg-[#D9D9D9] rounded-full w-50 h-50 flex flex-col items-center justify-center`}>
+                      <Image source={item.image} style={{ width: 100, height: 100 }} />
+                      {item.title === 'Depósito' ? (
+                        <Text style={tw`text-m text-white text-center font-bold`}>
+                          {bankAccount}
+                        </Text>
+                      ) : null}
+                    </View>
+                    <Text style={tw`pt-8 px-4 text-m text-white text-center`}>
+                      {item.text}
+                    </Text>
+                  </View>
+                )}
+                sliderWidth={WIDTH_DIMENSIONS}
+                itemWidth={350}
+                loop
                 autoplay
-                bullets
-                style={{ width: 350, height: 400, }}
-                isLooped
-            >
-                {requirements.map((requisito) => {
-                    return (
-                        // eslint-disable-next-line react/jsx-key
-                        <View style={tw`bg-[#0C3248] h-full rounded-lg flex flex-col items-center`}>
-                            <Text style={tw`pt-4 pb-8 text-xl text-white text-center font-bold`}>
-                                {requisito.title}
-                            </Text>
-                            <View style={tw`bg-[#D9D9D9] rounded-full w-50 h-50 flex flex-col items-center justify-center`}>
-                                <Image source={requisito.image} style={{width: 100, height: 100,}}/>
-                                {(requisito.title === 'Depósito') ? (
-                                    <Text style={tw`text-m text-white text-center font-bold`}>
-                                        {bankAccount}
-                                    </Text>
-                                    ) : null
-                                }
-                            </View>
-                            <Text style={tw`pt-8 px-4 text-m text-white text-center`}>
-                                {requisito.text}
-                            </Text>
-                        </View>
-                    )
-                })}
-            </Carousel>
+                enableSnap
+                onSnapToItem={(index) => setActiveSlide(index)}
+              />
+              <Pagination
+                dotsLength={requirements.length}
+                activeDotIndex={activeSlide}
+                containerStyle={tw`mt-2`}
+                dotStyle={tw`bg-primary`}
+                inactiveDotStyle={tw`bg-gray-300`}
+                dotContainerStyle={tw`px-2`}
+                inactiveDotOpacity={0.6}
+                inactiveDotScale={0.8}
+              />
+            </View>
+
+
+
+
+            
             <Pressable
               style={tw`${BACKGROUND_COLORS.ORANGE} rounded-3xl p-2 mt-4 w-30 items-center`}
               onPress={()=> navigation.navigate('RegistroLocalSeguroFormulario', {registerType})}

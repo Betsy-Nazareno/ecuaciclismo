@@ -41,7 +41,6 @@ const MediaPicker = ({
     ])
   }
   const imageAndVideo = (file: any) => {
-    console.log(file.assets[0].type)
     if(file.assets[0].type === 'image' || file.assets[0].type=== 'video') {
       return true
     }
@@ -99,7 +98,7 @@ const MediaPicker = ({
 
     toggleModal();
   };
-  //console.log(values);
+
 
   return (
     <>

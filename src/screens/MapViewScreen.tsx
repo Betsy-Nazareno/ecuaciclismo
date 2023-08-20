@@ -21,7 +21,7 @@ const MapViewScreen = ({
     userPhoto, 
     onClose ,
 }: MapViewScreenProps) => {
-    console.log(latitude,longitude)
+
     const initialRegion = {
         latitude: -2.1453021140388437,
         latitudeDelta: 0.2568955895381215,

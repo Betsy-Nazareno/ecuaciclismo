@@ -65,7 +65,7 @@ export const getDetalleUsuario = async (
       url: 'https://ecuaciclismoapp.pythonanywhere.com/api/usuario/get_detalle_usuario/',
       headers: { Authorization: 'Token ' + authToken },
     })
-    console.log("respuesta:",response.data)
+
     const [detalle] = response?.data?.data || []
     return converterUsuario(detalle)
   } catch (e) {

@@ -58,7 +58,7 @@ export const new_lugar= async (token:string,lugar:Lugar) =>{
 
         })
         const {token_lugar}=response.data || {};
-        console.log(response.data)
+        
         if (token_lugar){
             return token_lugar
         }else{

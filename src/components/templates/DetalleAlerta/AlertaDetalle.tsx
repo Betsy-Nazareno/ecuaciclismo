@@ -7,8 +7,7 @@ import {
   TEXT_COLORS,
   WIDTH_DIMENSIONS,
   uri_perfil_icon,
-  HEIGHT_DIMENSIONS,
-  BORDER_COLORS
+  HEIGHT_DIMENSIONS
 } from '../../../utils/constants'
 import DetalleAlertante from '../../moleculas/DetalleUsuario'
 import VerticalDivider from '../../atomos/VerticalDivider'
@@ -20,7 +19,6 @@ import {Alerta} from '../../../models/Alertas'
 import { MultimediaResult } from '../../../models/Publicaciones.model'
 import { RootState } from '../../../redux/store'
 import { useSelector } from 'react-redux'
-import Carousel from 'react-native-carousel-loop/lib'
 import VideoPlayer from 'expo-video-player'
 import { ResizeMode } from 'expo-av'
 import NoteVoice from '../../moleculas/NoteVoice'
@@ -37,6 +35,8 @@ import MenuAlertas from '../../moleculas/MenuAlertas'
 import MapView, { Marker } from 'react-native-maps'
 import ModalConfirmarAyuda from '../../atomos/ModalConfirmarAyuda'
 import PermissionWrapperAlerta from '../PermissionWrapperAlerta'
+import Carousel from 'react-native-swiper-flatlist';
+
 interface DetallesAlertaProps {
   token: string
 }
@@ -56,47 +56,49 @@ const AlertaDetalle = ({ token }: DetallesAlertaProps) => {
         setIsRending(false)
       })()
     }, [isAddingComent, token])
-
     const diplayImagesAndVideos = (multimediaResult: MultimediaResult[]) => {
-        const items = multimediaResult.map((file, index) => {
-          switch (file.tipo) {
-            case MIME_TYPES.IMAGE:
-              return (
-                <Image
-                  key={index}
-                  source={{ uri: file.link }}
-                  style={{
-                    width: WIDTH_DIMENSIONS * 0.85,
-                    height: 250,
-                    backgroundColor: '#fff',
-                  }}
-                  resizeMode="contain"
-                />
-              )
-            case MIME_TYPES.VIDEO:
-              return (
-                <VideoPlayer
-                  key={index}
-                  style={{
-                    width: WIDTH_DIMENSIONS * 0.85,
-                    height: 250,
-                    videoBackgroundColor: '#fff',
-                  }}
-                  slider={{ visible: false }}
-                  videoProps={{
-                    source: { uri: file.link },
-                    resizeMode: 'contain' as ResizeMode,
-                    isLooping: true,
-                  }}
-                />
-              )
-            default:
-              return null
+        if (multimediaResult.length > 0) {
+   
+          const items = multimediaResult.map((file, index) => {
+            switch (file.tipo) {
+              case MIME_TYPES.IMAGE:
+                return (
+                  <Image
+                    key={index}
+                    source={{ uri: file.link }}
+                    style={{
+                      width: WIDTH_DIMENSIONS * 0.85,
+                      height: 250,
+                      backgroundColor: '#fff',
+                    }}
+                    resizeMode="contain"
+                  />
+                )
+              case MIME_TYPES.VIDEO:
+                return (
+                  <VideoPlayer
+                    key={index}
+                    style={{
+                      width: WIDTH_DIMENSIONS * 0.85,
+                      height: 250,
+                      videoBackgroundColor: '#fff',
+                    }}
+                    slider={{ visible: false }}
+                    videoProps={{
+                      source: { uri: file.link },
+                      resizeMode: 'contain' as ResizeMode,
+                      isLooping: true,
+                    }}
+                  />
+                )
+              default:
+                return null
+            }
+          })
+          const finalItems = items.filter((item) => item)
+          if (finalItems.length > 0) {
+            return finalItems
           }
-        })
-        const finalItems = items.filter((item) => item)
-        if (finalItems.length > 0) {
-          return finalItems
         }
         return (
           <View style={tw`mx-auto`}>
@@ -178,7 +180,7 @@ const AlertaDetalle = ({ token }: DetallesAlertaProps) => {
                     name={alerta?.tipo}
                     label={alerta?.tipo}
                     backgroundColor={BACKGROUND_COLORS.WHITE}
-                    stylesProp={`border-2 border-solid ${BORDER_COLORS.DARK_BLUE} `}
+                    stylesProp={'border-2 border-solid ${BORDER_COLORS.DARK_BLUE} '}
                     styleText={tw`${TEXT_COLORS.DARK_BLUE} `}
                     
                   />
@@ -186,17 +188,24 @@ const AlertaDetalle = ({ token }: DetallesAlertaProps) => {
               </View>
               
               <View style={tw`mt-2`}>
+              <View style={tw`justify-center items-center`}>
                 <Carousel
-                  swipe
-                  isLooped
-                  bullets
+                  showPagination
+                  index={0}
                   style={{
                     width: WIDTH_DIMENSIONS * 0.85,
                     height: 250,
+                    
                   }}
+              
+
                 >
                   {diplayImagesAndVideos(alerta?.multimediaResult || [])}
+                  
                 </Carousel>
+
+
+              </View>
   
                   <Gap py="2">
                     <Text style={tw`text-base`}>{alerta?.descripcion}</Text>

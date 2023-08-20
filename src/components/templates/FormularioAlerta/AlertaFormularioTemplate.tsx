@@ -63,7 +63,7 @@ interface AlertaFormularioProps {
   
     const handleSubmit = async (alerta: Alerta) => {
       setIsLoading(true)
-      console.log(alertaProp, authToken)
+
       if (authToken) {
         const tokens= await agregarAlerta(alerta, authToken)
       

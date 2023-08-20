@@ -30,8 +30,6 @@ const AlertasActivas = ({ authToken}: AlertasActivasProps) => {
         console.log('Error al obtener las alertas recibidas:', error);
       }
     };
-    //console.log(alertasRecibidas.some((alerta) => alerta.estado === 'En curso'))
-    //setShowModal(alertasRecibidas.some((alerta) => alerta.estado === 'En curso'))
     fetchAlertasRecibidas();
   }, [authToken]);
 

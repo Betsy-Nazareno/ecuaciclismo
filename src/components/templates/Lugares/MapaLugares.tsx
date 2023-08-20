@@ -84,7 +84,7 @@ const MapaLugares = () => {
   const handleGoToLocation = () => {
     if (selectedLocation) {
       navigation.navigate('LugarFormulario', { longitud: selectedLocation.longitude, latitud: selectedLocation.latitude })
-      console.log('Ir a ubicación:', selectedLocation);
+
       
     }
     setIsModalVisible(false);

@@ -8,7 +8,7 @@ import { CustomText } from '../atomos/CustomText'
 
 const UserInformation = () => {
   const { user } = useSelector((state: RootState) => state.user)
-  console.log(user)
+
   return (
     <View style={tw`flex flex-row`}>
       <View style={tw`mr-4`}>

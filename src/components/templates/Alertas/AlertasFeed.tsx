@@ -34,7 +34,6 @@ const AlertasFeed = () => {
         dispatch(setAlertasEnviadas({ alertasEnviadas }))
         setFilteredAlertas(response)
         setIsRending(false)
-        console.log('AlertasFeed', alertasEnviadas)
       }
     })()
   }, [alertaHasModified])

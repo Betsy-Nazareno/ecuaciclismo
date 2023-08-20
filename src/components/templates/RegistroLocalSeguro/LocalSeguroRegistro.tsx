@@ -3,10 +3,10 @@ import { ScrollView } from 'react-native-gesture-handler'
 import tw from 'twrnc'
 import HeaderScreen from '../../moleculas/HeaderScreen'
 import { View, Text, Image, Pressable } from 'react-native'
-import Carousel from 'react-native-carousel-loop'
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
-import { BACKGROUND_COLORS } from '../../../utils/constants'
+import { BACKGROUND_COLORS, WIDTH_DIMENSIONS } from '../../../utils/constants'
 
 const LocalSeguroRegistro = () => {
   const beneficios = [
@@ -40,7 +40,7 @@ const LocalSeguroRegistro = () => {
         setRegisterType(text)
     }
   }
-
+  
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={tw`px-2 mb-8`}>
         <HeaderScreen
@@ -55,31 +55,36 @@ const LocalSeguroRegistro = () => {
                 </Text>
             </View>
 
-            <View style={tw`mb-8`}>
-                <Carousel
-                    delay={8000}
-                    autoplay
-                    bullets
-                    style={{ width: 350, height: 400, }}
-                    isLooped
-                >
-                    {beneficios.map((beneficio) => {
-                        return (
-                            // eslint-disable-next-line react/jsx-key
-                            <View style={tw`bg-[#0C3248] h-full rounded-lg flex flex-col items-center`}>
-                                <Text style={tw`pt-4 pb-8 text-xl text-white text-center font-bold`}>
-                                    {beneficio.title}
-                                </Text>
-                                <View style={tw`bg-[#D9D9D9] rounded-full w-50 h-50 flex flex-col items-center justify-center`}>
-                                    <Image source={beneficio.image} style={{width: 100, height: 100,}}/>
-                                </View>
-                                <Text style={tw`pt-8 px-4 text-m text-white text-center`}>
-                                    {beneficio.text}
-                                </Text>
-                            </View>
-                        )
-                    })}
-                </Carousel>
+            <View style={tw`mb-8 flex-1 justify-center items-center`}>
+            <Carousel
+                data={beneficios}
+                renderItem={({ item }) => (
+                <View style={tw`bg-[#0C3248] h-full rounded-lg flex flex-col items-center w-full h-100`}>
+                    <Text style={tw`pt-4 pb-8 text-xl text-white text-center font-bold`}>
+                    {item.title}
+                    </Text>
+                    <View style={tw`bg-[#D9D9D9] rounded-full w-50 h-50 flex flex-col items-center justify-center`}>
+                    <Image source={item.image} style={{ width: 100, height: 100 }} />
+                    </View>
+                    <Text style={tw`pt-8 px-4 text-m text-white text-center`}>
+                    {item.text}
+                    </Text>
+                </View>
+                )}
+                sliderWidth={WIDTH_DIMENSIONS}
+                itemWidth={350}
+                loop
+                autoplay
+                enableSnap
+            />
+            <Pagination
+                dotsLength={beneficios.length}
+                activeDotIndex={0} // Puedes cambiar esto para indicar el índice activo
+                containerStyle={tw`mt-2`}
+                dotStyle={tw`bg-primary`}
+                inactiveDotStyle={tw`bg-gray-300`}
+            />
+    
             </View>
             {planes.map((plan) => {
                 return (
