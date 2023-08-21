@@ -33,15 +33,15 @@ const MediaPicker = ({
   const deleteFile = (uri: string) => {
     setFieldValue(field, [
       ...(values || []).filter((file: any) => {
-        if(file.assets) {
-          const uriFile = file.assets[0].uri
+        if(file) {
+          const uriFile = file.uri
           return uriFile !== uri
         }
       }),
     ])
   }
   const imageAndVideo = (file: any) => {
-    if(file.assets[0].type === 'image' || file.assets[0].type=== 'video') {
+    if(file.type === 'image' || file.type=== 'video') {
       return true
     }
     else {
@@ -55,13 +55,13 @@ const MediaPicker = ({
   const handleOpenGallery = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-    if (!result.cancelled) {
+    if (result.cancelled===false) {
       if(imageAndVideo(result)) {
         setFieldValue(field, [...(values || []), result]);
+        console.log("result:",result)
       }
       
     }
@@ -72,7 +72,6 @@ const MediaPicker = ({
   const handleOpenCamera = async () => {
     const result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
@@ -87,7 +86,6 @@ const MediaPicker = ({
   const handleOpenVideo = async () => {
     const result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-      allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
@@ -98,7 +96,6 @@ const MediaPicker = ({
 
     toggleModal();
   };
-
 
   return (
     <>

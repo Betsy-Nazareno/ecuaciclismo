@@ -37,7 +37,7 @@ const SideMenu = (props: DrawerContentComponentProps) => {
         <UserInformation />
       </View>
 
-      <View style={tw`mt-2 mb-45`}>
+      <View style={tw`mt-2 mb-30`}>
         <View>
           <OptionSideMenu
             label="Inicio"
