@@ -29,6 +29,7 @@ import { guardarArchivo, eliminarArchivo } from '../../../lib/googleCloudStorage
 import { getAdminTokens } from '../../../lib/services/notifications.services'
 import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
 import { capitalize } from '../../../utils/capitalizeText'
+import Spinner from '../../atomos/Spinner'
 
 const DescargarPDF = () => {
   const { authToken, user } = useSelector((state: RootState) => state.user)
@@ -38,15 +39,13 @@ const DescargarPDF = () => {
   const [displayMenu, setDisplayMenu] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const { sendPushNotification } = usePermissionsNotifications()
-  const [ img, setImg ] = React.useState<string>('')
-  const [ text, setText ] = React.useState<string>('')
-  const [ altText, setAltText ] = React.useState<string>('')
-
+  const [ img, setImg ] = React.useState<string>('caution')
+  const [ text, setText ] = React.useState<string>('Hubo un error, intentelo más tarde por favor.')
+  const [ isCharging, setIsCharging ] = React.useState<boolean>(false)
   
   React.useEffect(() => {
     (async () => await getData())()
   }, [])
-  
 
   const getData = async () => {
     try {
@@ -62,6 +61,7 @@ const DescargarPDF = () => {
   }
 
   const handleDownload = async () => {
+    setIsCharging(true)
     await getData()
     const fecha = new Date(Date.now())
     const fecha_registro = `${fecha.getDate().toString()}/${(fecha.getMonth()+1).toString()}/${fecha.getFullYear().toString()}`
@@ -116,6 +116,7 @@ const DescargarPDF = () => {
     await eliminarArchivo(cedula2)
     if(initValues?.payment && (initValues?.payment.length > 0) && initValues?.registerType !== 'Plan gratuito')
       await eliminarArchivo(payment)
+    setIsCharging(false)
   }
   
   const uploadDoc = async (doc: any) => {
@@ -128,7 +129,6 @@ const DescargarPDF = () => {
 
   const handleSubmit = async (document: DocumentPicker.DocumentResult) => {
     await getData()
-    setImg('verificacion_envio')
     if(initValues){
       const isBeneficios: number = (initValues?.registerType !== 'Plan gratuito') ? 1 : 0
       const imagen = initValues?.imagen[0] as any
@@ -140,6 +140,7 @@ const DescargarPDF = () => {
         await uploadDoc(document).then(response => path_PDF = response )
         const resp2: string= await newPlaceRequest(authToken??'', resp1.token_lugar, path_PDF)
         if(resp2 === 'success'){
+          setImg('verificacion_envio')
           setText("Su solicitud ha sido enviada con exito, un administrador revisará y responderá a su solicitud dentro de los siguientes días. En la sección “Solicitudes” podrá ver el estado y respuesta a su solicitud.")
           try {
             await AsyncStorage.removeItem('registro-local-seguro-key')
@@ -147,13 +148,10 @@ const DescargarPDF = () => {
             console.error(e)
           }
           await sendNotificationToAdmins()
-        }else
-          setText('Hubo un error, intentelo más tarde por favor.')
-      }else
-        setText('Hubo un error, intentelo más tarde por favor.')
-    }else
-      setText('Hubo un error, intentelo más tarde por favor.')
-    setShowModal(true)
+        }
+      }
+    }
+    setDisplayMenu(true)
   }
 
   const sendNotificationToAdmins = async () => {
@@ -169,9 +167,8 @@ const DescargarPDF = () => {
   const handleCancel = async () => {
     try {
       await AsyncStorage.removeItem('registro-local-seguro-key')
-      setAltText('Su registro ha sido cancelado.')
+      setText('Su registro ha sido cancelado.')
     } catch(e) {
-      setAltText('Hubo un error, intentelo más tarde por favor.')
       console.error(e)
     }
     setShowModal(false)
@@ -187,16 +184,16 @@ const DescargarPDF = () => {
       <ConfirmationPopUp
         setVisible={setShowModal}
         visible={showModal}
-        imageName= {img}
-        body= {text}
-        setConfirmation={() =>(img === 'caution') ? handleCancel() : navigation.navigate('Inicio')}
+        imageName= 'caution'
+        body= 'En caso de no haber elegido el plan gratuito, no podemos asegurarle que su dinero sea devuelto si cancela su registro en este momento y ya ha realizado el pago del registro. ¿Desea proseguir con la cancelación del registro de todas formas?'
+        setConfirmation={handleCancel}
       />
 
       <NotificationPopUp
-        setVisible={setDisplayMenu}
-        visible={displayMenu}
-        imageName='caution'
-        body={altText}
+        setVisible= {setDisplayMenu}
+        visible= {displayMenu}
+        imageName= {img}
+        body={text}
         setConfirmation={() => navigation.navigate('Inicio')}
       />
 
@@ -213,15 +210,19 @@ const DescargarPDF = () => {
               llenaste en el formulario anterior (la firma
               puede ser digital o hecha a mano).
             </Text>
-
-            <Pressable onPress={handleDownload} style={tw`items-center`}>
-              <View style={tw`flex flex-row items-center justify-center w-5/6 my-2 p-2 rounded-lg border border-[#0C3248]`}>
-                <Text style={tw`text-m text-black`}>
-                  Descargar documento
-                </Text>
-                <Image source={require('../../../../assets/download.png')} style={{width: 25, height: 25,}}/>
-              </View>
-            </Pressable>
+            
+            {isCharging ? (
+              <Spinner />
+            ) : (
+              <Pressable onPress={handleDownload} style={tw`items-center`}>
+                <View style={tw`flex flex-row items-center justify-center w-5/6 my-2 p-2 rounded-lg border border-[#0C3248]`}>
+                  <Text style={tw`text-m text-black`}>
+                    Descargar documento
+                  </Text>
+                  <Image source={require('../../../../assets/download.png')} style={{width: 25, height: 25,}}/>
+                </View>
+              </Pressable>
+            )}
 
             <Pressable 
               onPress={async () => {
@@ -265,11 +266,7 @@ const DescargarPDF = () => {
                     <UnfocusButton
                       label="Cancelar"
                       style="w-full mr-18"
-                      handleClick={()=> {
-                        setText('En caso de no haber elegido el plan gratuito, si cancela su registro en este momento y ya ha realizado el pago del registro, no podemos asegurarle que su dinero sea devuelto. ¿Desea proseguir con la cancelación del registro de todas formas?')
-                        setImg('caution')
-                        setShowModal(true)
-                      }}
+                      handleClick={()=> setShowModal(true)}
                     />
                     <SecondaryButton
                       label= 'Enviar solicitud'
