@@ -43,6 +43,7 @@ const DescargarPDF = () => {
   const [ text, setText ] = React.useState<string>('Hubo un error, intentelo más tarde por favor.')
   const [ isCharging, setIsCharging ] = React.useState<boolean>(false)
   const [ isSubmitting, setIsSubmitting ] = React.useState<boolean>(false)
+  const fileName : string = 'Solicitud_registro_miemrbo.pdf'
   
   React.useEffect(() => {
     (async () => await getData())()
@@ -98,10 +99,9 @@ const DescargarPDF = () => {
         payment,
         initValues?.num_ced || ''),
       base64:false
-    })    
+    })
     
-    const PDFlink : string = await guardarArchivo(FOLDERS_STORAGE.LUGARES, 'Solicitud_registro_miembro.pdf', file.uri)
-    const fileName : string = 'Solicitud_registro_miemrbo.pdf'
+    const PDFlink : string = await guardarArchivo(FOLDERS_STORAGE.LUGARES, fileName, file.uri)
     const result = await FileSystem.downloadAsync(
       PDFlink,
       FileSystem.documentDirectory + fileName
