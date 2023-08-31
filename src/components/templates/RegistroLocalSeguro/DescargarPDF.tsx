@@ -45,8 +45,8 @@ const DescargarPDF = () => {
   const [ text, setText ] = React.useState<string>('Hubo un error, intentelo más tarde por favor.')
   const [ isCharging, setIsCharging ] = React.useState<boolean>(false)
   const [ isSubmitting, setIsSubmitting ] = React.useState<boolean>(false)
+  const fileName : string = 'Solicitud_registro_local_seguro.pdf'
 
-  
   React.useEffect(() => {
     (async () => await getData())()
   }, [])
@@ -85,7 +85,7 @@ const DescargarPDF = () => {
       await uploadDoc(imagenp).then(response => payment = response )
     }
 
-    const file = await printToFileAsync({
+    await printToFileAsync({
       html: html(fecha_registro,
         initValues?.nombre || '',
         initValues?.direccion || '',
@@ -101,25 +101,23 @@ const DescargarPDF = () => {
         parqueadero,
         payment),
       base64:false
+    }).then(async (file) => {
+      const PDFlink : string = await guardarArchivo(FOLDERS_STORAGE.LUGARES, fileName, file.uri)
+      const result = await FileSystem.downloadAsync(
+        PDFlink,
+        FileSystem.documentDirectory + fileName
+      )
+      
+      await save(result.uri, fileName)
+      
+      await eliminarArchivo(PDFlink)
+      await eliminarArchivo(cedula1)
+      await eliminarArchivo(cedula2)
+      if(initValues?.payment && (initValues?.payment.length > 0) && initValues?.registerType !== 'Plan gratuito'){
+        await eliminarArchivo(payment)
+      }
+      setIsCharging(false)
     })
-
-    const PDFlink : string = await guardarArchivo(FOLDERS_STORAGE.LUGARES, 'Solicitud_registro_local_seguro.pdf', file.uri)
-    const fileName : string = 'Solicitud_registro_local_seguro.pdf'
-    const result = await FileSystem.downloadAsync(
-      PDFlink,
-      FileSystem.documentDirectory + fileName
-    )
-    
-    await save(result.uri, fileName)
-    
-    await eliminarArchivo(PDFlink)
-    await eliminarArchivo(cedula1)
-    await eliminarArchivo(cedula2)
-    if(initValues?.payment && (initValues?.payment.length > 0) && initValues?.registerType !== 'Plan gratuito'){
-      await eliminarArchivo(payment)
-    }
-
-    setIsCharging(false)
   }
   
   const uploadDoc = async (doc: any) => {
