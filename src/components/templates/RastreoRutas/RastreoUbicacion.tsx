@@ -106,7 +106,7 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
       })
     })()
   }, [])
-
+  console.log('participantes:',infParticipantes.length)
   React.useEffect(() => {
     if (location && ruta.ubicacion && !location.retorno) {
       const { coordinateY } = ruta.ubicacion || {}
@@ -131,6 +131,8 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
       }
     })()
   }, [location])
+  console.log('location:',location)
+  console.log('ruta.ubicacion:',ruta.ubicacion)
 
   const stopTracking = async () => {
     if (TaskManager.isTaskDefined(TASK_NAME)) {
@@ -250,7 +252,7 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
         <MenuAlertaRuta 
           visible={showModalAlerta}
           setVisible={setShowModalAlerta}
-          ubicacion={ruta?.ubicacion}
+          ubicacion={{coordinateX: location?.coords,coordinateY:location?.coords}}
         />
       )
 

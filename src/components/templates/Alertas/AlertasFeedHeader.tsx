@@ -16,6 +16,9 @@ const AlertasFeedHeader = () => {
   const handleText = (text: string) => {
     dispatch(setText({ text }))
   }
+  React.useEffect(() => {
+    console.log('Componente se montó o se actualizó.');
+  }, []);
 
   return (
     <HeaderRoundedContainer>

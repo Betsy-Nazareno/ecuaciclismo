@@ -1,13 +1,10 @@
 import React from 'react'
 import { Image, Text, View } from 'react-native'
-import { useSelector } from 'react-redux'
 import tw from 'twrnc'
-import { RootState } from '../../redux/store'
 import { TEXT_COLORS } from '../../utils/constants'
 import { ButtonTab } from '../atomos/ButtonTab'
 
 const NavigationBar = () => {
-  const { user } = useSelector((state: RootState) => state.user)
   return (
     <View
       style={[
@@ -46,14 +43,14 @@ const NavigationBar = () => {
           </Text>
         </ButtonTab>
 
-        <ButtonTab screen="Perfil" param={{ userToken: user?.id_usuario }}>
+        <ButtonTab screen="AlertaFormulario">
           <Image
-            source={require('../../../assets/ciclista_icon.png')}
+            source={require('../../../assets/nueva_alerta.png')}
             style={{ width: 25, height: 25 }}
           />
 
           <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-xs font-bold`}>
-            Perfil
+            Crear Alerta
           </Text>
         </ButtonTab>
       </View>

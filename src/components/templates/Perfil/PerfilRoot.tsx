@@ -43,7 +43,7 @@ const PerfilRoot = ({ userToken }: PerfilRootProps) => {
       }
     })()
   }, [userToken, hasRefresh, refreshUser])
-
+  console.log('usuario_id:',userToken)
   const handleUpdates = async (updatedFields: Partial<User>) => {
     const data = { ...detalleUser, ...updatedFields }
 

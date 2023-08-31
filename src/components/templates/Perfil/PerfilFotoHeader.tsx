@@ -24,7 +24,9 @@ interface PerfilFotoHeaderProps {
   idUser: string
   telefono?: string
   tipo?:string
-  onUpdate: (user: Partial<User>) => void
+  onUpdate?: (user: Partial<User>) => void
+  editable?: boolean
+  dimensionWidth?: number
 }
 
 const PerfilFotoHeader = ({
@@ -37,6 +39,8 @@ const PerfilFotoHeader = ({
   idUser,
   telefono,
   onUpdate,
+  editable=true,
+  dimensionWidth = WIDTH_DIMENSIONS,
 }: PerfilFotoHeaderProps) => {
   const [admin, setAdmin] = React.useState(false)
   React.useEffect(() => {
@@ -75,7 +79,7 @@ const PerfilFotoHeader = ({
               : require('../../../../assets/user_placeholder.png')
           }
           style={{
-            width: WIDTH_DIMENSIONS,
+            width: dimensionWidth,
             height: HEIGHT_DIMENSIONS * 0.7,
             backgroundColor: 'white',
           }}
@@ -83,9 +87,12 @@ const PerfilFotoHeader = ({
         />
 
         <UserValidator userToken={idUser}>
-          <View style={tw`absolute -bottom-6 right-2 `}>
-            <RoundedGalleryButton handleImage={changePhoto} />
-          </View>
+          {editable==true ? (
+              <View style={tw`absolute -bottom-6 right-2 `}>
+                <RoundedGalleryButton handleImage={changePhoto} />
+              </View>
+            
+          ):null}
         </UserValidator>
       </View>
       <View style={tw`flex flex-row justify-center`}>

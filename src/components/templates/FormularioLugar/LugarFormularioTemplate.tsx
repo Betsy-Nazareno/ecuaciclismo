@@ -12,7 +12,7 @@ import { setLugarHasModified } from "../../../redux/lugar";
 import { new_lugar } from "../../../lib/services/lugares.services";
 import LugarContenidoFormulario from "./LugarContenidoFormulario";
 import { LugarValidationSchema } from "../../../schemas/LugarSchema";
-import { new_solicitud_lugar } from "../../../lib/services/solicitud.services";
+import { newPlaceRequest} from "../../../lib/services/solicitud.services";
 interface LugarFormularioProps {
     Prop?: Lugar,
     longitud: number,
@@ -27,8 +27,7 @@ interface LugarFormularioProps {
     const [isLoading, setIsLoading] = React.useState(false)
     const [lugarProp, setLugarProp] = React.useState<Lugar>()
     const { authToken } = useSelector((state: RootState) => state.user)
-    const navigation =
-      useNavigation<NavigationProp<RootStackParamList, Screens>>()
+    const navigation = useNavigation<NavigationProp<RootStackParamList, Screens>>()
     const {lugarHasModified} = useSelector((state: RootState) => state.lugar)
 
     const dispatch = useDispatch()
@@ -60,7 +59,7 @@ interface LugarFormularioProps {
       setIsLoading(true)
       if (authToken) {
          const token_lugar=await new_lugar(authToken,lugar)
-         await new_solicitud_lugar(authToken,token_lugar)
+         await newPlaceRequest(authToken,token_lugar)
       }
       dispatch(
         setLugarHasModified({
@@ -68,7 +67,7 @@ interface LugarFormularioProps {
         })
       )
       setIsLoading(false)
-      navigation.goBack()
+      navigation.navigate('Solicitudes')
     }
     const handleCancel = () => {
         navigation.goBack()

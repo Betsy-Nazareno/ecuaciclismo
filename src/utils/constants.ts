@@ -62,6 +62,12 @@ export const ESTADOS_ALERTA = {
   ATENDIDA: 'Atendida',
   EN_CURSO: 'En curso',
 }
+export const ESTADOS_SOLICITUD = {
+  RECHAZADA: 'Rechazada',
+  PENDIENTE: 'Pendiente',
+  APROBADA: 'Aprobada',
+}
+
 export const TIPOS_LUGARES = {
   PARQUEADERO: 'parqueadero',
   CICLOVIA: 'ciclovia',
@@ -205,6 +211,26 @@ export const etiquetasPublicaciones = [
     icon: require('../../assets/peligro_icon.png'),
   },
 ]
+
+export const tipoSolicitudes = [
+  {
+    value: 'Registro Local',
+    nombre: 'Registro Local',
+  },
+  {
+    value: 'Membresia',
+    nombre: 'Membresia',
+  },
+  {
+    value: 'Recomendados',
+    nombre: 'Recomendados',
+  },
+  {
+    value: 'Verificacion',
+    nombre: 'Verificacion',
+  },
+]
+
 export const tipoAlertas=[
   {
     value: 'tubo bajo',
