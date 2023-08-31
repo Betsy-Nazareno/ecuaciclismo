@@ -153,7 +153,7 @@ const DescargarPDF = () => {
       const resp: string= await newMemberRequest(authToken??'', path_PDF)
       if(resp === 'success'){
         setImg('verificacion_envio')
-        setText("Su solicitud ha sido enviada con exito, un administrador revisará y responderá a su solicitud dentro de los siguientes días. En la sección “Solicitudes” podrá ver el estado y respuesta a su solicitud.")
+        setText("Su solicitud ha sido enviada con éxito, un administrador revisará y responderá a su solicitud dentro de los siguientes días. En la sección “Solicitudes” podrá ver el estado y respuesta a su solicitud.")
         try {
           await AsyncStorage.removeItem('registro-miembro-key')
         } catch(e) {

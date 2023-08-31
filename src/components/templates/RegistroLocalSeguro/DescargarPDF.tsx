@@ -162,7 +162,7 @@ const DescargarPDF = () => {
         const resp2: string= await newPlaceRequest(authToken??'', resp1.token_lugar, path_PDF)
         if(resp2 === 'success'){
           setImg('verificacion_envio')
-          setText("Su solicitud ha sido enviada con exito, un administrador revisará y responderá a su solicitud dentro de los siguientes días. En la sección “Solicitudes” podrá ver el estado y respuesta a su solicitud.")
+          setText("Su solicitud ha sido enviada con éxito, un administrador revisará y responderá a su solicitud dentro de los siguientes días. En la sección “Solicitudes” podrá ver el estado y respuesta a su solicitud.")
           try {
             await AsyncStorage.removeItem('registro-local-seguro-key')
           } catch(e) {
