@@ -44,7 +44,7 @@ const SideMenu = (props: DrawerContentComponentProps) => {
         </Pressable>
       </View>
 
-      <View style={tw`mt-2 mb-30`}>
+      <View style={tw`mt-2 mb-5`}>
         <View>
           <OptionSideMenu
             label="Inicio"
@@ -124,7 +124,7 @@ const SideMenu = (props: DrawerContentComponentProps) => {
         </View>
       </View>
 
-      <View style={tw`flex flex-col bottom-0 items-center justify-center`}>
+      <View style={tw`flex flex-col items-center justify-center`}>
         <Pressable
           style={tw`${BACKGROUND_COLORS.ORANGE} rounded-3xl p-2 mb-4 w-30 items-center`}
           onPress={() => verifyPendingForm('registro-local-seguro-key', 'DescargarSubirPDF', 'RegistroLocalSeguro')}

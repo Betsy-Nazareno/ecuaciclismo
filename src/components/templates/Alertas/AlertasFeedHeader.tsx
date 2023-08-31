@@ -29,7 +29,7 @@ const AlertasFeedHeader = () => {
           background={false}
           hasButton
           isRestricted={false}
-          buttonIcon={require('../../../../assets/menu_white_icon.png')}
+          // buttonIcon={require('../../../../assets/menu_white_icon.png')}
         />
       </View>
       <SearchBar text={text} setText={handleText} />

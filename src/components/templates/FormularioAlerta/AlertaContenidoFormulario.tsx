@@ -87,6 +87,9 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
       case 'robo':
         descripcionPredeterminada = 'He sido victima de un robo mientras iba en mi bicicleta, necesito ayuda por favor'
         break
+      case 'informativa':
+        descripcionPredeterminada = '¡Hola a todos! Solo quería compartirles que estoy a punto de salir en mi bicicleta. ¡Les aviso para que estén al tanto y me envíen buenas vibras mientras pedaleo! ¡Nos vemos pronto!'	
+        break
       default:
         descripcionPredeterminada = ''
     }

@@ -245,6 +245,10 @@ export const tipoAlertas=[
     value: 'robo',
     nombre: 'Robo',
   },
+  {
+    value: 'informativa',
+    nombre: 'Informativa',
+  }
 
 ]
 

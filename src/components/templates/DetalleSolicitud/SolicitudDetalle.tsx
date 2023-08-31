@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text,View, Image, Pressable, Modal, TouchableOpacity, ImageSourcePropType } from 'react-native'
+import { Text,View, Image, Pressable, Modal, TouchableOpacity, ImageSourcePropType, Platform } from 'react-native'
 import { Solicitud } from '../../../models/Solicitud'
 import { RootState } from '../../../redux/store'
 import { useSelector } from 'react-redux'
@@ -32,7 +32,6 @@ interface SolicitudesDetalleProps {
 const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
     const {user} = useSelector((state: RootState) => state.user)
     const [isRending, setIsRending] = React.useState(true)
-    const [infoView, setInfoView] = React.useState(false);
     const [solicitudState, setSolicitud] = React.useState<Solicitud>()
     const [showMapView, setShowMapView] = React.useState(false);
     const { authToken, refreshUser } = useSelector(
@@ -57,12 +56,7 @@ const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
     }, [ hasRefresh, refreshUser])
 
 
-    const handleOpenInfoView = () => {
-      setInfoView(true);
-    };
-    const handleCloseInfoView = () => {
-      setInfoView(false);
-    };
+ 
     const handleCloseMapView = () => {
       setShowMapView(false);
     };
@@ -88,6 +82,7 @@ const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
         console.error(e)
       }
     }
+  
     return isRending ? (
       <EmptyPublicacionDetalle />
     ) : (
@@ -211,19 +206,6 @@ const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
             </Pressable>  
           ):null}
 
-        <Modal visible={infoView} transparent animationType="slide">
-            <View style={tw`flex-1 justify-center items-center bg-black bg-opacity-50`}>
-          
-                <TouchableOpacity style={tw`absolute top-4 right-4`} onPress={handleCloseInfoView}>
-                    <Image
-                        source={require('../../../../assets/cancel_icon.png')}
-                        style={{ width: 25, height: 25 }}
-                    />
-                </TouchableOpacity>
-                
-             
-            </View>
-        </Modal>
         <Modal visible={showMapView} transparent animationType="slide">
           <View style={tw`flex-1 justify-center items-center bg-black bg-opacity-50`}>
           
