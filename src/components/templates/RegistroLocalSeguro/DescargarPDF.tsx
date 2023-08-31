@@ -116,8 +116,8 @@ const DescargarPDF = () => {
       if(initValues?.payment && (initValues?.payment.length > 0) && initValues?.registerType !== 'Plan gratuito'){
         await eliminarArchivo(payment)
       }
-      setIsCharging(false)
-    })
+    });
+    setIsCharging(false)
   }
   
   const uploadDoc = async (doc: any) => {

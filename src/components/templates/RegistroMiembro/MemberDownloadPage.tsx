@@ -82,7 +82,7 @@ const DescargarPDF = () => {
       await uploadDoc(imagenp).then(response => payment = response )
     }
     
-    const file = await printToFileAsync({
+    await printToFileAsync({
       html: html(fecha_registro,
         initValues?.nombre || '',
         initValues?.direccion || '',
@@ -99,20 +99,20 @@ const DescargarPDF = () => {
         payment,
         initValues?.num_ced || ''),
       base64:false
-    })
-    
-    const PDFlink : string = await guardarArchivo(FOLDERS_STORAGE.LUGARES, fileName, file.uri)
-    const result = await FileSystem.downloadAsync(
-      PDFlink,
-      FileSystem.documentDirectory + fileName
-    )
-    
-    await save(result.uri, fileName)
-    
-    await eliminarArchivo(PDFlink)
-    await eliminarArchivo(cedula1)
-    await eliminarArchivo(cedula2)
-    await eliminarArchivo(payment)
+    }).then(async (file) => {
+      const PDFlink : string = await guardarArchivo(FOLDERS_STORAGE.LUGARES, fileName, file.uri)
+      const result = await FileSystem.downloadAsync(
+        PDFlink,
+        FileSystem.documentDirectory + fileName
+      )
+      
+      await save(result.uri, fileName)
+      
+      await eliminarArchivo(PDFlink)
+      await eliminarArchivo(cedula1)
+      await eliminarArchivo(cedula2)
+      await eliminarArchivo(payment)
+    });
     setIsCharging(false)
   }
   
