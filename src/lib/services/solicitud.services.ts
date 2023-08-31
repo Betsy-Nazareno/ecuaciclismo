@@ -5,9 +5,9 @@ export const newPlaceRequest = async (token: string, token_lugar: string, path_P
     try {
         const response = await axios({
             method: 'POST',
-            url: 'https://ecuaciclismoapp.pythonanywhere.com/api/solicitud/new_solicitud_lugar/',
+            url: 'https://ecuaciclismoapp.pythonanywhere.com/api/solicitud/new_solicitud/',  
+            headers:{Authorization:'Token '+token},
             data:{
-                token: token,
                 token_lugar: token_lugar,
                 path_Pdf: path_Pdf,
             },
@@ -22,12 +22,28 @@ export const new_solicitud_lugar= async (token:string, token_lugar:string , path
     try{
         await axios({
             method:'POST',
-            url:'https://ecuaciclismoapp.pythonanywhere.com/api/solicitud/new_solicitud_lugar/',  
+            url:'https://ecuaciclismoapp.pythonanywhere.com/api/solicitud/new_solicitud/',  
             headers:{Authorization:'Token '+token},
             data: {token_lugar:token_lugar,path_pdf:path_pdf?path_pdf:''}
         })
     }catch(e){
 
+        console.error(e)
+    }
+}
+
+export const newMemberRequest = async (token: string, path_Pdf: string) => {
+    try {
+        const response = await axios({
+            method: 'POST',
+            url: 'https://ecuaciclismoapp.pythonanywhere.com/api/solicitud/new_solicitud/',  
+            headers:{Authorization:'Token '+token},
+            data:{
+                path_Pdf: path_Pdf,
+            },
+        })
+        return response?.data?.status || ""
+    } catch (e) {
         console.error(e)
     }
 }

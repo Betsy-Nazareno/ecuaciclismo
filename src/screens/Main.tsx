@@ -47,6 +47,10 @@ import AlertaFormulario from './AlertaFormulario'
 import MapViewScreen from './MapViewScreen'
 import Lugares from './Lugares'
 import LugarFormulario from './LugarFormulario'
+import FormularioMiembro from './FormularioMiembro'
+import PaginaDescargaMiembro from './PaginaDescargaMiembro'
+import RegistroMiembro from './RegistroMiembro'
+import RequisitosMiembro from './RequisitosMiembro'
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -146,6 +150,10 @@ const Main = () => {
         <Drawer.Screen name="DescargarSubirPDF" component={DescargarSubirPDF} />
         <Drawer.Screen name="Seguridad" component={Seguridad} />
         <Drawer.Screen name="Lugares" component={Lugares} />
+        <Drawer.Screen name="FormularioMiembro" component={FormularioMiembro} />
+        <Drawer.Screen name="PaginaDescargaMiembro" component={PaginaDescargaMiembro} />
+        <Drawer.Screen name="RegistroMiembro" component={RegistroMiembro} />
+        <Drawer.Screen name="RequisitosMiembro" component={RequisitosMiembro} />
       </Drawer.Navigator>
     )
   }

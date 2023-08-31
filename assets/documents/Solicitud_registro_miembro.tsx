@@ -9,10 +9,10 @@ export const html = (fecha_inscripcion: string,
                      ocupacion: string,
                      email: string,
                      ciudad: string,
-                     provincia: string,
                      seguro_medico: string,
                      contacto: string,
-                     payment: string) => {return `
+                     payment: string,
+                     num_ced: string) => {return `
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
     <head>
@@ -159,11 +159,6 @@ export const html = (fecha_inscripcion: string,
                     </tr>
 
                     <tr>
-                        <td><p class="table">Provincia</p></td>
-                        <td><p class="table">${provincia}</p></td>
-                    </tr>
-
-                    <tr>
                         <td><p class="table">Cuenta con seguro<br/>médico, indique cual</p></td>
                         <td><p class="table">${seguro_medico}</p></td>
                     </tr>
@@ -205,7 +200,7 @@ export const html = (fecha_inscripcion: string,
 				<br/>
 				<br/>
                 <p class="ft12">
-                    C.I.: ____________________________________________
+                    C.I.: ${num_ced}
                 </p>
             </div>
         </div>

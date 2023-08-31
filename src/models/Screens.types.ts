@@ -4,6 +4,7 @@ import { NovedadInterface } from './Novedad.model'
 import { Publicacion } from './Publicaciones.model'
 import { Ruta } from './Rutas'
 import { RegistroLocalSeguro } from './RegistroLocalSeguro'
+import { RegistroMiembro } from './RegistroMiembro'
 
 export type RootStackParamList = {
   Inicio: { reload: boolean } | undefined
@@ -17,6 +18,10 @@ export type RootStackParamList = {
   RegistroLocalSeguroRequisitos: { registerType: string } | undefined
   RegistroLocalSeguroFormulario: { registerType: string; initValues?: RegistroLocalSeguro } | undefined
   DescargarSubirPDF: undefined
+  RegistroMiembro: undefined
+  RequisitosMiembro: undefined
+  FormularioMiembro: { initValues?: RegistroMiembro } | undefined
+  PaginaDescargaMiembro: undefined
   Perfil: { userToken: string } | undefined
   ConsejoFormulario: { consejo: Consejo } | undefined
   NovedadFormulario: { publicidad: NovedadInterface } | undefined

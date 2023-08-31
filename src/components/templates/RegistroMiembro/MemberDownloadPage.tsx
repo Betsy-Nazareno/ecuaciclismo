@@ -6,8 +6,8 @@ import tw from 'twrnc'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import { RootState } from '../../../redux/store'
 import HeaderScreen from '../../moleculas/HeaderScreen'
-import { RegistroLocalSeguro } from '../../../models/RegistroLocalSeguro'
-import { html } from '../../../../assets/documents/Solicitud_registro_local_seguro'
+import { RegistroMiembro } from '../../../models/RegistroMiembro'
+import { html } from '../../../../assets/documents/Solicitud_registro_miembro'
 import { printToFileAsync } from 'expo-print'
 import { shareAsync } from 'expo-sharing'
 import ConfirmationPopUp from '../../organismos/ConfirmationPopUp'
@@ -23,8 +23,7 @@ import * as DocumentPicker from 'expo-document-picker'
 import * as Yup from 'yup'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { isDocumentResultType } from '../../../utils/ckeckTypes'
-import { newLocalSeguro } from '../../../lib/services/lugares.services'
-import { newPlaceRequest } from '../../../lib/services/solicitud.services'
+import { newMemberRequest } from '../../../lib/services/solicitud.services'
 import { guardarArchivo, eliminarArchivo } from '../../../lib/googleCloudStorage'
 import { getAdminTokens } from '../../../lib/services/notifications.services'
 import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
@@ -36,7 +35,7 @@ const DescargarPDF = () => {
   const { authToken, user } = useSelector((state: RootState) => state.user)
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
-  const [initValues, setInitValues] = React.useState<RegistroLocalSeguro>()
+  const [initValues, setInitValues] = React.useState<RegistroMiembro>()
   const [displayMenu, setDisplayMenu] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const { sendPushNotification } = usePermissionsNotifications()
@@ -53,7 +52,7 @@ const DescargarPDF = () => {
     try {
       let jsonValue = null
       while(jsonValue === null)
-        jsonValue = await AsyncStorage.getItem('registro-local-seguro-key')
+        jsonValue = await AsyncStorage.getItem('registro-miembro-key')
       setInitValues(JSON.parse(jsonValue))
     } catch (e) {
       console.error(e)
@@ -62,47 +61,47 @@ const DescargarPDF = () => {
 
   const handleDownload = async () => {
     setIsCharging(true)
+
     await getData()
     const fecha = new Date(Date.now())
     const fecha_registro = `${fecha.getDate().toString()}/${(fecha.getMonth()+1).toString()}/${fecha.getFullYear().toString()}`
-    const owner: string = (user?.first_name??'')+' '+(user?.last_name??'')
     const email: string= user?.email??''
-    const parqueadero: string = (initValues?.parqueadero===1) ? 'Sí' : 'No'
     let cedula1 = ''
     let cedula2 = ''
-    let payment = 'https://raw.githubusercontent.com/Betsy-Nazareno/ecuaciclismo/main/assets/celebracion_icon.png'
-
+    let payment = ''
+    
     const imagenc1 = initValues?.cedula[0] as any
     await uploadDoc(imagenc1).then(response => cedula1 = response )
     
     const imagenc2 = initValues?.cedula[1] as any
     await uploadDoc(imagenc2).then(response => cedula2 = response )
 
-    if(initValues?.payment && (initValues?.payment.length > 0) && initValues?.registerType !== 'Plan gratuito'){
+    if(initValues?.payment && (initValues?.payment.length > 0)){
       const imagenp = initValues?.payment[0] as any
       await uploadDoc(imagenp).then(response => payment = response )
     }
-
+    
     const file = await printToFileAsync({
       html: html(fecha_registro,
         initValues?.nombre || '',
         initValues?.direccion || '',
         initValues?.celular || '',
-        owner,
+        initValues?.fecha_nacimiento || '',
         cedula1,
         cedula2,
+        initValues?.tipo_sangre || '',
+        initValues?.ocupacion || '',
         email,
-        initValues?.servicio || '',
-        initValues?.hora_inicio || '',
-        initValues?.hora_fin || '',
         initValues?.ciudad || '',
-        parqueadero,
-        payment),
+        initValues?.seguro_med || '',
+        initValues?.contacto_emergencia || '',
+        payment,
+        initValues?.num_ced || ''),
       base64:false
-    })
-
-    const PDFlink : string = await guardarArchivo(FOLDERS_STORAGE.LUGARES, 'Solicitud_registro_local_seguro.pdf', file.uri)
-    const fileName : string = 'Solicitud_registro_local_seguro.pdf'
+    })    
+    
+    const PDFlink : string = await guardarArchivo(FOLDERS_STORAGE.LUGARES, 'Solicitud_registro_miembro.pdf', file.uri)
+    const fileName : string = 'Solicitud_registro_miemrbo.pdf'
     const result = await FileSystem.downloadAsync(
       PDFlink,
       FileSystem.documentDirectory + fileName
@@ -113,9 +112,7 @@ const DescargarPDF = () => {
     await eliminarArchivo(PDFlink)
     await eliminarArchivo(cedula1)
     await eliminarArchivo(cedula2)
-    if(initValues?.payment && (initValues?.payment.length > 0) && initValues?.registerType !== 'Plan gratuito'){
-      await eliminarArchivo(payment)
-    }
+    await eliminarArchivo(payment)
     setIsCharging(false)
   }
   
@@ -151,25 +148,18 @@ const DescargarPDF = () => {
     setIsSubmitting(true)
     await getData()
     if(initValues){
-      const isBeneficios: number = (initValues?.registerType !== 'Plan gratuito') ? 1 : 0
-      const imagen = initValues?.imagen[0] as any
-      let imageLink = ''
-      await uploadDoc(imagen).then(response => imageLink = response )
-      const resp1= await newLocalSeguro(authToken??'', initValues, isBeneficios, imageLink)
-      if(resp1?.status === 'success'){
-        let path_PDF = ''
-        await uploadDoc(document).then(response => path_PDF = response )
-        const resp2: string= await newPlaceRequest(authToken??'', resp1.token_lugar, path_PDF)
-        if(resp2 === 'success'){
-          setImg('verificacion_envio')
-          setText("Su solicitud ha sido enviada con exito, un administrador revisará y responderá a su solicitud dentro de los siguientes días. En la sección “Solicitudes” podrá ver el estado y respuesta a su solicitud.")
-          try {
-            await AsyncStorage.removeItem('registro-local-seguro-key')
-          } catch(e) {
-            console.error(e)
-          }
-          await sendNotificationToAdmins()
+      let path_PDF = ''
+      await uploadDoc(document).then(response => path_PDF = response )
+      const resp: string= await newMemberRequest(authToken??'', path_PDF)
+      if(resp === 'success'){
+        setImg('verificacion_envio')
+        setText("Su solicitud ha sido enviada con exito, un administrador revisará y responderá a su solicitud dentro de los siguientes días. En la sección “Solicitudes” podrá ver el estado y respuesta a su solicitud.")
+        try {
+          await AsyncStorage.removeItem('registro-miembro-key')
+        } catch(e) {
+          console.error(e)
         }
+        await sendNotificationToAdmins()
       }
     }
     setIsSubmitting(false)
@@ -181,14 +171,14 @@ const DescargarPDF = () => {
     const tokens = await getAdminTokens(authToken)
     await sendPushNotification({
       tokens,
-      title: 'Nueva solicitud de registro de local seguro',
-      body: `${capitalize(user?.first_name)} ${capitalize(user?.last_name)} ha enviado una solicitud de registro de local seguro y necesita aprobación.`,
+      title: 'Nueva solicitud de registro de miembro',
+      body: `${capitalize(user?.first_name)} ${capitalize(user?.last_name)} ha enviado una solicitud de registro de miembro y necesita aprobación.`,
     })
   }
 
   const handleCancel = async () => {
     try {
-      await AsyncStorage.removeItem('registro-local-seguro-key')
+      await AsyncStorage.removeItem('registro-miembro-key')
       setText('Su registro ha sido cancelado.')
     } catch(e) {
       console.error(e)
@@ -196,8 +186,6 @@ const DescargarPDF = () => {
     setShowModal(false)
     setDisplayMenu(true)
   }
-
-  const registerType: string = initValues?.registerType || ''
 
   const archivo: DocumentPicker.DocumentResult[] = []
 
@@ -207,7 +195,7 @@ const DescargarPDF = () => {
         setVisible={setShowModal}
         visible={showModal}
         imageName= 'caution'
-        body= 'En caso de no haber elegido el plan gratuito, no podemos asegurarle que su dinero sea devuelto si cancela su registro en este momento y ya ha realizado el pago del registro. ¿Desea proseguir con la cancelación del registro de todas formas?'
+        body= 'No podemos asegurarle que su dinero sea devuelto si cancela su registro en este momento y ya ha realizado el pago del registro. ¿Desea proseguir con la cancelación del registro de todas formas?'
         setConfirmation={handleCancel}
       />
 
@@ -221,8 +209,8 @@ const DescargarPDF = () => {
 
       <ScrollView showsVerticalScrollIndicator={false} style={tw`px-2 mb-8`}>
           <HeaderScreen
-              title="Registro de local seguro"
-              message="Forma parte de los locales seguros"
+              title="Registro de miembro"
+              message="Forma parte de los miembros de la comunidad de Ecuaciclismo App"
               srcImage={require('../../../../assets/registro_local.png')}
           />
           <View style={tw`flex flex-col justify-center mt-4 mx-6`}>
@@ -249,7 +237,7 @@ const DescargarPDF = () => {
             <Pressable 
               onPress={async () => {
                 await getData()
-                navigation.navigate('RegistroLocalSeguroFormulario', {registerType, initValues})
+                navigation.navigate('FormularioMiembro', {initValues})
               }}
             >
               <Text style={tw`text-m text-center font-bold underline ${TEXT_COLORS.DARK_BLUE}`}>

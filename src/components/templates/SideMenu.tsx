@@ -117,8 +117,8 @@ const SideMenu = (props: DrawerContentComponentProps) => {
         </Pressable>
 
         <Pressable
-          style={tw`${BACKGROUND_COLORS.ORANGE} rounded-3xl p-2 w-30 items-center`}
-          onPress={()=>handleClick('Seguridad')}
+          style={tw`${BACKGROUND_COLORS.ORANGE} rounded-3xl p-2 mb-8 w-30 items-center`}
+          onPress={()=> verifyPendingForm('registro-miembro-key', 'PaginaDescargaMiembro', 'RegistroMiembro')}
         >
           <Text style={tw`font-bold text-white`}>Ser miembro</Text>
         </Pressable>

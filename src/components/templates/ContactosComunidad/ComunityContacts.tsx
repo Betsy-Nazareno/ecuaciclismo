@@ -31,7 +31,7 @@ const ComunityContacts = () => {
       const result : DatosBasicosUser[] = comunidad.filter((val) =>
         (!contactosSeguros.some((item) => item.usuario_id === val.usuario_id))
         && (val.token_usuario!==user?.id_usuario)
-        && (val.tipo!=='No verificado')
+        && (val.tipo!=='No verificado' || val.admin)
       )
       
       setNoContactosSeguros(result)
