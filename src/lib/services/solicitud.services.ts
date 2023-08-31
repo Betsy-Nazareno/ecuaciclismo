@@ -5,11 +5,12 @@ export const newPlaceRequest = async (token: string, token_lugar?: string, path_
     try {
         const response = await axios({
             method: 'POST',
-            url: 'https://ecuaciclismoapp.pythonanywhere.com/api/solicitud/new_solicitud/',
+            url: 'https://ecuaciclismoapp.pythonanywhere.com/api/solicitud/new_solicitud/',  
             headers:{Authorization:'Token '+token},
             data:{
-                token_lugar: token_lugar? token_lugar: '',
+                token_lugar: token_lugar,
                 path_Pdf: path_Pdf? path_Pdf: '',
+
             },
         })
         return response?.data?.status || ""
@@ -48,6 +49,23 @@ export const getSolicitudById = async (token: string, token_solicitud: string) =
     }
 }
 
+
+export const newMemberRequest = async (token: string, path_Pdf: string) => {
+    try {
+        const response = await axios({
+            method: 'POST',
+            url: 'https://ecuaciclismoapp.pythonanywhere.com/api/solicitud/new_solicitud/',  
+            headers:{Authorization:'Token '+token},
+            data:{
+                path_Pdf: path_Pdf,
+            },
+        })
+        return response?.data?.status || ""
+    } catch (e) {
+        console.error(e)
+    }
+}
+
 export const responderSolicitud = async (
     authToken: string,
     token_solicitud: string,
@@ -66,4 +84,4 @@ export const responderSolicitud = async (
       console.error(e)
     }
   }
-  
+
