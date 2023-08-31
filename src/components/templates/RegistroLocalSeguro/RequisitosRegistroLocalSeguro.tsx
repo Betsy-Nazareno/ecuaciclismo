@@ -46,7 +46,7 @@ const RequisitosRegistroLocalSeguro = ({ registerType }: RequisitosRegistroLocal
         />
         <View style={tw`flex flex-col justify-center items-center`}>
             <View style={tw`py-4 px-8 justify-center items-center`}>
-                <Text style={tw`text-m text-black text-opacity-40 text-center font-bold`}>
+                <Text style={tw`text-sm text-black text-opacity-40 text-center font-bold`}>
                     Ten en cuenta los siguientes requisitos para registrarte como local seguro
                 </Text>
             </View>

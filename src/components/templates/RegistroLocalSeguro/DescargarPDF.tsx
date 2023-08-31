@@ -32,6 +32,7 @@ import { capitalize } from '../../../utils/capitalizeText'
 import Spinner from '../../atomos/Spinner'
 import * as FileSystem from 'expo-file-system'
 
+
 const DescargarPDF = () => {
   const { authToken, user } = useSelector((state: RootState) => state.user)
   const navigation =
@@ -44,6 +45,7 @@ const DescargarPDF = () => {
   const [ text, setText ] = React.useState<string>('Hubo un error, intentelo más tarde por favor.')
   const [ isCharging, setIsCharging ] = React.useState<boolean>(false)
   const [ isSubmitting, setIsSubmitting ] = React.useState<boolean>(false)
+
   
   React.useEffect(() => {
     (async () => await getData())()
@@ -116,6 +118,7 @@ const DescargarPDF = () => {
     if(initValues?.payment && (initValues?.payment.length > 0) && initValues?.registerType !== 'Plan gratuito'){
       await eliminarArchivo(payment)
     }
+
     setIsCharging(false)
   }
   
@@ -163,6 +166,7 @@ const DescargarPDF = () => {
         if(resp2 === 'success'){
           setImg('verificacion_envio')
           setText("Su solicitud ha sido enviada con éxito, un administrador revisará y responderá a su solicitud dentro de los siguientes días. En la sección “Solicitudes” podrá ver el estado y respuesta a su solicitud.")
+
           try {
             await AsyncStorage.removeItem('registro-local-seguro-key')
           } catch(e) {

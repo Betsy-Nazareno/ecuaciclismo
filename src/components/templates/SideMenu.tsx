@@ -5,18 +5,21 @@ import {
 import * as React from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { BACKGROUND_COLORS } from '../../utils/constants'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import tw from 'twrnc'
-import { ScreensDrawer } from '../../models/Screens.types'
+import { RootStackParamList, Screens, ScreensDrawer } from '../../models/Screens.types'
 import { setActiveTab } from '../../redux/drawerTabs'
 import OptionSideMenu from '../atomos/OptionSideMenu'
 import Ruler from '../atomos/Ruler'
 import UserInformation from '../moleculas/UserInformation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { RootState } from '../../redux/store'
 
 const SideMenu = (props: DrawerContentComponentProps) => {
   const dispatch = useDispatch()
-
+  const navigation = useNavigation<NavigationProp<RootStackParamList, Screens>>()
+  const {user} = useSelector((state: RootState) => state.user)
   const handleClick = (tab: ScreensDrawer) => {
     dispatch(setActiveTab({ activeTab: tab }))
     props.navigation.navigate(tab)
@@ -30,14 +33,18 @@ const SideMenu = (props: DrawerContentComponentProps) => {
         console.error(e)
       }
   }
-
+  const handlePress = () => {
+    return navigation.navigate('Perfil', { userToken: user?.id_usuario})
+  }
   return (
     <DrawerContentScrollView {...props}>
       <View style={[tw`flex flex-row items-center pl-4`, styles.container]}>
+        <Pressable onPress={handlePress}>
         <UserInformation />
+        </Pressable>
       </View>
 
-      <View style={tw`mt-2 mb-45`}>
+      <View style={tw`mt-2 mb-30`}>
         <View>
           <OptionSideMenu
             label="Inicio"
@@ -103,6 +110,15 @@ const SideMenu = (props: DrawerContentComponentProps) => {
             name="Lugares"
             source={require('../../../assets/lugares.png')}
             handleClick={() => handleClick('Lugares')}
+          />
+          <Ruler style="w-11/12 bg-[#e6e6e6] mx-auto" />
+        </View>
+        <View>
+          <OptionSideMenu
+            label="Solicitudes"
+            name="Solicitudes"
+            source={require('../../../assets/solicitud.png')}
+            handleClick={() => handleClick('Solicitudes')}
           />
           <Ruler style="w-11/12 bg-[#e6e6e6] mx-auto" />
         </View>

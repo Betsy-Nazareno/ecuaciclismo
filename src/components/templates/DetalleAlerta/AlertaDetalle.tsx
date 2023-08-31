@@ -180,7 +180,7 @@ const AlertaDetalle = ({ token }: DetallesAlertaProps) => {
                     name={alerta?.tipo}
                     label={alerta?.tipo}
                     backgroundColor={BACKGROUND_COLORS.WHITE}
-                    stylesProp={'border-2 border-solid ${BORDER_COLORS.DARK_BLUE} '}
+                    stylesProp={`border-2 border-solid ${TEXT_COLORS.DARK_BLUE} `}
                     styleText={tw`${TEXT_COLORS.DARK_BLUE} `}
                     
                   />

@@ -23,5 +23,5 @@ export const isImagePickerResult = (
 ): file is ImagePickerResult => {
   const fi = file as ImagePickerResult;
 
-  return 'uri' in fi.assets[0] && 'type' in fi.assets[0] && 'width' in fi.assets[0]  ;
+  return 'uri' in fi && 'type' in fi && 'width' in fi  ;
 }

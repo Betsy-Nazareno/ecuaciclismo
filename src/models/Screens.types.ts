@@ -5,6 +5,7 @@ import { Publicacion } from './Publicaciones.model'
 import { Ruta } from './Rutas'
 import { RegistroLocalSeguro } from './RegistroLocalSeguro'
 import { RegistroMiembro } from './RegistroMiembro'
+import { Solicitud } from './Solicitud'
 
 export type RootStackParamList = {
   Inicio: { reload: boolean } | undefined
@@ -32,6 +33,7 @@ export type RootStackParamList = {
   RutasFormulario: { ruta: Ruta } | undefined
   DetalleRuta: { token: string } | undefined
   DetalleAlerta:{token: string} | undefined
+  DetalleSolicitud:{solicitud: Solicitud} | undefined
   InicioRastreo: { ruta: Ruta } | undefined
   RastreoUbicacion: { ruta: Ruta } | undefined
   RutaIncompleta: { tokenRuta: string; tokenUsuario: string } | undefined
@@ -40,6 +42,7 @@ export type RootStackParamList = {
   Alertas: undefined
   AlertaFormulario: { data: RutaCoordinadas } | undefined
   LugarFormulario: { longitud: number | 0; latitud:number | 0 } | undefined
+  Solicitudes: undefined
 }
 
 export type Screens =
@@ -71,6 +74,8 @@ export type Screens =
   | 'RegistroLocalSeguroFormulario'
   | 'DescargarSubirPDF'
   | 'LugarFormulario'
+  | 'DetalleSolicitud'
+  | 'Solicitudes'
 
 export type RootDrawerParamList = {
   HomeStack: undefined
@@ -86,6 +91,7 @@ export type RootDrawerParamList = {
   ContactosSeguros: undefined
   Seguridad: undefined
   Lugares: undefined
+  Solicitudes: undefined
 }
 
 export type ScreensDrawer =
@@ -101,4 +107,5 @@ export type ScreensDrawer =
   | 'ContactosSeguros'
   | 'Seguridad'
   | 'Lugares'
+  | 'Solicitudes'
   

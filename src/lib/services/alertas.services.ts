@@ -175,12 +175,14 @@ const guardarMultimedia = async (multimedia: ImagePickerResult[]) => {
   for (let i = 0; i < multimedia?.length; i++) {
     const file = multimedia[i]
     const isDocResult = isImagePickerResult(file)
-
-    if (isDocResult && file.canceled!=="false") {
-      const { uri, type } = file.assets[0]
+    console.log('isDocResult', isDocResult)
+    console.log('file', file)
+    console.log('file.cancelled', file.cancelled)
+    if (isDocResult && file.cancelled==false) {
+      const { uri, type } = file
       const name= uri.split('/').pop() || ''
       const fileType = type
-
+      console.log('type', type)
       const path = await guardarArchivo(
         FOLDERS_STORAGE.ALERTAS,
         name,

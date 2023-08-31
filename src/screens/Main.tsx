@@ -51,6 +51,9 @@ import FormularioMiembro from './FormularioMiembro'
 import PaginaDescargaMiembro from './PaginaDescargaMiembro'
 import RegistroMiembro from './RegistroMiembro'
 import RequisitosMiembro from './RequisitosMiembro'
+import Solicitudes from './Solicitudes'
+import DetalleSolicitud from './DetalleSolicitud'
+
 
 const Stack = createNativeStackNavigator()
 const Drawer = createDrawerNavigator()
@@ -114,6 +117,8 @@ const Main = () => {
         <Stack.Screen name="AlertaFormulario" component={AlertaFormulario}/>
         <Stack.Screen name="LugarFormulario" component={LugarFormulario}/>
         <Stack.Screen name="MapView" component={MapViewScreen} />
+        <Stack.Screen name="DetalleSolicitud" component={DetalleSolicitud} />
+        <Stack.Screen name="Solicitudes" component={Solicitudes} />
         </Stack.Navigator>
     )
   }
@@ -154,6 +159,7 @@ const Main = () => {
         <Drawer.Screen name="PaginaDescargaMiembro" component={PaginaDescargaMiembro} />
         <Drawer.Screen name="RegistroMiembro" component={RegistroMiembro} />
         <Drawer.Screen name="RequisitosMiembro" component={RequisitosMiembro} />
+        <Drawer.Screen name="Solicitudes" component={Solicitudes} />
       </Drawer.Navigator>
     )
   }

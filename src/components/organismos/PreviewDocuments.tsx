@@ -18,20 +18,16 @@ const PreviewDocuments = ({ values, handleDelete }: PreviewDocumentsProps) => {
     const multimedia = [...values]
     const fileClicked =
       multimedia.find((file) => {
-        const fileUri = file.uri || file.link  || file.assets[0]?.uri
+        const fileUri = file.uri || file.link 
         return fileUri === name
       }) || []
-    const uriDelete = fileClicked.uri || fileClicked.link || fileClicked.assets[0]?.uri
+    const uriDelete = fileClicked.uri || fileClicked.link
     handleDelete(uriDelete)
   }
 
   const renderPreview = (file: any) => {
-    let typeFile = file.mimeType?.split('/')[0] || file.tipo 
-    let uri = file.uri || file.link 
-    if (file.assets && file.assets.length > 0) {
-      typeFile = file.mimeType?.split('/')[0] || file.tipo  || file.assets[0].type
-      uri= file.mimeType?.split('/')[0] || file.tipo || file.assets[0].uri
-  }
+    const typeFile = file.mimeType?.split('/')[0] || file.tipo  || file.type
+    const uri = file.uri || file.link 
     switch (typeFile) {
       case MIME_TYPES.IMAGEN:
       case MIME_TYPES.IMAGE:
@@ -68,13 +64,7 @@ const PreviewDocuments = ({ values, handleDelete }: PreviewDocumentsProps) => {
         if (file.tipo === 'audio') {
           return null
         }
-        let uri = file.uri || file.link;
-        if (file.assets && file.assets.length > 0) {
-          uri = file.assets[0]?.uri || uri;
-        }
-        if (!uri) {
-          return null;
-        }    
+        const uri = file.uri || file.link;   
         return (
           <Gap px="2" py="2" styles="relative" key={uri}>
             {renderPreview(file)}
