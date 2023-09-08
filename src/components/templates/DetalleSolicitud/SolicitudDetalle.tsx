@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text,View, Image, Pressable, Modal, TouchableOpacity, ImageSourcePropType, Platform } from 'react-native'
+import { Text,View, Image, Pressable, Modal, TouchableOpacity, ImageSourcePropType, Platform, Linking, Alert } from 'react-native'
 import { Solicitud } from '../../../models/Solicitud'
 import { RootState } from '../../../redux/store'
 import { useSelector } from 'react-redux'
@@ -9,11 +9,10 @@ import tw from 'twrnc'
 import DetalleAlertante from '../../moleculas/DetalleUsuario'
 import {  getTiempoTranscurridoReseña } from '../../../utils/TiempoTranscurrido'
 import InfoEstadoSolicitud from '../../moleculas/infoEstadoSolicitud'
-import { BACKGROUND_COLORS, HEIGHT_DIMENSIONS, TEXT_COLORS, WIDTH_DIMENSIONS, uri_perfil_icon } from '../../../utils/constants'
+import { BACKGROUND_COLORS, HEIGHT_DIMENSIONS, MIME_TYPES, TEXT_COLORS, WIDTH_DIMENSIONS} from '../../../utils/constants'
 import ResponderSolicitud from '../../moleculas/ResponderSolicitud'
 import { CustomText } from '../../atomos/CustomText'
 import MapView, { Marker } from 'react-native-maps'
-import * as FileSystem from 'expo-file-system'
 import Gap from '../../atomos/Gap'
 import RutasParticipantes from '../DetalleRutas/RutasParticipantes'
 import AdminValidator from '../AdminValidator'
@@ -39,7 +38,7 @@ const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
     )
     const [hasRefresh, setHasRefresh] = React.useState(false)
     const [detalleUser, setDetalleUser] = React.useState<Partial<User>>({})
-
+    const [downloaded, setDownloaded] = React.useState(false);
     React.useEffect(() => {
       ;(async () => {
         setSolicitud(solicitud)
@@ -55,8 +54,19 @@ const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
       })()
     }, [ hasRefresh, refreshUser])
 
-
- 
+    const url = solicitud.path_Pdf;
+    const handlePress = React.useCallback(async () => {
+      // Checking if the link is supported for links with custom URL scheme.
+      const supported = await Linking.canOpenURL(url);
+  
+      if (supported) {
+        // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+        // by some browser in the mobile
+        await Linking.openURL(url);
+      } else {
+        Alert.alert(`Don't know how to open this URL: ${url}`);
+      }
+    }, [url]);
     const handleCloseMapView = () => {
       setShowMapView(false);
     };
@@ -69,20 +79,6 @@ const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
       longitude: solicitud?.ubicacion?.coordinateX.longitude || -79.93498552590609,
       longitudeDelta: 0.13138934969902039,
     }
-
-    const onClickDownload = async (link: string) => {
-      const downloadResumable = FileSystem.createDownloadResumable(
-        link,
-        FileSystem.documentDirectory + 'file.pdf'
-      )
-      try {
-        const { uri } = (await downloadResumable.downloadAsync()) || {}
-        if (!uri) return
-      } catch (e) {
-        console.error(e)
-      }
-    }
-  
     return isRending ? (
       <EmptyPublicacionDetalle />
     ) : (
@@ -192,18 +188,19 @@ const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
           )}
           
           {solicitud.path_Pdf ? (
-            <Pressable
-              onPress={() => onClickDownload(solicitud.path_Pdf? solicitud.path_Pdf:'' )}
-              style={tw`flex flex-row items-center px-3 mt-3`}
-            >
-              <Image
-                source={require('../../../../assets/pdf_icon.png')}
-                style={{ width: 30, height: 30 }}
-              />
-              <Gap px="2">
-                <Text style={tw`underline ${TEXT_COLORS.ORANGE}`}>file.pdf</Text>
-              </Gap>
-            </Pressable>  
+                <Pressable
+                onPress={handlePress}
+                style={tw`flex flex-row items-center px-3 mt-3`}
+                >
+                <Image
+                  source={require('../../../../assets/pdf_icon.png')}
+                  style={{ width: 30, height: 30 }}
+                />
+                <Gap px="2">
+                  <Text style={tw`underline ${TEXT_COLORS.ORANGE}`}>file.pdf</Text>
+                </Gap>
+                </Pressable>
+
           ):null}
 
         <Modal visible={showMapView} transparent animationType="slide">

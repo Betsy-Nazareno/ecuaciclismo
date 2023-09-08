@@ -159,8 +159,6 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
       }
     })()
   }, [location])
-  console.log('location:',location)
-  console.log('ruta.ubicacion:',ruta.ubicacion)
 
   const stopTracking = async () => {
     if (TaskManager.isTaskDefined(TASK_NAME)) {

@@ -61,7 +61,6 @@ const MediaPicker = ({
     if (result.cancelled===false) {
       if(imageAndVideo(result)) {
         setFieldValue(field, [...(values || []), result]);
-        console.log("result:",result)
       }
       
     }

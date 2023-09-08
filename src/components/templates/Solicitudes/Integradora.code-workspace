@@ -1,12 +1,7 @@
 {
-    "folders": [
-        {
-            "path": "../../../.."
-        },
-        {
-            "path": "../../../../../ecua-ciclismo"
-        }
-    ],
     "settings": {
+        "files.associations": {
+            "plyconfig.json": "jsonc"
+        }
     }
 }

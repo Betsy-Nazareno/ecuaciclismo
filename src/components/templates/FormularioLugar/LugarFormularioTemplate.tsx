@@ -13,6 +13,12 @@ import { new_lugar } from "../../../lib/services/lugares.services";
 import LugarContenidoFormulario from "./LugarContenidoFormulario";
 import { LugarValidationSchema } from "../../../schemas/LugarSchema";
 import { newPlaceRequest} from "../../../lib/services/solicitud.services";
+import NotificationPopUp from "../../organismos/NotificationPopUp";
+import { getAdminTokens } from "../../../lib/services/notifications.services";
+import { usePermissionsNotifications } from "../../../hooks/usePermissionsNotifications";
+import { capitalize } from "../../../utils/capitalizeText";
+const { sendPushNotification } = usePermissionsNotifications()
+
 interface LugarFormularioProps {
     Prop?: Lugar,
     longitud: number,
@@ -24,9 +30,13 @@ interface LugarFormularioProps {
     longitud,
     latitud,
   }: LugarFormularioProps) => {
+    const [displayMenu, setDisplayMenu] = React.useState(false)
+    const [ img, setImg ] = React.useState<string>('caution')
+    const [ text, setText ] = React.useState<string>('Hubo un error, intentelo más tarde por favor.')
+
     const [isLoading, setIsLoading] = React.useState(false)
     const [lugarProp, setLugarProp] = React.useState<Lugar>()
-    const { authToken } = useSelector((state: RootState) => state.user)
+    const { authToken, user } = useSelector((state: RootState) => state.user)
     const navigation = useNavigation<NavigationProp<RootStackParamList, Screens>>()
     const {lugarHasModified} = useSelector((state: RootState) => state.lugar)
 
@@ -54,12 +64,25 @@ interface LugarFormularioProps {
       },
 
     }
-  
+    const sendNotificationToAdmins = async () => {
+      if (!authToken) return
+      const tokens = await getAdminTokens(authToken)
+      await sendPushNotification({
+        tokens,
+        title: 'Nueva solicitud de recomendación de lugar',
+        body: `${capitalize(user?.first_name)} ${capitalize(user?.last_name)} ha enviado una solicitud de recomendación de lugar y necesita aprobación.`,
+      })
+    }
+    
     const handleSubmit = async (lugar: Lugar) => {
       setIsLoading(true)
       if (authToken) {
          const token_lugar=await new_lugar(authToken,lugar)
-         await newPlaceRequest(authToken,token_lugar)
+         const message: string= await newPlaceRequest(authToken,token_lugar)
+         if(message === 'success'){
+          setImg('verificacion_envio')
+          setText("Su solicitud ha sido enviada con éxito, un administrador revisará y responderá a su solicitud dentro de los siguientes días. En la sección “Solicitudes” podrá ver el estado y respuesta a su solicitud.")
+         }
       }
       dispatch(
         setLugarHasModified({
@@ -67,13 +90,24 @@ interface LugarFormularioProps {
         })
       )
       setIsLoading(false)
-      navigation.navigate('Solicitudes')
+      await sendNotificationToAdmins()
+      setDisplayMenu(true)
+
     }
     const handleCancel = () => {
         navigation.goBack()
     }
   
     return (
+      <>
+      <NotificationPopUp
+        setVisible= {setDisplayMenu}
+        visible= {displayMenu}
+        imageName= {img}
+        body={text}
+        setConfirmation={() => navigation.navigate('Solicitudes')}
+      />
+
       <ScrollView showsVerticalScrollIndicator={false} style={tw`px-2 mb-8`}>
         <HeaderScreen
           title="Recomienda un Lugar"
@@ -93,6 +127,7 @@ interface LugarFormularioProps {
           />
         </Formik>
       </ScrollView>
+    </>
     )
   }
   

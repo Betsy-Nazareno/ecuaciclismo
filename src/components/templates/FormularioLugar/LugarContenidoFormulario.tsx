@@ -11,6 +11,7 @@ import SelectInput from '../../atomos/SelectInput'
 import { Lugar } from '../../../models/Lugares'
 import GalleryButton from '../../moleculas/GalleryButton'
 import UnfocusButton from '../../atomos/UnfocusButton'
+
 interface LugarFormularioProps {
   isSubmiting: boolean
   onCancel: () => void
@@ -142,12 +143,12 @@ const LugarContenidoFormulario = ({ isSubmiting , onCancel}: LugarFormularioProp
         <UnfocusButton
             label="Cancelar"
             handleClick={onCancel}
-            style={`${BACKGROUND_COLORS.GRAY} w-30 shadow-sm`}
+            style={`${BACKGROUND_COLORS.GRAY} w-30 shadow-sm mr-4`}
         />
         <SecondaryButton
             label="Recomendar Lugar"
             handleClick={handleSubmit}
-            style={`${BACKGROUND_COLORS.ORANGE} w-60 shadow-sm`}
+            style={`${BACKGROUND_COLORS.ORANGE} w-40 shadow-sm`}
         />
         </View>
       )}

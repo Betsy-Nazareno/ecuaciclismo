@@ -21,7 +21,7 @@ const converterAlerta= (alerta: Alerta)=>{
 } 
 export const agregarAlerta = async (
   alerta: Alerta,
-  token: string
+  token: string,
 ) => {
   try {
     const { audios, multimedia } = alerta
@@ -35,13 +35,14 @@ export const agregarAlerta = async (
       multimedia: [...audiosPaths, ...multimediaPaths],
       colaboraciones:alerta.colaboraciones,
     }
+    console.log(data.ubicacion)
     const response=await axios({
       method: 'POST',
       url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/new_alerta/',
       data,
       headers: { Authorization: 'Token ' + token },
     })
-    return response.data?.data
+    return response.data
   } catch (e) {
     console.error(e)
   }
@@ -175,14 +176,10 @@ const guardarMultimedia = async (multimedia: ImagePickerResult[]) => {
   for (let i = 0; i < multimedia?.length; i++) {
     const file = multimedia[i]
     const isDocResult = isImagePickerResult(file)
-    console.log('isDocResult', isDocResult)
-    console.log('file', file)
-    console.log('file.cancelled', file.cancelled)
     if (isDocResult && file.cancelled==false) {
       const { uri, type } = file
       const name= uri.split('/').pop() || ''
       const fileType = type
-      console.log('type', type)
       const path = await guardarArchivo(
         FOLDERS_STORAGE.ALERTAS,
         name,

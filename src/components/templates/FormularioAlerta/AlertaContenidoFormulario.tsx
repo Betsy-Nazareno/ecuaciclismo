@@ -9,7 +9,7 @@ import CreatableAudioRecord from '../../organismos/CreatableAudioRecord'
 import tw from 'twrnc'
 import Spinner from '../../atomos/Spinner'
 import {
-  Alerta,
+  Alerta, RutaCoordinadas,
 } from '../../../models/Alertas'
 import { getColaboracionesRutas } from '../../../lib/services/rutas.services'
 import { Audio } from 'expo-av'
@@ -22,6 +22,7 @@ import FieldTitle from '../../atomos/FieldTitle'
 import CustomSwitch from '../../atomos/CustomSwitch'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
+import * as Location from 'expo-location';
 interface AlertaFormularioProps {
   isSubmiting: boolean
 }
@@ -30,13 +31,15 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
   const { values, setFieldValue, handleSubmit } =useFormikContext<Alerta>()
   const [colaboracionesCatalog, setColaboracionesCatalog] = React.useState([])
   const [hasCollaborations, setHasCollaborations] = React.useState(false)
-  
+  const [location, setLocation] =React.useState<RutaCoordinadas>()
+
 
   React.useEffect(() => {
   ;(async () => {
     if (authToken) {
       setColaboracionesCatalog(await getColaboracionesRutas(authToken))
     }
+    getLocationAsync();
   })()
   }, [])
   React.useEffect(() => {
@@ -58,6 +61,47 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
       }),
     ])
   }
+  //obtener ubicacion
+  const getLocationAsync = async () => {
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+  
+      if (status !== 'granted') {
+        const temp={
+          coordinateX: {
+            latitude:-2.1538019492930163,
+            longitude: -79.88844282925129,
+          },
+          coordinateY: {
+            latitude: -2.1453200715782175,
+            longitude: -79.89056378602983,
+          }
+        }
+        setLocation(temp);
+        return { errorMsg: 'Permiso de ubicación denegado', coordinates: null };
+      }
+  
+      const locationTemp = await Location.getCurrentPositionAsync({});
+      const temp={
+        coordinateX: {
+          latitude: locationTemp.coords.latitude,
+          longitude: locationTemp.coords.longitude,
+        },
+        coordinateY: {
+          latitude: -2.1453200715782175,
+          longitude: -79.89056378602983,
+        }
+      }
+      setLocation(temp);
+      
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
+  const updateLocation=()=>{
+    setFieldValue('ubicacion',location)
+  }
   const addVisibilidad = (value: string) => {
     const exists = values.visibilidad.find((tipoUsuario) => tipoUsuario === value)
     if (!exists) {
@@ -71,7 +115,6 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
       ...(visibilidad || []).filter((user) => user !== value),
     ])
   }
-
   // Función para manejar el tipo de alerta y actualizar la descripción
   const handleTipoAlertaChange = (value: string) => {
     setFieldValue('tipo', value)
@@ -207,9 +250,10 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
         <View style={tw`flex flex-row justify-center items-center my-6`}>
           <SecondaryButton
             label="Enviar Alerta"
-            handleClick={handleSubmit}
+            handleClick={() => { handleSubmit(); updateLocation(); }}
             style={`${BACKGROUND_COLORS.ORANGE} w-48 shadow-sm`}
           />
+          
         </View>
       )}
     </>

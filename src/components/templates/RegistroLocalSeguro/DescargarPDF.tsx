@@ -218,7 +218,7 @@ const DescargarPDF = () => {
         visible= {displayMenu}
         imageName= {img}
         body={text}
-        setConfirmation={() => navigation.navigate('Inicio')}
+        setConfirmation={() => navigation.navigate('Solicitudes')}
       />
 
       <ScrollView showsVerticalScrollIndicator={false} style={tw`px-2 mb-8`}>

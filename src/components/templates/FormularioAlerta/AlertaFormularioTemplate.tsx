@@ -16,6 +16,7 @@ import { Formik } from "formik";
 import tw from 'twrnc'
 import { RutaCoordinadas } from "../../../models/Alertas";
 import * as Location from 'expo-location';
+import NotificationPopUp from "../../organismos/NotificationPopUp";
 
 
 interface AlertaFormularioProps {
@@ -30,7 +31,6 @@ interface AlertaFormularioProps {
     const { authToken, user } = useSelector((state: RootState) => state.user)
     const [isLoading, setIsLoading] = React.useState(false)
     const [alertaProp, setalertaProp] = React.useState<Alerta>()
-    const [location, setLocation] =React.useState<RutaCoordinadas>()
     
     const navigation =
       useNavigation<NavigationProp<RootStackParamList, Screens>>()
@@ -39,56 +39,23 @@ interface AlertaFormularioProps {
     )
     const { sendPushNotification } = usePermissionsNotifications()
     const dispatch = useDispatch()
+    const [displayMenu, setDisplayMenu] = React.useState(false)
+    const [ img, setImg ] = React.useState<string>('caution')
+    const [ text, setText ] = React.useState<string>('Hubo un error, intentelo más tarde por favor.')
+
   
     React.useEffect(() => {
       setalertaProp(Prop)
-      getLocationAsync();
     }, [])
 
-    //obtener ubicacion
-    const getLocationAsync = async () => {
-      try {
-        if(ubicacion){
-          setLocation(ubicacion)
-          return;
-        }
-        if(alertaProp?.ubicacion){
-          setLocation(alertaProp?.ubicacion)
-          return;
-        }
-        const { status } = await Location.requestForegroundPermissionsAsync();
-    
-        if (status !== 'granted') {
-          const temp={
-            coordinateX: {
-              latitude:-2.1538019492930163,
-              longitude: -79.88844282925129,
-            },
-            coordinateY: {
-              latitude: -2.1453200715782175,
-              longitude: -79.89056378602983,
-            }
-          }
-          setLocation(temp);
-          return { errorMsg: 'Permiso de ubicación denegado', coordinates: null };
-        }
-    
-        const locationTemp = await Location.getCurrentPositionAsync({});
-        const temp={
-          coordinateX: {
-            latitude: locationTemp.coords.latitude,
-            longitude: locationTemp.coords.longitude,
-          },
-          coordinateY: {
-            latitude: -2.1453200715782175,
-            longitude: -79.89056378602983,
-          }
-        }
-        setLocation(temp);
-        
-      } catch (error) {
-        console.log(error);
-
+    const temp={
+      coordinateX: {
+        latitude: -2.1453200715782175,
+        longitude: -79.89056378602983,
+      },
+      coordinateY: {
+        latitude: -2.1453200715782175,
+        longitude: -79.89056378602983,
       }
     }
     const initialValues = {
@@ -98,17 +65,21 @@ interface AlertaFormularioProps {
       estado: alertaProp?.estado || 'En curso',
       multimedia: alertaProp?.multimedia || [],
       audios: alertaProp?.audios || [],
-      ubicacion: location,
+      ubicacion: ubicacion || temp,
       visibilidad:alertaProp?.visibilidad || [],
       
     }
-
     const handleSubmit = async (alerta: Alerta) => {
       setIsLoading(true)
 
       if (authToken) {
-        const tokens= await agregarAlerta(alerta, authToken)
-        console.log(tokens)
+        const data= await agregarAlerta(alerta, authToken)
+        const tokens = data?.tokens
+        const message: string= data?.status
+        if(message === 'success'){
+          setImg('verificacion_envio')
+          setText("Su Alerta se ha enviado con éxito")
+         }
         await sendPushNotification({
           tokens,
           title: 'Nueva Alerta',
@@ -123,26 +94,35 @@ interface AlertaFormularioProps {
         })
       )
       setIsLoading(false)
-      navigation.navigate('Alertas')
+      setDisplayMenu(true)
     }
   
     return (
-      <ScrollView showsVerticalScrollIndicator={false} style={tw`px-2 mb-8`}>
-        <HeaderScreen
-          title="Crear Alerta"
-          message="¡Envia una alerta a la comunidad!"
-          srcImage={require('../../../../assets/alertaBanner.png')}
-        />
-        <Formik
-          initialValues={initialValues}
-          validationSchema={AlertaValidationSchema}
-          onSubmit={handleSubmit}
-        >
-          <AlertaContenidoFormulario
-            isSubmiting={isLoading} 
+      <>
+        <NotificationPopUp
+        setVisible= {setDisplayMenu}
+        visible= {displayMenu}
+        imageName= {img}
+        body={text}
+        setConfirmation={() => navigation.navigate('Alertas')}
+      />
+        <ScrollView showsVerticalScrollIndicator={false} style={tw`px-2 mb-8`}>
+          <HeaderScreen
+            title="Crear Alerta"
+            message="¡Envia una alerta a la comunidad!"
+            srcImage={require('../../../../assets/alertaBanner.png')}
           />
-        </Formik>
-      </ScrollView>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={AlertaValidationSchema}
+            onSubmit={handleSubmit}
+          >
+            <AlertaContenidoFormulario
+              isSubmiting={isLoading} 
+            />
+          </Formik>
+        </ScrollView>
+      </>
     )
   }
   
