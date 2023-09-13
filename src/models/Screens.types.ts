@@ -6,6 +6,7 @@ import { Ruta } from './Rutas'
 import { RegistroLocalSeguro } from './RegistroLocalSeguro'
 import { RegistroMiembro } from './RegistroMiembro'
 import { Solicitud } from './Solicitud'
+import { User } from '../components/templates/RegistroVerificado/VerifiedRegister'
 
 export type RootStackParamList = {
   Inicio: { reload: boolean } | undefined
@@ -23,6 +24,8 @@ export type RootStackParamList = {
   RequisitosMiembro: undefined
   FormularioMiembro: { initValues?: RegistroMiembro } | undefined
   PaginaDescargaMiembro: undefined
+  RegistroVerificado: undefined
+  SeleccionarUsers: undefined
   Perfil: { userToken: string } | undefined
   ConsejoFormulario: { consejo: Consejo } | undefined
   NovedadFormulario: { publicidad: NovedadInterface } | undefined
@@ -76,6 +79,12 @@ export type Screens =
   | 'LugarFormulario'
   | 'DetalleSolicitud'
   | 'Solicitudes'
+  | 'RegistroMiembro'
+  | 'RequisitosMiembro'
+  | 'FormularioMiembro'
+  | 'PaginaDescargaMiembro'
+  | 'RegistroVerificado'
+  | 'SeleccionarUsers'
 
 export type RootDrawerParamList = {
   HomeStack: undefined

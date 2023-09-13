@@ -132,12 +132,21 @@ const SideMenu = (props: DrawerContentComponentProps) => {
           <Text style={tw`font-bold text-white`}>Registrar local</Text>
         </Pressable>
 
-        <Pressable
-          style={tw`${BACKGROUND_COLORS.ORANGE} rounded-3xl p-2 mb-8 w-30 items-center`}
-          onPress={()=> verifyPendingForm('registro-miembro-key', 'PaginaDescargaMiembro', 'RegistroMiembro')}
-        >
-          <Text style={tw`font-bold text-white`}>Ser miembro</Text>
-        </Pressable>
+        {(user?.tipo === 'Verificado') ? (
+          <Pressable
+            style={tw`${BACKGROUND_COLORS.ORANGE} rounded-3xl p-2 mb-8 w-30 items-center`}
+            onPress={()=> verifyPendingForm('registro-miembro-key', 'PaginaDescargaMiembro', 'RegistroMiembro')}
+          >
+            <Text style={tw`font-bold text-white`}>Ser miembro</Text>
+          </Pressable>
+        ) : (
+          <Pressable
+            style={tw`${BACKGROUND_COLORS.ORANGE} rounded-3xl p-2 mb-8 w-30 items-center`}
+            onPress={()=> navigation.navigate('RegistroVerificado')}
+          >
+            <Text style={tw`font-bold text-white`}>Verificar cuenta</Text>
+          </Pressable>
+        )}
       </View>
 
     </DrawerContentScrollView>

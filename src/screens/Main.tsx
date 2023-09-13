@@ -53,6 +53,8 @@ import RegistroMiembro from './RegistroMiembro'
 import RequisitosMiembro from './RequisitosMiembro'
 import Solicitudes from './Solicitudes'
 import DetalleSolicitud from './DetalleSolicitud'
+import RegistroVerificado from './RegistroVerificado'
+import SeleccionarUsers from './SeleccionarUsers'
 
 
 const Stack = createNativeStackNavigator()
@@ -159,6 +161,8 @@ const Main = () => {
         <Drawer.Screen name="PaginaDescargaMiembro" component={PaginaDescargaMiembro} />
         <Drawer.Screen name="RegistroMiembro" component={RegistroMiembro} />
         <Drawer.Screen name="RequisitosMiembro" component={RequisitosMiembro} />
+        <Drawer.Screen name="RegistroVerificado" component={RegistroVerificado} />
+        <Drawer.Screen name="SeleccionarUsers" component={SeleccionarUsers} />
         <Drawer.Screen name="Solicitudes" component={Solicitudes} />
       </Drawer.Navigator>
     )

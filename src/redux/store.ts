@@ -14,6 +14,7 @@ import AlertaBusqueda from './alertaBusqueda'
 import RegistroLocalSeguro from './RegistroLocalSeguro'
 import LugarReducer from './lugar'
 import SolicitudReducer from './solicitud'
+import RegistroVerificado from './RegistroVerificado'
 
 export const store = configureStore({
   reducer: {
@@ -32,6 +33,7 @@ export const store = configureStore({
     registroLocalSeguro: RegistroLocalSeguro,
     lugar: LugarReducer,
     solicitud: SolicitudReducer,
+    verificado: RegistroVerificado,
   },
 })
 

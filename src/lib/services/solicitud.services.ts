@@ -66,6 +66,7 @@ export const newMemberRequest = async (token: string, path_Pdf: string) => {
     }
 }
 
+
 export const responderSolicitud = async (
     authToken: string,
     token_solicitud: string,
@@ -85,3 +86,21 @@ export const responderSolicitud = async (
     }
   }
 
+
+  export const newVerifiedRequest = async (token: string, description: string, image: string, users: any[]) => {
+    try {
+        const response = await axios({
+            method: 'POST',
+            url: 'https://ecuaciclismoapp.pythonanywhere.com/api/solicitud/new_solicitud_verificado/',  
+            headers:{Authorization:'Token '+token},
+            data:{
+                descripcion: description,
+                imagen: image,
+                users: users,
+            },
+        })
+        return response?.data?.status || ""
+    } catch (e) {
+        console.error(e)
+    }
+}

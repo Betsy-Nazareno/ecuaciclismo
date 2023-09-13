@@ -16,7 +16,7 @@ import { RegistroMiembro } from '../../../models/RegistroMiembro'
 const FormularioRegistroLocalSeguroCampos = () => {
   const { values, setFieldValue, handleSubmit } = useFormikContext<RegistroMiembro>()
   const [ showField, setShowField ] = React.useState<boolean>(false)
-  const [isChecked, setIsChecked] = React.useState(0)
+  const [ isChecked, setIsChecked ] = React.useState(0)
  
   React.useEffect(() => {
     (values.seguro_med === 'No') ? setIsChecked(2) :
