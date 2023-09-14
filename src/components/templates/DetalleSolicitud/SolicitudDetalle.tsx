@@ -49,6 +49,7 @@ const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
         if (authToken) {
           const detalle = await getDetalleUsuario(authToken, user?.id_usuario)
           setDetalleUser(detalle)
+
         }
       })()
     }, [ hasRefresh, refreshUser])
@@ -59,8 +60,7 @@ const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
       const supported = await Linking.canOpenURL(url);
   
       if (supported) {
-        // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-        // by some browser in the mobile
+
         await Linking.openURL(url);
       } else {
         Alert.alert(`Don't know how to open this URL: ${url}`);
@@ -229,7 +229,7 @@ const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
         {solicitud.tipo=='Verificacion' ? ( 
             <RoundedWhiteBaseTemplate shadow={false}>
               <Image
-                  source={{ uri: solicitud?.foto } as ImageSourcePropType}
+                  source={{ uri: solicitud?.imagen } as ImageSourcePropType}
                   style={{
                     width: WIDTH_DIMENSIONS * 0.8,
                     height: 200,
@@ -248,7 +248,7 @@ const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
 
           ):null}
         <AdminValidator>
-          <ResponderSolicitud solicitud={solicitudState as Solicitud} setSolicitud={setSolicitud}/>
+          <ResponderSolicitud solicitud={solicitud} setSolicitud={setSolicitud}/>
         </AdminValidator>
         </View>
     )

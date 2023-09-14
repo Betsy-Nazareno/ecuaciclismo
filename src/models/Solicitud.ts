@@ -7,6 +7,7 @@ export interface Solicitud {
     username?: string;
     foto?: string;
     token_usuario: string;
+    token_notificacion?: string;
     tipo: string;
     nombre: string;
     direccion?: string;

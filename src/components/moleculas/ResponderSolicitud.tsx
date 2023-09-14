@@ -12,6 +12,8 @@ import UnfocusButton from '../atomos/UnfocusButton'
 import SecondaryButton from '../atomos/SecondaryButton'
 import { RootStackParamList, Screens } from '../../models/Screens.types'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { usePermissionsNotifications } from '../../hooks/usePermissionsNotifications'
+import Spinner from '../atomos/Spinner'
 
 interface ResponderSolicitudProps {
   solicitud: Solicitud
@@ -24,15 +26,19 @@ const ResponderSolicitud= ({ solicitud ,setSolicitud}: ResponderSolicitudProps) 
   const [confirmationAttended, setConfirmationAttended] = React.useState(false)
   const { authToken } = useSelector((state: RootState) => state.user)
   const [motivo, setMotivo] = React.useState('')
+  const [ isSubmitting, setIsSubmitting ] = React.useState<boolean>(false)
   const navigation = useNavigation<NavigationProp<RootStackParamList, Screens>>()
   const { solicitudHasModified } = useSelector(
     (state: RootState) => state.solicitud
   )
   const dispatch = useDispatch()
+  const { sendPushNotification } = usePermissionsNotifications()
+
    
   React.useEffect(() => {
     ;(async () => {
       if (confirmationAttended) {
+        setIsSubmitting(true)
         dispatch(
           setSolicitudHasModified({
             solicitudHasModified: !solicitudHasModified,
@@ -42,6 +48,9 @@ const ResponderSolicitud= ({ solicitud ,setSolicitud}: ResponderSolicitudProps) 
           await responderSolicitud(authToken, solicitud.token, 'Aprobada','',solicitud.tipo)
           setSolicitud({ ...solicitud, estado: 'Aprobada' });
           setShowModal(false)
+          await sendNotificacionComentario()
+          setIsSubmitting(false)
+          setConfirmationAttended(false)
           navigation.navigate('Solicitudes')
 
         }
@@ -52,6 +61,7 @@ const ResponderSolicitud= ({ solicitud ,setSolicitud}: ResponderSolicitudProps) 
   React.useEffect(() => {
     ;(async () => {
       if (confirmationRefused) {
+        setIsSubmitting(true)
         dispatch(
           setSolicitudHasModified({
             solicitudHasModified: !solicitudHasModified,
@@ -62,6 +72,9 @@ const ResponderSolicitud= ({ solicitud ,setSolicitud}: ResponderSolicitudProps) 
             await responderSolicitud(authToken, solicitud.token, 'Rechazada', motivo,solicitud.tipo)
             setSolicitud({ ...solicitud, estado: 'Cancelada' });
             setShowModalCancelled(false)
+            await sendNotificacionComentario()
+            setIsSubmitting(false)
+            setConfirmationRefused(false)
             navigation.navigate('Solicitudes')
 
         }
@@ -77,7 +90,16 @@ const ResponderSolicitud= ({ solicitud ,setSolicitud}: ResponderSolicitudProps) 
   const handleDecline = async () => {
     setShowModalCancelled(true)
   }
-
+  const sendNotificacionComentario = async () => {
+    if (!solicitud.token_usuario || !solicitud.token_notificacion) return
+    await sendPushNotification({
+      tokens: [solicitud.token_usuario],
+      title: 'Solicitud revisada',
+      body: `Un administrador ha revisado tu  ${solicitud.nombre}`,
+    })
+  }
+  console.log(solicitud.nombre)
+  console.log(solicitud.estado)
   return (
     <>
       <ConfirmationModal
@@ -98,16 +120,25 @@ const ResponderSolicitud= ({ solicitud ,setSolicitud}: ResponderSolicitudProps) 
         setConfirmation={setConfirmationRefused}
       />
           <View style={tw`flex flex-row justify-center my-6`}>
-          <UnfocusButton
-              label="Rechazar"
-              handleClick={handleDecline}
-              style={`${BACKGROUND_COLORS.GRAY} w-30 shadow-sm mr-4`}
-          />
-          <SecondaryButton
-              label="Aprobar"
-              handleClick={handleApprove}
-              style={`${BACKGROUND_COLORS.ORANGE} w-40 shadow-sm `}
-          />
+            {isSubmitting?(
+                <Spinner />
+            ):(
+              <>
+              <UnfocusButton
+                label="Rechazar"
+                handleClick={handleDecline}
+                style={`${BACKGROUND_COLORS.GRAY} w-30 shadow-sm mr-4`}
+              />
+              {solicitud.estado != 'Aprobada' ? (
+              <SecondaryButton
+                label="Aprobar"
+                handleClick={handleApprove}
+                style={`${BACKGROUND_COLORS.ORANGE} w-40 shadow-sm `}
+              />
+            ):null}
+              </>
+            )}
+    
           </View>
     </>
   )
