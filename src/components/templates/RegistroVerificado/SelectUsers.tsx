@@ -2,7 +2,7 @@ import * as React from 'react'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
 import tw from 'twrnc'
-import { Pressable, RefreshControl, ScrollView, View, Text, StyleSheet } from 'react-native'
+import { Pressable, RefreshControl, ScrollView, View, Text, Image } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
 import TarjetaSelectUsers from './TarjetaSelectUsers'
@@ -92,38 +92,42 @@ const SelectUsers = () => {
   }, [isElectionModified])
 
   return (
-    <ScrollView
-      style={tw`px-2 py-4`}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-      showsVerticalScrollIndicator={false}
-    >
-      <SelectUsersHeader />
-      <View style={tw`my-4`}>
-        {isLoading ? (
-          <>
-            <EmptyTarjetaContacto />
-            <EmptyTarjetaContacto />
-            <EmptyTarjetaContacto />
-          </>
-        ) : filteredComunity?.length <= 0 ? (
-          <WithoutResults styles="pt-12" />
-        ) : (
-          filteredComunity.map((ciclista) => (
-            <TarjetaSelectUsers usuario={ciclista}/>
-          ))
-        )}
-      </View>
-      <Pressable
-        style={tw`${BACKGROUND_COLORS.ORANGE} right-3 top-10 absolute rounded-3xl py-2 w-20 items-center justify-center ${(disabled)? 'opacity-50':'opacity-100'}`}
-        disabled= {disabled}
-        onPress={()=> handlePress()}
+ <View style={tw`flex-1`}>
+      <ScrollView
+        style={tw`px-2 py-4`}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        showsVerticalScrollIndicator={false}
       >
-        <Text style={tw`text-m font-bold text-white`}>Hecho</Text>
-      </Pressable>
-    </ScrollView>
-  )
-}
+        <SelectUsersHeader />
+        <View style={tw`my-4`}>
+          {isLoading ? (
+            <>
+              <EmptyTarjetaContacto />
+              <EmptyTarjetaContacto />
+              <EmptyTarjetaContacto />
+            </>
+          ) : filteredComunity?.length <= 0 ? (
+            <WithoutResults styles="pt-12" />
+          ) : (
+            filteredComunity.map((ciclista) => (
+              <TarjetaSelectUsers usuario={ciclista} />
+            ))
+          )}
+        </View>
+      </ScrollView>
 
+      <View style={tw`absolute bottom-0 right-0 p-4`}>
+        <Pressable
+          style={tw`${BACKGROUND_COLORS.ORANGE} rounded-full py-2 w-16 h-16 items-center justify-center ${(disabled) ? 'opacity-50' : 'opacity-100'}`}
+          disabled={disabled}
+          onPress={() => handlePress()}
+        >
+          <Text style={tw`text-m font-bold text-white`}>Hecho</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+};
 export default SelectUsers

@@ -138,6 +138,7 @@ const VerifiedRegister = () => {
                     horizontal
                   >
                     {users.map((usuario) =>(
+                      // eslint-disable-next-line react/jsx-key
                       <Image
                         source={
                           usuario.foto
@@ -224,6 +225,7 @@ const VerifiedRegister = () => {
             </Formik>
           </View>
       </ScrollView>
+      
     </>
   )
 }
