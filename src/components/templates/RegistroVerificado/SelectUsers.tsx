@@ -112,6 +112,7 @@ const SelectUsers = () => {
             <WithoutResults styles="pt-12" />
           ) : (
             filteredComunity.map((ciclista) => (
+              // eslint-disable-next-line react/jsx-key
               <TarjetaSelectUsers usuario={ciclista} />
             ))
           )}

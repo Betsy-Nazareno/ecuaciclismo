@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text,View, Image, Pressable, Modal, TouchableOpacity, ImageSourcePropType, Platform, Linking, Alert } from 'react-native'
+import { Text,View, Image, Pressable, Modal, TouchableOpacity, ImageSourcePropType, Linking, Alert } from 'react-native'
 import { Solicitud } from '../../../models/Solicitud'
 import { RootState } from '../../../redux/store'
 import { useSelector } from 'react-redux'
@@ -9,7 +9,7 @@ import tw from 'twrnc'
 import DetalleAlertante from '../../moleculas/DetalleUsuario'
 import {  getTiempoTranscurridoReseña } from '../../../utils/TiempoTranscurrido'
 import InfoEstadoSolicitud from '../../moleculas/infoEstadoSolicitud'
-import { BACKGROUND_COLORS, HEIGHT_DIMENSIONS, MIME_TYPES, TEXT_COLORS, WIDTH_DIMENSIONS} from '../../../utils/constants'
+import { BACKGROUND_COLORS, HEIGHT_DIMENSIONS, TEXT_COLORS, WIDTH_DIMENSIONS} from '../../../utils/constants'
 import ResponderSolicitud from '../../moleculas/ResponderSolicitud'
 import { CustomText } from '../../atomos/CustomText'
 import MapView, { Marker } from 'react-native-maps'
@@ -38,7 +38,6 @@ const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
     )
     const [hasRefresh, setHasRefresh] = React.useState(false)
     const [detalleUser, setDetalleUser] = React.useState<Partial<User>>({})
-    const [downloaded, setDownloaded] = React.useState(false);
     React.useEffect(() => {
       ;(async () => {
         setSolicitud(solicitud)
@@ -104,7 +103,15 @@ const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
               <InfoEstadoSolicitud estadoSolicitud={solicitud.estado} />
             </View>
           </View>
-          {solicitud.tipo==('Membresia'|| 'Verificacion') ?(
+          {solicitud.estado=="Rechazada" && solicitud.motivo_rechazo ? (
+                <View
+                  style={tw`mx-6 mt-4 bg-gray-100 rounded-xl px-8 py-4 border-2 border-dashed border-[#c6c6c6]`}
+                >
+                  <Text>{solicitud.motivo_rechazo}</Text>
+                </View>
+              ) : null}
+
+          {solicitud.tipo=='Membresia' || solicitud.tipo=='Verificacion' ?(
             <>
               <PerfilFotoHeader
                       isAdmin={!!detalleUser?.admin}
@@ -146,13 +153,6 @@ const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
             </>
           ):(
             <>
-                {solicitud.estado=="Rechazada" && solicitud.motivo_rechazo ? (
-                <View
-                  style={tw`mx-6 mt-4 bg-gray-100 rounded-xl px-8 py-4 border-2 border-dashed border-[#c6c6c6]`}
-                >
-                  <Text>{solicitud.motivo_rechazo}</Text>
-                </View>
-              ) : null}
               <View style={tw`mx-auto mt-5`}>
                 {solicitud.imagen ? (
                   <Image
@@ -226,6 +226,23 @@ const SolicitudDetalle = ({ solicitud}: SolicitudesDetalleProps) => {
           </View>
         </Modal>
         </RoundedWhiteBaseTemplate>
+        {solicitud.tipo=='Verificacion' ? ( 
+            <RoundedWhiteBaseTemplate shadow={false}>
+              <Image
+                  source={{ uri: solicitud?.foto } as ImageSourcePropType}
+                  style={{
+                    width: WIDTH_DIMENSIONS * 0.8,
+                    height: 200,
+                    borderRadius: 20 / 2,
+                  }}
+                />
+                <View style={tw`pt-4 pb-4 px-4`}>
+                  <Text style={tw`${TEXT_COLORS.DARK_BLUE} text-sm`}>
+                    {solicitud.descripcion}
+                  </Text>
+                </View>
+            </RoundedWhiteBaseTemplate>
+          ) : null}
         {solicitud.usuarios?(
             <RutasParticipantes participantes={solicitud?.usuarios || []} label="Usuarios que lo conocen" texto='No se ha marcado a ningun usuario conocido'/>
 
