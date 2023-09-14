@@ -5,18 +5,16 @@ import tw from 'twrnc'
 import { BACKGROUND_COLORS } from '../utils/constants'
 
 const SeleccionarUsers = () => {
-    return (
-      <>
+  return (
+    <>
       <View
-      style={tw`relative h-full ${ BACKGROUND_COLORS.BLUE_LIGHTER
-      }`}
-    >
-      <StatusBar backgroundColor={'#2D84C4'} />
-      <SelectUsers />
-    </View>
-
-      </>
-    )
-  }
+        style={tw`relative h-full ${ BACKGROUND_COLORS.BLUE_LIGHTER}`}
+      >
+        <StatusBar backgroundColor={'#2D84C4'} />
+        <SelectUsers />
+      </View>
+    </>
+  )
+}
   
-  export default SeleccionarUsers
+export default SeleccionarUsers
