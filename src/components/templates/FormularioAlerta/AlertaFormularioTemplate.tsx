@@ -74,7 +74,7 @@ interface AlertaFormularioProps {
 
       if (authToken) {
         const data= await agregarAlerta(alerta, authToken)
-        const tokens = data?.tokens
+        const tokens = data?.data
         const message: string= data?.status
         if(message === 'success'){
           setImg('verificacion_envio')

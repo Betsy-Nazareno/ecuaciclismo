@@ -70,7 +70,6 @@ const MapaLugares = () => {
       }
     })();
   }, []);
-
   const handleMapLongPress = (event: { nativeEvent: { coordinate: { latitude: number; longitude: number } } }) => {
     const { latitude, longitude } = event.nativeEvent.coordinate;
     setSelectedLocation({ latitude, longitude });

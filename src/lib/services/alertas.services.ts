@@ -35,7 +35,6 @@ export const agregarAlerta = async (
       multimedia: [...audiosPaths, ...multimediaPaths],
       colaboraciones:alerta.colaboraciones,
     }
-    console.log(data.ubicacion)
     const response=await axios({
       method: 'POST',
       url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/new_alerta/',

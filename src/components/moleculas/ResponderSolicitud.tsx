@@ -98,8 +98,7 @@ const ResponderSolicitud= ({ solicitud ,setSolicitud}: ResponderSolicitudProps) 
       body: `Un administrador ha revisado tu  ${solicitud.nombre}`,
     })
   }
-  console.log(solicitud.nombre)
-  console.log(solicitud.estado)
+
   return (
     <>
       <ConfirmationModal

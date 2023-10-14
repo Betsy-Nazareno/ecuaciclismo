@@ -57,7 +57,6 @@ const VerifiedRegister = () => {
       const foto = imagen[0] as any
       let imageLink = ''
       await uploadDoc(foto).then(response => imageLink = response )
-      console.log(imageLink)
       const resp: string= await newVerifiedRequest(authToken??'', descripcion, imageLink, list)
       if(resp === 'success'){
         setImg('verificacion_envio')
