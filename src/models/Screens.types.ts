@@ -6,7 +6,6 @@ import { Ruta } from './Rutas'
 import { RegistroLocalSeguro } from './RegistroLocalSeguro'
 import { RegistroMiembro } from './RegistroMiembro'
 import { Solicitud } from './Solicitud'
-import { User } from '../components/templates/RegistroVerificado/VerifiedRegister'
 
 export type RootStackParamList = {
   Inicio: { reload: boolean } | undefined

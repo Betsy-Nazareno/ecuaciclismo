@@ -15,7 +15,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Formik } from "formik";
 import tw from 'twrnc'
 import { RutaCoordinadas } from "../../../models/Alertas";
-import * as Location from 'expo-location';
 import NotificationPopUp from "../../organismos/NotificationPopUp";
 
 

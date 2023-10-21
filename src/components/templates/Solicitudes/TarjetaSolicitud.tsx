@@ -4,8 +4,8 @@ import { Text, View, Pressable, Image } from 'react-native'
 import { TEXT_COLORS} from '../../../utils/constants'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { RootStackParamList, Screens } from '../../../models/Screens.types'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../../redux/store'
+//import { useSelector } from 'react-redux'
+//import { RootState } from '../../../redux/store'
 import TarjetaTemplate from '../../organismos/RoundedWhiteBaseTemplate'
 import InformacionUsuario from '../../atomos/InformacionUsuario'
 import Gap from '../../atomos/Gap'
@@ -21,7 +21,6 @@ interface TarjetaSolicitudProps {
 const TarjetaSolicitud = ({ solicitud }: TarjetaSolicitudProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
-  const { authToken } = useSelector((state: RootState) => state.user)
   
   return (
     <Pressable
