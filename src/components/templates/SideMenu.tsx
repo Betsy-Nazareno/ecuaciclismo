@@ -19,28 +19,28 @@ import { RootState } from '../../redux/store'
 const SideMenu = (props: DrawerContentComponentProps) => {
   const dispatch = useDispatch()
   const navigation = useNavigation<NavigationProp<RootStackParamList, Screens>>()
-  const {user} = useSelector((state: RootState) => state.user)
+  const { user } = useSelector((state: RootState) => state.user)
   const handleClick = (tab: ScreensDrawer) => {
     dispatch(setActiveTab({ activeTab: tab }))
     props.navigation.navigate(tab)
   }
 
   const verifyPendingForm = async (key: string, pending: string, notPending: string) => {
-      try {
-        const jsonValue = await AsyncStorage.getItem(key)
-        jsonValue != null ? handleClick(pending) : handleClick(notPending)
-      } catch (e) {
-        console.error(e)
-      }
+    try {
+      const jsonValue = await AsyncStorage.getItem(key)
+      jsonValue != null ? handleClick(pending) : handleClick(notPending)
+    } catch (e) {
+      console.error(e)
+    }
   }
   const handlePress = () => {
-    return navigation.navigate('Perfil', { userToken: user?.id_usuario})
+    return navigation.navigate('Perfil', { userToken: user?.id_usuario })
   }
   return (
     <DrawerContentScrollView {...props}>
       <View style={[tw`flex flex-row items-center pl-4`, styles.container]}>
         <Pressable onPress={handlePress}>
-        <UserInformation />
+          <UserInformation />
         </Pressable>
       </View>
 
@@ -113,7 +113,9 @@ const SideMenu = (props: DrawerContentComponentProps) => {
           />
           <Ruler style="w-11/12 bg-[#e6e6e6] mx-auto" />
         </View>
-        <View>
+        {/*
+          <View>
+          
           <OptionSideMenu
             label="Solicitudes"
             name="Solicitudes"
@@ -122,6 +124,9 @@ const SideMenu = (props: DrawerContentComponentProps) => {
           />
           <Ruler style="w-11/12 bg-[#e6e6e6] mx-auto" />
         </View>
+        */
+        }
+
       </View>
 
       <View style={tw`flex flex-col items-center justify-center`}>
@@ -132,18 +137,18 @@ const SideMenu = (props: DrawerContentComponentProps) => {
           <Text style={tw`font-bold text-white`}>Registrar local</Text>
         </Pressable>
 
-        {(/*user?.admin || */user?.tipo === 'Miembro') ? null : 
+        {(/*user?.admin || */user?.tipo === 'Miembro') ? null :
           (user?.tipo === 'Verificado') ? (
             <Pressable
               style={tw`${BACKGROUND_COLORS.ORANGE} rounded-3xl p-2 mb-8 w-30 items-center`}
-              onPress={()=> verifyPendingForm('registro-miembro-key', 'PaginaDescargaMiembro', 'RegistroMiembro')}
+              onPress={() => verifyPendingForm('registro-miembro-key', 'PaginaDescargaMiembro', 'RegistroMiembro')}
             >
               <Text style={tw`font-bold text-white`}>Ser miembro</Text>
             </Pressable>
           ) : (
             <Pressable
               style={tw`${BACKGROUND_COLORS.ORANGE} rounded-3xl p-2 mb-8 w-30 items-center`}
-              onPress={()=> navigation.navigate('RegistroVerificado')}
+              onPress={() => navigation.navigate('RegistroVerificado')}
             >
               <Text style={tw`font-bold text-white`}>Verificar cuenta</Text>
             </Pressable>

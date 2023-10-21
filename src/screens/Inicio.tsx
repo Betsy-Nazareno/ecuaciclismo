@@ -43,7 +43,12 @@ const Inicio = () => {
           handleClickButton={() => navigation.navigate('NovedadFormulario')}
         />
       </AdminValidator>
-      <AlertasActivas authToken={authToken} user={user} />
+      {
+        /* 
+          <AlertasActivas authToken={authToken} user={user} />
+      */
+      }
+
       <BannerPublicidad />
       <Consejos />
     </BasePaginas>

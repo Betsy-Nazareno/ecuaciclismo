@@ -127,6 +127,9 @@ export const actualizarAlerta = async (
       url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/update_alerta/',
       data: { token_alerta,estado, motivo_cancelacion }, 
       headers: { Authorization: 'Token ' + authToken },
+
+
+      
     })
   } catch (e) {
     console.error(e)
