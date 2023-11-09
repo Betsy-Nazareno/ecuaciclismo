@@ -71,6 +71,7 @@
     "twrnc": "^3.3.2",
     "yup": "^0.32.11"
   },
+  "resolutions": { "@types/react": "~17.0.21" },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@types/react": "~17.0.21",

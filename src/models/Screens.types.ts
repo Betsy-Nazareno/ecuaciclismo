@@ -11,6 +11,7 @@ export type RootStackParamList = {
   Inicio: { reload: boolean } | undefined
   Login: undefined
   Registro: undefined
+  RecuperarContrasena: undefined
   Rutas: undefined
   Publicaciones: undefined
   ContactosComunidad: undefined
@@ -84,6 +85,7 @@ export type Screens =
   | 'PaginaDescargaMiembro'
   | 'RegistroVerificado'
   | 'SeleccionarUsers'
+  | 'RecuperarContrasena'
 
 export type RootDrawerParamList = {
   HomeStack: undefined
@@ -100,6 +102,7 @@ export type RootDrawerParamList = {
   Seguridad: undefined
   Lugares: undefined
   Solicitudes: undefined
+  Bicicletas: undefined
 }
 
 export type ScreensDrawer =
@@ -116,4 +119,6 @@ export type ScreensDrawer =
   | 'Seguridad'
   | 'Lugares'
   | 'Solicitudes'
+  | 'Bicicletas'
+
   
