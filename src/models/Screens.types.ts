@@ -46,6 +46,7 @@ export type RootStackParamList = {
   AlertaFormulario: { data: RutaCoordinadas } | undefined
   LugarFormulario: { longitud: number | 0; latitud:number | 0 } | undefined
   Solicitudes: undefined
+  
 }
 
 export type Screens =
@@ -86,6 +87,7 @@ export type Screens =
   | 'RegistroVerificado'
   | 'SeleccionarUsers'
   | 'RecuperarContrasena'
+  
 
 export type RootDrawerParamList = {
   HomeStack: undefined
@@ -103,6 +105,7 @@ export type RootDrawerParamList = {
   Lugares: undefined
   Solicitudes: undefined
   Bicicletas: undefined
+  BicicletaFormulario:{tokenUsuario:string}
 }
 
 export type ScreensDrawer =
@@ -120,5 +123,6 @@ export type ScreensDrawer =
   | 'Lugares'
   | 'Solicitudes'
   | 'Bicicletas'
+  | 'BicicletaFormulario'
 
   

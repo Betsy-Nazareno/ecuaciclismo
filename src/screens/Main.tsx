@@ -57,6 +57,7 @@ import RegistroVerificado from './RegistroVerificado'
 import SeleccionarUsers from './SeleccionarUsers'
 import RecuperarContrasenaFormulario from '../components/templates/RecuperarContraseña/RecuperarContrasena'
 import Bicicletas from './HistorialBicicletas'
+import BicicletaFormulario from './BicicletaFormulario'
 
 
 const Stack = createNativeStackNavigator()
@@ -150,6 +151,7 @@ const Main = () => {
         <Drawer.Screen name="DetalleNovedad" component={DetalleNovedad} />
         <Drawer.Screen name="Novedades" component={Novedades} />
         <Drawer.Screen name="Bicicletas" component={Bicicletas} />
+        <Drawer.Screen name="BicicletaFormulario" component={BicicletaFormulario} />
         <Drawer.Screen name="Inicio" component={Inicio} />
         <Drawer.Screen name="Perfil" component={Perfil} />
         <Drawer.Screen name="Contactenos" component={Contactaenos} />
@@ -169,6 +171,7 @@ const Main = () => {
         <Drawer.Screen name="RegistroVerificado" component={RegistroVerificado} />
         <Drawer.Screen name="SeleccionarUsers" component={SeleccionarUsers} />
         <Drawer.Screen name="Solicitudes" component={Solicitudes} />
+
       </Drawer.Navigator>
     )
   }

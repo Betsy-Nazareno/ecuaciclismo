@@ -15,7 +15,7 @@ import RegistroLocalSeguro from './RegistroLocalSeguro'
 import LugarReducer from './lugar'
 import SolicitudReducer from './solicitud'
 import RegistroVerificado from './RegistroVerificado'
-
+import BicicletaReducer from './bicicleta'
 export const store = configureStore({
   reducer: {
     user: userReducer,
@@ -29,6 +29,7 @@ export const store = configureStore({
     ruta: Rutas,
     contactosSeguros: SecureContacts,
     alerta:AlertaReducer,
+    bicicleta:BicicletaReducer,
     busquedaAlertas:AlertaBusqueda,
     registroLocalSeguro: RegistroLocalSeguro,
     lugar: LugarReducer,
