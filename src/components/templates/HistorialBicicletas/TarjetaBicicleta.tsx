@@ -11,13 +11,19 @@ import {
 import tw from 'twrnc'
 import { TEXT_COLORS } from '../../../utils/constants'
 import ContenedorPaginasDetalle from '../ContenedorPaginasDetalle'
+import { RootDrawerParamList, ScreensDrawer } from '../../../models/Screens.types'
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 
 
 
 
 const TarjetaBicicleta = () => {
+    const navigation =
+        useNavigation<NavigationProp<RootDrawerParamList, ScreensDrawer>>()
+
     return (
-        <Pressable >
+        <Pressable onPress={() => navigation.navigate('DetalleBicicleta', { token: '' })} >
+
             <ContenedorPaginasDetalle borderRight colorBorder="#F16F31" borderWidth={8} styleProps="mt-1">
                 <View style={[tw`flex flex-row items-center py-2`, styles.container]}>
                     <View style={tw`flex-row flex-1`}>

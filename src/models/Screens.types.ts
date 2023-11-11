@@ -44,7 +44,7 @@ export type RootStackParamList = {
   PerfilFormulario: { data: any } | undefined
   Alertas: undefined
   AlertaFormulario: { data: RutaCoordinadas } | undefined
-  LugarFormulario: { longitud: number | 0; latitud:number | 0 } | undefined
+  
   Solicitudes: undefined
   
 }
@@ -77,7 +77,6 @@ export type Screens =
   | 'RegistroLocalSeguroRequisitos'
   | 'RegistroLocalSeguroFormulario'
   | 'DescargarSubirPDF'
-  | 'LugarFormulario'
   | 'DetalleSolicitud'
   | 'Solicitudes'
   | 'RegistroMiembro'
@@ -105,7 +104,9 @@ export type RootDrawerParamList = {
   Lugares: undefined
   Solicitudes: undefined
   Bicicletas: undefined
+  LugarFormulario: { longitud: number | 0; latitud:number | 0 } | undefined
   BicicletaFormulario:{tokenUsuario:string}
+  DetalleBicicleta : {token: string} | undefined
 }
 
 export type ScreensDrawer =
@@ -119,10 +120,12 @@ export type ScreensDrawer =
   | 'Perfil'
   | 'Contactenos'
   | 'ContactosSeguros'
+  | 'LugarFormulario'
   | 'Seguridad'
   | 'Lugares'
   | 'Solicitudes'
   | 'Bicicletas'
   | 'BicicletaFormulario'
+  | 'DetalleBicicleta'
 
   

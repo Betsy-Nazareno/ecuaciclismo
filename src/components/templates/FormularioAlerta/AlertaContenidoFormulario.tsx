@@ -27,31 +27,31 @@ interface AlertaFormularioProps {
   isSubmiting: boolean
 }
 const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
-  const { authToken} = useSelector((state: RootState) => state.user)
-  const { values, setFieldValue, handleSubmit } =useFormikContext<Alerta>()
+  const { authToken } = useSelector((state: RootState) => state.user)
+  const { values, setFieldValue, handleSubmit } = useFormikContext<Alerta>()
   const [colaboracionesCatalog, setColaboracionesCatalog] = React.useState([])
   const [hasCollaborations, setHasCollaborations] = React.useState(false)
-  const [location, setLocation] =React.useState<RutaCoordinadas>()
+  const [location, setLocation] = React.useState<RutaCoordinadas>()
 
 
   React.useEffect(() => {
-  ;(async () => {
-    if (authToken) {
-      setColaboracionesCatalog(await getColaboracionesRutas(authToken))
-    }
-    getLocationAsync();
-  })()
+    ; (async () => {
+      if (authToken) {
+        setColaboracionesCatalog(await getColaboracionesRutas(authToken))
+      }
+      getLocationAsync();
+    })()
   }, [])
   React.useEffect(() => {
     if (values) {
       setHasCollaborations(!!(values.colaboraciones.length > 0))
-      
+
     }
   }, [values])
   const addAudio = (audio: Audio.Recording) => {
     const { audios } = values
-      setFieldValue('audios', [...(audios || []), audio])
-    }
+    setFieldValue('audios', [...(audios || []), audio])
+  }
 
   const deleteAudio = (uri: string) => {
     const { audios } = values
@@ -65,11 +65,11 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
   const getLocationAsync = async () => {
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
-  
+
       if (status !== 'granted') {
-        const temp={
+        const temp = {
           coordinateX: {
-            latitude:-2.1538019492930163,
+            latitude: -2.1538019492930163,
             longitude: -79.88844282925129,
           },
           coordinateY: {
@@ -80,9 +80,9 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
         setLocation(temp);
         return { errorMsg: 'Permiso de ubicación denegado', coordinates: null };
       }
-  
+
       const locationTemp = await Location.getCurrentPositionAsync({});
-      const temp={
+      const temp = {
         coordinateX: {
           latitude: locationTemp.coords.latitude,
           longitude: locationTemp.coords.longitude,
@@ -93,14 +93,14 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
         }
       }
       setLocation(temp);
-      
+
     } catch (error) {
       console.log(error);
 
     }
   }
-  const updateLocation=()=>{
-    setFieldValue('ubicacion',location)
+  const updateLocation = () => {
+    setFieldValue('ubicacion', location)
   }
   const addVisibilidad = (value: string) => {
     const exists = values.visibilidad.find((tipoUsuario) => tipoUsuario === value)
@@ -131,7 +131,7 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
         descripcionPredeterminada = 'He sido victima de un robo mientras iba en mi bicicleta, necesito ayuda por favor'
         break
       case 'informativa':
-        descripcionPredeterminada = '¡Hola a todos! Solo quería compartirles que estoy a punto de salir en mi bicicleta. ¡Les aviso para que estén al tanto y me envíen buenas vibras mientras pedaleo! ¡Nos vemos pronto!'	
+        descripcionPredeterminada = '¡Hola a todos! Solo quería compartirles que estoy a punto de salir en mi bicicleta. ¡Les aviso para que estén al tanto y me envíen buenas vibras mientras pedaleo! ¡Nos vemos pronto!'
         break
       default:
         descripcionPredeterminada = ''
@@ -157,13 +157,13 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
 
       <FieldFormulario>
         <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
-            Tipo de Alerta
+          Tipo de Alerta
         </Text>
         <SelectInput
-            values={tipoAlertas}
-            placeholder="Selecciona un tipo"
-            setValuesSelected={handleTipoAlertaChange}
-            selectedValue={values.tipo}
+          values={tipoAlertas}
+          placeholder="Selecciona un tipo"
+          setValuesSelected={handleTipoAlertaChange}
+          selectedValue={values.tipo}
         />
       </FieldFormulario>
 
@@ -182,66 +182,66 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
           placeholder="Agrega una descripción..."
         />
         <Gap py="2">
-                <View style={tw`flex flex-row items-center justify-between`}>
-                  <FieldTitle text="Colaboraciones de los ciclistas" />
-                  <CustomSwitch
-                    handleClick={() => setHasCollaborations(!hasCollaborations)}
-                    active={hasCollaborations}
-                  />
-                </View>
-                {hasCollaborations ? (
-                  <SelectCreatableList
-                    field="colaboraciones"
-                    placeholder="Gasas, Alcohol..."
-                    values={colaboracionesCatalog}
-                    selectedValues={values.colaboraciones}
-                    setValuesSelected={(valor) => {
-                      const exists = values.colaboraciones.find(
-                        (colaboracion) => colaboracion === valor
-                      )
-                      if (!exists) {
-                        setFieldValue('colaboraciones', [
-                          ...(values.colaboraciones || []),
-                          valor,
-                        ])
-                      }
-                    }}
-                    deleteValue={(valor) => {
-                      setFieldValue('colaboraciones', [
-                        ...(values.colaboraciones || []).filter(
-                          (m) => m !== valor
-                        ),
-                      ])
-                    }}
-                  />
-                ) : null}
-          </Gap>
+          <View style={tw`flex flex-row items-center justify-between`}>
+            <FieldTitle text="Colaboraciones de los ciclistas" />
+            <CustomSwitch
+              handleClick={() => setHasCollaborations(!hasCollaborations)}
+              active={hasCollaborations}
+            />
+          </View>
+          {hasCollaborations ? (
+            <SelectCreatableList
+              field="colaboraciones"
+              placeholder="Gasas, Alcohol..."
+              values={colaboracionesCatalog}
+              selectedValues={values.colaboraciones}
+              setValuesSelected={(valor) => {
+                const exists = values.colaboraciones.find(
+                  (colaboracion) => colaboracion === valor
+                )
+                if (!exists) {
+                  setFieldValue('colaboraciones', [
+                    ...(values.colaboraciones || []),
+                    valor,
+                  ])
+                }
+              }}
+              deleteValue={(valor) => {
+                setFieldValue('colaboraciones', [
+                  ...(values.colaboraciones || []).filter(
+                    (m) => m !== valor
+                  ),
+                ])
+              }}
+            />
+          ) : null}
+        </Gap>
       </FieldFormulario>
 
-        <FieldFormulario>
-          <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
-            Multimedia
-          </Text>
-          <MediaPicker
-            field="multimedia"
-            setFieldValue={setFieldValue}
-            values={values.multimedia}
-            icon={require('../../../../assets/multimedia.png')}
-            placeholder="Puedes tomar fotos / videos o agregar desde la galeria"
-          />
-        </FieldFormulario>
-        <FieldFormulario>
-          <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
-            Audios
-          </Text>
-          {/* Campo para ingresar archivos de audio */}
-          <CreatableAudioRecord
-            field="audios"
-            setField={addAudio}
-            values={values.audios}
-            deleteValue={deleteAudio}
-          />
-        </FieldFormulario>
+      <FieldFormulario>
+        <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
+          Multimedia
+        </Text>
+        <MediaPicker
+          field="multimedia"
+          setFieldValue={setFieldValue}
+          values={values.multimedia}
+          icon={require('../../../../assets/multimedia.png')}
+          placeholder="Puedes tomar fotos / videos o agregar desde la galeria"
+        />
+      </FieldFormulario>
+      <FieldFormulario>
+        <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
+          Audios
+        </Text>
+        {/* Campo para ingresar archivos de audio */}
+        <CreatableAudioRecord
+          field="audios"
+          setField={addAudio}
+          values={values.audios}
+          deleteValue={deleteAudio}
+        />
+      </FieldFormulario>
 
       {/* Botón de publicar alerta o Spinner si se está enviando */}
       {isSubmiting ? (
@@ -253,7 +253,7 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
             handleClick={() => { handleSubmit(); updateLocation(); }}
             style={`${BACKGROUND_COLORS.ORANGE} w-48 shadow-sm`}
           />
-          
+
         </View>
       )}
     </>

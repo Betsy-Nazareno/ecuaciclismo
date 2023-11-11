@@ -38,7 +38,7 @@ const BicicletasFormulario = ({tokenUsuario}:Props) => {
     codigo: bicicletaProp?.codigo || '',
     tipo: bicicletaProp?.tipo || '',
     marca: bicicletaProp?.marca || '',
-    imagen: bicicletaProp?.imagen || '',
+    imagen: bicicletaProp?.imagen || [],
     token_usuario: bicicletaProp?.token_usuario || ''
   }
   const handleSubmit = async (bicicleta: Bicicleta) => {

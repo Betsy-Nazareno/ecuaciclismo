@@ -17,14 +17,14 @@ const OpcionesMenuAlertas = ({
 }: OpcionesMenuAlertasProps) => {
   return (
     <View
-      style={tw`absolute top-6 right-4 bg-white z-40 py-1 rounded-lg shadow-md w-44`}
+      style={tw`absolute top-6 right-0 bg-white z-40 py-1 rounded-lg shadow-md w-50`}
     >
           <Pressable onPress={handleAttended}
           >
             <View style={tw`flex flex-row items-center py-4 px-8`}>
               <Image
                 source={require('../../../assets/atendido.png')}
-                style={{ width: 20, height: 20, marginRight: 16 }}
+                style={{ width: 20, height: 20, marginRight: 10 }}
               />
               <CustomText
                 style={`${TEXT_COLORS.DARK_BLUE} font-semibold text-sm`}
@@ -40,7 +40,7 @@ const OpcionesMenuAlertas = ({
         <View style={tw`flex flex-row items-center py-4 px-8 `}>
           <Image
             source={require('../../../assets/cancelar_alerta.png')}
-            style={{ width: 20, height: 20, marginRight: 16 }}
+            style={{ width: 20, height: 20, marginRight: 10 }}
           />
           <CustomText style={`${TEXT_COLORS.DARK_BLUE} font-semibold text-sm`}>
             Cancelar alerta

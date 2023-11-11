@@ -5,28 +5,26 @@ import tw from 'twrnc'
 import SectionTitle from '../../moleculas/SectionTitle'
 import ListaBicicletas from './ListaBicicletas'
 import { View, Image, TouchableHighlight } from 'react-native'
-import { RootStackParamList, Screens } from '../../../models/Screens.types'
+import { RootDrawerParamList, RootStackParamList, Screens } from '../../../models/Screens.types'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 
 
 const HistorialBicicletas = () => {
     const navigation =
-        useNavigation<NavigationProp<RootStackParamList>>()
+        useNavigation<NavigationProp<RootDrawerParamList>>()
 
     return (
         <ScrollView style={tw`px-2 py-4`}>
-            <View style={tw`flex-row items-center justify-between`}>
-                <SectionTitle text="Mis Bicicletas" />
-                <View style={tw`flex-row items-center`}>
-                    <TouchableHighlight
-                        onPress={() => navigation.navigate('BicicletaFormulario', { tokenUsuario: '' })}
-                        activeOpacity={0.6}
-                        underlayColor="#F16F31"
-                        style={{ borderRadius: 100 / 2 }}
-                    >
-                        <Image source={require('../../../../assets/boton-agregar.png')} style={{ width: 30, height: 30, marginRight: 10 }} />
-                    </TouchableHighlight>
-                </View>
+            <View style={tw`mx-4`}>
+                <SectionTitle
+                    hasButton
+                    isRestricted={false}
+                    text="Mis Bicicletas"
+                    styleText="text-3xl"
+                    background={false}
+                    buttonIcon={require('../../../../assets/plus.png')}
+                    handleClickButton={() => navigation.navigate('BicicletaFormulario', { tokenUsuario: '' })}
+                />
             </View>
             <ListaBicicletas />
         </ScrollView>

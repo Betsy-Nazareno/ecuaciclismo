@@ -137,8 +137,9 @@ const SideMenu = (props: DrawerContentComponentProps) => {
         }
 
       </View>
-
-      <View style={tw`flex flex-col items-center justify-center`}>
+      {
+        /*
+          <View style={tw`flex flex-col items-center justify-center`}>
         <Pressable
           style={tw`${BACKGROUND_COLORS.ORANGE} rounded-3xl p-2 mb-4 w-30 items-center`}
           onPress={() => verifyPendingForm('registro-local-seguro-key', 'DescargarSubirPDF', 'RegistroLocalSeguro')}
@@ -146,7 +147,7 @@ const SideMenu = (props: DrawerContentComponentProps) => {
           <Text style={tw`font-bold text-white`}>Registrar local</Text>
         </Pressable>
 
-        {(/*user?.admin || */user?.tipo === 'Miembro') ? null :
+        {(user?.tipo === 'Miembro') ? null :
           (user?.tipo === 'Verificado') ? (
             <Pressable
               style={tw`${BACKGROUND_COLORS.ORANGE} rounded-3xl p-2 mb-8 w-30 items-center`}
@@ -164,6 +165,9 @@ const SideMenu = (props: DrawerContentComponentProps) => {
           )
         }
       </View>
+        */
+      }
+
 
     </DrawerContentScrollView>
   )
