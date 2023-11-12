@@ -4,11 +4,14 @@ import React from "react"
 import { Bicicleta } from "../../../models/Bicicletas"
 import { ResizeMode } from "expo-av"
 import VideoPlayer from "expo-video-player"
-import { View, Image } from "react-native"
+import { View, Image, Text } from "react-native"
 import { MultimediaResult } from "../../../models/Publicaciones.model"
-import { MIME_TYPES, WIDTH_DIMENSIONS } from "../../../utils/constants"
+import { MIME_TYPES, TEXT_COLORS, WIDTH_DIMENSIONS } from "../../../utils/constants"
 import EmptyPublicacionDetalle from "../../organismos/EmptyPublicacionDetalle"
 import tw from 'twrnc'
+import RoundedWhiteBaseTemplate from "../../organismos/RoundedWhiteBaseTemplate"
+import FieldFormulario from "../../moleculas/FieldFormulario"
+import SectionTitle from "../../moleculas/SectionTitle"
 
 interface DetalleBicicletaProps {
     token: string
@@ -81,7 +84,51 @@ const BicicletaDetalle = ({ token }: DetalleBicicletaProps) => {
             </View>
         )
     };
-    return <EmptyPublicacionDetalle />;
+    return isRending ? (
+        <EmptyPublicacionDetalle />
+    ) : (
+        <View style={tw`p-2`}>
+            <SectionTitle
+                hasButton
+                isRestricted={false}
+                text="Detalle de la Bicicleta"
+
+                styleText="text"
+                background={true}
+                buttonIcon={require('../../../../assets/pencil.png')}
+
+            />
+            <FieldFormulario>
+                <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
+                    Código
+                </Text>
+                <Text style={tw`${TEXT_COLORS.DARK_GRAY} font-bold text-sm pl-2`}>
+                    Prueba
+                </Text>
+            </FieldFormulario>
+            <FieldFormulario>
+                <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
+                    Marca
+                </Text>
+                <Text style={tw`${TEXT_COLORS.DARK_GRAY} font-bold text-sm pl-2`}>
+                    Prueba
+                </Text>
+            </FieldFormulario>
+            <FieldFormulario>
+                <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
+                    Tipo
+                </Text>
+                <Text style={tw`${TEXT_COLORS.DARK_GRAY} font-bold text-sm pl-2`}>
+                    Prueba
+                </Text>
+            </FieldFormulario>
+            <FieldFormulario>
+                <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
+                    Imagenes
+                </Text>
+            </FieldFormulario>
+        </View>
+    );
 
 }
 export default BicicletaDetalle

@@ -62,17 +62,22 @@ export const useAuthentication = () => {
   }
 
   const setUser = async () => {
-    const result = await SecureStore.getItemAsync('user')
-    if (result) {
-      const data = JSON.parse(result)
-      dispatch(
-        iniciarSesion({
-          token: data.token,
-          user: data.user,
-        })
-      )
+    try {
+      const result = await SecureStore.getItemAsync('user')
+      if (result) {
+        const data = JSON.parse(result)
+        dispatch(
+          iniciarSesion({
+            token: data.token,
+            user: data.user,
+          })
+        )
+      }
+      setIsLoading(false)
+    } catch (error) {
+      console.error('Error en SecureStore:', error);
     }
-    setIsLoading(false)
+
   }
 
   const deleteUserStore = async () => {

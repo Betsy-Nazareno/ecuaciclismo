@@ -2,7 +2,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setBicicletaHasModified } from "../../../redux/bicicleta";
-import { RootStackParamList, Screens } from "../../../models/Screens.types";
+import { RootDrawerParamList, RootStackParamList, Screens, ScreensDrawer } from "../../../models/Screens.types";
 import { RootState } from "../../../redux/store";
 import HeaderScreen from "../../moleculas/HeaderScreen";
 import { ScrollView } from "react-native-gesture-handler";
@@ -12,13 +12,14 @@ import NotificationPopUp from "../../organismos/NotificationPopUp";
 import { Bicicleta } from "../../../models/Bicicletas";
 import { BicicletaValidationSchema } from "../../../schemas/BicicletaSchema";
 import BicicletaContenidoFormulario from "./BicicletaContenidoFormulario";
+import { agregarBicicleta } from "../../../lib/services/bicicleta.services";
 
 
-interface Props {
-  tokenUsuario: string
-}
 
-const BicicletasFormulario = ({tokenUsuario}:Props) => {
+const BicicletasFormulario = () => {
+  const navigation =
+    useNavigation<NavigationProp<RootDrawerParamList, ScreensDrawer>>()
+  
   const { authToken } = useSelector((state: RootState) => state.user)
   const [isLoading, setIsLoading] = React.useState(false)
   const [bicicletaProp] = React.useState<Bicicleta>()
@@ -30,10 +31,6 @@ const BicicletasFormulario = ({tokenUsuario}:Props) => {
   const [img, setImg] = React.useState<string>('caution')
   const [text, setText] = React.useState<string>('Hubo un error, intentelo más tarde por favor.')
 
-
-
-
-
   const initialValues = {
     codigo: bicicletaProp?.codigo || '',
     tipo: bicicletaProp?.tipo || '',
@@ -43,21 +40,20 @@ const BicicletasFormulario = ({tokenUsuario}:Props) => {
   }
   const handleSubmit = async (bicicleta: Bicicleta) => {
     setIsLoading(true)
-
     if (authToken) {
-
-      const message: string = 'success'
-      if (message === 'success') {
+      const response = await agregarBicicleta(bicicleta,authToken);
+      if (response.status === 200) {
         setImg('verificacion_envio')
         setText("Bicicleta Registrada con Éxito")
+      } else {
+        setImg('caution')
+        setText(response.data)
       }
-
     }
     dispatch(
       setBicicletaHasModified({
         bicicletaHasModified: !bicicletaHasModified
       })
-
     )
     setIsLoading(false)
     setDisplayMenu(true)
@@ -65,10 +61,16 @@ const BicicletasFormulario = ({tokenUsuario}:Props) => {
 
   return (
     <>
-      
+      <NotificationPopUp
+        setVisible={setDisplayMenu}
+        visible={displayMenu}
+        imageName={img}
+        body={text}
+        setConfirmation={() => navigation.navigate('Bicicletas')}
+      />
       <ScrollView showsVerticalScrollIndicator={false} style={tw`px-2 mb-8`}>
         <HeaderScreen
-        
+
           title="Registra tu Bicicleta"
           message="Proporciona información sobre tu bicicleta"
           srcImage={require('../../../../assets/alertaBanner.png')}

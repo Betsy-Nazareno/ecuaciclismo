@@ -31,9 +31,6 @@ const BicicletaContenidoFormulario = ({ isSubmiting }: BicicletaFormularioProps)
   const { authToken } = useSelector((state: RootState) => state.user)
   const { values, setFieldValue, handleSubmit } = useFormikContext<Bicicleta>()
   const [colaboracionesCatalog, setColaboracionesCatalog] = React.useState([])
-  const [hasCollaborations, setHasCollaborations] = React.useState(false)
-  const [location, setLocation] = React.useState<RutaCoordinadas>()
-
 
   React.useEffect(() => {
     ; (async () => {
@@ -43,13 +40,6 @@ const BicicletaContenidoFormulario = ({ isSubmiting }: BicicletaFormularioProps)
 
     })()
   }, [])
-
-
-  const updateLocation = () => {
-    setFieldValue('ubicacion', location)
-  }
-
-
   // Función para manejar el tipo de alerta y actualizar la descripción
   const handleTipoAlertaChange = (value: string) => {
     setFieldValue('tipo', value)
@@ -125,7 +115,7 @@ const BicicletaContenidoFormulario = ({ isSubmiting }: BicicletaFormularioProps)
         <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
           Multimedia
         </Text>
-        
+
         <MediaPicker
           field="multimedia"
           setFieldValue={setFieldValue}
@@ -143,10 +133,9 @@ const BicicletaContenidoFormulario = ({ isSubmiting }: BicicletaFormularioProps)
         <View style={tw`flex flex-row justify-center items-center my-6`}>
           <SecondaryButton
             label="Registrar Bicicleta"
-            handleClick={() => { handleSubmit(); updateLocation(); }}
+            handleClick={() => { handleSubmit(); }}
             style={`${BACKGROUND_COLORS.ORANGE} w-48 shadow-sm`}
           />
-
         </View>
       )}
     </>

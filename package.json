@@ -25,6 +25,7 @@
     "eslint-config-prettier": "^8.5.0",
     "expo": "~45.0.0",
     "expo-av": "~11.2.3",
+    "expo-cli": "^6.3.10",
     "expo-contacts": "~10.2.0",
     "expo-device": "~4.2.0",
     "expo-document-picker": "~10.2.1",
@@ -46,6 +47,7 @@
     "firebase": "^9.8.3",
     "formik": "^2.2.9",
     "geolib": "^3.3.3",
+    "global": "^4.4.0",
     "husky": "^8.0.1",
     "prettier": "^2.6.2",
     "react": "17.0.2",
@@ -71,7 +73,9 @@
     "twrnc": "^3.3.2",
     "yup": "^0.32.11"
   },
-  "resolutions": { "@types/react": "~17.0.21" },
+  "resolutions": {
+    "@types/react": "~17.0.21"
+  },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@types/react": "~17.0.21",
