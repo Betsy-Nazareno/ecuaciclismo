@@ -28,10 +28,4 @@ export const usuarioValidationSchema = Yup.object({
   email: Yup.string()
     .email('Por favor, ingresa un correo electrónico válido')
     .required('Debe ingresar un correo electrónico'),
-  tipo: Yup.string().required('El tipo de bicicleta es requerido'),
-  marca: Yup.string().required('La marca de la bicicleta es requerida'),
-  codigo: Yup.string().required('El código de la bicicleta es requerido'),
-  foto_bicicleta: Yup.mixed().required(
-    'Debes ingresar una foto de tu bicicleta'
-  ),
 })

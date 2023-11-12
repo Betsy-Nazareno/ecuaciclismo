@@ -26,7 +26,7 @@ export type RootStackParamList = {
   PaginaDescargaMiembro: undefined
   RegistroVerificado: undefined
   SeleccionarUsers: undefined
-  Perfil: { userToken: string } | undefined
+  
   ConsejoFormulario: { consejo: Consejo } | undefined
   NovedadFormulario: { publicidad: NovedadInterface } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
@@ -41,7 +41,7 @@ export type RootStackParamList = {
   RastreoUbicacion: { ruta: Ruta } | undefined
   RutaIncompleta: { tokenRuta: string; tokenUsuario: string } | undefined
   FinalRuta: { tokenRuta: string; tokenUsuario: string } | undefined
-  PerfilFormulario: { data: any } | undefined
+  
   Alertas: undefined
   AlertaFormulario: { data: RutaCoordinadas } | undefined
   
@@ -51,7 +51,6 @@ export type RootStackParamList = {
 
 export type Screens =
   | 'Inicio'
-  | 'Perfil'
   | 'Login'
   | 'Registro'
   | 'Rutas'
@@ -68,7 +67,7 @@ export type Screens =
   | 'RastreoUbicacion'
   | 'RutaIncompleta'
   | 'FinalRuta'
-  | 'PerfilFormulario'
+  
   | 'ContactosComunidad'
   | 'ContactosCelular'
   | 'Alertas'
@@ -94,6 +93,7 @@ export type RootDrawerParamList = {
   Comunidad: undefined
   Novedades: undefined
   Perfil: { userToken: string } | undefined
+  PerfilFormulario: { data: any } | undefined
   ConsejoDetalle: { consejo: Consejo } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
   Publicaciones: undefined
@@ -118,6 +118,7 @@ export type ScreensDrawer =
   | 'Publicaciones'
   | 'Inicio'
   | 'Perfil'
+  | 'PerfilFormulario'
   | 'Contactenos'
   | 'ContactosSeguros'
   | 'LugarFormulario'

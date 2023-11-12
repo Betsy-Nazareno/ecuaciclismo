@@ -98,7 +98,7 @@ const Main = () => {
       >
         <Stack.Screen name="Rutas" component={Rutas} />
         
-        <Stack.Screen name="Perfil" component={Perfil} />
+        
         <Stack.Screen name="DetalleNovedad" component={DetalleNovedad} />
         <Stack.Screen name="Publicaciones" component={Publicaciones} />
         <Stack.Screen name="NovedadFormulario" component={NovedadFormulario} />
@@ -108,7 +108,7 @@ const Main = () => {
         <Stack.Screen name="RastreoUbicacion" component={RastreoLocation} />
         <Stack.Screen name="RutaIncompleta" component={RutaIncompleta} />
         <Stack.Screen name="FinalRuta" component={FinalRuta} />
-        <Stack.Screen name="PerfilFormulario" component={PerfilFormulario} />
+        
         <Stack.Screen name="PublicacionFormulario" component={PublicacionFormulario}/>
         <Stack.Screen name="RutasFormulario" component={RutasFormulario} />
         <Stack.Screen
@@ -156,6 +156,7 @@ const Main = () => {
         <Drawer.Screen name="DetalleBicicleta" component={DetalleBicicleta} />
         <Drawer.Screen name="Inicio" component={Inicio} />
         <Drawer.Screen name="Perfil" component={Perfil} />
+        <Drawer.Screen name="PerfilFormulario" component={PerfilFormulario} />
         <Drawer.Screen name="Contactenos" component={Contactaenos} />
         <Drawer.Screen name="ContactosSeguros" component={ContactosSeguros} />
         <Drawer.Screen name="ContactosComunidad" component={ContactosComunidad} />

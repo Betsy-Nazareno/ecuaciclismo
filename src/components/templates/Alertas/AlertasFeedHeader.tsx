@@ -14,6 +14,7 @@ const AlertasFeedHeader = () => {
   const dispatch = useDispatch()
 
   const handleText = (text: string) => {
+    console.log('hola')
     dispatch(setText({ text }))
   }
   React.useEffect(() => {

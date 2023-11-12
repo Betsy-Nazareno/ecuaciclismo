@@ -26,14 +26,14 @@ import { usuarioValidationSchema } from '../../../schemas/usuarioValidationSchem
 import { enviarDatosUsuarios } from '../../../lib/services/user.services'
 import Spinner from '../../atomos/Spinner'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
-import { RootStackParamList, Screens } from '../../../models/Screens.types'
+import { RootDrawerParamList, RootStackParamList, Screens, ScreensDrawer } from '../../../models/Screens.types'
 
 const PerfilForm = ({ datosPerfil }: any) => {
   const [tiposRuta, setTiposRuta] = React.useState([])
   const { authToken, user } = useSelector((state: RootState) => state.user)
   const [isLoading, setIsLoading] = React.useState(false)
   const navigation =
-    useNavigation<NavigationProp<RootStackParamList, Screens>>()
+    useNavigation<NavigationProp<RootDrawerParamList, ScreensDrawer>>()
 
   const initialValues = {
     nombre: datosPerfil?.first_name || '',
@@ -44,11 +44,6 @@ const PerfilForm = ({ datosPerfil }: any) => {
     foto: datosPerfil?.foto || undefined,
     email: datosPerfil?.email || '',
     genero: datosPerfil?.genero || '',
-    tipoBicicleta: datosPerfil?.tipoBicicleta || '',
-
-    marca: datosPerfil?.marca || '',
-    codigo: datosPerfil?.codigo || '',
-    foto_bicicleta: datosPerfil?.foto_bicicleta || '',
     peso: datosPerfil?.peso || undefined,
     nivel: datosPerfil?.nivel || '',
     rutas_interes: datosPerfil?.rutas_interes || [],
@@ -63,7 +58,8 @@ const PerfilForm = ({ datosPerfil }: any) => {
   const handleSubmit = async (props: any) => {
     setIsLoading(true)
     if (authToken) {
-      await enviarDatosUsuarios(authToken, props)
+      const response = await enviarDatosUsuarios(authToken, props)
+      console.log(response);
     }
     navigation.navigate('Perfil', { userToken: user?.id_usuario || '' })
 
@@ -246,47 +242,6 @@ const PerfilForm = ({ datosPerfil }: any) => {
 
               <Ruler style="w-10/12 mx-auto bg-[#e6e6e6] my-4" />
 
-              <Gap py="1">
-                <Text
-                  style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2 pb-1`}
-                >
-                  Modelo de bicicleta
-                </Text>
-                <Input
-                  type="none"
-                  name="tipo"
-                  value={values.tipoBicicleta}
-                  setValue={(value) => setFieldValue('tipo', value)}
-                  placeholder="Tipo..."
-                />
-                <Input
-                  type="none"
-                  name="marca"
-                  value={values.marca}
-                  setValue={(value) => setFieldValue('marca', value)}
-                  placeholder="Marca..."
-                />
-                <Input
-                  type="none"
-                  name="codigo"
-                  value={values.codigo}
-                  setValue={(value) => setFieldValue('codigo', value)}
-                  placeholder="Código..."
-                />
-                <FieldFormulario>
-                  <GalleryButton
-                    field="foto_bicicleta"
-                    icono={require('../../../../assets/gallery_icon.png')}
-                    imagen={
-                      typeof values.foto_bicicleta === 'string'
-                        ? values.foto_bicicleta
-                          ? { uri: values.foto_bicicleta }
-                          : undefined
-                        : values.foto_bicicleta
-                    }
-                  />
-                </FieldFormulario>
-              </Gap>
               {isLoading ? (
                 <Spinner />
               ) : (

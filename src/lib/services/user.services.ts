@@ -1,9 +1,6 @@
 import axios from 'axios'
-import { DocumentResult } from 'expo-document-picker'
-import { Registro, User } from '../../models/User'
-import { isDocumentResultType } from '../../utils/ckeckTypes'
-import { FOLDERS_STORAGE } from '../../utils/constants'
-import { guardarArchivo } from '../googleCloudStorage'
+
+import { Registro } from '../../models/User'
 
 export const createUser = async (data: Registro, tokenNotification: string) => {
   try {
@@ -80,55 +77,22 @@ const converterUsuario = (user: any) => {
   }
 }
 
-export const updateUser = async (
-  authToken: string,
-  updatedUser: Partial<User>
-) => {
-  try {
-    await axios({
-      method: 'POST',
-      data: {
-        ...updatedUser,
-        usuario: updatedUser.username,
-        nombre: updatedUser.first_name,
-        apellido: updatedUser.last_name,
-      },
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/usuario/editar_usuario/',
-      headers: { Authorization: 'Token ' + authToken },
-    })
-  } catch (e) {
-    console.error(e)
-  }
-}
 
 export const enviarDatosUsuarios = async (
   authToken: string,
   updatedUser: any
 ) => {
   try {
-    const { foto_bicicleta = {} } = updatedUser || {}
-    const document = foto_bicicleta as DocumentResult
-    if (document.type === 'cancel') {
-      return
-    }
-
-    let path = foto_bicicleta
-    if (foto_bicicleta && isDocumentResultType(foto_bicicleta)) {
-      path = await guardarArchivo(
-        FOLDERS_STORAGE.USUARIOS,
-        document.name,
-        document.uri
-      )
-    }
-    await axios({
+    
+    const response = await axios({
       method: 'POST',
       data: {
         ...updatedUser,
-        foto_bicicleta: path,
       },
       url: 'https://ecuaciclismoapp.pythonanywhere.com/api/usuario/editar_usuario/',
       headers: { Authorization: 'Token ' + authToken },
     })
+    return response;
   } catch (e) {
     console.error(e)
   }
@@ -166,12 +130,12 @@ export const addContactoSeguro = async (authToken: string, user: number, id: num
       method: 'POST',
       url: 'https://ecuaciclismoapp.pythonanywhere.com/api/usuario/agregar_contacto_seguro/',
       headers: { Authorization: 'Token ' + authToken },
-      data:{
-              isUser: user,
-              user_id: id,
-              nombre: name,
-              celular: phone
-           },
+      data: {
+        isUser: user,
+        user_id: id,
+        nombre: name,
+        celular: phone
+      },
     })
     return response?.data?.message || ""
   } catch (e) {

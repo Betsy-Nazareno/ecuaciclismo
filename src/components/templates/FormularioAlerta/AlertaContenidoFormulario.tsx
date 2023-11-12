@@ -168,7 +168,6 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
       </FieldFormulario>
 
       <FieldFormulario>
-        {/* Campo para ingresar la descripción */}
         <Input
           multiline
           numberOfLines={6}

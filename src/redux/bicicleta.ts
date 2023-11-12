@@ -16,7 +16,7 @@ const initialState: BicicletaSlice = {
 };
 
 export const Bicicletas = createSlice({
-  name: 'alerta',
+  name: 'bicicleta',
   initialState,
   reducers: {
     setBicicletaHasModified: (state, action: PayloadAction<BicicletaSlice>) => {
