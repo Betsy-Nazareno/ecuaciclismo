@@ -9,7 +9,7 @@ export const getRequisitos = async (authToken: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/get_requisitos/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/get_requisitos/',
       headers: { Authorization: 'Token ' + authToken },
     })
     const requisitos = response.data?.data || []
@@ -27,7 +27,7 @@ export const getTiposRuta = async (authToken: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/get_tipos_rutas/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/get_tipos_rutas/',
       headers: { Authorization: 'Token ' + authToken },
     })
     const tipos = response.data?.data || []
@@ -45,7 +45,7 @@ export const getColaboracionesRutas = async (authToken: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/get_colaboraciones/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/get_colaboraciones/',
       headers: { Authorization: 'Token ' + authToken },
     })
     const colaboraciones = response.data?.data || []
@@ -65,7 +65,7 @@ export const getGruposEncuentro = async (authToken: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/get_grupos_encuentro/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/get_grupos_encuentro/',
       headers: { Authorization: 'Token ' + authToken },
     })
     const grupos = response.data?.data || []
@@ -83,7 +83,7 @@ export const getAllRutas = async (authToken: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/get_rutas/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/get_rutas/',
       headers: { Authorization: 'Token ' + authToken },
     })
     return response.data?.data
@@ -97,7 +97,7 @@ export const guardarRuta = async (authToken: string, ruta: Ruta) => {
     const fotos = await guardarGaleriaFotos(ruta.fotos || [])
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/new_ruta/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/new_ruta/',
       data: {
         ...ruta,
         fotos,
@@ -130,7 +130,7 @@ export const editarRuta = async (
     const fotos = await guardarGaleriaFotos(ruta.fotos || [])
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/editar_ruta/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/editar_ruta/',
       data: {
         ...ruta,
         token_ruta: tokenRuta,
@@ -199,7 +199,7 @@ export const getRutaById = async (authToken: string, tokenRuta: string) => {
   try {
     const response = await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/get_ruta/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/get_ruta/',
       data: { token_ruta: tokenRuta },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -218,7 +218,7 @@ export const aprobarRuta = async (authToken: string, tokenRuta: string) => {
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/aprobar_ruta/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/aprobar_ruta/',
       data: { token_ruta: tokenRuta },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -234,7 +234,7 @@ export const eliminarRuta = async (authToken: string, tokenRuta: string) => {
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/eliminar_ruta/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/eliminar_ruta/',
       data: { token_ruta: tokenRuta },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -254,7 +254,7 @@ export const inscribirUsuarioEnRuta = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/inscribirse_ruta/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/inscribirse_ruta/',
       data: { token: tokenRuta, colaboraciones },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -273,7 +273,7 @@ export const cancelarInscripcionUsuario = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/cancelar_inscripcion/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/cancelar_inscripcion/',
       data: { token: tokenRuta },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -293,7 +293,7 @@ export const cancelarRutas = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/cancelar_ruta/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/cancelar_ruta/',
       data: { token: tokenRuta, motivo_cancelacion: motivo },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -312,7 +312,7 @@ export const finalizarRutaAdmin = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/finalizar_ruta/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/finalizar_ruta/',
       data: { token_ruta: tokenRuta },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -332,7 +332,7 @@ export const finalizarRastreo = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/finalizar_rastreo/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/finalizar_rastreo/',
       data: { token_ruta: tokenRuta, ...hitos },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -353,7 +353,7 @@ export const getDatosRastreoById = async (
     const response = await axios({
       method: 'POST',
       data: { token_ruta: tokenRuta, token_usuario: userId },
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/get_informacion_individual_ruta/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/get_informacion_individual_ruta/',
       headers: { Authorization: 'Token ' + authToken },
     })
     const [hitos] = response.data?.data
@@ -372,7 +372,7 @@ export const enviarComentariosRuta = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/adicional_rastreo/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/ruta/adicional_rastreo/',
       data: { token_ruta: tokenRuta, estrellas: stars, comentario },
       headers: {
         Authorization: 'Token ' + authToken,

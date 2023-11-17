@@ -7,18 +7,18 @@ import { FOLDERS_STORAGE } from '../../utils/constants'
 import { guardarArchivo } from '../googleCloudStorage'
 import { ImagePickerResult } from 'expo-image-picker'
 
-const converterAlerta= (alerta: Alerta)=>{
-  const colaboraciones= alerta.colaboraciones as unknown as any[]
-  const parseColaboraciones=colaboraciones.map((colaboracion:any)=>{
-        return colaboracion.token
+const converterAlerta = (alerta: Alerta) => {
+  const colaboraciones = alerta.colaboraciones as unknown as any[]
+  const parseColaboraciones = colaboraciones.map((colaboracion: any) => {
+    return colaboracion.token
   })
   return {
     ...alerta,
-    colaboraciones:parseColaboraciones,
-    colaboracionesValues:colaboraciones,
-    multimediaResult:alerta.multimedia as unknown as MultimediaResult[],
+    colaboraciones: parseColaboraciones,
+    colaboracionesValues: colaboraciones,
+    multimediaResult: alerta.multimedia as unknown as MultimediaResult[],
   }
-} 
+}
 export const agregarAlerta = async (
   alerta: Alerta,
   token: string,
@@ -31,13 +31,13 @@ export const agregarAlerta = async (
       etiqueta: alerta.tipo,
       ubicacion: alerta.ubicacion,
       descripcion: alerta.descripcion,
-      visibilidad:alerta.visibilidad,
+      visibilidad: alerta.visibilidad,
       multimedia: [...audiosPaths, ...multimediaPaths],
-      colaboraciones:alerta.colaboraciones,
+      colaboraciones: alerta.colaboraciones,
     }
-    const response=await axios({
+    const response = await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/new_alerta/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/alerta/new_alerta/',
       data,
       headers: { Authorization: 'Token ' + token },
     })
@@ -46,30 +46,30 @@ export const agregarAlerta = async (
     console.error(e)
   }
 }
-export const obtenerAlertasEnviadas= async (token:string) =>{
-    try {
-        const response = await axios({
-          method: 'GET',
-          url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/get_alertas_enviadas/',
-          headers: { Authorization: 'Token ' + token },
-        })
-        return response.data?.data
-      } catch (e) {
-        console.error(e)
-      }
+export const obtenerAlertasEnviadas = async (token: string) => {
+  try {
+    const response = await axios({
+      method: 'GET',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/alerta/get_alertas_enviadas/',
+      headers: { Authorization: 'Token ' + token },
+    })
+    return response.data?.data
+  } catch (e) {
+    console.error(e)
+  }
 }
 
-export const obtenerAlertasRecibidas= async (token:string) =>{
-    try {
-        const response = await axios({
-          method: 'GET',
-          url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/get_alertas_recibidas/',
-          headers: { Authorization: 'Token ' + token },
-        })
-        return response.data?.data
-      } catch (e) {
-        console.error(e)
-      }
+export const obtenerAlertasRecibidas = async (token: string) => {
+  try {
+    const response = await axios({
+      method: 'GET',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/alerta/get_alertas_recibidas/',
+      headers: { Authorization: 'Token ' + token },
+    })
+    return response.data?.data
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 export const getAlertaById = async (authToken: string, token: string) => {
@@ -77,7 +77,7 @@ export const getAlertaById = async (authToken: string, token: string) => {
   try {
     const response = await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/get_alerta/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/alerta/get_alerta/',
       data: { token_alerta: token },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -105,7 +105,7 @@ export const agregarComentarioAlerta = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/new_comentario_alerta/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/alerta/new_comentario_alerta/',
       data: { token_alerta, comentario },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -124,26 +124,26 @@ export const actualizarAlerta = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/update_alerta/',
-      data: { token_alerta,estado, motivo_cancelacion }, 
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/alerta/update_alerta/',
+      data: { token_alerta, estado, motivo_cancelacion },
       headers: { Authorization: 'Token ' + authToken },
 
 
-      
+
     })
   } catch (e) {
     console.error(e)
   }
 }
 
-export const confirmarAsistencia= async (
+export const confirmarAsistencia = async (
   authToken: string,
   token_alerta: string
 ) => {
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/confirmar_asistencia/',
+      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/alerta/confirmar_asistencia/',
       data: { token_alerta },
       headers: { Authorization: 'Token ' + authToken },
     })
@@ -178,9 +178,9 @@ const guardarMultimedia = async (multimedia: ImagePickerResult[]) => {
   for (let i = 0; i < multimedia?.length; i++) {
     const file = multimedia[i]
     const isDocResult = isImagePickerResult(file)
-    if (isDocResult && file.cancelled==false) {
+    if (isDocResult && file.cancelled == false) {
       const { uri, type } = file
-      const name= uri.split('/').pop() || ''
+      const name = uri.split('/').pop() || ''
       const fileType = type
       const path = await guardarArchivo(
         FOLDERS_STORAGE.ALERTAS,
