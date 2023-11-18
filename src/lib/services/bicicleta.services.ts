@@ -8,7 +8,7 @@ export const agregarBicicleta = async (
     try {
         const response = await axios({
             method: 'POST',
-            url: 'https://fa94-157-100-104-212.ngrok-free.app/api/publicacion/get_publicaciones/',
+            url: 'https://ecuaciclismoapp.pythonanywhere.com/api/publicacion/get_publicaciones/',
 
         })
         return response

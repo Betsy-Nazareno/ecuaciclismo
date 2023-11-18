@@ -27,7 +27,7 @@ export const agregarNovedad = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/consejodia/new_novedad/',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/new_novedad/',
       headers: { Authorization: 'Token ' + authToken },
       data: {
         titulo: data.titulo,
@@ -48,7 +48,7 @@ export const obtenerNovedades = async (token: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/consejodia/get_novedades/',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/get_novedades/',
       headers: { Authorization: 'Token ' + token },
     })
     return response.data
@@ -61,7 +61,7 @@ export const eliminarNovedad = async (token: string, tokenNovedad: string) => {
   try {
     await axios({
       method: 'DELETE',
-      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/consejodia/delete_novedad/',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/delete_novedad/',
       data: { token: tokenNovedad },
       headers: { Authorization: 'Token ' + token },
     })

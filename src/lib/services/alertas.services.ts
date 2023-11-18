@@ -37,7 +37,7 @@ export const agregarAlerta = async (
     }
     const response = await axios({
       method: 'POST',
-      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/alerta/new_alerta/',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/new_alerta/',
       data,
       headers: { Authorization: 'Token ' + token },
     })
@@ -50,7 +50,7 @@ export const obtenerAlertasEnviadas = async (token: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/alerta/get_alertas_enviadas/',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/get_alertas_enviadas/',
       headers: { Authorization: 'Token ' + token },
     })
     return response.data?.data
@@ -63,7 +63,7 @@ export const obtenerAlertasRecibidas = async (token: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/alerta/get_alertas_recibidas/',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/get_alertas_recibidas/',
       headers: { Authorization: 'Token ' + token },
     })
     return response.data?.data
@@ -77,7 +77,7 @@ export const getAlertaById = async (authToken: string, token: string) => {
   try {
     const response = await axios({
       method: 'POST',
-      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/alerta/get_alerta/',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/get_alerta/',
       data: { token_alerta: token },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -105,7 +105,7 @@ export const agregarComentarioAlerta = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/alerta/new_comentario_alerta/',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/new_comentario_alerta/',
       data: { token_alerta, comentario },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -124,7 +124,7 @@ export const actualizarAlerta = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/alerta/update_alerta/',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/update_alerta/',
       data: { token_alerta, estado, motivo_cancelacion },
       headers: { Authorization: 'Token ' + authToken },
 
@@ -143,7 +143,7 @@ export const confirmarAsistencia = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://fa94-157-100-104-212.ngrok-free.app/api/alerta/confirmar_asistencia/',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/confirmar_asistencia/',
       data: { token_alerta },
       headers: { Authorization: 'Token ' + authToken },
     })
