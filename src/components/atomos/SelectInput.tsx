@@ -24,10 +24,10 @@ const SelectInput = ({
       accessibilityLabel={accessibilityLabel}
       selectedValue={selectedValue}
     >
-      <Picker.Item label={placeholder} style={{ color: '#767676' }} />
+      <Picker.Item  label={placeholder} style={{ color: '#767676' }} />
       {values.map((item) => {
         const { nombre, value } = item
-        return <Picker.Item label={nombre} value={value} key={value} />
+        return <Picker.Item testID={nombre} label={nombre} value={value} key={value} />
       })}
     </Picker>
   )
