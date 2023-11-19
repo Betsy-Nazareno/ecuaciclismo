@@ -140,13 +140,13 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
   }
   return (
     <>
-      <FieldFormulario>
+      <FieldFormulario >
         <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
           Visibilidad
         </Text>
-        {/* Campo para ingresar la visibilidad de la alerta */}
         <SelectCreatableBatches
           values={tiposUsuarios}
+          accessibilityLabel='visibilidad'
           selectedValues={values.visibilidad}
           setValuesSelected={addVisibilidad}
           deleteValue={deleteVisibilidad}
@@ -161,6 +161,7 @@ const AlertaContenidoFormulario = ({ isSubmiting }: AlertaFormularioProps) => {
         </Text>
         <SelectInput
           values={tipoAlertas}
+          accessibilityLabel='tipo'
           placeholder="Selecciona un tipo"
           setValuesSelected={handleTipoAlertaChange}
           selectedValue={values.tipo}

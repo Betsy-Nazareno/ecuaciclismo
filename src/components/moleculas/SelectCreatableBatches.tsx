@@ -13,6 +13,7 @@ import Badge from './Badge'
 interface SelectCreatableBatchesProps {
   values: Etiqueta[]
   selectedValues: string[]
+  accessibilityLabel: string
   placeholder: string
   deleteValue: (value: string) => void
   setValuesSelected: (value: string) => void
@@ -25,6 +26,7 @@ const SelectCreatableBatches = ({
   values,
   selectedValues,
   placeholder,
+  accessibilityLabel,
   setValuesSelected,
   deleteValue,
   activateCancel = true,
@@ -63,6 +65,7 @@ const SelectCreatableBatches = ({
         }}
       >
         <SelectInput
+          accessibilityLabel={accessibilityLabel}
           values={values}
           setValuesSelected={setValuesSelected}
           placeholder={placeholder}
