@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { Picker } from '@react-native-picker/picker'
 import { Etiqueta } from '../../models/Etiqueta.model'
-import TouchableOpacity from 'react-native-gesture-handler/lib/typescript/components/touchables/TouchableOpacity'
+import { TouchableOpacity } from 'react-native'
+import tw from 'twrnc';
 
 interface SelectInputProps {
   values: Etiqueta[]
@@ -25,16 +26,10 @@ const SelectInput = ({
       accessibilityLabel={accessibilityLabel}
       selectedValue={selectedValue}
     >
-      <TouchableOpacity accessibilityLabel="picker-pp">
-        <Picker.Item testID='pp' label={placeholder} style={{ color: '#767676' }} />
-      </TouchableOpacity>
-
-
+      <Picker.Item testID='pp' label={placeholder} style={{ color: '#767676' }} />
       {values.map((item) => {
         const { nombre, value } = item
-        return <TouchableOpacity key={value} accessibilityLabel={nombre}>
-          <Picker.Item testID={nombre} label={nombre} value={value} key={value} />
-        </TouchableOpacity>
+        return <Picker.Item testID={nombre} label={nombre} value={value} key={value} />;
       })}
     </Picker>
   )
