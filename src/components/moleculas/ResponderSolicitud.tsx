@@ -104,12 +104,14 @@ const ResponderSolicitud= ({ solicitud ,setSolicitud}: ResponderSolicitudProps) 
       <ConfirmationModal
         setVisible={setShowModal}
         visible={showModal}
+        labelId='confirmationAprobeForm'
         title={'Aprobar solicitud'}
         body="¿Estás seguro que deseas aprobar esta solicitud?"
 
         setConfirmation={setConfirmationAttended}
       />
       <ConfirmationModal
+      labelId='rejectForm'
         setVisible={setShowModalCancelled}
         visible={showmodalCancelled}
         title={'Rechazar solicitud'}

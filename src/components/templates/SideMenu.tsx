@@ -47,6 +47,7 @@ const SideMenu = (props: DrawerContentComponentProps) => {
       <View style={tw`mt-2 mb-5`}>
         <View>
           <OptionSideMenu
+        
             label="Inicio"
             name="Inicio"
             source={require('../../../assets/home_blue_icon.png')}
