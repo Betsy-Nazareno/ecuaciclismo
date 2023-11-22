@@ -37,7 +37,7 @@ const SideMenu = (props: DrawerContentComponentProps) => {
     return navigation.navigate('Perfil', { userToken: user?.id_usuario })
   }
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView accessibilityLabel='drawerMenu' {...props}>
       <View style={[tw`flex flex-row items-center pl-4`, styles.container]}>
         <Pressable onPress={handlePress}>
           <UserInformation />

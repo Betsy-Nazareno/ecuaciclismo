@@ -134,6 +134,7 @@ const Main = () => {
   const MainStack = () => {
     return (
       <Drawer.Navigator
+      
         drawerContent={SideMenu}
         screenOptions={{
           headerStyle: {
