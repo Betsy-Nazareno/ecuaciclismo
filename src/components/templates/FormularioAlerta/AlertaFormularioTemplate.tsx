@@ -74,6 +74,7 @@ const AlertaFormularioTemplate = ({
 
     if (authToken) {
       const data = await agregarAlerta(alerta, authToken)
+      console.log(data)
       const tokens = data?.data
       const message: string = data?.status
       if (message === 'success') {

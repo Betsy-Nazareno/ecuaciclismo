@@ -99,12 +99,10 @@ const MenuAlertas = ({ alerta, setAlerta }: MenuAlertasProps) => {
             style={{ width: 20, height: 20 }}
           />
         </Pressable>
-        {displayMenu && (
-          <OpcionesMenuAlertas
-            handleCancelled={handleCancelled}
-            handleAttended={handleAttended}
-          />
-        )}
+        <OpcionesMenuAlertas
+          handleCancelled={handleCancelled}
+          handleAttended={handleAttended}
+        />
       </View>
     </>
   )

@@ -41,6 +41,7 @@ export const agregarAlerta = async (
       data,
       headers: { Authorization: 'Token ' + token },
     })
+    console.log(response)
     return response.data
   } catch (e) {
     console.error(e)
