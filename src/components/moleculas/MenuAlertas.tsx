@@ -76,7 +76,7 @@ const MenuAlertas = ({ alerta, setAlerta }: MenuAlertasProps) => {
       <ConfirmationModal
         setVisible={setShowModal}
         visible={showModal}
-        labelId='confirmationAtendAlert'
+        labelId='buttonconfirmationAtendAlert'
         title={'Marcar como atendida'}
         body="¿Estás seguro que desear marcar como atendida tu alerta?"
 
@@ -86,7 +86,7 @@ const MenuAlertas = ({ alerta, setAlerta }: MenuAlertasProps) => {
         setVisible={setShowModalCancelled}
         visible={showmodalCancelled}
         title={'Cancelar Alerta'}
-        labelId='cancelAprobeAlert'
+        labelId='buttoncancelAprobeAlert'
         body="¿Estás seguro que deseas cancelar tu alerta?"
         motivo={motivo}
         setMotivo={setMotivo}

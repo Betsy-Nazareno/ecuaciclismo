@@ -11,32 +11,32 @@ interface OpcionesMenuAlertasProps {
 }
 
 const OpcionesMenuAlertas = ({
-    handleCancelled,
-    handleAttended,
+  handleCancelled,
+  handleAttended,
 
 }: OpcionesMenuAlertasProps) => {
   return (
     <View
       style={tw`absolute top-6 right-0 bg-white z-40 py-1 rounded-lg shadow-md w-50`}
     >
-          <Pressable onPress={handleAttended}
+      <Pressable accessibilityLabel='confirmationAtendAlert' onPress={handleAttended}
+      >
+        <View style={tw`flex flex-row items-center py-4 px-8`}>
+          <Image
+            source={require('../../../assets/atendido.png')}
+            style={{ width: 20, height: 20, marginRight: 10 }}
+          />
+          <CustomText
+            style={`${TEXT_COLORS.DARK_BLUE} font-semibold text-sm`}
           >
-            <View style={tw`flex flex-row items-center py-4 px-8`}>
-              <Image
-                source={require('../../../assets/atendido.png')}
-                style={{ width: 20, height: 20, marginRight: 10 }}
-              />
-              <CustomText
-                style={`${TEXT_COLORS.DARK_BLUE} font-semibold text-sm`}
-              >
-                Marcar como atendida
-              </CustomText>
-            </View>
-          </Pressable>
-          <Ruler style="w-11/12 mx-auto" />
-  
+            Marcar como atendida
+          </CustomText>
+        </View>
+      </Pressable>
+      <Ruler style="w-11/12 mx-auto" />
 
-      <Pressable onPress={handleCancelled}>
+
+      <Pressable accessibilityLabel='cancelAprobeAlert' onPress={handleCancelled}>
         <View style={tw`flex flex-row items-center py-4 px-8 `}>
           <Image
             source={require('../../../assets/cancelar_alerta.png')}
