@@ -19,9 +19,9 @@ const OpcionesMenuAlertas = ({
     <View
       style={tw`absolute top-6 right-0 bg-white z-40 py-1 rounded-lg shadow-md w-50`}
     >
-      <Pressable accessibilityLabel='confirmationAtendAlert' onPress={handleAttended}
+      <Pressable onPress={handleAttended}
       >
-        <View style={tw`flex flex-row items-center py-4 px-8`}>
+        <View accessibilityLabel='confirmationAtendAlert' style={tw`flex flex-row items-center py-4 px-8`}>
           <Image
             source={require('../../../assets/atendido.png')}
             style={{ width: 20, height: 20, marginRight: 10 }}
@@ -36,8 +36,8 @@ const OpcionesMenuAlertas = ({
       <Ruler style="w-11/12 mx-auto" />
 
 
-      <Pressable accessibilityLabel='cancelAprobeAlert' onPress={handleCancelled}>
-        <View style={tw`flex flex-row items-center py-4 px-8 `}>
+      <Pressable onPress={handleCancelled}>
+        <View accessibilityLabel='cancelAprobeAlert' style={tw`flex flex-row items-center py-4 px-8 `}>
           <Image
             source={require('../../../assets/cancelar_alerta.png')}
             style={{ width: 20, height: 20, marginRight: 10 }}
