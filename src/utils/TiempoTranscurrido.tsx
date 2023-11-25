@@ -26,8 +26,10 @@ export const getTiempoTranscurrido =(fechaStr: string) => {
     }
 
     // Si han pasado más de 7 días, mostrar la fecha en un formato adecuado
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options = { year: "numeric", month: "long", day: "numeric" } as const;
     return fechaPasada.toLocaleDateString(undefined, options);
+
+    
   }
 
   export const getTiempoTranscurridoReseña = (fechaStr: string) => {

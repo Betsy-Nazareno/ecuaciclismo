@@ -19,6 +19,7 @@ interface ConfirmationModalProps {
   body: string
   motivo?: string
   setMotivo?: (text: string) => void
+  labelId: string
 }
 
 const ConfirmationModal = ({
@@ -29,10 +30,12 @@ const ConfirmationModal = ({
   setConfirmation,
   motivo,
   setMotivo,
+  labelId
 }: ConfirmationModalProps) => {
   return (
     <Modal
       visible={visible}
+      accessibilityLabel={labelId}
       transparent={true}
       animationType="fade"
       onRequestClose={() => {

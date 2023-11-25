@@ -52,7 +52,7 @@ const VerifiedRegister = () => {
   const handleSubmit = async (descripcion : string, imagen : DocumentPicker.DocumentResult[]) => {
     if(users.length > 0){
       setIsSubmitting(true)
-      let list: any[] = []
+      const list: any[] = []
       users.forEach(u=> list.push({username: u.username}))
       const foto = imagen[0] as any
       let imageLink = ''

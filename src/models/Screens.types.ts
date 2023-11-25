@@ -6,12 +6,12 @@ import { Ruta } from './Rutas'
 import { RegistroLocalSeguro } from './RegistroLocalSeguro'
 import { RegistroMiembro } from './RegistroMiembro'
 import { Solicitud } from './Solicitud'
-import { User } from '../components/templates/RegistroVerificado/VerifiedRegister'
 
 export type RootStackParamList = {
   Inicio: { reload: boolean } | undefined
   Login: undefined
   Registro: undefined
+  RecuperarContrasena: undefined
   Rutas: undefined
   Publicaciones: undefined
   ContactosComunidad: undefined
@@ -26,7 +26,7 @@ export type RootStackParamList = {
   PaginaDescargaMiembro: undefined
   RegistroVerificado: undefined
   SeleccionarUsers: undefined
-  Perfil: { userToken: string } | undefined
+  
   ConsejoFormulario: { consejo: Consejo } | undefined
   NovedadFormulario: { publicidad: NovedadInterface } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
@@ -41,16 +41,16 @@ export type RootStackParamList = {
   RastreoUbicacion: { ruta: Ruta } | undefined
   RutaIncompleta: { tokenRuta: string; tokenUsuario: string } | undefined
   FinalRuta: { tokenRuta: string; tokenUsuario: string } | undefined
-  PerfilFormulario: { data: any } | undefined
+  
   Alertas: undefined
   AlertaFormulario: { data: RutaCoordinadas } | undefined
-  LugarFormulario: { longitud: number | 0; latitud:number | 0 } | undefined
+  
   Solicitudes: undefined
+  
 }
 
 export type Screens =
   | 'Inicio'
-  | 'Perfil'
   | 'Login'
   | 'Registro'
   | 'Rutas'
@@ -67,7 +67,7 @@ export type Screens =
   | 'RastreoUbicacion'
   | 'RutaIncompleta'
   | 'FinalRuta'
-  | 'PerfilFormulario'
+  
   | 'ContactosComunidad'
   | 'ContactosCelular'
   | 'Alertas'
@@ -76,7 +76,6 @@ export type Screens =
   | 'RegistroLocalSeguroRequisitos'
   | 'RegistroLocalSeguroFormulario'
   | 'DescargarSubirPDF'
-  | 'LugarFormulario'
   | 'DetalleSolicitud'
   | 'Solicitudes'
   | 'RegistroMiembro'
@@ -85,6 +84,8 @@ export type Screens =
   | 'PaginaDescargaMiembro'
   | 'RegistroVerificado'
   | 'SeleccionarUsers'
+  | 'RecuperarContrasena'
+  
 
 export type RootDrawerParamList = {
   HomeStack: undefined
@@ -92,6 +93,7 @@ export type RootDrawerParamList = {
   Comunidad: undefined
   Novedades: undefined
   Perfil: { userToken: string } | undefined
+  PerfilFormulario: { data: any } | undefined
   ConsejoDetalle: { consejo: Consejo } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
   Publicaciones: undefined
@@ -101,6 +103,10 @@ export type RootDrawerParamList = {
   Seguridad: undefined
   Lugares: undefined
   Solicitudes: undefined
+  Bicicletas: undefined
+  LugarFormulario: { longitud: number | 0; latitud:number | 0 } | undefined
+  BicicletaFormulario:{tokenUsuario:string}
+  DetalleBicicleta : {token: string} | undefined
 }
 
 export type ScreensDrawer =
@@ -112,9 +118,15 @@ export type ScreensDrawer =
   | 'Publicaciones'
   | 'Inicio'
   | 'Perfil'
+  | 'PerfilFormulario'
   | 'Contactenos'
   | 'ContactosSeguros'
+  | 'LugarFormulario'
   | 'Seguridad'
   | 'Lugares'
   | 'Solicitudes'
+  | 'Bicicletas'
+  | 'BicicletaFormulario'
+  | 'DetalleBicicleta'
+
   

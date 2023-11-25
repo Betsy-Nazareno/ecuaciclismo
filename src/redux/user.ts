@@ -2,9 +2,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { User, UserSession } from '../models/User'
 
 interface UserSlice {
-  user: User | null
-  authToken: string | null
-  refreshUser: boolean
+  user?: User | null
+  authToken?: string | null
+  refreshUser?: boolean
 }
 
 const initialState: UserSlice = {
@@ -26,7 +26,7 @@ export const Auth = createSlice({
       state.user = null
       state.authToken = null
     },
-    actualizarUsuario: (state, action: PayloadAction<any>) => {
+    actualizarUsuario: (state, action: PayloadAction<UserSlice>) => {
       state.refreshUser = action.payload.refreshUser
     },
   },

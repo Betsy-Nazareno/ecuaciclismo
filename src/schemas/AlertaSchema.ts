@@ -6,3 +6,5 @@ export const AlertaValidationSchema = Yup.object({
   .min(1, 'Debes escoger quienes veran tu alerta')
   .required('La visibilidad es requerida'),
 })
+
+

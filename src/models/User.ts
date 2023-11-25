@@ -15,10 +15,6 @@ export interface User {
   admin?: boolean
   tipo: string
   propietary?:boolean
-  marca?: string
-  codigo?: string
-  tipoBicicleta?: string
-  foto_bicicleta?: string
   etiquetas?: catalogs[]
   rutas?: any
   id_usuario?: string

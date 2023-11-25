@@ -37,7 +37,7 @@ const SideMenu = (props: DrawerContentComponentProps) => {
     return navigation.navigate('Perfil', { userToken: user?.id_usuario })
   }
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView accessibilityLabel='drawerMenu' {...props}>
       <View style={[tw`flex flex-row items-center pl-4`, styles.container]}>
         <Pressable onPress={handlePress}>
           <UserInformation />
@@ -47,6 +47,7 @@ const SideMenu = (props: DrawerContentComponentProps) => {
       <View style={tw`mt-2 mb-5`}>
         <View>
           <OptionSideMenu
+        
             label="Inicio"
             name="Inicio"
             source={require('../../../assets/home_blue_icon.png')}
@@ -113,6 +114,15 @@ const SideMenu = (props: DrawerContentComponentProps) => {
           />
           <Ruler style="w-11/12 bg-[#e6e6e6] mx-auto" />
         </View>
+        <View>
+          <OptionSideMenu
+            label="Bicicletas"
+            name="Bicicletas"
+            source={require('../../../assets/bicicleta_drawer2.jpg')}
+            handleClick={() => handleClick('Bicicletas')}
+          />
+          <Ruler style="w-11/12 bg-[#e6e6e6] mx-auto" />
+        </View>
         {/*
           <View>
           
@@ -128,8 +138,9 @@ const SideMenu = (props: DrawerContentComponentProps) => {
         }
 
       </View>
-
-      <View style={tw`flex flex-col items-center justify-center`}>
+      {
+        /*
+          <View style={tw`flex flex-col items-center justify-center`}>
         <Pressable
           style={tw`${BACKGROUND_COLORS.ORANGE} rounded-3xl p-2 mb-4 w-30 items-center`}
           onPress={() => verifyPendingForm('registro-local-seguro-key', 'DescargarSubirPDF', 'RegistroLocalSeguro')}
@@ -137,7 +148,7 @@ const SideMenu = (props: DrawerContentComponentProps) => {
           <Text style={tw`font-bold text-white`}>Registrar local</Text>
         </Pressable>
 
-        {(/*user?.admin || */user?.tipo === 'Miembro') ? null :
+        {(user?.tipo === 'Miembro') ? null :
           (user?.tipo === 'Verificado') ? (
             <Pressable
               style={tw`${BACKGROUND_COLORS.ORANGE} rounded-3xl p-2 mb-8 w-30 items-center`}
@@ -155,6 +166,9 @@ const SideMenu = (props: DrawerContentComponentProps) => {
           )
         }
       </View>
+        */
+      }
+
 
     </DrawerContentScrollView>
   )

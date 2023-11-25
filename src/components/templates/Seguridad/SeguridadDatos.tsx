@@ -10,7 +10,7 @@ const SeguridadDatos = () => {
       <>
         <View style={tw`bg-white px-5 pt-15 justify-center items-center`}>
           <ButtonTab screen="Alertas" activeBackgroundColor={BACKGROUND_COLORS.WHITE}>
-            <Image
+            <Image 
               source={require('../../../../assets/alerta_fondo.png')}
               style={{ width: 200, height: 200 }}
             />

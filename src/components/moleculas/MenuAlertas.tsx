@@ -11,9 +11,9 @@ import { actualizarAlerta } from '../../lib/services/alertas.services'
 
 interface MenuAlertasProps {
   alerta: Alerta
-  setAlerta:(nuevaAlerta: Alerta | undefined) => void;
+  setAlerta: (nuevaAlerta: Alerta | undefined) => void;
 }
-const MenuAlertas= ({ alerta ,setAlerta}: MenuAlertasProps) => {
+const MenuAlertas = ({ alerta, setAlerta }: MenuAlertasProps) => {
   const [displayMenu, setDisplayMenu] = React.useState(false)
   const [showModal, setShowModal] = React.useState(false)
   const [showmodalCancelled, setShowModalCancelled] = React.useState(false)
@@ -25,9 +25,9 @@ const MenuAlertas= ({ alerta ,setAlerta}: MenuAlertasProps) => {
     (state: RootState) => state.alerta
   )
   const dispatch = useDispatch()
-   
+
   React.useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       if (confirmationAttended) {
         dispatch(
           setAlertaHasModified({
@@ -35,17 +35,17 @@ const MenuAlertas= ({ alerta ,setAlerta}: MenuAlertasProps) => {
           })
         )
         if (alerta.token && authToken) {
-          await actualizarAlerta(authToken, alerta.token, 'Atendida','')
+          await actualizarAlerta(authToken, alerta.token, 'Atendida', '')
           setAlerta({ ...alerta, estado: 'Atendida' });
           setShowModal(false)
 
         }
-        
+
       }
     })()
   }, [confirmationAttended])
   React.useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       if (confirmationCancelled) {
         dispatch(
           setAlertaHasModified({
@@ -58,7 +58,7 @@ const MenuAlertas= ({ alerta ,setAlerta}: MenuAlertasProps) => {
           setShowModalCancelled(false)
 
         }
-        
+
       }
     })()
   }, [confirmationCancelled])
@@ -76,6 +76,7 @@ const MenuAlertas= ({ alerta ,setAlerta}: MenuAlertasProps) => {
       <ConfirmationModal
         setVisible={setShowModal}
         visible={showModal}
+        labelId='buttonconfirmationAtendAlert'
         title={'Marcar como atendida'}
         body="¿Estás seguro que desear marcar como atendida tu alerta?"
 
@@ -85,6 +86,7 @@ const MenuAlertas= ({ alerta ,setAlerta}: MenuAlertasProps) => {
         setVisible={setShowModalCancelled}
         visible={showmodalCancelled}
         title={'Cancelar Alerta'}
+        labelId='buttoncancelAprobeAlert'
         body="¿Estás seguro que deseas cancelar tu alerta?"
         motivo={motivo}
         setMotivo={setMotivo}
@@ -97,12 +99,10 @@ const MenuAlertas= ({ alerta ,setAlerta}: MenuAlertasProps) => {
             style={{ width: 20, height: 20 }}
           />
         </Pressable>
-        {displayMenu && (
-          <OpcionesMenuAlertas
-            handleCancelled={handleCancelled}
-            handleAttended={handleAttended}
-          />
-        )}
+        <OpcionesMenuAlertas
+          handleCancelled={handleCancelled}
+          handleAttended={handleAttended}
+        />
       </View>
     </>
   )

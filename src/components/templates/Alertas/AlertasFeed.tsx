@@ -22,11 +22,12 @@ const AlertasFeed = () => {
   const { text, buildFiltros } = useSelector(
     (state: RootState) => state.busqueda
   )
+  console.log(alertaHasModified)
   const [filteredAlertas, setFilteredAlertas] = React.useState<Alerta[]>([])
-
   React.useEffect(() => {
     ; (async function () {
       if (authToken) {
+        console.log('Yo escucho')
         const response: Alerta[] = await obtenerAlertasRecibidas(authToken)
         const alertasEnviadas: Alerta[] = await obtenerAlertasEnviadas(authToken)
         dispatch(setAlertasFeed({ alertasFeed: response }))

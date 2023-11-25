@@ -62,6 +62,7 @@ export const useAuthentication = () => {
   }
 
   const setUser = async () => {
+
     const result = await SecureStore.getItemAsync('user')
     if (result) {
       const data = JSON.parse(result)

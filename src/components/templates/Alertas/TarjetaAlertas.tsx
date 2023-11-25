@@ -54,10 +54,10 @@ const TarjetaAlertas = ({ alerta }: TarjetaAlertasProps) => {
             </Gap>
         </View>
     
-      {/* Tercera línea */}
+      
       <Text style={tw`text-base mt-4 ml-10`}>{alerta.descripcion}</Text>
 
-      {/* Cuarta línea */}
+      
       <View style={tw`flex flex-row justify-end mt-2`}>
         <Text style={tw`text-sm text-gray-500`}>{ getTiempoTranscurrido(alerta.fecha_creacion as any)}</Text>
       </View>
