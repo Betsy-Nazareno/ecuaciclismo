@@ -5,14 +5,16 @@ import tw from 'twrnc'
 interface RoundedWhiteBaseTemplateProps {
   children: React.ReactNode | React.ReactNode[]
   shadow?: boolean
+  label?: string
 }
 
 const RoundedWhiteBaseTemplate = ({
   children,
+  label,
   shadow = true,
 }: RoundedWhiteBaseTemplateProps) => {
   return (
-    <View style={styles.borderContainer}>
+    <View accessibilityLabel={label} style={styles.borderContainer}>
       <View
         style={tw`bg-white py-2 px-4 rounded-xl ${shadow ? 'shadow-xl' : ''}`}
       >

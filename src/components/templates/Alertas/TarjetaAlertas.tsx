@@ -30,7 +30,7 @@ const TarjetaAlertas = ({ alerta }: TarjetaAlertasProps) => {
       onPress={() =>
         navigation.navigate('DetalleAlerta', { token: alerta.token || '' })}
     >
-      <TarjetaTemplate shadow={false}>
+      <TarjetaTemplate label='TarjetaTemplate' shadow={false}>
         <View style={tw`flex flex-row justify-between relative`}>
         
           { alerta?.token_usuario!=authToken &&(
