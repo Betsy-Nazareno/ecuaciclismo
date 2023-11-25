@@ -7,7 +7,7 @@ import Input from '../../moleculas/Input'
 import RoundedButtonIcon from '../../atomos/RoundedButtonIcon'
 import tw from 'twrnc'
 import FieldFormulario from '../../moleculas/FieldFormulario'
-import { agregarComentarioAlerta} from '../../../lib/services/alertas.services'
+import { agregarComentarioAlerta } from '../../../lib/services/alertas.services'
 import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
@@ -73,6 +73,7 @@ const InputAgregarComentario = ({
               <View style={tw`w-[88%]`}>
                 <Input
                   type="none"
+                  label='inputCommentAlert'
                   multiline
                   numberOfLines={3}
                   textAlignVertical="top"
@@ -84,6 +85,7 @@ const InputAgregarComentario = ({
               </View>
               <View style={tw`w-[5%]`}>
                 <RoundedButtonIcon
+                  label='buttonSendCommentAlert'
                   style="h-8 w-8"
                   src={require('../../../../assets/enviar_icon.png')}
                   handleClick={sendComentario}

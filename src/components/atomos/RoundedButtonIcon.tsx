@@ -12,6 +12,7 @@ interface RoundedButtonProps {
   handleClick: () => void
   src: ImageSourcePropType
   style?: string
+  label?: string
   dimension?: number
   background?: string; // Nueva prop para el background opcional
 }
@@ -19,6 +20,7 @@ interface RoundedButtonProps {
 const RoundedButtonIcon = ({
   handleClick,
   src,
+  label,
   style = '',
   dimension = 18,
   background = BACKGROUND_COLORS.PRIMARY_BLUE,
@@ -26,6 +28,7 @@ const RoundedButtonIcon = ({
   return (
     <TouchableHighlight
       activeOpacity={0.6}
+      accessibilityLabel={label}
       underlayColor="#E7F5FF"
       onPress={handleClick}
       style={{ borderRadius: 100 / 2 }}
