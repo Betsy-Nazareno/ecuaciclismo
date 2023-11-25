@@ -5,7 +5,7 @@ import AlertasFeedHeader from './AlertasFeedHeader'
 import TarjetaAlertas from './TarjetaAlertas'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
-import { obtenerAlertasRecibidas,obtenerAlertasEnviadas} from '../../../lib/services/alertas.services'
+import { obtenerAlertasRecibidas, obtenerAlertasEnviadas } from '../../../lib/services/alertas.services'
 import { Alerta } from '../../../models/Alertas'
 import { setAlertasEnviadas, setAlertasFeed, setAllAlertas } from '../../../redux/alerta'
 import EmptyTarjetaPublicacion from '../../organismos/EmptyTarjetaPublicacion'
@@ -25,12 +25,12 @@ const AlertasFeed = () => {
   const [filteredAlertas, setFilteredAlertas] = React.useState<Alerta[]>([])
 
   React.useEffect(() => {
-    ;(async function () {
+    ; (async function () {
       if (authToken) {
         const response: Alerta[] = await obtenerAlertasRecibidas(authToken)
         const alertasEnviadas: Alerta[] = await obtenerAlertasEnviadas(authToken)
         dispatch(setAlertasFeed({ alertasFeed: response }))
-        dispatch(setAllAlertas({ allAlertas: [...response, ...alertasEnviadas]}))
+        dispatch(setAllAlertas({ allAlertas: [...response, ...alertasEnviadas] }))
         dispatch(setAlertasEnviadas({ alertasEnviadas }))
         setFilteredAlertas(response)
         setIsRending(false)
@@ -45,9 +45,9 @@ const AlertasFeed = () => {
       // Filtrar por texto y etiquetas seleccionadas a la vez
       alertasFiltradas = alertasEnviadas?.filter(
         (alerta) =>
-          (alerta.first_name.toLowerCase().includes(text.toLowerCase()) ||
+        (alerta.first_name.toLowerCase().includes(text.toLowerCase()) ||
           alerta.last_name.toLowerCase().includes(text.toLowerCase()) ||
-          alerta.descripcion.toLowerCase().includes(text.toLowerCase())) 
+          alerta.descripcion.toLowerCase().includes(text.toLowerCase()))
       );
     } else if (text) {
       // Filtrar solo por texto
@@ -57,9 +57,9 @@ const AlertasFeed = () => {
           alerta.last_name.toLowerCase().includes(text.toLowerCase()) ||
           alerta.descripcion.toLowerCase().includes(text.toLowerCase())
       );
-    }else if (etiquetas?.length > 0) {
+    } else if (etiquetas?.length > 0) {
       alertasFiltradas = alertasEnviadas
-    }else {
+    } else {
       // Si no hay texto ni etiquetas seleccionadas, mostrar todas las alertas
       alertasFiltradas = alertasFeed;
     }
@@ -70,28 +70,28 @@ const AlertasFeed = () => {
         const fechaCreacion = new Date(alerta.fecha_creacion || '')
         fechaCreacion.setUTCHours(5)
         return date.getFullYear() === fechaCreacion.getFullYear() &&
-        date.getMonth() === fechaCreacion.getMonth() &&
-        date.getDate() === fechaCreacion.getDate()
+          date.getMonth() === fechaCreacion.getMonth() &&
+          date.getDate() === fechaCreacion.getDate()
       })
     }
     setFilteredAlertas(alertasFiltradas)
   }, [text, buildFiltros])
   filteredAlertas
-  ?.slice()
-  ?.sort((a, b) => new Date(b.fecha_creacion)- new Date(a.fecha_creacion))
+    ?.slice()
+    ?.sort((a, b) => new Date(b.fecha_creacion) - new Date(a.fecha_creacion))
   return (
     <View style={tw`px-2`}>
       <AlertasFeedHeader />
-      <View style={tw`py-2`}>
+      <View accessibilityLabel='listCardAlerts' style={tw`py-2`}>
         {isRending ? (
-            <>
-              <EmptyTarjetaPublicacion />
-              <EmptyTarjetaPublicacion />
-              <EmptyTarjetaPublicacion />
-            </>
-          ) :filteredAlertas && filteredAlertas.length<=0? (
-            <WithoutResults styles="pt-12" />
-          )
+          <>
+            <EmptyTarjetaPublicacion />
+            <EmptyTarjetaPublicacion />
+            <EmptyTarjetaPublicacion />
+          </>
+        ) : filteredAlertas && filteredAlertas.length <= 0 ? (
+          <WithoutResults styles="pt-12" />
+        )
           : (
             filteredAlertas?.map((alerta, index) => {
               return <TarjetaAlertas key={index} alerta={alerta} />

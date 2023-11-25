@@ -32,7 +32,7 @@ const TarjetaAlertas = ({ alerta }: TarjetaAlertasProps) => {
     >
       <TarjetaTemplate shadow={false}>
         <View style={tw`flex flex-row justify-between relative`}>
-          
+        
           { alerta?.token_usuario!=authToken &&(
           <InformacionUsuario
             firstName={alerta?.first_name || ''}
