@@ -92,9 +92,16 @@ const LoginFormulario = ({ navigation }: Prop) => {
           )}
         </Formik>
       </View>
-
-      <TouchableHighlight
+      {/*
+                  <TouchableHighlight
         onPress={() => navigation.navigate('RecuperarContrasena')}
+        underlayColor="#E7F5FF"
+      >
+        <Text style={tw`text-[#F16F31] text-center mt-[5%]`}>¿Olvidaste tu contraseña?</Text>
+      </TouchableHighlight>
+                   */}
+      <TouchableHighlight
+
         underlayColor="#E7F5FF"
       >
         <Text style={tw`text-[#F16F31] text-center mt-[5%]`}>¿Olvidaste tu contraseña?</Text>
