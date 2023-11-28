@@ -58,8 +58,7 @@ const PerfilForm = ({ datosPerfil }: any) => {
   const handleSubmit = async (props: any) => {
     setIsLoading(true)
     if (authToken) {
-      const response = await enviarDatosUsuarios(authToken, props)
-      console.log(response);
+      await enviarDatosUsuarios(authToken, props)
     }
     navigation.navigate('Perfil', { userToken: user?.id_usuario || '' })
 

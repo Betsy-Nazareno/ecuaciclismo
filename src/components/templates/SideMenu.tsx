@@ -47,7 +47,7 @@ const SideMenu = (props: DrawerContentComponentProps) => {
       <View style={tw`mt-2 mb-5`}>
         <View>
           <OptionSideMenu
-        
+
             label="Inicio"
             name="Inicio"
             source={require('../../../assets/home_blue_icon.png')}
@@ -114,12 +114,27 @@ const SideMenu = (props: DrawerContentComponentProps) => {
           />
           <Ruler style="w-11/12 bg-[#e6e6e6] mx-auto" />
         </View>
-        <View>
+        {
+          /*
+          <View>
           <OptionSideMenu
             label="Bicicletas"
             name="Bicicletas"
             source={require('../../../assets/bicicleta_drawer2.jpg')}
             handleClick={() => handleClick('Bicicletas')}
+          />
+          <Ruler style="w-11/12 bg-[#e6e6e6] mx-auto" />
+        </View>
+        
+          */
+        }
+        <View>
+
+          <OptionSideMenu
+            label="Solicitudes"
+            name="Solicitudes"
+            source={require('../../../assets/solicitud.png')}
+            handleClick={() => handleClick('Solicitudes')}
           />
           <Ruler style="w-11/12 bg-[#e6e6e6] mx-auto" />
         </View>

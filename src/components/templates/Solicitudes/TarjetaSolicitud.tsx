@@ -3,7 +3,7 @@ import tw from 'twrnc'
 import { Text, View, Pressable, Image } from 'react-native'
 import { TEXT_COLORS} from '../../../utils/constants'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
-import { RootStackParamList, Screens } from '../../../models/Screens.types'
+import { RootDrawerParamList, ScreensDrawer } from '../../../models/Screens.types'
 //import { useSelector } from 'react-redux'
 //import { RootState } from '../../../redux/store'
 import TarjetaTemplate from '../../organismos/RoundedWhiteBaseTemplate'
@@ -19,8 +19,9 @@ interface TarjetaSolicitudProps {
   solicitud: Solicitud
 }
 const TarjetaSolicitud = ({ solicitud }: TarjetaSolicitudProps) => {
+  console.log(solicitud);
   const navigation =
-    useNavigation<NavigationProp<RootStackParamList, Screens>>()
+    useNavigation<NavigationProp<RootDrawerParamList, ScreensDrawer>>()
   
   return (
     <Pressable

@@ -97,8 +97,8 @@ const Main = () => {
         initialRouteName="Inicio"
       >
         <Stack.Screen name="Rutas" component={Rutas} />
-        
-        
+
+
         <Stack.Screen name="DetalleNovedad" component={DetalleNovedad} />
         <Stack.Screen name="Publicaciones" component={Publicaciones} />
         <Stack.Screen name="NovedadFormulario" component={NovedadFormulario} />
@@ -108,8 +108,8 @@ const Main = () => {
         <Stack.Screen name="RastreoUbicacion" component={RastreoLocation} />
         <Stack.Screen name="RutaIncompleta" component={RutaIncompleta} />
         <Stack.Screen name="FinalRuta" component={FinalRuta} />
-        
-        <Stack.Screen name="PublicacionFormulario" component={PublicacionFormulario}/>
+
+        <Stack.Screen name="PublicacionFormulario" component={PublicacionFormulario} />
         <Stack.Screen name="RutasFormulario" component={RutasFormulario} />
         <Stack.Screen
           name="Inicio"
@@ -122,19 +122,18 @@ const Main = () => {
         />
         <Stack.Screen name="Alertas" component={Alertas} />
         <Stack.Screen name="DetalleAlerta" component={DetalleAlerta} />
-        <Stack.Screen name="AlertaFormulario" component={AlertaFormulario}/>
-        
+        <Stack.Screen name="AlertaFormulario" component={AlertaFormulario} />
+
         <Stack.Screen name="MapView" component={MapViewScreen} />
-        <Stack.Screen name="DetalleSolicitud" component={DetalleSolicitud} />
-        <Stack.Screen name="Solicitudes" component={Solicitudes} />
-        </Stack.Navigator>
+       
+             </Stack.Navigator>
     )
   }
 
   const MainStack = () => {
     return (
       <Drawer.Navigator
-      
+
         drawerContent={SideMenu}
         screenOptions={{
           headerStyle: {
@@ -168,13 +167,14 @@ const Main = () => {
         <Drawer.Screen name="DescargarSubirPDF" component={DescargarSubirPDF} />
         <Drawer.Screen name="Seguridad" component={Seguridad} />
         <Drawer.Screen name="Lugares" component={Lugares} />
-        <Drawer.Screen name="LugarFormulario" component={LugarFormulario}/>
+        <Drawer.Screen name="LugarFormulario" component={LugarFormulario} />
         <Drawer.Screen name="FormularioMiembro" component={FormularioMiembro} />
         <Drawer.Screen name="PaginaDescargaMiembro" component={PaginaDescargaMiembro} />
         <Drawer.Screen name="RegistroMiembro" component={RegistroMiembro} />
         <Drawer.Screen name="RequisitosMiembro" component={RequisitosMiembro} />
         <Drawer.Screen name="RegistroVerificado" component={RegistroVerificado} />
         <Drawer.Screen name="SeleccionarUsers" component={SeleccionarUsers} />
+        <Drawer.Screen name="DetalleSolicitud" component={DetalleSolicitud} />   
         <Drawer.Screen name="Solicitudes" component={Solicitudes} />
 
       </Drawer.Navigator>
