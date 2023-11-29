@@ -12,7 +12,6 @@ import { setHasModified } from '../redux/consejo'
 import { setNovedadHasModified } from '../redux/novedad'
 import { setActiveScreen } from '../redux/screens'
 import AlertasActivas from './AlertasActivas'
-//import AlertasActivas from './AlertasActivas'
 
 const Inicio = () => {
   const navigation =
@@ -45,7 +44,6 @@ const Inicio = () => {
         />
       </AdminValidator>
       <AlertasActivas authToken={authToken} user={user} />
-
       <BannerPublicidad />
       <Consejos />
     </BasePaginas>
