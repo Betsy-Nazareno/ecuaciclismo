@@ -4,16 +4,17 @@ import BasePaginasSecundarias from '../components/templates/BasePaginasSecundari
 import AlertaFormularioTemplate from '../components/templates/FormularioAlerta/AlertaFormularioTemplate'
 import { RootStackParamList } from '../models/Screens.types'
 
-interface Props {
-  route: RouteProp<RootStackParamList, 'AlertaFormulario'>
-}
+  interface Props {
+    route: RouteProp<RootStackParamList, 'AlertaFormulario'>
+  }
 
-const AlertaFormulario = ({ route }: Props) => {
-  return (
-    <BasePaginasSecundarias>
-      <AlertaFormularioTemplate ubicacion={route.params?.data} />
-    </BasePaginasSecundarias>
-  )
-}
+  const AlertaFormulario = ({ route }: Props) => {
+    
+    return (
+      <BasePaginasSecundarias>
+        <AlertaFormularioTemplate ubicacion={route.params?.data} />
+      </BasePaginasSecundarias>
+    )
+  }
 
-export default AlertaFormulario
+  export default AlertaFormulario

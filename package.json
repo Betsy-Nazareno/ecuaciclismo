@@ -71,6 +71,8 @@
     "react-native-web": "0.17.7",
     "react-redux": "^8.0.2",
     "twrnc": "^3.3.2",
+    "uuid": "8",
+    "react-native-get-random-values": "~1.8.0",
     "yup": "^0.32.11"
   },
   "resolutions": {
@@ -82,6 +84,7 @@
     "@types/react-native": "~0.66.13",
     "@types/react-native-global-props": "^1.1.1",
     "@types/react-native-snap-carousel": "^3.8.5",
+    "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": ">=6.0.0",
     "@typescript-eslint/parser": ">=6.0.0",
     "detox": "^20.13.5",

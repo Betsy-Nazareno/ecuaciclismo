@@ -1,8 +1,10 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import React from "react";
+import 'react-native-get-random-values';
 import { useDispatch, useSelector } from "react-redux";
 import { usePermissionsNotifications } from "../../../hooks/usePermissionsNotifications";
 import { agregarAlerta } from "../../../lib/services/alertas.services";
+import { registrarLogAlerta } from "../../../lib/services/alertas.services";
 import { setAlertaHasModified } from '../../../redux/alerta'
 import { Alerta } from "../../../models/Alertas";
 import { RootStackParamList, Screens } from "../../../models/Screens.types";
@@ -15,6 +17,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Formik } from "formik";
 import tw from 'twrnc'
 import { RutaCoordinadas } from "../../../models/Alertas";
+import { v4 as uuidv4 } from 'uuid';
 import NotificationPopUp from "../../organismos/NotificationPopUp";
 
 
@@ -42,9 +45,10 @@ const AlertaFormularioTemplate = ({
   const [displayMenu, setDisplayMenu] = React.useState(false)
   const [img, setImg] = React.useState<string>('caution')
   const [text, setText] = React.useState<string>('Hubo un error, intentelo más tarde por favor.')
-
+  const uuid = uuidv4();
 
   React.useEffect(() => {
+    registrarLogAlerta(authToken!, "Ingresar Modulo de Alertas", "El usuario ha ingresado al modulo de alerta", uuid);
     setalertaProp(Prop)
   }, [])
 
@@ -58,6 +62,7 @@ const AlertaFormularioTemplate = ({
       longitude: -79.89056378602983,
     }
   }
+
   const initialValues = {
     descripcion: alertaProp?.descripcion || '',
     tipo: alertaProp?.tipo || '',
@@ -73,11 +78,12 @@ const AlertaFormularioTemplate = ({
     setIsLoading(true)
 
     if (authToken) {
+
       const data = await agregarAlerta(alerta, authToken)
-      console.log(data)
       const tokens = data?.data
       const message: string = data?.status
       if (message === 'success') {
+        await registrarLogAlerta(authToken!, "Alerta Creada", "El usuario ha creado la alerta", uuid);
         setImg('verificacion_envio')
         setText("Su Alerta se ha enviado con éxito")
       }
@@ -117,8 +123,10 @@ const AlertaFormularioTemplate = ({
           initialValues={initialValues}
           validationSchema={AlertaValidationSchema}
           onSubmit={handleSubmit}
+
         >
           <AlertaContenidoFormulario
+
             isSubmiting={isLoading}
           />
         </Formik>

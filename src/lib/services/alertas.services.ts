@@ -41,7 +41,6 @@ export const agregarAlerta = async (
       data,
       headers: { Authorization: 'Token ' + token },
     })
-    console.log(response)
     return response.data
   } catch (e) {
     console.error(e)
@@ -57,6 +56,26 @@ export const obtenerAlertasEnviadas = async (token: string) => {
     return response.data?.data
   } catch (e) {
     console.error(e)
+  }
+}
+
+export const registrarLogAlerta = async (token_usuario: string, tipoEvento:string,descripcion:string, uuidLog:string) => {
+  const data = {
+    tipoEvento: tipoEvento,
+    descripcion: descripcion,
+    uuidLog: uuidLog
+  }
+  console.log(data)
+  console.log(token_usuario)
+  try {
+    await axios({
+      method: 'POST',
+      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/logs/crear_log/',
+      data,
+      headers: { Authorization: 'Token ' + token_usuario },
+    })
+  } catch (error) {
+    console.error(error)
   }
 }
 
