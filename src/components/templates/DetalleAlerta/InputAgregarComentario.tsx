@@ -7,7 +7,7 @@ import Input from '../../moleculas/Input'
 import RoundedButtonIcon from '../../atomos/RoundedButtonIcon'
 import tw from 'twrnc'
 import FieldFormulario from '../../moleculas/FieldFormulario'
-import { agregarComentarioAlerta } from '../../../lib/services/alertas.services'
+import { agregarComentarioAlerta, registrarLogAlerta } from '../../../lib/services/alertas.services'
 import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
@@ -19,6 +19,7 @@ interface InputAgregarComentarioProps {
   tokenAlerta: string
   fotoUsuario?: string
   tokenNotificacion?: string
+  uuid: string
   onSend: () => void
 }
 
@@ -28,6 +29,7 @@ const InputAgregarComentario = ({
   tokenAlerta,
   fotoUsuario,
   tokenNotificacion,
+  uuid,
   onSend,
 }: InputAgregarComentarioProps) => {
   const { user } = useSelector((state: RootState) => state.user)
@@ -47,11 +49,19 @@ const InputAgregarComentario = ({
 
   const sendComentario = async () => {
     if (tokenUsuario && tokenAlerta && comentario) {
-      await agregarComentarioAlerta(
+      const response = await agregarComentarioAlerta(
         tokenUsuario,
         tokenAlerta,
         comentario
       )
+      const status = response.status;
+      const message = response.message;
+      if (status === 'success') {
+        await registrarLogAlerta(tokenUsuario!, "Comentario Creado", "El usuario ha creado un comentario", uuid);
+      } else {
+        await registrarLogAlerta(tokenUsuario!, "Comentario No Creado", message, uuid);
+      }
+
       await sendNotificacionComentario()
       onSend()
     }

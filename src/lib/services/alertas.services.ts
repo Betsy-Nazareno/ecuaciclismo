@@ -122,18 +122,15 @@ export const agregarComentarioAlerta = async (
   token_alerta: string,
   comentario: string
 ) => {
-  try {
-    await axios({
-      method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/new_comentario_alerta/',
-      data: { token_alerta, comentario },
-      headers: {
-        Authorization: 'Token ' + authToken,
-      },
-    })
-  } catch (e) {
-    console.error(e)
-  }
+  const response = await axios({
+    method: 'POST',
+    url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/new_comentario_alerta/',
+    data: { token_alerta, comentario },
+    headers: {
+      Authorization: 'Token ' + authToken,
+    },
+  })
+  return response.data;
 }
 export const actualizarAlerta = async (
   authToken: string,
@@ -141,19 +138,16 @@ export const actualizarAlerta = async (
   estado: string,
   motivo_cancelacion: string
 ) => {
-  try {
-    await axios({
-      method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/update_alerta/',
-      data: { token_alerta, estado, motivo_cancelacion },
-      headers: { Authorization: 'Token ' + authToken },
+  const response = await axios({
+    method: 'POST',
+    url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/update_alerta/',
+    data: { token_alerta, estado, motivo_cancelacion },
+    headers: { Authorization: 'Token ' + authToken },
 
 
 
-    })
-  } catch (e) {
-    console.error(e)
-  }
+  })
+  return response.data;
 }
 
 export const confirmarAsistencia = async (

@@ -81,11 +81,14 @@ const AlertaFormularioTemplate = ({
 
       const data = await agregarAlerta(alerta, authToken)
       const tokens = data?.data
-      const message: string = data?.status
-      if (message === 'success') {
+      const status: string = data?.status
+      const message: string = data?.message
+      if (status === 'success') {
         await registrarLogAlerta(authToken!, "Alerta Creada", "El usuario ha creado la alerta", uuid);
         setImg('verificacion_envio')
         setText("Su Alerta se ha enviado con éxito")
+      }else{
+        await registrarLogAlerta(authToken!, "Alerta No Creada", message, uuid);
       }
       await sendPushNotification({
         tokens,

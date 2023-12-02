@@ -23,7 +23,7 @@ import VideoPlayer from 'expo-video-player'
 import { ResizeMode } from 'expo-av'
 import NoteVoice from '../../moleculas/NoteVoice'
 import EmptyPublicacionDetalle from '../../organismos/EmptyPublicacionDetalle'
-import { getAlertaById } from '../../../lib/services/alertas.services'
+import { getAlertaById, registrarLogAlerta } from '../../../lib/services/alertas.services'
 import InfoEstado from '../../moleculas/InfoEstado'
 import Badge from '../../moleculas/Badge'
 import { getTiempoTranscurrido } from '../../../utils/TiempoTranscurrido'
@@ -36,6 +36,7 @@ import MapView, { Marker } from 'react-native-maps'
 import ModalConfirmarAyuda from '../../atomos/ModalConfirmarAyuda'
 import PermissionWrapperAlerta from '../PermissionWrapperAlerta'
 import Carousel from 'react-native-swiper-flatlist';
+import { v4 as uuidv4 } from 'uuid';
 
 interface DetallesAlertaProps {
   token: string
@@ -48,10 +49,12 @@ const AlertaDetalle = ({ token }: DetallesAlertaProps) => {
   const [isRending, setIsRending] = React.useState(true)
   const [showHelpModal, setShowHelpModal] = React.useState(false);
   const [showMapView, setShowMapView] = React.useState(false);
+  const uuid = uuidv4();
   React.useEffect(() => {
     ; (async () => {
       if (authToken && token) {
         setAlerta(await getAlertaById(authToken, token))
+        await registrarLogAlerta(authToken!, "Ha Ingresado a una Alerta", "El usuario ha ingresado a una la alerta", uuid);
       }
       setIsRending(false)
     })()
@@ -157,7 +160,7 @@ const AlertaDetalle = ({ token }: DetallesAlertaProps) => {
           >
             {isEnCurso && (
               <View style={tw`absolute right-0 top-5`}>
-                <MenuAlertas alerta={alerta as Alerta} setAlerta={setAlerta} />
+                <MenuAlertas alerta={alerta as Alerta} uuid={uuid} setAlerta={setAlerta} />
               </View>
             )}
           </PermissionWrapperAlerta>
@@ -321,6 +324,7 @@ const AlertaDetalle = ({ token }: DetallesAlertaProps) => {
               tokenAlerta={alerta?.token || ''}
               tokenNotificacion={alerta?.token_notificacion}
               fotoUsuario={user?.foto}
+              uuid={uuid}
             />
           </View>
         )}
