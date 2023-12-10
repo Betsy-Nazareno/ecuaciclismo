@@ -19,7 +19,7 @@ import { Login } from '../../../models/User'
 import Spinner from '../../atomos/Spinner'
 import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
 interface Prop {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Login', 'RecuperarContrasena'>
+  navigation: NativeStackNavigationProp<RootStackParamList>
 }
 
 const LoginFormulario = ({ navigation }: Prop) => {

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View } from 'react-native'
+import { View,Text } from 'react-native'
 import RoundedWhiteBaseTemplate from '../../organismos/RoundedWhiteBaseTemplate'
 import VerticalDivider from '../../atomos/VerticalDivider'
 import DetalleUsuario from '../../moleculas/DetalleUsuario'
@@ -35,7 +35,7 @@ const InputAgregarComentario = ({
   const { user } = useSelector((state: RootState) => state.user)
   const [comentario, setComentario] = React.useState('')
   const { sendPushNotification } = usePermissionsNotifications()
-
+  const [error, setError] = React.useState<string>(''); // Nuevo estado para el mensaje de error
   const sendNotificacionComentario = async () => {
     if (!tokenUsuario || !tokenNotificacion) return
     await sendPushNotification({
@@ -48,7 +48,15 @@ const InputAgregarComentario = ({
   }
 
   const sendComentario = async () => {
+
     if (tokenUsuario && tokenAlerta && comentario) {
+      const comentarioSinEspacios = comentario.trim();
+      if (comentarioSinEspacios === '') {
+
+        setError('No se puede enviar comentarios en blanco');
+        return;
+      }
+      setError('');
       const response = await agregarComentarioAlerta(
         tokenUsuario,
         tokenAlerta,
@@ -78,10 +86,14 @@ const InputAgregarComentario = ({
           />
         </View>
         <View style={tw`bg-white z-40 mt-4`}>
+        {error ? (
+            <Text style={tw`text-red-500 mt-2`}>{error}</Text>
+          ):null}
           <FieldFormulario>
             <View style={tw`flex flex-row items-center`}>
               <View style={tw`w-[88%]`}>
                 <Input
+                
                   type="none"
                   label='inputCommentAlert'
                   multiline
@@ -103,6 +115,7 @@ const InputAgregarComentario = ({
               </View>
             </View>
           </FieldFormulario>
+          
         </View>
         <VerticalDivider />
       </View>

@@ -24,7 +24,7 @@ const TarjetaAlertas = ({ alerta }: TarjetaAlertasProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
   const { authToken } = useSelector((state: RootState) => state.user)
-
+  console.log(alerta)
   return (
     <Pressable
       onPress={() =>
@@ -38,6 +38,7 @@ const TarjetaAlertas = ({ alerta }: TarjetaAlertasProps) => {
               firstName={alerta?.first_name || ''}
               lastName={alerta?.last_name || ''}
               foto={alerta?.foto}
+              type={alerta.tipoUser!}
             />
           )}
         </View>

@@ -6,14 +6,14 @@ import { TEXT_COLORS } from '../../utils/constants'
 interface InformacionUsuarioProps {
   firstName: string
   lastName: string
-  type?:string
+  type:string
   foto?: string
 }
 
 const InformacionUsuario = ({
   firstName,
   lastName,
-  type='Administrador',
+  type,
   foto,
 }: InformacionUsuarioProps) => {
   let iconSource;
@@ -24,8 +24,7 @@ const InformacionUsuario = ({
   } else if (type === 'Miembro') {
     iconSource = require('../../../assets/miembro.png');
   } else {
-    // Si el tipo de usuario no es "verificado" ni "miembro", no mostramos ningún icono
-    return null;
+    iconSource = null;
   }
   return (
     <View style={tw`flex flex-row pb-2`}>

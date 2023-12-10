@@ -1,4 +1,4 @@
-import {  RutaCoordinadas } from './Alertas'
+import { RutaCoordinadas } from './Alertas'
 import { Consejo } from './Consejo.model'
 import { NovedadInterface } from './Novedad.model'
 import { Publicacion } from './Publicaciones.model'
@@ -26,7 +26,7 @@ export type RootStackParamList = {
   PaginaDescargaMiembro: undefined
   RegistroVerificado: undefined
   SeleccionarUsers: undefined
-  
+
   ConsejoFormulario: { consejo: Consejo } | undefined
   NovedadFormulario: { publicidad: NovedadInterface } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
@@ -35,18 +35,16 @@ export type RootStackParamList = {
   PublicacionFormulario: { data: Publicacion } | undefined
   RutasFormulario: { ruta: Ruta } | undefined
   DetalleRuta: { token: string } | undefined
-  DetalleAlerta:{token: string} | undefined
-  
+
   InicioRastreo: { ruta: Ruta } | undefined
   RastreoUbicacion: { ruta: Ruta } | undefined
   RutaIncompleta: { tokenRuta: string; tokenUsuario: string } | undefined
   FinalRuta: { tokenRuta: string; tokenUsuario: string } | undefined
-  
-  Alertas: undefined
+
   AlertaFormulario: { data: RutaCoordinadas } | undefined
-  
+
   Solicitudes: undefined
-  
+
 }
 
 export type Screens =
@@ -62,15 +60,14 @@ export type Screens =
   | 'PublicacionFormulario'
   | 'RutasFormulario'
   | 'DetalleRuta'
-  | 'DetalleAlerta'
+
   | 'InicioRastreo'
   | 'RastreoUbicacion'
   | 'RutaIncompleta'
   | 'FinalRuta'
-  
+
   | 'ContactosComunidad'
   | 'ContactosCelular'
-  | 'Alertas'
   | 'AlertaFormulario'
   | 'RegistroLocalSeguro'
   | 'RegistroLocalSeguroRequisitos'
@@ -83,7 +80,7 @@ export type Screens =
   | 'RegistroVerificado'
   | 'SeleccionarUsers'
   | 'RecuperarContrasena'
-  
+
 
 export type RootDrawerParamList = {
   HomeStack: undefined
@@ -100,12 +97,12 @@ export type RootDrawerParamList = {
   ContactosSeguros: undefined
   Seguridad: undefined
   Lugares: undefined
-  DetalleSolicitud:{solicitud: Solicitud} | undefined
+  DetalleSolicitud: { solicitud: Solicitud } | undefined
   Solicitudes: undefined
   Bicicletas: undefined
-  LugarFormulario: { longitud: number | 0; latitud:number | 0 } | undefined
-  BicicletaFormulario:{tokenUsuario:string}
-  DetalleBicicleta : {token: string} | undefined
+  LugarFormulario: { longitud: number | 0; latitud: number | 0 } | undefined
+  BicicletaFormulario: { tokenUsuario: string }
+  DetalleBicicleta: { token: string } | undefined
 }
 
 export type ScreensDrawer =
@@ -117,6 +114,8 @@ export type ScreensDrawer =
   | 'Publicaciones'
   | 'Inicio'
   | 'Perfil'
+  | 'Alertas'
+  | 'DetalleAlerta'
   | 'PerfilFormulario'
   | 'Contactenos'
   | 'ContactosSeguros'
@@ -129,4 +128,4 @@ export type ScreensDrawer =
   | 'BicicletaFormulario'
   | 'DetalleBicicleta'
 
-  
+

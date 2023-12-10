@@ -120,8 +120,6 @@ const Main = () => {
           name="DetallePublicacion"
           component={DetallePublicacion}
         />
-        <Stack.Screen name="Alertas" component={Alertas} />
-        <Stack.Screen name="DetalleAlerta" component={DetalleAlerta} />
         <Stack.Screen name="AlertaFormulario" component={AlertaFormulario} />
 
         <Stack.Screen name="MapView" component={MapViewScreen} />
@@ -151,6 +149,8 @@ const Main = () => {
         <Drawer.Screen name="ConsejoDetalle" component={ConsejoDetalle} />
         <Drawer.Screen name="DetalleNovedad" component={DetalleNovedad} />
         <Drawer.Screen name="Novedades" component={Novedades} />
+        <Drawer.Screen name="Alertas" component={Alertas} />
+        <Drawer.Screen name="DetalleAlerta" component={DetalleAlerta} />
         <Drawer.Screen name="Bicicletas" component={Bicicletas} />
         <Drawer.Screen name="BicicletaFormulario" component={BicicletaFormulario} />
         <Drawer.Screen name="DetalleBicicleta" component={DetalleBicicleta} />

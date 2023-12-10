@@ -129,6 +129,15 @@ const SideMenu = (props: DrawerContentComponentProps) => {
           */
         }
         <View>
+          <OptionSideMenu
+            label="Bicicletas"
+            name="Bicicletas"
+            source={require('../../../assets/bicicleta_drawer2.jpg')}
+            handleClick={() => handleClick('Bicicletas')}
+          />
+          <Ruler style="w-11/12 bg-[#e6e6e6] mx-auto" />
+        </View>
+        <View>
 
           <OptionSideMenu
             label="Solicitudes"
