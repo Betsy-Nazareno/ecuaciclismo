@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { ReaccionTypes } from '../../models/Reacciones.model'
-
+import 'dotenv/config';
 export const agregarReacciones = async (
   name: ReaccionTypes,
   token: string,
@@ -25,7 +25,7 @@ export const agregarReacciones = async (
 
     await axios({
       method: 'POST',
-      url: `https://ecuaciclismoapp.pythonanywhere.com/api/${endpoint[type]}`,
+      url: `${process.env.BASE_URL}/api/${endpoint[type]}`,
       data: data[type],
       headers: { Authorization: 'Token ' + userToken },
     })
@@ -59,7 +59,7 @@ export const eliminarReaccion = async (
 
     await axios({
       method: 'DELETE',
-      url: `https://ecuaciclismoapp.pythonanywhere.com/api/${endpoint[type]}`,
+      url: `${process.env.BASE_URL}/api/${endpoint[type]}`,
       data: data[type],
       headers: { Authorization: 'Token ' + userToken },
     })

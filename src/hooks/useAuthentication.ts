@@ -13,7 +13,7 @@ export const useAuthentication = () => {
     const data = { user: { email: props.email, password: props.password } }
     try {
       const response = await axios.post(
-        'https://ecuaciclismoapp.pythonanywhere.com/api/token-auth/',
+        '${process.env.BASE_URL}/api/token-auth/',
         data
       )
 

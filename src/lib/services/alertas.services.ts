@@ -6,6 +6,9 @@ import { isAudioRecording, isImagePickerResult } from '../../utils/ckeckTypes'
 import { FOLDERS_STORAGE } from '../../utils/constants'
 import { guardarArchivo } from '../googleCloudStorage'
 import { ImagePickerResult } from 'expo-image-picker'
+import 'dotenv/config';
+
+
 
 const converterAlerta = (alerta: Alerta) => {
   const colaboraciones = alerta.colaboraciones as unknown as any[]
@@ -37,7 +40,7 @@ export const agregarAlerta = async (
     }
     const response = await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/new_alerta/',
+      url: `${process.env.BASE_URL}/api/alerta/new_alerta/`,
       data,
       headers: { Authorization: 'Token ' + token },
     })
@@ -50,7 +53,7 @@ export const obtenerAlertasEnviadas = async (token: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/get_alertas_enviadas/',
+      url: `${process.env.BASE_URL}/api/alerta/get_alertas_enviadas/`,
       headers: { Authorization: 'Token ' + token },
     })
     return response.data?.data
@@ -59,7 +62,7 @@ export const obtenerAlertasEnviadas = async (token: string) => {
   }
 }
 
-export const registrarLogAlerta = async (token_usuario: string, tipoEvento:string,descripcion:string, uuidLog:string) => {
+export const registrarLogAlerta = async (token_usuario: string, tipoEvento: string, descripcion: string, uuidLog: string) => {
   const data = {
     tipoEvento: tipoEvento,
     descripcion: descripcion,
@@ -70,7 +73,7 @@ export const registrarLogAlerta = async (token_usuario: string, tipoEvento:strin
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/logs/crear_log/',
+      url: `${process.env.BASE_URL}/api/logs/crear_log/`,
       data,
       headers: { Authorization: 'Token ' + token_usuario },
     })
@@ -83,7 +86,7 @@ export const obtenerAlertasRecibidas = async (token: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/get_alertas_recibidas/',
+      url: `${process.env.BASE_URL}/api/alerta/get_alertas_recibidas/`,
       headers: { Authorization: 'Token ' + token },
     })
     return response.data?.data
@@ -97,7 +100,7 @@ export const getAlertaById = async (authToken: string, token: string) => {
   try {
     const response = await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/get_alerta/',
+      url: `${process.env.BASE_URL}/api/alerta/get_alerta/`,
       data: { token_alerta: token },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -124,7 +127,7 @@ export const agregarComentarioAlerta = async (
 ) => {
   const response = await axios({
     method: 'POST',
-    url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/new_comentario_alerta/',
+    url: `${process.env.BASE_URL}/api/alerta/new_comentario_alerta/`,
     data: { token_alerta, comentario },
     headers: {
       Authorization: 'Token ' + authToken,
@@ -140,7 +143,7 @@ export const actualizarAlerta = async (
 ) => {
   const response = await axios({
     method: 'POST',
-    url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/update_alerta/',
+    url: `${process.env.BASE_URL}/api/alerta/update_alerta/`,
     data: { token_alerta, estado, motivo_cancelacion },
     headers: { Authorization: 'Token ' + authToken },
 
@@ -157,7 +160,7 @@ export const confirmarAsistencia = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/alerta/confirmar_asistencia/',
+      url: `${process.env.BASE_URL}/api/alerta/confirmar_asistencia/`,
       data: { token_alerta },
       headers: { Authorization: 'Token ' + authToken },
     })
