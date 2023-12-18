@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Bicicleta } from "../../models/Bicicletas";
-import 'dotenv/config';
+import { BASE_URL } from '@env'
 
 export const agregarBicicleta = async (
   bicicleta: Bicicleta,
@@ -9,7 +9,7 @@ export const agregarBicicleta = async (
   try {
     const response = await axios({
       method: 'POST',
-      url: `${process.env.BASE_URL}/api/publicacion/get_publicaciones/`,
+      url: `${BASE_URL}/api/publicacion/get_publicaciones/`,
 
     })
     return response
@@ -17,4 +17,14 @@ export const agregarBicicleta = async (
     console.error(e)
     throw new Error('Error interno del servidor (500)');
   }
+}
+
+export const recuperarBicicletas = async (
+  token_usuario: string) => {
+  const response = await axios({
+    method: 'POST',
+    url: `${BASE_URL}/api/publicacion/get_publicaciones/`,
+
+  })
+  return response
 }

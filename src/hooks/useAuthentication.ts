@@ -4,7 +4,7 @@ import { cerrarSesion, iniciarSesion } from '../redux/user'
 import * as SecureStore from 'expo-secure-store'
 import { Login } from '../models/User'
 import { useState } from 'react'
-
+import { BASE_URL } from '@env'
 export const useAuthentication = () => {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(true)
@@ -13,7 +13,7 @@ export const useAuthentication = () => {
     const data = { user: { email: props.email, password: props.password } }
     try {
       const response = await axios.post(
-        '${process.env.BASE_URL}/api/token-auth/',
+        `${BASE_URL}/api/token-auth/`,
         data
       )
 

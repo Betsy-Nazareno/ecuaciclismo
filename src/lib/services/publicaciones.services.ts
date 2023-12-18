@@ -6,7 +6,7 @@ import { MultimediaResult, Publicacion } from '../../models/Publicaciones.model'
 import { isAudioRecording, isDocumentResultType } from '../../utils/ckeckTypes'
 import { FOLDERS_STORAGE } from '../../utils/constants'
 import { guardarArchivo } from '../googleCloudStorage'
-import 'dotenv/config';
+import { BASE_URL } from '@env'
 export const agregarPublicacion = async (
   publicacion: Publicacion,
   token: string
@@ -23,7 +23,7 @@ export const agregarPublicacion = async (
     }
     await axios({
       method: 'POST',
-      url: '${process.env.BASE_URL}/api/publicacion/new_publicacion/',
+      url: `${BASE_URL}/api/publicacion/new_publicacion/`,
       data,
       headers: { Authorization: 'Token ' + token },
     })
@@ -51,7 +51,7 @@ export const editarPublicacion = async (
 
     await axios({
       method: 'POST',
-      url: `${process.env.BASE_URL}/api/publicacion/update_publicacion/`,
+      url: `${BASE_URL}/api/publicacion/update_publicacion/`,
       data,
       headers: { Authorization: 'Token ' + authToken },
     })
@@ -113,7 +113,7 @@ export const obtenerPublicaciones = async (token: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: `${process.env.BASE_URL}/api/publicacion/get_publicaciones/`,
+      url: `${BASE_URL}/api/publicacion/get_publicaciones/`,
       headers: { Authorization: 'Token ' + token },
     })
     const { data } = response.data || {}
@@ -146,7 +146,7 @@ export const eliminarPublicacion = async (
   try {
     await axios({
       method: 'DELETE',
-      url: `${process.env.BASE_URL}/api/publicacion/delete_publicacion/`,
+      url: `${BASE_URL}/api/publicacion/delete_publicacion/`,
       data: { token: publicacionToken },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -163,7 +163,7 @@ export const getPublicacionById = async (authToken: string, token: string) => {
   try {
     const response = await axios({
       method: 'POST',
-      url: `${process.env.BASE_URL}/api/publicacion/get_publicacion/`,
+      url: `${BASE_URL}/api/publicacion/get_publicacion/`,
       data: { token_publicacion: token },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -185,7 +185,7 @@ export const agregarComentarioPublicacion = async (
   try {
     await axios({
       method: 'POST',
-      url: `${process.env.BASE_URL}/api/publicacion/new_comentario_publicacion/`,
+      url: `${BASE_URL}/api/publicacion/new_comentario_publicacion/`,
       data: { token, comentario },
       headers: {
         Authorization: 'Token ' + authToken,
