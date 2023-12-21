@@ -114,8 +114,6 @@ export type ScreensDrawer =
   | 'Publicaciones'
   | 'Inicio'
   | 'Perfil'
-  | 'Alertas'
-  | 'DetalleAlerta'
   | 'PerfilFormulario'
   | 'Contactenos'
   | 'ContactosSeguros'

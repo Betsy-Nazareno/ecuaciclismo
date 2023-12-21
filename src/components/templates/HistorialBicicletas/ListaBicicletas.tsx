@@ -12,25 +12,23 @@ import WithoutResults from '../../moleculas/WithoutResults'
 const ListaBicicletas = () => {
     const { authToken } = useSelector((state: RootState) => state.user)
     const [listBicicletas, setListBicicletas] = React.useState<Bicicleta[]>([])
-    const [isLoading, setIsLoading] = React.useState(false)
-    /*
+    const [isLoading, setIsLoading] = React.useState(true)
+
+    const { bicicletaHasModified } = useSelector(
+        (state: RootState) => state.bicicleta
+    )
     React.useEffect(() => {
         ; (async () => {
-            const listBicicletas = await recuperarBicicletas(authToken || '')
-            if (listBicicletas.data.status === 'success') {
-                const list: Bicicleta[] = listBicicletas.data.data
-                setListBicicletas(list)
-                setIsLoading(false)
+            const listRBicicletas = await recuperarBicicletas(authToken || '')
+            if (listRBicicletas.length > 0) {
+                setListBicicletas(listRBicicletas)
             } else {
-                const listEmpty: Bicicleta[] = []
-                setListBicicletas(listEmpty)
-                setIsLoading(false)
+                setListBicicletas([])
             }
-
-
+            setIsLoading(false)
         })()
-    }, [listBicicletas])
-    */
+    }, [bicicletaHasModified])
+
     return (
         <View style={tw`pt-4`}>
             {isLoading ? (
@@ -39,14 +37,16 @@ const ListaBicicletas = () => {
                     <EmptyTarjetaPublicacion />
                     <EmptyTarjetaPublicacion />
                 </>
-            ) : listBicicletas?.length <= 0 ? (
+            ) : listBicicletas.length <= 0 ? (
                 <WithoutResults styles="pt-12" />
             ) : (
                 listBicicletas.map((bici, index) => (
-                    <TarjetaBicicleta key={index} />
+                    <View key={index} style={tw`p-2`}>
+                        <TarjetaBicicleta bicicleta={bici} />
+                    </View>
                 ))
             )}
-            
+
         </View>
     )
 }

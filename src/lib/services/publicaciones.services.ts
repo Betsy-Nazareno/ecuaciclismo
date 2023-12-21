@@ -110,16 +110,35 @@ const guardarMultimedia = async (multimedia: DocumentResult[]) => {
 }
 
 export const obtenerPublicaciones = async (token: string) => {
+
   try {
     const response = await axios({
       method: 'GET',
       url: `${BASE_URL}/api/publicacion/get_publicaciones/`,
       headers: { Authorization: 'Token ' + token },
     })
+    // Procesar la respuesta si la solicitud tiene éxito
+    console.log('Respuesta exitosa:', response.data); 
     const { data } = response.data || {}
     return converterPublicaciones(data)
-  } catch (e) {
-    console.error(e)
+  } catch (error) {
+    // Manejar el error
+    if (axios.isAxiosError(error)) {
+      // AxiosError específico
+      if (error.response) {
+        // La solicitud fue realizada y el servidor respondió con un código de estado fuera del rango 2xx
+        console.error('Error de respuesta:', error.response.data);
+      } else if (error.request) {
+        // La solicitud fue realizada pero no se recibió ninguna respuesta
+        console.error('Error de solicitud:', error.request);
+      } else {
+        // Algo sucedió en la configuración de la solicitud que generó un error
+        console.error('Error de configuración:', error.message);
+      }
+    } else {
+      // Otro tipo de error
+      console.error('Error general:', error);
+    }
   }
 }
 

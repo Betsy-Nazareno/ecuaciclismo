@@ -1,6 +1,7 @@
 import axios from "axios";
-import { Bicicleta } from "../../models/Bicicletas";
+import { Bicicleta, MultimediaResult } from "../../models/Bicicletas";
 import { BASE_URL } from '@env'
+
 
 export const agregarBicicleta = async (
   bicicleta: Bicicleta,
@@ -21,10 +22,24 @@ export const agregarBicicleta = async (
 
 export const recuperarBicicletas = async (
   token_usuario: string) => {
+  const uri = `${BASE_URL}/api/biclicleta/mis_bicicletas/`
+  console.log(uri)
   const response = await axios({
-    method: 'POST',
-    url: `${BASE_URL}/api/publicacion/get_publicaciones/`,
-
+    method: 'GET',
+    url: uri,
+    headers: { Authorization: 'Token ' + token_usuario },
   })
-  return response
+  const { data } = response.data || {}
+  return converterBicicletas(data)
+}
+
+const converterBicicletas = (bicicletas: Bicicleta[]) => {
+  return bicicletas.map((bici) =>
+    converterBicicletaObject(bici)
+  )
+}
+const converterBicicletaObject = (bicicleta: Bicicleta) => {
+  return {
+    ...bicicleta
+  }
 }

@@ -11,9 +11,10 @@ export const useAuthentication = () => {
 
   const initUser = async (props: Login) => {
     const data = { user: { email: props.email, password: props.password } }
+    const uri = `${BASE_URL}/api/token-auth/`
     try {
       const response = await axios.post(
-        `${BASE_URL}/api/token-auth/`,
+        uri,
         data
       )
 

@@ -1,11 +1,15 @@
-import { MultimediaResult } from "./Publicaciones.model";
-import { ImageSourcePropType } from 'react-native'
+
+import { DocumentResult } from 'expo-document-picker'
 export interface Bicicleta {
     tipo: string;
     marca: string;
     codigo: string;
     token_usuario?: string;
-    multimediaResult?: MultimediaResult[];
-    imagen?: ImageSourcePropType;
+    imagenes?: MultimediaResult[];
+    multimedia: DocumentResult[]
     //imagen: DocumentResult[];
 }
+export interface MultimediaResult {
+    imagen_url: string
+}
+  
