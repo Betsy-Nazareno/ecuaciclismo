@@ -92,11 +92,8 @@ const BicicletaDetalle = ({ token }: DetalleBicicletaProps) => {
                 hasButton
                 isRestricted={false}
                 text="Detalle de la Bicicleta"
-
                 styleText="text"
                 background={true}
-                buttonIcon={require('../../../../assets/pencil.png')}
-
             />
             <FieldFormulario>
                 <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>

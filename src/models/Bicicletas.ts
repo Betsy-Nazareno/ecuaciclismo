@@ -1,15 +1,14 @@
+import * as ImagePicker from 'expo-image-picker';
 
-import { DocumentResult } from 'expo-document-picker'
 export interface Bicicleta {
+    id?: string;
     tipo: string;
     marca: string;
-    codigo: string;
     token_usuario?: string;
     imagenes?: MultimediaResult[];
-    multimedia: DocumentResult[]
+    imagen: ImagePicker.ImagePickerResult[];
     //imagen: DocumentResult[];
 }
 export interface MultimediaResult {
     imagen_url: string
 }
-  

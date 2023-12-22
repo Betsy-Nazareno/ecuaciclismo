@@ -10,20 +10,34 @@ import {
 } from 'react-native'
 import tw from 'twrnc'
 import { TEXT_COLORS } from '../../../utils/constants'
+import { useSelector } from "react-redux";
 import ContenedorPaginasDetalle from '../ContenedorPaginasDetalle'
 import { RootDrawerParamList, ScreensDrawer } from '../../../models/Screens.types'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { Bicicleta } from '../../../models/Bicicletas'
+import { eliminarBicicleta } from '../../../lib/services/bicicleta.services'
+import { RootState } from '../../../redux/store'
 
 
 interface TarjetaPublicacionesProps {
-    bicicleta: Bicicleta
+    bicicleta: Bicicleta;
+    onEliminar: (id: string) => void;
 }
 
-const TarjetaBicicleta = ({ bicicleta }: TarjetaPublicacionesProps) => {
+const TarjetaBicicleta = ({ bicicleta, onEliminar  }: TarjetaPublicacionesProps) => {
+    const { authToken } = useSelector((state: RootState) => state.user)
+
     const navigation =
         useNavigation<NavigationProp<RootDrawerParamList, ScreensDrawer>>()
-    console.log(bicicleta);
+    const eliminarBici = async () => {
+        if (authToken) {
+            const response = await eliminarBicicleta(authToken!, bicicleta.id!);
+            const status: string = response?.status
+            if (status === 'success') {
+                onEliminar(bicicleta.id!)
+            }
+        }
+    };
     return (
         <Pressable onPress={() => navigation.navigate('DetalleBicicleta', { token: '' })} >
             <ContenedorPaginasDetalle borderRight colorBorder="#F16F31" borderWidth={8} styleProps="mt-1">
@@ -40,6 +54,7 @@ const TarjetaBicicleta = ({ bicicleta }: TarjetaPublicacionesProps) => {
                         </View>
                     </View>
                     <TouchableHighlight
+                        onPress={eliminarBici}
                         activeOpacity={0.6}
                         underlayColor="#F16F31"
                         style={{ borderRadius: 100 / 2 }}

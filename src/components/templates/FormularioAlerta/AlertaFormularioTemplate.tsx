@@ -72,7 +72,6 @@ const AlertaFormularioTemplate = ({
     audios: alertaProp?.audios || [],
     ubicacion: ubicacion || temp,
     visibilidad: alertaProp?.visibilidad || [],
-
   }
   const handleSubmit = async (alerta: Alerta) => {
     setIsLoading(true)

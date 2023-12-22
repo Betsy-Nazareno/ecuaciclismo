@@ -124,6 +124,8 @@ export const FOLDERS_STORAGE = {
   USUARIOS: 'usuarios',
   ALERTAS: 'alertas',
   LUGARES: 'lugares',
+  BICICLETAS: 'bicicletas'
+
 }
 
 export const MIME_TYPES = {

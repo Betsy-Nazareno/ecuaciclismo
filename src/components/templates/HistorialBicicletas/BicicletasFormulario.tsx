@@ -15,10 +15,10 @@ import SecondaryButton from "../../atomos/SecondaryButton";
 import Spinner from "../../atomos/Spinner";
 import Input from "../../moleculas/Input";
 import FieldFormulario from "../../moleculas/FieldFormulario";
-import { View, Text, ImageSourcePropType } from "react-native";
-import { BACKGROUND_COLORS, TEXT_COLORS, tipoAlertas } from "../../../utils/constants";
-import SelectInput from "../../atomos/SelectInput";
-import GalleryButton from "../../moleculas/GalleryButton";
+import { View, Text } from "react-native";
+import { BACKGROUND_COLORS, TEXT_COLORS } from "../../../utils/constants";
+import { agregarBicicleta } from "../../../lib/services/bicicleta.services";
+import MediaPicker from "../../organismos/MediaPicker";
 
 
 interface BicicletasFormularioProps {
@@ -41,26 +41,25 @@ const BicicletasFormulario = ({
   const [displayMenu, setDisplayMenu] = React.useState(false)
   const [img, setImg] = React.useState<string>('caution')
   const [text, setText] = React.useState<string>('Hubo un error, intentelo más tarde por favor.')
-
   React.useEffect(() => {
     setbicicletaProp(Prop)
   }, []);
   const initialValues = {
-    codigo: bicicletaProp?.codigo || '',
     tipo: bicicletaProp?.tipo || '',
     marca: bicicletaProp?.marca || '',
-    imagen: bicicletaProp?.imagen
+    imagen: bicicletaProp?.imagen || [],
   }
 
   const handleSubmit = async (bicicleta: Bicicleta) => {
-    if (authToken) {
-      console.log("hola mundo")
-    }
-
-    setImg('verificacion_envio')
-    setText("Su solicitud ha sido enviada con éxito, un administrador revisará y responderá a su solicitud dentro de los siguientes días. En la sección “Solicitudes” podrá ver el estado y respuesta a su solicitud.")
-    console.log(bicicleta)
     setIsLoading(true)
+    if (authToken) {
+      const data = await agregarBicicleta(bicicleta, authToken)
+      const message: string = data?.status
+      if (message === 'success') {
+        setImg('verificacion_envio')
+        setText("Su Bicicleta se ha enviado con éxito")
+      }
+    }
     dispatch(
       setBicicletaHasModified({
         bicicletaHasModified: !bicicletaHasModified
@@ -68,7 +67,10 @@ const BicicletasFormulario = ({
     )
     setIsLoading(false)
     setDisplayMenu(true)
-  }
+  };
+
+
+
   return (
 
     <>
@@ -82,7 +84,6 @@ const BicicletasFormulario = ({
       />
       <ScrollView showsVerticalScrollIndicator={false} style={tw`px-2 mb-8`}>
         <HeaderScreen
-
           title="Registra tu Bicicleta"
           message="Proporciona información sobre tu bicicleta"
           srcImage={require('../../../../assets/alertaBanner.png')}
@@ -96,18 +97,6 @@ const BicicletasFormulario = ({
             <>
               <FieldFormulario>
                 <Input
-                  text="Código"
-                  type="none"
-                  name="codigo"
-                  value={values.codigo}
-                  textAlignVertical="top"
-                  stylesInput="pt-2"
-                  setValue={(value) => setFieldValue('codigo', value)}
-                  placeholder="Agrega el código de tu bicicleta..."
-                />
-              </FieldFormulario>
-              <FieldFormulario>
-                <Input
                   text="Marca"
                   type="none"
                   name="marca"
@@ -117,29 +106,30 @@ const BicicletasFormulario = ({
                   setValue={(value) => setFieldValue('marca', value)}
                   placeholder="Especifica la marca de tu bicicleta..."
                 />
-
               </FieldFormulario>
               <FieldFormulario>
-                <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
-                  Tipo
-                </Text>
-                <SelectInput
-
-                  values={tipoAlertas}
-                  placeholder="Selecciona un tipo"
-                  setValuesSelected={(value) => (setFieldValue('tipo', value))}
-                  selectedValue={values.tipo}
+                <Input
+                  text="Tipo"
+                  type="none"
+                  name="tipo"
+                  value={values.tipo}
+                  textAlignVertical="top"
+                  stylesInput="pt-2"
+                  setValue={(value) => setFieldValue('tipo', value)}
+                  placeholder="Especifica el tipo de tu bicicleta..."
                 />
               </FieldFormulario>
-
               <FieldFormulario>
                 <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
                   Imagen
                 </Text>
-                <GalleryButton
+                <MediaPicker
                   field="imagen"
-                  icono={require('../../../../assets/gallery_icon.png')}
-                  imagen={values.imagen as ImageSourcePropType}
+                  icon={require('../../../../assets/gallery_icon.png')}
+                  placeholder="Puedes tomar fotos desde la galeria"
+                  setFieldValue={setFieldValue}
+                  values={values.imagen}
+
                 />
               </FieldFormulario>
 

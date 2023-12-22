@@ -29,6 +29,16 @@ const ListaBicicletas = () => {
         })()
     }, [bicicletaHasModified])
 
+    const actualizarLista = React.useCallback(async () => {
+        // Actualizar el estado para reflejar la eliminación
+        const listRBicicletas = await recuperarBicicletas(authToken || '')
+        if (listRBicicletas.length > 0) {
+            setListBicicletas(listRBicicletas)
+        } else {
+            setListBicicletas([])
+        }
+    }, [authToken]); // Dependencias de la función
+
     return (
         <View style={tw`pt-4`}>
             {isLoading ? (
@@ -42,7 +52,7 @@ const ListaBicicletas = () => {
             ) : (
                 listBicicletas.map((bici, index) => (
                     <View key={index} style={tw`p-2`}>
-                        <TarjetaBicicleta bicicleta={bici} />
+                        <TarjetaBicicleta onEliminar={actualizarLista} bicicleta={bici} />
                     </View>
                 ))
             )}
