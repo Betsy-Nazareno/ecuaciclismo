@@ -26,11 +26,17 @@ import { usuarioValidationSchema } from '../../../schemas/usuarioValidationSchem
 import { enviarDatosUsuarios } from '../../../lib/services/user.services'
 import Spinner from '../../atomos/Spinner'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
-import { RootDrawerParamList, RootStackParamList, Screens, ScreensDrawer } from '../../../models/Screens.types'
+import { RootDrawerParamList, ScreensDrawer } from '../../../models/Screens.types'
+import NotificationPopUp from '../../organismos/NotificationPopUp'
 
 const PerfilForm = ({ datosPerfil }: any) => {
   const [tiposRuta, setTiposRuta] = React.useState([])
+  const [displayMenu, setDisplayMenu] = React.useState(false)
+
   const { authToken, user } = useSelector((state: RootState) => state.user)
+  const [img, setImg] = React.useState<string>('caution')
+  const [text, setText] = React.useState<string>('Hubo un error, intentelo más tarde por favor.')
+  
   const [isLoading, setIsLoading] = React.useState(false)
   const navigation =
     useNavigation<NavigationProp<RootDrawerParamList, ScreensDrawer>>()
@@ -58,11 +64,17 @@ const PerfilForm = ({ datosPerfil }: any) => {
   const handleSubmit = async (props: any) => {
     setIsLoading(true)
     if (authToken) {
-      await enviarDatosUsuarios(authToken, props)
+      const data = await enviarDatosUsuarios(authToken, props)
+      const message: string = data?.status
+      if (message === 'success') {
+        setImg('verificacion_envio')
+        setText("Se ha editado un usuario con éxito.");
+      }
     }
-    navigation.navigate('Perfil', { userToken: user?.id_usuario || '' })
+    
 
     setIsLoading(false)
+    setDisplayMenu(true)
   }
 
   return (
@@ -72,7 +84,13 @@ const PerfilForm = ({ datosPerfil }: any) => {
         message="¡Presentate a la comunidad!"
         srcImage={require('../../../../assets/ciclista.png')}
       />
-
+      <NotificationPopUp
+        setVisible={setDisplayMenu}
+        visible={displayMenu}
+        imageName={img}
+        body={text}
+        setConfirmation={() => navigation.navigate('Perfil',{ userToken: user?.id_usuario || '' })}
+      />
       <Formik
         initialValues={initialValues}
         validationSchema={usuarioValidationSchema}

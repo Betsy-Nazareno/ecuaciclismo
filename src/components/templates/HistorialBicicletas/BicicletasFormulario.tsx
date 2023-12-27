@@ -6,7 +6,7 @@ import { RootDrawerParamList, ScreensDrawer } from "../../../models/Screens.type
 import { RootState } from "../../../redux/store";
 import HeaderScreen from "../../moleculas/HeaderScreen";
 import { ScrollView } from "react-native-gesture-handler";
-import { Formik } from "formik";
+import { Formik, FormikState } from "formik";
 import tw from 'twrnc'
 import NotificationPopUp from "../../organismos/NotificationPopUp";
 import { Bicicleta } from "../../../models/Bicicletas";
@@ -19,6 +19,7 @@ import { View, Text } from "react-native";
 import { BACKGROUND_COLORS, TEXT_COLORS } from "../../../utils/constants";
 import { agregarBicicleta } from "../../../lib/services/bicicleta.services";
 import MediaPicker from "../../organismos/MediaPicker";
+import { ImagePickerResult } from "expo-image-picker";
 
 
 interface BicicletasFormularioProps {
@@ -49,8 +50,8 @@ const BicicletasFormulario = ({
     marca: bicicletaProp?.marca || '',
     imagen: bicicletaProp?.imagen || [],
   }
-
-  const handleSubmit = async (bicicleta: Bicicleta) => {
+ 
+  const handleSubmit = async (bicicleta: Bicicleta,resetForm: { (nextState?: Partial<FormikState<{ tipo: string; marca: string; imagen: ImagePickerResult[]; }>> | undefined): void; (): void; }) => {
     setIsLoading(true)
     if (authToken) {
       const data = await agregarBicicleta(bicicleta, authToken)
@@ -58,6 +59,8 @@ const BicicletasFormulario = ({
       if (message === 'success') {
         setImg('verificacion_envio')
         setText("Su Bicicleta se ha enviado con éxito")
+        resetForm(); // Limpia el formulario después del éxito
+
       }
     }
     dispatch(
@@ -91,8 +94,8 @@ const BicicletasFormulario = ({
         <Formik
           initialValues={initialValues}
           validationSchema={BicicletaValidationSchema}
-          onSubmit={handleSubmit}
-        >
+          onSubmit={(values, { resetForm }) => handleSubmit(values, resetForm)}
+          >
           {({ handleSubmit, values, setFieldValue }) => (
             <>
               <FieldFormulario>

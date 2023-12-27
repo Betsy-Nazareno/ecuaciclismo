@@ -85,9 +85,8 @@ export const enviarDatosUsuarios = async (
   const dataBody = {
     ...updatedUser,
   }
-  console.log(dataBody)
   try {
-
+    
     const response = await axios({
       method: 'POST',
       data: dataBody,
@@ -95,7 +94,7 @@ export const enviarDatosUsuarios = async (
       headers: { Authorization: 'Token ' + authToken },
     })
     console.log(response)
-    return response;
+    return response.data;
   } catch (e) {
     console.error(e)
   }
