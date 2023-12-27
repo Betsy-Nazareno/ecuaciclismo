@@ -22,22 +22,36 @@ export const agregarBicicleta = async (
     }
     const response = await axios({
       method: 'POST',
-      url: `${BASE_URL}/api/biclicleta/crear_bicicleta/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/biclicleta/crear_bicicleta/`,
       data,
       headers: { Authorization: 'Token ' + token },
 
     })
     console.log(response)
     return response.data
-  } catch (e) {
-    console.error(e)
-    throw new Error('Error interno del servidor (500)');
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      // AxiosError específico
+      if (error.response) {
+        // La solicitud fue realizada y el servidor respondió con un código de estado fuera del rango 2xx
+        console.error('Error de respuesta:', error.response.data);
+      } else if (error.request) {
+        // La solicitud fue realizada pero no se recibió ninguna respuesta
+        console.error('Error de solicitud:', error.request);
+      } else {
+        // Algo sucedió en la configuración de la solicitud que generó un error
+        console.error('Error de configuración:', error.message);
+      }
+    } else {
+      // Otro tipo de error
+      console.error('Error general:', error);
+    }
   }
 }
 
 export const recuperarBicicletas = async (
   token_usuario: string) => {
-  const uri = `${BASE_URL}/api/biclicleta/mis_bicicletas/`
+  const uri = `https://ecuaciclismoapp.pythonanywhere.com/api/biclicleta/mis_bicicletas/`
   console.log(uri)
   const response = await axios({
     method: 'GET',
@@ -51,7 +65,7 @@ export const recuperarBicicletas = async (
 export const eliminarBicicleta = async (
   token_usuario: string,
   id_bicicleta: string) => {
-  const uri = `${BASE_URL}/api/biclicleta/${id_bicicleta}/eliminar_bicicleta/`
+  const uri = `https://ecuaciclismoapp.pythonanywhere.com/api/biclicleta/${id_bicicleta}/eliminar_bicicleta/`
   console.log(uri)
   const response = await axios({
     method: 'DELETE',

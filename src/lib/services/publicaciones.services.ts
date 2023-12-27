@@ -23,7 +23,7 @@ export const agregarPublicacion = async (
     }
     await axios({
       method: 'POST',
-      url: `${BASE_URL}/api/publicacion/new_publicacion/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/publicacion/new_publicacion/`,
       data,
       headers: { Authorization: 'Token ' + token },
     })
@@ -51,7 +51,7 @@ export const editarPublicacion = async (
 
     await axios({
       method: 'POST',
-      url: `${BASE_URL}/api/publicacion/update_publicacion/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/publicacion/update_publicacion/`,
       data,
       headers: { Authorization: 'Token ' + authToken },
     })
@@ -114,11 +114,11 @@ export const obtenerPublicaciones = async (token: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: `${BASE_URL}/api/publicacion/get_publicaciones/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/publicacion/get_publicaciones/`,
       headers: { Authorization: 'Token ' + token },
     })
     // Procesar la respuesta si la solicitud tiene éxito
-    console.log('Respuesta exitosa:', response.data); 
+    console.log('Respuesta exitosa:', response.data);
     const { data } = response.data || {}
     return converterPublicaciones(data)
   } catch (error) {
@@ -165,7 +165,7 @@ export const eliminarPublicacion = async (
   try {
     await axios({
       method: 'DELETE',
-      url: `${BASE_URL}/api/publicacion/delete_publicacion/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/publicacion/delete_publicacion/`,
       data: { token: publicacionToken },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -182,7 +182,7 @@ export const getPublicacionById = async (authToken: string, token: string) => {
   try {
     const response = await axios({
       method: 'POST',
-      url: `${BASE_URL}/api/publicacion/get_publicacion/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/publicacion/get_publicacion/`,
       data: { token_publicacion: token },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -204,7 +204,7 @@ export const agregarComentarioPublicacion = async (
   try {
     await axios({
       method: 'POST',
-      url: `${BASE_URL}/api/publicacion/new_comentario_publicacion/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/publicacion/new_comentario_publicacion/`,
       data: { token, comentario },
       headers: {
         Authorization: 'Token ' + authToken,

@@ -6,7 +6,7 @@ export const createUser = async (data: Registro, tokenNotification: string) => {
   try {
     await axios({
       method: 'POST',
-      url: `${BASE_URL}/api/usuario/crear_usuario/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/usuario/crear_usuario/`,
       data: {
         usuario: data.username,
         email: data.email,
@@ -25,7 +25,7 @@ export const getRutasSinConfirmar = async (authToken: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: `${BASE_URL}/api/ruta/get_not_response/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/ruta/get_not_response/`,
       headers: { Authorization: 'Token ' + authToken },
     })
     return response?.data?.data?.[0]
@@ -42,7 +42,7 @@ export const confirmarSafeInHome = async (
   try {
     await axios({
       method: 'POST',
-      url: `${BASE_URL}/api/ruta/safe_in_home/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/ruta/safe_in_home/`,
       headers: { Authorization: 'Token ' + authToken },
       data: { token_ruta: tokenRuta, safe },
     })
@@ -59,7 +59,7 @@ export const getDetalleUsuario = async (
     const response = await axios({
       method: 'POST',
       data: { token_usuario: userToken },
-      url: `${BASE_URL}/api/usuario/get_detalle_usuario/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/usuario/get_detalle_usuario/`,
       headers: { Authorization: 'Token ' + authToken },
     })
 
@@ -82,16 +82,19 @@ export const enviarDatosUsuarios = async (
   authToken: string,
   updatedUser: any
 ) => {
+  const dataBody = {
+    ...updatedUser,
+  }
+  console.log(dataBody)
   try {
 
     const response = await axios({
       method: 'POST',
-      data: {
-        ...updatedUser,
-      },
-      url: `${BASE_URL}/api/usuario/editar_usuario/`,
+      data: dataBody,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/usuario/editar_usuario/`,
       headers: { Authorization: 'Token ' + authToken },
     })
+    console.log(response)
     return response;
   } catch (e) {
     console.error(e)
@@ -102,7 +105,7 @@ export const getComunidad = async (authToken: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: `${BASE_URL}/api/usuario/get_usuarios/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/usuario/get_usuarios/`,
       headers: { Authorization: 'Token ' + authToken },
     })
     return response?.data?.data || []
@@ -115,7 +118,7 @@ export const getContactosSeguros = async (authToken: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: `${BASE_URL}/api/usuario/get_contactos_seguros/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/usuario/get_contactos_seguros/`,
       headers: { Authorization: 'Token ' + authToken },
     })
     return response?.data?.data || []
@@ -128,7 +131,7 @@ export const addContactoSeguro = async (authToken: string, user: number, id: num
   try {
     const response = await axios({
       method: 'POST',
-      url: `${BASE_URL}/api/usuario/agregar_contacto_seguro/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/usuario/agregar_contacto_seguro/`,
       headers: { Authorization: 'Token ' + authToken },
       data: {
         isUser: user,
@@ -147,7 +150,7 @@ export const deleteContactoSeguro = async (authToken: string) => {
   try {
     const response = await axios({
       method: 'DELETE',
-      url: `${BASE_URL}/api/usuario/delete_contacto_seguro/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/usuario/delete_contacto_seguro/`,
       data: { token_contacto: authToken },
     })
     return response?.data?.message || ""
@@ -160,7 +163,7 @@ export const recuperarContrasena = async (email: string) => {
   try {
     const response = await axios({
       method: 'POST',
-      url: `${BASE_URL}/api/recuperar_credenciales/enviar_email_recuperacion_clave/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/recuperar_credenciales/enviar_email_recuperacion_clave/`,
       data: {
         email: email,
       },
@@ -182,7 +185,7 @@ export const cambiarPermiso = async (
   try {
     await axios({
       method: 'POST',
-      url: `${BASE_URL}/api/usuario/setear_admin/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/usuario/setear_admin/`,
       data: { token_usuario: usuarioToken, admin: isAdmin },
       headers: { Authorization: 'Token ' + adminToken },
     })

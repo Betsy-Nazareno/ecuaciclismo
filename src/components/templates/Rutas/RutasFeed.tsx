@@ -1,4 +1,4 @@
-import * as React from 'react'
+  import * as React from 'react'
 import tw from 'twrnc'
 import { View } from 'react-native'
 import RutasFeedHeader from './RutasFeedHeader'
