@@ -43,7 +43,6 @@ export type RootStackParamList = {
 
   AlertaFormulario: { data: RutaCoordinadas } | undefined
 
-  Solicitudes: undefined
 
 }
 

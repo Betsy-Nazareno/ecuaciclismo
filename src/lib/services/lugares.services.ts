@@ -11,7 +11,7 @@ export const getLugares = async (token: string) => {
     try {
         const response = await axios({
             method: 'GET',
-            url: `https://ecuaciclismoapp.pythonanywhere.com/api/lugar/get_lugares/`,
+            url: `${BASE_URL}/api/lugar/get_lugares/`,
             headers: { Authorization: 'Token ' + token }
         })
         return response.data['lugares']
@@ -39,7 +39,7 @@ export const new_lugar = async (token: string, lugar: Lugar) => {
         }
         const response = await axios({
             method: 'POST',
-            url: `https://ecuaciclismoapp.pythonanywhere.com/api/lugar/new_lugar/`,
+            url: `${BASE_URL}/api/lugar/new_lugar/`,
             headers: { Authorization: 'Token ' + token },
             data: {
                 nombre: lugar.nombre,
@@ -75,7 +75,7 @@ export const newLocalSeguro = async (authToken: string, data: RegistroLocalSegur
     try {
         const response = await axios({
             method: 'POST',
-            url: `https://ecuaciclismoapp.pythonanywhere.com/api/lugar/new_lugar/`,
+            url: `${BASE_URL}/api/lugar/new_lugar/`,
             headers: { Authorization: 'Token ' + authToken },
             data: {
                 tipo_lugar: 'local',
@@ -104,7 +104,7 @@ export const getLugar = async (token: string, tokenLugar: string) => {
     try {
         const response = await axios({
             method: 'POST',
-            url: `https://ecuaciclismoapp.pythonanywhere.com/api/lugar/get_lugar/`,
+            url: `${BASE_URL}/api/lugar/get_lugar/`,
             data: { token_lugar: tokenLugar },
             headers: { Authorization: 'Token ' + token }
         })
@@ -123,7 +123,7 @@ export const getReseñas = async (token: string, tokenLugar: string) => {
     try {
         const response = await axios({
             method: 'POST',
-            url: `https://ecuaciclismoapp.pythonanywhere.com/api/lugar/get_reseñas/`,
+            url: `${BASE_URL}/api/lugar/get_reseñas/`,
             data: { token_lugar: tokenLugar },
             headers: { Authorization: 'Token ' + token }
         })
@@ -142,7 +142,7 @@ export const new_reseña = async (token: string, token_lugar: string, contenido:
     try {
         await axios({
             method: 'POST',
-            url: `https://ecuaciclismoapp.pythonanywhere.com/api/lugar/new_reseña/`,
+            url: `${BASE_URL}/api/lugar/new_reseña/`,
             data: { token_lugar: token_lugar, contenido: contenido, puntuacion_atencion: puntuacion_atencion, puntuacion_limpieza: puntuacion_limpieza, puntuacion_seguridad: puntuacion_seguridad },
             headers: { Authorization: 'Token ' + token }
         })
@@ -155,7 +155,7 @@ export const update_reseña = async (token: string, token_reseña: string, conte
     try {
         await axios({
             method: 'POST',
-            url: `https://ecuaciclismoapp.pythonanywhere.com/api/lugar/edit_reseña/`,
+            url: `${BASE_URL}/api/lugar/edit_reseña/`,
             data: { token_reseña: token_reseña, contenido: contenido, puntuacion_atencion: puntuacion_atencion, puntuacion_limpieza: puntuacion_limpieza, puntuacion_seguridad: puntuacion_seguridad },
             headers: { Authorization: 'Token ' + token }
         })
@@ -169,7 +169,7 @@ export const delete_reseña = async (token: string, token_reseña: string) => {
     try {
         await axios({
             method: 'POST',
-            url: `https://ecuaciclismoapp.pythonanywhere.com/api/lugar/delete_reseña/`,
+            url: `${BASE_URL}/api/lugar/delete_reseña/`,
             data: { token_reseña: token_reseña },
             headers: { Authorization: 'Token ' + token }
         })
