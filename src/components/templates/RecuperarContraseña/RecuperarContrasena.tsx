@@ -32,7 +32,6 @@ const RecuperarContrasenaFormulario = () => {
     console.log(data.email);
     try {
       const response = await recuperarContrasena(data.email);
-      console.log(response.data);
       if (response.data.status === 'success') {
         setImg('verificacion_envio')
         
@@ -57,7 +56,7 @@ const RecuperarContrasenaFormulario = () => {
         visible={displayMenu}
         imageName={img}
         body={text}
-        setConfirmation={() => navigation.navigate('Alertas')}
+        setConfirmation={() => navigation.navigate('Login')}
       />
       <View style={tw`pt-[${HEIGHT_DIMENSIONS * 0.1}] mx-2`}>
         <View style={tw`w-full flex flex-row justify-center mx-`}>
