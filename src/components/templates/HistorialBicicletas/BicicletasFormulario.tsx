@@ -16,10 +16,11 @@ import Spinner from "../../atomos/Spinner";
 import Input from "../../moleculas/Input";
 import FieldFormulario from "../../moleculas/FieldFormulario";
 import { View, Text } from "react-native";
-import { BACKGROUND_COLORS, TEXT_COLORS } from "../../../utils/constants";
+import { BACKGROUND_COLORS, TEXT_COLORS, tipoModalidadBicicleta } from "../../../utils/constants";
 import { agregarBicicleta } from "../../../lib/services/bicicleta.services";
 import MediaPicker from "../../organismos/MediaPicker";
 import { ImagePickerResult } from "expo-image-picker";
+import SelectInput from "../../atomos/SelectInput";
 
 
 interface BicicletasFormularioProps {
@@ -46,12 +47,23 @@ const BicicletasFormulario = ({
     setbicicletaProp(Prop)
   }, []);
   const initialValues = {
-    tipo: bicicletaProp?.tipo || '',
+    modelo: bicicletaProp?.modelo || '',
+    n_serie: bicicletaProp?.n_serie || '',
+    tienda_origen: bicicletaProp?.tienda_origen || '',
+    factura: bicicletaProp?.factura || '',
+    color: bicicletaProp?.color || '',
+    modalidad: bicicletaProp?.modalidad || '',
     marca: bicicletaProp?.marca || '',
     imagen: bicicletaProp?.imagen || [],
   }
- 
-  const handleSubmit = async (bicicleta: Bicicleta,resetForm: { (nextState?: Partial<FormikState<{ tipo: string; marca: string; imagen: ImagePickerResult[]; }>> | undefined): void; (): void; }) => {
+
+  const handleSubmit = async (bicicleta: Bicicleta, resetForm: {
+    (nextState?: Partial<FormikState<{
+      modelo: string; marca: string;
+      imagen: ImagePickerResult[]; n_serie: string; tienda_origen: string;
+      factura: string; color: string; modalidad: string;
+    }>> | undefined): void; (): void;
+  }) => {
     setIsLoading(true)
     if (authToken) {
       const data = await agregarBicicleta(bicicleta, authToken)
@@ -95,7 +107,7 @@ const BicicletasFormulario = ({
           initialValues={initialValues}
           validationSchema={BicicletaValidationSchema}
           onSubmit={(values, { resetForm }) => handleSubmit(values, resetForm)}
-          >
+        >
           {({ handleSubmit, values, setFieldValue }) => (
             <>
               <FieldFormulario>
@@ -112,14 +124,75 @@ const BicicletasFormulario = ({
               </FieldFormulario>
               <FieldFormulario>
                 <Input
-                  text="Tipo"
+                  text="Modelo"
                   type="none"
-                  name="tipo"
-                  value={values.tipo}
+                  name="modelo"
+                  value={values.modelo}
                   textAlignVertical="top"
                   stylesInput="pt-2"
-                  setValue={(value) => setFieldValue('tipo', value)}
-                  placeholder="Especifica el tipo de tu bicicleta..."
+                  setValue={(value) => setFieldValue('modelo', value)}
+                  placeholder="Especifica el Modelo de tu bicicleta..."
+                />
+              </FieldFormulario>
+              <FieldFormulario>
+                <Text style={tw`${TEXT_COLORS.DARK_BLUE} font-bold text-sm pl-2`}>
+                  Modalidad
+                </Text>
+                <SelectInput
+                  values={tipoModalidadBicicleta}
+                  accessibilityLabel='modalidad'
+                  placeholder="Selecciona la modalidad de tu bicicleta"
+                  setValuesSelected={(value) => setFieldValue('modalidad', value)}
+                  selectedValue={values.modalidad}
+                />
+              </FieldFormulario>
+
+              <FieldFormulario>
+                <Input
+                  text="Numero de Serie o Chasis"
+                  type="none"
+                  name="n_serie"
+                  value={values.n_serie}
+                  textAlignVertical="top"
+                  stylesInput="pt-2"
+                  setValue={(value) => setFieldValue('n_serie', value)}
+                  placeholder="Especifica el número de serie o chasis de tu bicicleta..."
+                />
+              </FieldFormulario>
+              <FieldFormulario>
+                <Input
+                  text="Tienda de Origen"
+                  type="none"
+                  name="tienda_origen"
+                  value={values.tienda_origen}
+                  textAlignVertical="top"
+                  stylesInput="pt-2"
+                  setValue={(value) => setFieldValue('tienda_origen', value)}
+                  placeholder="Especifica el número de serie de tu bicicleta..."
+                />
+              </FieldFormulario>
+              <FieldFormulario>
+                <Input
+                  text="Factura"
+                  type="none"
+                  name="factura"
+                  value={values.factura}
+                  textAlignVertical="top"
+                  stylesInput="pt-2"
+                  setValue={(value) => setFieldValue('factura', value)}
+                  placeholder="Especifica la factura de tu bicicleta..."
+                />
+              </FieldFormulario>
+              <FieldFormulario>
+                <Input
+                  text="Color"
+                  type="none"
+                  name="color"
+                  value={values.color}
+                  textAlignVertical="top"
+                  stylesInput="pt-2"
+                  setValue={(value) => setFieldValue('color', value)}
+                  placeholder="Especifica el color de tu bicicleta..."
                 />
               </FieldFormulario>
               <FieldFormulario>

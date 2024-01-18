@@ -4,31 +4,33 @@ import { useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { RootState } from '../../../redux/store'
 import TarjetaBicicleta from './TarjetaBicicleta'
-import { recuperarBicicletas } from '../../../lib/services/bicicleta.services'
+import { recuperarBicicletas, recuperarBicicletasPorUsuario } from '../../../lib/services/bicicleta.services'
 import { Bicicleta } from '../../../models/Bicicletas'
 import EmptyTarjetaPublicacion from '../../organismos/EmptyTarjetaPublicacion'
 import WithoutResults from '../../moleculas/WithoutResults'
+import TarjetaBicicletaVisitor from './TarjetaBicicletaVisitor'
 
-const ListaBicicletas = () => {
+interface ListaBicicletasVisitorProps {
+    token_usuario: string
+}
+const ListaBicicletasVisitor = ({ token_usuario }: ListaBicicletasVisitorProps) => {
     const { authToken } = useSelector((state: RootState) => state.user)
     const [listBicicletas, setListBicicletas] = React.useState<Bicicleta[]>([])
     const [isLoading, setIsLoading] = React.useState(true)
-
-    const { bicicletaHasModified } = useSelector(
-        (state: RootState) => state.bicicleta
-    )
     React.useEffect(() => {
         ; (async () => {
-            const listRBicicletas = await recuperarBicicletas(authToken || '')
-            console.log(listRBicicletas)
+            const listRBicicletas = await recuperarBicicletasPorUsuario(authToken!, token_usuario);
+            console.log(listRBicicletas);
             if (listRBicicletas.length > 0) {
-                setListBicicletas(listRBicicletas)
+                setListBicicletas(listRBicicletas);
             } else {
-                setListBicicletas([])
+                setListBicicletas([]);
             }
-            setIsLoading(false)
-        })()
-    }, [bicicletaHasModified])
+            setIsLoading(false);
+        })();
+    }, [authToken, token_usuario]);
+
+
 
     const actualizarLista = React.useCallback(async () => {
         // Actualizar el estado para reflejar la eliminación
@@ -53,7 +55,7 @@ const ListaBicicletas = () => {
             ) : (
                 listBicicletas.map((bici, index) => (
                     <View key={index} style={tw`p-2`}>
-                        <TarjetaBicicleta onEliminar={actualizarLista} bicicleta={bici} />
+                        <TarjetaBicicletaVisitor onEliminar={actualizarLista} bicicleta={bici} />
                     </View>
                 ))
             )}
@@ -62,4 +64,4 @@ const ListaBicicletas = () => {
     )
 }
 
-export default ListaBicicletas
+export default ListaBicicletasVisitor

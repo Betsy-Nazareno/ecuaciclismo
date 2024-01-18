@@ -40,14 +40,15 @@ const PerfilRoot = ({ userToken }: PerfilRootProps) => {
       if (authToken) {
         const detalle = await getDetalleUsuario(authToken, userToken)
         setDetalleUser(detalle)
+        setHasRefresh(!hasRefresh)
       }
     })()
-  }, [hasRefresh, refreshUser])
+  }, [!hasRefresh, refreshUser])
   const handleUpdates = async (updatedFields: Partial<User>) => {
     const data = { ...detalleUser, ...updatedFields }
 
-    const response = await enviarDatosUsuarios(userToken, data)
-    console.log(response)
+    await enviarDatosUsuarios(userToken, data)
+    
     const result = await SecureStore.getItemAsync('user')
     if (result) {
       const data = JSON.parse(result)

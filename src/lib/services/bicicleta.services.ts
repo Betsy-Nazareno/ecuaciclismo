@@ -16,13 +16,18 @@ export const agregarBicicleta = async (
     const { imagen } = bicicleta
     const multimediaPaths = await guardarMultimedia(imagen)
     const data = {
-      tipo: bicicleta.tipo,
+      modelo: bicicleta.modelo,
       marca: bicicleta.marca,
+      modalidad: bicicleta.modalidad,
+      n_serie: bicicleta.n_serie,
+      factura: bicicleta.factura,
+      color: bicicleta.color,
+      tienda_origen: bicicleta.tienda_origen,
       multimedia: [...multimediaPaths]
     }
     const response = await axios({
       method: 'POST',
-      url: `${BASE_URL}/api/bicicleta/crear_bicicleta/`,
+      url: `https://ecuaciclismoapp.pythonanywhere.com/api/bicicleta/crear_bicicleta/`,
       data,
       headers: { Authorization: 'Token ' + token },
 
@@ -50,8 +55,7 @@ export const agregarBicicleta = async (
 
 export const recuperarBicicletas = async (
   token_usuario: string) => {
-  const uri = `${BASE_URL}/api/bicicleta/mis_bicicletas/`
-  console.log(uri)
+  const uri = `https://ecuaciclismoapp.pythonanywhere.com/api/bicicleta/mis_bicicletas/` 
   const response = await axios({
     method: 'GET',
     url: uri,
@@ -60,14 +64,32 @@ export const recuperarBicicletas = async (
   const { data } = response.data || {}
   return converterBicicletas(data)
 }
-
+export const recuperarBicicletasPorUsuario = async (
+  token_admin: string, token: string) => {
+  const uri = `https://ecuaciclismoapp.pythonanywhere.com/api/bicicleta/user_bicicletas/?token_usuario=${token}` 
+  console.log(uri)
+  try {
+    const response = await axios({
+      method: 'GET',
+      url: uri,
+      headers: { Authorization: 'Token ' + token_admin },
+    })
+    const { data } = response.data || {}
+    return converterBicicletas(data)
+  } catch (error) {
+    return []
+  }
+  
+  
+}
 export const eliminarBicicleta = async (
   token_usuario: string,
   id_bicicleta: string) => {
-  const uri = `${BASE_URL}/api/bicicleta/${id_bicicleta}/eliminar_bicicleta/`
+  const uri = `https://ecuaciclismoapp.pythonanywhere.com/api/bicicleta/${id_bicicleta}/eliminar_bicicleta/`
   console.log(uri)
   const response = await axios({
     method: 'DELETE',
+    
     url: uri,
     headers: { Authorization: 'Token ' + token_usuario },
   })

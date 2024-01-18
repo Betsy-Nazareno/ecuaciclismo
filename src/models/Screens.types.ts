@@ -99,8 +99,10 @@ export type RootDrawerParamList = {
   DetalleSolicitud: { solicitud: Solicitud } | undefined
   Solicitudes: undefined
   Bicicletas: undefined
+  BicicletasVisitor: {token_usuario:string}
   LugarFormulario: { longitud: number | 0; latitud: number | 0 } | undefined
   BicicletaFormulario: { tokenUsuario: string }
+  
   DetalleBicicleta: { token: string } | undefined
 }
 
@@ -121,6 +123,7 @@ export type ScreensDrawer =
   | 'Lugares'
   | 'DetalleSolicitud'
   | 'Solicitudes'
+  | 'BicicletasVisitor'
   | 'Bicicletas'
   | 'BicicletaFormulario'
   | 'DetalleBicicleta'

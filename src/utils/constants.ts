@@ -254,6 +254,35 @@ export const tipoAlertas=[
 
 ]
 
+export const tipoModalidadBicicleta=[
+  {
+    value: 'montañera',
+    nombre: 'Montañera',
+
+  },
+  {
+    value: 'ruta',
+    nombre: 'Ruta',
+  },
+  {
+    value: 'pista',
+    nombre: 'Pista',
+  },
+  {
+    value: 'triaclon',
+    nombre: 'Triaclon',
+  },
+  {
+    value: 'ebike',
+    nombre: 'ebike',
+  },
+  {
+    value: 'BMX',
+    nombre: 'BMX',
+  }
+
+]
+
 export const tiposUsuarios = [
   {
     value: 'Contactos seguros',

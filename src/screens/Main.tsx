@@ -59,6 +59,7 @@ import RecuperarContrasenaFormulario from '../components/templates/RecuperarCont
 import Bicicletas from './HistorialBicicletas'
 import BicicletaFormulario from './BicicletaFormulario'
 import DetalleBicicleta from './DetalleBicicleta'
+import BicicletasVisitor from './HistorialBicicletasVisitor'
 
 
 const Stack = createNativeStackNavigator()
@@ -151,6 +152,7 @@ const Main = () => {
         <Drawer.Screen name="Novedades" component={Novedades} />
         <Drawer.Screen name="Alertas" component={Alertas} />
         <Drawer.Screen name="DetalleAlerta" component={DetalleAlerta} />
+        <Drawer.Screen name="BicicletasVisitor" component={BicicletasVisitor} />
         <Drawer.Screen name="Bicicletas" component={Bicicletas} />
         <Drawer.Screen name="BicicletaFormulario" component={BicicletaFormulario} />
         <Drawer.Screen name="DetalleBicicleta" component={DetalleBicicleta} />

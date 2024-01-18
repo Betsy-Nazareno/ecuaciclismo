@@ -5,7 +5,7 @@ export const newPlaceRequest = async (token: string, token_lugar?: string, path_
     try {
         const response = await axios({
             method: 'POST',
-            url: `${BASE_URL}/api/solicitud/new_solicitud/`,
+            url: `https://ecuaciclismoapp.pythonanywhere.com/api/solicitud/new_solicitud/`,
             headers: { Authorization: 'Token ' + token },
             data: {
                 token_lugar: token_lugar,
@@ -24,7 +24,7 @@ export const getSolicitudes = async (token: string) => {
     try {
         const response = await axios({
             method: 'GET',
-            url: `${BASE_URL}/api/solicitud/get_solicitudes/`,
+            url: `https://ecuaciclismoapp.pythonanywhere.com/api/solicitud/get_solicitudes/`,
             headers: { Authorization: 'Token ' + token },
         })
         return response?.data['solicitudes']
@@ -37,7 +37,7 @@ export const getSolicitudById = async (token: string, token_solicitud: string) =
     try {
         const response = await axios({
             method: 'GET',
-            url: `${BASE_URL}/api/solicitud/get_solicitud_by_id/`,
+            url: `https://ecuaciclismoapp.pythonanywhere.com/api/solicitud/get_solicitud_by_id/`,
             headers: { Authorization: 'Token ' + token },
             params: {
                 token_solicitud: token_solicitud
@@ -54,7 +54,7 @@ export const newMemberRequest = async (token: string, path_Pdf: string) => {
     try {
         const response = await axios({
             method: 'POST',
-            url: `${BASE_URL}/api/solicitud/new_solicitud/`,
+            url: `https://ecuaciclismoapp.pythonanywhere.com/api/solicitud/new_solicitud/`,
             headers: { Authorization: 'Token ' + token },
             data: {
                 path_Pdf: path_Pdf,
@@ -77,7 +77,7 @@ export const responderSolicitud = async (
     try {
         await axios({
             method: 'POST',
-            url: `${BASE_URL}/api/solicitud/responder_solicitud/`,
+            url: `https://ecuaciclismoapp.pythonanywhere.com/api/solicitud/responder_solicitud/`,
             data: { token_solicitud, estado, motivo_rechazo, tipo },
             headers: { Authorization: 'Token ' + authToken },
         })
@@ -91,7 +91,7 @@ export const newVerifiedRequest = async (token: string, description: string, ima
     try {
         const response = await axios({
             method: 'POST',
-            url: `${BASE_URL}/api/solicitud/new_solicitud_verificado/`,
+            url: `https://ecuaciclismoapp.pythonanywhere.com/api/solicitud/new_solicitud_verificado/`,
             headers: { Authorization: 'Token ' + token },
             data: {
                 descripcion: description,

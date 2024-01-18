@@ -7,7 +7,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { BACKGROUND_COLORS } from '../../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import tw from 'twrnc'
-import { RootStackParamList, Screens, ScreensDrawer } from '../../models/Screens.types'
+import { RootDrawerParamList, RootStackParamList, Screens, ScreensDrawer } from '../../models/Screens.types'
 import { setActiveTab } from '../../redux/drawerTabs'
 import OptionSideMenu from '../atomos/OptionSideMenu'
 import Ruler from '../atomos/Ruler'
@@ -18,7 +18,7 @@ import { RootState } from '../../redux/store'
 
 const SideMenu = (props: DrawerContentComponentProps) => {
   const dispatch = useDispatch()
-  const navigation = useNavigation<NavigationProp<RootStackParamList, Screens>>()
+  const navigation = useNavigation<NavigationProp<RootDrawerParamList, ScreensDrawer>>()
   const { user } = useSelector((state: RootState) => state.user)
   const handleClick = (tab: ScreensDrawer) => {
     dispatch(setActiveTab({ activeTab: tab }))

@@ -26,7 +26,7 @@ interface TarjetaPublicacionesProps {
     onEliminar: (id: string) => void;
 }
 
-const TarjetaBicicleta = ({ bicicleta, onEliminar }: TarjetaPublicacionesProps) => {
+const TarjetaBicicletaVisitor = ({ bicicleta, onEliminar }: TarjetaPublicacionesProps) => {
     const { authToken } = useSelector((state: RootState) => state.user)
     const [modalVisible, setModalVisible] = React.useState(false);
     const navigation =
@@ -75,14 +75,6 @@ const TarjetaBicicleta = ({ bicicleta, onEliminar }: TarjetaPublicacionesProps) 
                             </View>
                         </View>
                     </View>
-                    <TouchableHighlight
-                        onPress={eliminarBici}
-                        activeOpacity={0.6}
-                        underlayColor="#F16F31"
-                        style={{ borderRadius: 100 / 2 }}
-                    >
-                        <Image source={require('../../../../assets/trash.jpg')} style={{ width: 20, height: 20 }} />
-                    </TouchableHighlight>
                 </View>
             </ContenedorPaginasDetalle>
             <Modal
@@ -115,7 +107,7 @@ const TarjetaBicicleta = ({ bicicleta, onEliminar }: TarjetaPublicacionesProps) 
     )
 }
 
-export default TarjetaBicicleta
+export default TarjetaBicicletaVisitor
 const styles = StyleSheet.create({
     container: {
         borderStyle: 'solid',
