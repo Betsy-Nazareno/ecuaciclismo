@@ -23,7 +23,8 @@
       "backgroundColor": "#2D84C4"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/e382b385-0b0f-474e-b079-984325c5e6ad"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -39,7 +40,10 @@
           "fetch"
         ]
       },
-      "bundleIdentifier": "com.ecuaciclismo.ecuaciclismo"
+      "bundleIdentifier": "com.ecuaciclismo.ecuaciclismo",
+      "runtimeVersion": {
+        "policy": "sdkVersion"
+      }
     },
     "android": {
       "config": {
@@ -62,8 +66,9 @@
         "ACCESS_FINE_LOCATION",
         "READ_CONTACTS"
       ],
-      "useNextNotificationsApi": true
-      },
+      "useNextNotificationsApi": true,
+      "runtimeVersion": "1.0.0"
+    },
     "web": {
       "favicon": "./assets/favicon.png"
     },
