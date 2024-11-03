@@ -22,10 +22,10 @@ import Consejos from './HistorialConsejos'
 import Novedades from './HistorialNovedades'
 import ConsejoDetalle from './ConsejoDetalle'
 import Publicaciones from './Publicaciones'
-import DetallePublicacion from './DetallePublicacion'
+// import DetallePublicacion from './DetallePublicacion'
 import PublicacionFormulario from './PublicacionFormulario'
 import RutasFormulario from './RutasFormulario'
-import DetalleRuta from './DetalleRuta'
+// import DetalleRuta from './DetalleRuta'
 import InicioRastreo from './InicioRastreo'
 import RutaIncompleta from './RutaIncompleta'
 import FinalRuta from './FinalRuta'
@@ -36,21 +36,21 @@ import Contactaenos from './Contactenos'
 import ContactosSeguros from './ContactosSeguros'
 import ContactosComunidad from './ContactosComunidad'
 import ContactosCelular from './ContactosCelular'
-import RegistroLocalSeguro from './RegistroLocalSeguro'
-import RegistroLocalSeguroRequisitos from './RegistroLocalSeguroRequisitos'
+// import RegistroLocalSeguro from './RegistroLocalSeguro'
+// import RegistroLocalSeguroRequisitos from './RegistroLocalSeguroRequisitos'
 import RegistroLocalSeguroFormulario from './RegistroLocalSeguroFormulario'
 import DescargarSubirPDF from './DescargarSubirPDF'
 import Seguridad from './Seguridad'
 import Alertas from './Alertas'
-import DetalleAlerta from './DetalleAlerta'
+// import DetalleAlerta from './DetalleAlerta'
 import AlertaFormulario from './AlertaFormulario'
 import MapViewScreen from './MapViewScreen'
 import Lugares from './Lugares'
 import LugarFormulario from './LugarFormulario'
 import FormularioMiembro from './FormularioMiembro'
 import PaginaDescargaMiembro from './PaginaDescargaMiembro'
-import RegistroMiembro from './RegistroMiembro'
-import RequisitosMiembro from './RequisitosMiembro'
+// import RegistroMiembro from './RegistroMiembro'
+// import RequisitosMiembro from './RequisitosMiembro'
 import Solicitudes from './Solicitudes'
 import DetalleSolicitud from './DetalleSolicitud'
 import RegistroVerificado from './RegistroVerificado'
@@ -104,7 +104,7 @@ const Main = () => {
         <Stack.Screen name="Publicaciones" component={Publicaciones} />
         <Stack.Screen name="NovedadFormulario" component={NovedadFormulario} />
         <Stack.Screen name="ConsejoFormulario" component={ConsejoFormulario} />
-        <Stack.Screen name="DetalleRuta" component={DetalleRuta} />
+        {/* <Stack.Screen name="DetalleRuta" component={DetalleRuta} /> */}
         <Stack.Screen name="InicioRastreo" component={InicioRastreo} />
         <Stack.Screen name="RastreoUbicacion" component={RastreoLocation} />
         <Stack.Screen name="RutaIncompleta" component={RutaIncompleta} />
@@ -117,10 +117,10 @@ const Main = () => {
           component={Inicio}
           options={{ headerBackVisible: false }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="DetallePublicacion"
           component={DetallePublicacion}
-        />
+        /> */}
         <Stack.Screen name="AlertaFormulario" component={AlertaFormulario} />
 
         <Stack.Screen name="MapView" component={MapViewScreen} />
@@ -151,7 +151,7 @@ const Main = () => {
         <Drawer.Screen name="DetalleNovedad" component={DetalleNovedad} />
         <Drawer.Screen name="Novedades" component={Novedades} />
         <Drawer.Screen name="Alertas" component={Alertas} />
-        <Drawer.Screen name="DetalleAlerta" component={DetalleAlerta} />
+        {/* <Drawer.Screen name="DetalleAlerta" component={DetalleAlerta} /> */}
         <Drawer.Screen name="BicicletasVisitor" component={BicicletasVisitor} />
         <Drawer.Screen name="Bicicletas" component={Bicicletas} />
         <Drawer.Screen name="BicicletaFormulario" component={BicicletaFormulario} />
@@ -163,8 +163,8 @@ const Main = () => {
         <Drawer.Screen name="ContactosSeguros" component={ContactosSeguros} />
         <Drawer.Screen name="ContactosComunidad" component={ContactosComunidad} />
         <Drawer.Screen name="ContactosCelular" component={ContactosCelular} />
-        <Drawer.Screen name="RegistroLocalSeguro" component={RegistroLocalSeguro} />
-        <Drawer.Screen name="RegistroLocalSeguroRequisitos" component={RegistroLocalSeguroRequisitos} />
+        {/* <Drawer.Screen name="RegistroLocalSeguro" component={RegistroLocalSeguro} /> */}
+        {/* <Drawer.Screen name="RegistroLocalSeguroRequisitos" component={RegistroLocalSeguroRequisitos} /> */}
         <Drawer.Screen name="RegistroLocalSeguroFormulario" component={RegistroLocalSeguroFormulario} />
         <Drawer.Screen name="DescargarSubirPDF" component={DescargarSubirPDF} />
         <Drawer.Screen name="Seguridad" component={Seguridad} />
@@ -172,8 +172,8 @@ const Main = () => {
         <Drawer.Screen name="LugarFormulario" component={LugarFormulario} />
         <Drawer.Screen name="FormularioMiembro" component={FormularioMiembro} />
         <Drawer.Screen name="PaginaDescargaMiembro" component={PaginaDescargaMiembro} />
-        <Drawer.Screen name="RegistroMiembro" component={RegistroMiembro} />
-        <Drawer.Screen name="RequisitosMiembro" component={RequisitosMiembro} />
+        {/* <Drawer.Screen name="RegistroMiembro" component={RegistroMiembro} /> */}
+        {/* <Drawer.Screen name="RequisitosMiembro" component={RequisitosMiembro} /> */}
         <Drawer.Screen name="RegistroVerificado" component={RegistroVerificado} />
         <Drawer.Screen name="SeleccionarUsers" component={SeleccionarUsers} />
         <Drawer.Screen name="DetalleSolicitud" component={DetalleSolicitud} />   
