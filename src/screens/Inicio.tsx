@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import BasePaginas from '../components/templates/BasePaginas'
 import Consejos from '../components/templates/Inicio/Consejos'
-// import BannerPublicidad from '../components/templates/Inicio/BannerPublicidad'
+import BannerPublicidad from '../components/templates/Inicio/BannerPublicidad'
 import SectionTitle from '../components/moleculas/SectionTitle'
 import AdminValidator from '../components/templates/AdminValidator'
 import { NavigationProp, useNavigation } from '@react-navigation/native'
@@ -44,7 +44,7 @@ const Inicio = () => {
         />
       </AdminValidator>
       <AlertasActivas authToken={authToken} user={user} />
-      {/* <BannerPublicidad /> */}
+      <BannerPublicidad />
       <Consejos />
     </BasePaginas>
   )
