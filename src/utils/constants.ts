@@ -220,6 +220,10 @@ export const tipoSolicitudes = [
     nombre: 'Registro Local',
   },
   {
+    value: 'Registro Local Safepoint',
+    nombre: 'Registro Local Safepoint',
+  },
+  {
     value: 'Membresia',
     nombre: 'Membresia',
   },

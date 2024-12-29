@@ -4,6 +4,7 @@
   "scripts": {
     "start": "expo start --dev-client",
     "android": "expo run:android",
+    "android:dev": "expo start --localhost --android",
     "ios": "expo run:ios",
     "web": "expo start --web",
     "eject": "expo eject",
@@ -87,7 +88,8 @@
     "yup": "^0.32.11"
   },
   "resolutions": {
-    "@types/react": "~17.0.21"
+    "@types/react": "18.0.0",
+    "@types/react-dom": "18.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",

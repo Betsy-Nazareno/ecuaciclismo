@@ -21,4 +21,8 @@ export interface Solicitud {
     descripcion?: string;
     fecha_creacion?: string;
     ubicacion?: RutaCoordinadas;
+    servicio_local?: string;
+    tipos_productos?: string[];
+    servicios_extra?: string[];
+    es_propietario?: boolean;
 }
