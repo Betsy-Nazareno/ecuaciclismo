@@ -177,3 +177,16 @@ export const delete_reseña = async (token: string, token_reseña: string) => {
         console.error(e)
     }
 }
+
+export const enviar_estadistica_lugar = async (token: string, local: number) => {
+    try {
+        await axios({
+            method: 'POST',
+            url: `https://ecuaciclismoapp.pythonanywhere.com/safepoint/negocio/actualizar_estadistica`,
+            data: { local },
+            headers: { Authorization: 'Token ' + token }
+        })
+    } catch (e) {
+        console.error(e)
+    }
+}

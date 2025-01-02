@@ -3,38 +3,49 @@ import { View, Image, StyleSheet} from 'react-native';
 import { Marker } from 'react-native-maps';
 import { BACKGROUND_COLORS, tiposDeLugares } from '../../utils/constants';
 import tw from 'twrnc'
-import { getLugar } from '../../lib/services/lugares.services';
+import { enviar_estadistica_lugar, getLugar } from '../../lib/services/lugares.services';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { Lugar } from '../../models/Lugares';
 
 interface MarcadorLugarProps {
-    lugar: any;
-    setLugarSeleccionado: (lugar: any) => void;
-    setModalInfoVisible: (visible: boolean) => void;
-    setShouldRefresh: (shouldRefresh: boolean) => void;
-    shouldRefresh: boolean;
-    
+  lugar: any;
+  setLugarSeleccionado: (lugar: any) => void;
+  setModalInfoVisible: (visible: boolean) => void;
+  setShouldRefresh: (shouldRefresh: boolean) => void;
+  shouldRefresh: boolean;
+  localSafepoint? : boolean; // Indicar si el local fue registrado por medio de la APP de safepoints
 }
-const MarcadorLugar = ({ lugar ,setLugarSeleccionado, setModalInfoVisible,setShouldRefresh,shouldRefresh}:MarcadorLugarProps ) => {
+
+const MarcadorLugar = ({ 
+    lugar ,
+    setLugarSeleccionado, 
+    setModalInfoVisible,
+    setShouldRefresh,
+    shouldRefresh,
+    localSafepoint
+  }: MarcadorLugarProps) => {
   const [lugarInfo, setLugar] =  React.useState<Lugar>() || undefined;
   const {authToken}= useSelector((state: RootState) => state.user)
 
   React.useEffect(() => {
-    ;(async function () {
+    (async function () {
         if(lugar.token && authToken){
             const response: Lugar= await getLugar(authToken,lugar.token)
             setLugar(response)
             setShouldRefresh(true)
         }
     })()
-}
-, [shouldRefresh])
+    }, [shouldRefresh])
 
-  const handleMarkerPress = () => {
-    setLugarSeleccionado(lugarInfo)
+  const handleMarkerPress = async () => {
+    setLugarSeleccionado(lugarInfo);
     setModalInfoVisible(true);
-    setShouldRefresh(false);
+    setShouldRefresh(false);  
+
+    // Verificamos si el lugar fue registrado mediante la aplicacion de Safepoint
+    if(localSafepoint && authToken && lugarInfo && lugarInfo.id)
+      await enviar_estadistica_lugar(authToken, lugarInfo.id);
   };
 
   const getTipo=()=>{

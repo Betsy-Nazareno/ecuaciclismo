@@ -94,25 +94,33 @@ const ModalInfoLugar = ({ lugar, onClose, isModalInfoVisible,setShouldRefresh }:
                               {`${lugar.hora_fin.split(':')[0]}:${lugar.hora_fin.split(':')[1]}`}
                             </Text>
                           </View>
-                          <View style={tw`mb-1`}>
+                          <View style={tw`mb-2`}>
                             <Text style={tw`text-xl font-bold ${TEXT_COLORS.SKY_BLUE} mb-1`}>Tipos de productos que ofrece: </Text>
                             <View style={tw`flex flex-row flex-wrap`}>
                               {
                                 lugar.tipos_productos.map((item: string, i: number) => {
                                   return (
-                                    <TransparentBadge label={item}  key={`productos-${i}`}/>
+                                    <Text 
+                                      style={tw`p-2 ${BACKGROUND_COLORS.SKY_BLUE} ${TEXT_COLORS.WHITE} border-0 rounded-full mr-2`}
+                                    >
+                                      {item}
+                                    </Text>
                                   );
                                 })
                               }
                             </View>
                           </View>
-                          <View style={tw`mb-1`}>
+                          <View style={tw`mb-2`}>
                             <Text style={tw`text-xl font-bold ${TEXT_COLORS.SKY_BLUE} mb-1`}>Servicios que ofrece: </Text>
                             <View style={tw`flex flex-row flex-wrap`}>
                               {
                                 lugar.servicios_adicionales.map((item: string, i: number) => {
                                   return (
-                                    <TransparentBadge label={item}  key={`productos-${i}`}/>
+                                    <Text 
+                                      style={tw`p-2 ${BACKGROUND_COLORS.SKY_BLUE} ${TEXT_COLORS.WHITE} border-0 rounded-full mr-2`}
+                                    >
+                                      {item}
+                                    </Text>
                                   );
                                 })
                               }

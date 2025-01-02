@@ -3,6 +3,7 @@ import { ImageSourcePropType } from 'react-native';
 import { RutaCoordinadas } from './Alertas';
 
 export interface Lugar {
+  id?: number;
   nombre: string;
   token: string;
   descripcion: string;
@@ -26,7 +27,7 @@ export interface Lugar {
   promedio_atecion?: number;
   promedio_limpieza?: number;
   promedio_seguridad?: number;
-
+  local_safepoint?: boolean;
 }
 
 export interface Reseña {

@@ -112,6 +112,7 @@ const MapaLugares = () => {
             <MarcadorLugar
               key={lugar.token}
               lugar={lugar}
+              localSafepoint={lugar.local_safepoint}
               setLugarSeleccionado={setLugarSeleccionado}
               setModalInfoVisible={setModalInfoVisible}
               setShouldRefresh={setShouldRefresh}
