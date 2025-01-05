@@ -27,7 +27,7 @@ export const agregarBicicleta = async (
     }
     const response = await axios({
       method: 'POST',
-      url: `https://ecuaciclismoapp.pythonanywhere.com/api/bicicleta/crear_bicicleta/`,
+      url: `${BASE_URL}/api/bicicleta/crear_bicicleta/`,
       data,
       headers: { Authorization: 'Token ' + token },
 
@@ -55,7 +55,7 @@ export const agregarBicicleta = async (
 
 export const recuperarBicicletas = async (
   token_usuario: string) => {
-  const uri = `https://ecuaciclismoapp.pythonanywhere.com/api/bicicleta/mis_bicicletas/` 
+  const uri = `${BASE_URL}/api/bicicleta/mis_bicicletas/` 
   const response = await axios({
     method: 'GET',
     url: uri,
@@ -66,7 +66,7 @@ export const recuperarBicicletas = async (
 }
 export const recuperarBicicletasPorUsuario = async (
   token_admin: string, token: string) => {
-  const uri = `https://ecuaciclismoapp.pythonanywhere.com/api/bicicleta/user_bicicletas/?token_usuario=${token}` 
+  const uri = `${BASE_URL}/api/bicicleta/user_bicicletas/?token_usuario=${token}` 
   console.log(uri)
   try {
     const response = await axios({
@@ -85,7 +85,7 @@ export const recuperarBicicletasPorUsuario = async (
 export const eliminarBicicleta = async (
   token_usuario: string,
   id_bicicleta: string) => {
-  const uri = `https://ecuaciclismoapp.pythonanywhere.com/api/bicicleta/${id_bicicleta}/eliminar_bicicleta/`
+  const uri = `${BASE_URL}/api/bicicleta/${id_bicicleta}/eliminar_bicicleta/`
   console.log(uri)
   const response = await axios({
     method: 'DELETE',
