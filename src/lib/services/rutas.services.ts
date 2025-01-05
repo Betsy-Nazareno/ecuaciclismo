@@ -412,7 +412,8 @@ export const getNegociosConReservasPorRuta = async (
       headers: { Authorization: 'Token ' + authToken },
     });
 
-    const reservas = reservasResponse.data?.results || [];
+    const reservas = reservasResponse.data || [];
+
   
     const reservasPorRuta = reservas.filter((reserva: any) => {
       return reserva.id_ruta === ruta.id;
