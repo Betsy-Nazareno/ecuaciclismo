@@ -10,7 +10,7 @@ export const useAuthentication = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const initUser = async (props: Login) => {
-    const data = { user: { email: props.email, password: props.password } }
+    const data = { user: { email: props.email, password: props.password, token_notificacion: props.token_notificacion } }
     const uri = `https://ecuaciclismoapp.pythonanywhere.com/api/token-auth/`
     console.log(uri)
     try {
