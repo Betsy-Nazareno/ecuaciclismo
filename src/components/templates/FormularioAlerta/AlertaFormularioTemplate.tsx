@@ -73,29 +73,41 @@ const AlertaFormularioTemplate = ({
     ubicacion: ubicacion || temp,
     visibilidad: alertaProp?.visibilidad || [],
   }
+
+  /**
+   * Funcion para enviar notificaciones
+   * @param tokens 
+   */
+  const sendNotifications = async (tokens: string[]) => {
+    await sendPushNotification({
+      tokens,
+      title: 'Nueva Alerta',
+      body: `${capitalize(
+        user?.first_name
+      )} te ha enviado una alerta. ¡Ven a revisarlo!`,
+    });
+  }
+
   const handleSubmit = async (alerta: Alerta) => {
     setIsLoading(true)
 
     if (authToken) {
 
       const data = await agregarAlerta(alerta, authToken)
-      const tokens = data?.data
+      const usuarios_ciclistas_tokens = data?.data;
+      const usuarios_negocio_tokens = data?.token_usuarios_negocio;
       const status: string = data?.status
       const message: string = data?.message
+
       if (status === 'success') {
         await registrarLogAlerta(authToken!, "Alerta Creada", "El usuario ha creado la alerta", uuid);
-        setImg('verificacion_envio')
-        setText("Su Alerta se ha enviado con éxito")
+        setImg('verificacion_envio');
+        setText("Su Alerta se ha enviado con éxito");
+        await sendNotifications(usuarios_ciclistas_tokens);
+        await sendNotifications(usuarios_negocio_tokens);
       }else{
         await registrarLogAlerta(authToken!, "Alerta No Creada", message, uuid);
       }
-      await sendPushNotification({
-        tokens,
-        title: 'Nueva Alerta',
-        body: `${capitalize(
-          user?.first_name
-        )} te ha enviado una alerta. ¡Ven a revisarlo!`,
-      })
     }
     dispatch(
       setAlertaHasModified({
