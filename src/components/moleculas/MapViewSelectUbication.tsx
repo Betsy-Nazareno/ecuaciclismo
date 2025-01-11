@@ -18,7 +18,7 @@ interface MapViewSelectUbicationProps {
   width?: number;
   isUnique?: boolean;
   setField?: (field: string, ubicacion: RutaCoordinadas) => void;
-  negocios: any[];
+  negocios?: any[];
 }
 
 const initialRegion = {
@@ -36,7 +36,7 @@ const MapViewSelectUbication = ({
   width = WIDTH_DIMENSIONS * 0.9,
   select = false,
   isUnique = false,
-  negocios,
+  negocios = [],
 }: MapViewSelectUbicationProps) => {
   const [selectedNegocio, setSelectedNegocio] = React.useState<any | null>(null);
 
