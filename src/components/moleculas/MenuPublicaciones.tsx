@@ -64,6 +64,7 @@ const MenuPublicaciones = ({ publicacion }: MenuPublicacionesProps) => {
       <ConfirmationModal
         setVisible={setShowModal}
         visible={showModal}
+        labelId='confirmationDetelePublic'
         title={'Eliminar Publicación'}
         body="¿Estás seguro que deseas eliminar esta publicación?"
         setConfirmation={setConfirmationDelete}

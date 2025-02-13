@@ -20,9 +20,7 @@ const PublicacionesFeed = () => {
   const { text, buildFiltros } = useSelector(
     (state: RootState) => state.busqueda
   )
-  const [filteredPublicaciones, setFilteredPublicaciones] = React.useState<
-    Publicacion[]
-  >([])
+  const [filteredPublicaciones, setFilteredPublicaciones] = React.useState<Publicacion[]>([])
 
   React.useEffect(() => {
     ;(async () => {

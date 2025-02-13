@@ -7,9 +7,10 @@ import { RutaCoordinadas } from '../../../models/Rutas'
 
 interface RutaMapViewProps {
   ubicacion: RutaCoordinadas
+  negocios: any[] 
 }
 
-const RutaMapView = ({ ubicacion }: RutaMapViewProps) => {
+const RutaMapView = ({ ubicacion, negocios }: RutaMapViewProps) => {
   return (
     <RoundedWhiteBaseTemplate shadow={false}>
       <TitleWithDivider label="Ruta" />
@@ -18,6 +19,7 @@ const RutaMapView = ({ ubicacion }: RutaMapViewProps) => {
           value={ubicacion}
           height={300}
           width={WIDTH_DIMENSIONS * 0.86}
+          negocios={negocios} 
         />
       ) : null}
     </RoundedWhiteBaseTemplate>

@@ -17,23 +17,21 @@ const ListaConsejosHistoricos = ({ text }: ListConsejosHistoricosProps) => {
   const [filteredConsejos, setFilterdConsejos] = React.useState([])
 
   React.useEffect(() => {
-    let isMounted = true
-    if (isMounted) {
-      ;(async function () {
+
+    {
+      ; (async function () {
         const response = await obtenerConsejosHistoricos(authToken as string)
         setConsejos(response.data)
         setFilterdConsejos(response.data)
       })()
     }
 
-    return () => {
-      isMounted = false
-    }
+
   }, [])
 
   React.useEffect(() => {
-    let isMounted = true
-    if (isMounted) {
+    
+     {
       if (!text) {
         setFilterdConsejos(consejos)
       } else {
@@ -43,9 +41,7 @@ const ListaConsejosHistoricos = ({ text }: ListConsejosHistoricosProps) => {
         setFilterdConsejos(filteredConsejos)
       }
     }
-    return () => {
-      isMounted = false
-    }
+    
   }, [text])
 
   return (

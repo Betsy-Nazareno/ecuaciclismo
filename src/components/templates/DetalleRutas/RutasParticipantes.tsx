@@ -10,9 +10,16 @@ import ParticipantesFotoMiniatura from '../../moleculas/ParticipantesFotoMiniatu
 
 interface RutasParticipantesProps {
   participantes: Partial<User>[]
+  label?: string // Prop opcional para el título de la sección
+  texto?: string // Prop opcional para el texto de "No hay ciclistas registrados en esta ruta"
+
 }
 
-const RutasParticipantes = ({ participantes }: RutasParticipantesProps) => {
+const RutasParticipantes = ({
+  participantes,
+  label = 'Participantes', // Valor por defecto para el título de la sección
+  texto = 'No hay ciclistas registrados en esta ruta', // Valor por defecto para el texto de "No hay ciclistas registrados en esta ruta"
+}: RutasParticipantesProps) => {
   const [showModal, setShowModal] = React.useState(false)
   const [listaParticipantes, setlistaParticipantes] =
     React.useState(participantes)
@@ -20,11 +27,10 @@ const RutasParticipantes = ({ participantes }: RutasParticipantesProps) => {
   React.useEffect(() => {
     setlistaParticipantes(participantes)
   }, [participantes])
-
   return (
     <>
       <RoundedWhiteBaseTemplate shadow={false}>
-        <TitleWithDivider label="Participantes" />
+        <TitleWithDivider label={label}/>
         <Pressable style={tw`mx-4 my-2`} onPress={() => setShowModal(true)}>
           {listaParticipantes.length > 0 ? (
             <ParticipantesFotoMiniatura ciclistas={participantes} />
@@ -32,7 +38,7 @@ const RutasParticipantes = ({ participantes }: RutasParticipantesProps) => {
             <Text
               style={tw`${TEXT_COLORS.GRAY_PLACEHOLDER} italic font-semibold text-base`}
             >
-              No hay ciclistas registrados en esta ruta
+              {texto} 
             </Text>
           )}
         </Pressable>

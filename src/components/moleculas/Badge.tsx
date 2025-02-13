@@ -9,6 +9,7 @@ interface BadgeProps {
   name: string
   backgroundColor: string
   stylesProp?: string
+  styleText?: string
   icon?: ImageSourcePropType | undefined
   handleClick?: (name: string) => void
 }
@@ -19,6 +20,7 @@ const Badge = ({
   icon,
   stylesProp,
   backgroundColor,
+  styleText="text-white text-xs",
   handleClick,
 }: BadgeProps) => {
   return (
@@ -34,7 +36,7 @@ const Badge = ({
           <Image source={icon} style={{ width: 16, height: 16 }} />
         </Gap>
       )}
-      <CustomText style="text-white text-xs">{label}</CustomText>
+      <CustomText style={styleText}>{label}</CustomText>
     </Pressable>
   )
 }

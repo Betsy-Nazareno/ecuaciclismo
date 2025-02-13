@@ -11,7 +11,9 @@
         "expo-notifications",
         {
           "icon": "./assets/adaptive-icon.png",
-          "sounds": ["./assets/sounds/bellnotification.wav"]
+          "sounds": [
+            "./assets/sounds/bellnotification.wav"
+          ]
         }
       ]
     ],
@@ -21,18 +23,28 @@
       "backgroundColor": "#2D84C4"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "enabled": false,
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/e382b385-0b0f-474e-b079-984325c5e6ad"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "config": {
         "googleMapsApiKey": "AIzaSyDMi7l9iptdGvFXZ4FgkBlmFquHvzZxpmU"
       },
       "infoPlist": {
-        "UIBackgroundModes": ["location", "fetch"]
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ]
       },
-      "bundleIdentifier": "com.ecuaciclismo.ecuaciclismo"
+      "bundleIdentifier": "com.ecuaciclismo.ecuaciclismo",
+      "runtimeVersion": {
+        "policy": "sdkVersion"
+      }
     },
     "android": {
       "config": {
@@ -48,14 +60,25 @@
       "googleServicesFile": "./google-services.json",
       "permissions": [
         "NOTIFICATIONS",
+        "CAMERA",
+        "CAMERA_ROLL",
         "ACCESS_BACKGROUND_LOCATION",
         "ACCESS_COARSE_LOCATION",
-        "ACCESS_FINE_LOCATION"
+        "ACCESS_FINE_LOCATION",
+        "READ_CONTACTS"
       ],
-      "useNextNotificationsApi": true
+      "useNextNotificationsApi": true,
+      "runtimeVersion": {
+        "policy": "sdkVersion"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e382b385-0b0f-474e-b079-984325c5e6ad"
+      }
     }
   }
 }

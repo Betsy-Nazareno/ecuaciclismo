@@ -1,0 +1,28 @@
+import * as React from 'react'
+import tw from 'twrnc'
+import { Text, View } from 'react-native'
+
+interface EstadoViewAlertaProps {
+  color: string
+  estado: string
+}
+
+const EstadoViewAlerta =({
+  color,
+  estado,
+}: EstadoViewAlertaProps) => {
+  return (
+    <View
+      style={[
+        tw`absolute top-4 -right-6 ${color} px-6 ${styles}`,
+        { transform: [{ rotate: '40deg' }] },
+      ]}
+    >
+      <Text style={tw`text-white font-semibold text-xs text-center`}>
+        {estado}
+      </Text>
+    </View>
+  )
+}
+
+export default EstadoViewAlerta

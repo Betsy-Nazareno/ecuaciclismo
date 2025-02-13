@@ -4,16 +4,18 @@ import { cerrarSesion, iniciarSesion } from '../redux/user'
 import * as SecureStore from 'expo-secure-store'
 import { Login } from '../models/User'
 import { useState } from 'react'
-
+import { BASE_URL } from '@env'
 export const useAuthentication = () => {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(true)
 
   const initUser = async (props: Login) => {
-    const data = { user: { email: props.email, password: props.password } }
+    const data = { user: { email: props.email, password: props.password, token_notificacion: props.token_notificacion } }
+    const uri = `https://ecuaciclismoapp.pythonanywhere.com/api/token-auth/`
+    console.log(uri)
     try {
       const response = await axios.post(
-        'https://ecuaciclismoapp.pythonanywhere.com/api/token-auth/',
+        uri,
         data
       )
 
@@ -30,6 +32,7 @@ export const useAuthentication = () => {
         edad,
         nivel,
         id_usuario,
+        tipo,
       } = response.data || {}
 
       const user = {
@@ -44,6 +47,7 @@ export const useAuthentication = () => {
         edad,
         nivel,
         id_usuario,
+        tipo,
       }
 
       dispatch(
@@ -60,6 +64,7 @@ export const useAuthentication = () => {
   }
 
   const setUser = async () => {
+
     const result = await SecureStore.getItemAsync('user')
     if (result) {
       const data = JSON.parse(result)

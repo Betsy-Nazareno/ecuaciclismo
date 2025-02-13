@@ -4,7 +4,7 @@ import { NovedadInterface } from '../../models/Novedad.model'
 import { isDocumentResultType } from '../../utils/ckeckTypes'
 import { FOLDERS_STORAGE } from '../../utils/constants'
 import { guardarArchivo } from '../googleCloudStorage'
-
+import { BASE_URL } from '@env'
 export const agregarNovedad = async (
   authToken: string,
   data: NovedadInterface
@@ -27,7 +27,7 @@ export const agregarNovedad = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/new_novedad/',
+      url: `${BASE_URL}/api/consejodia/new_novedad/`,
       headers: { Authorization: 'Token ' + authToken },
       data: {
         titulo: data.titulo,
@@ -48,7 +48,7 @@ export const obtenerNovedades = async (token: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/get_novedades/',
+      url: `${BASE_URL}/api/consejodia/get_novedades/`,
       headers: { Authorization: 'Token ' + token },
     })
     return response.data
@@ -61,7 +61,7 @@ export const eliminarNovedad = async (token: string, tokenNovedad: string) => {
   try {
     await axios({
       method: 'DELETE',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/delete_novedad/',
+      url: `${BASE_URL}/api/consejodia/delete_novedad/`,
       data: { token: tokenNovedad },
       headers: { Authorization: 'Token ' + token },
     })

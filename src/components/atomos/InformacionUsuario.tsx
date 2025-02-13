@@ -6,14 +6,26 @@ import { TEXT_COLORS } from '../../utils/constants'
 interface InformacionUsuarioProps {
   firstName: string
   lastName: string
+  type:string
   foto?: string
 }
 
 const InformacionUsuario = ({
   firstName,
   lastName,
+  type,
   foto,
 }: InformacionUsuarioProps) => {
+  let iconSource;
+  if(type==='Administrador'){
+    iconSource = require('../../../assets/admin.png');
+  }else if (type === 'Verificado') {
+    iconSource = require('../../../assets/verificado.png');
+  } else if (type === 'Miembro') {
+    iconSource = require('../../../assets/miembro.png');
+  } else {
+    iconSource = null;
+  }
   return (
     <View style={tw`flex flex-row pb-2`}>
       <Image
@@ -22,13 +34,28 @@ const InformacionUsuario = ({
         resizeMode="contain"
       />
       <View style={tw`ml-[4%] mt-[1%]`}>
-        <Text
-          style={tw`text-base ${TEXT_COLORS.DARK_BLUE} font-semibold capitalize`}
-        >
-          {`${firstName} ${lastName}`}
-        </Text>
+        <View style={tw`flex flex-row`}>
+          <Text
+            style={tw`text-base ${TEXT_COLORS.DARK_BLUE} font-semibold capitalize`}
+          >
+            {`${firstName} ${lastName}`}
+
+          </Text>
+          {iconSource!=null && (
+          <Image
+          source={iconSource}
+          style={{
+            width:20,
+            height: 20,
+            borderRadius: 400 / 2,
+            marginTop:2,
+          }}
+          resizeMode="contain"
+          />
+        )}  
+        </View>
         <Text style={tw`text-[11px] ${TEXT_COLORS.DARK_GRAY} font-semibold`}>
-          Administrador
+          {type}
         </Text>
       </View>
     </View>

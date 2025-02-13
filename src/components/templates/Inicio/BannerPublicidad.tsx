@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Carousel from 'react-native-carousel-loop'
+import Carousel from 'react-native-snap-carousel';
 import { useSelector } from 'react-redux'
 import { obtenerNovedades } from '../../../lib/services/novedades.services'
 import { NovedadInterface } from '../../../models/Novedad.model'
@@ -29,15 +29,17 @@ const BannerNovedad = () => {
     <EmptyNovedad />
   ) : (
     <Carousel
-      delay={3000}
+      data={novedades}
+      renderItem={({ item }) => (
+        <Novedad data={item} />
+      )}
+      sliderWidth={WIDTH_DIMENSIONS}
+      itemWidth={WIDTH_DIMENSIONS}
+      layout={'default'}
       autoplay
-      style={{ width: WIDTH_DIMENSIONS, height: 100 }}
-      isLooped
-    >
-      {novedades?.map((item, index) => {
-        return <Novedad key={index} data={item} />
-      })}
-    </Carousel>
+      autoplayDelay={3000}
+      loop
+    />
   )
 }
 

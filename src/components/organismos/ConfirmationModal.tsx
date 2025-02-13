@@ -9,6 +9,7 @@ import {
 import ButtonPrimary from '../atomos/ButtonPrimary'
 import Ruler from '../atomos/Ruler'
 import UnfocusButton from '../atomos/UnfocusButton'
+import Input from '../moleculas/Input'
 
 interface ConfirmationModalProps {
   visible: boolean
@@ -16,6 +17,9 @@ interface ConfirmationModalProps {
   setConfirmation: (value: boolean) => void
   title: string
   body: string
+  motivo?: string
+  setMotivo?: (text: string) => void
+  labelId: string
 }
 
 const ConfirmationModal = ({
@@ -24,11 +28,16 @@ const ConfirmationModal = ({
   body,
   setVisible,
   setConfirmation,
+  motivo,
+  setMotivo,
+  labelId
 }: ConfirmationModalProps) => {
   return (
     <Modal
       visible={visible}
+      accessibilityLabel={labelId}
       transparent={true}
+      animationType="fade"
       onRequestClose={() => {
         setVisible(!visible)
       }}
@@ -59,6 +68,23 @@ const ConfirmationModal = ({
             </Text>
           </View>
           <Ruler style={BORDER_COLORS.GRAY} />
+          {motivo!=undefined && (
+            
+            <View style={tw`mb-6`}>
+              <Text style={tw`text-sm mx-auto w-11/12 ${TEXT_COLORS.DARK_BLUE}`}>
+                Ingresa el motivo:
+              </Text>
+              <Input
+                multiline
+                numberOfLines={4}
+                textAlignVertical="center"
+                type="none"
+                stylesInput="bg-white"
+                value={motivo}
+                setValue={setMotivo}
+              />
+            </View>
+          )}
           <View style={tw`flex flex-row items-center justify-center pt-4`}>
             <UnfocusButton
               label="Cancelar"
@@ -69,7 +95,7 @@ const ConfirmationModal = ({
               }}
             />
             <ButtonPrimary
-              label="Eliminar"
+              label="Confirmar"
               style={`w-full ${BACKGROUND_COLORS.SKY_BLUE} rounded-lg`}
               handleClick={() => {
                 setConfirmation(true)

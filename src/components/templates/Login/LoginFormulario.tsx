@@ -2,7 +2,6 @@ import * as React from 'react'
 import { Text, View, Image, TouchableHighlight } from 'react-native'
 import Input from '../../moleculas/Input'
 import ButtonPrimary from '../../atomos/ButtonPrimary'
-import TouchableMessage from '../../atomos/TouchableMessage'
 import Ruler from '../../atomos/Ruler'
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { RootStackParamList } from '../../../models/Screens.types'
@@ -20,7 +19,7 @@ import { Login } from '../../../models/User'
 import Spinner from '../../atomos/Spinner'
 import { usePermissionsNotifications } from '../../../hooks/usePermissionsNotifications'
 interface Prop {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>
+  navigation: NativeStackNavigationProp<RootStackParamList>
 }
 
 const LoginFormulario = ({ navigation }: Prop) => {
@@ -44,9 +43,8 @@ const LoginFormulario = ({ navigation }: Prop) => {
   return (
     <>
       <View
-        style={tw`w-full flex flex-row justify-center mt-[${
-          HEIGHT_DIMENSIONS * 0.08
-        }]`}
+        style={tw`w-full flex flex-row justify-center mt-[${HEIGHT_DIMENSIONS * 0.08
+          }]`}
       >
         <Image source={require('../../../../assets/ecuaciclismo_logo.png')} />
       </View>
@@ -94,14 +92,13 @@ const LoginFormulario = ({ navigation }: Prop) => {
           )}
         </Formik>
       </View>
+      <TouchableHighlight
+        onPress={() => navigation.navigate('RecuperarContrasena')}
+        underlayColor="#E7F5FF"
+      >
+        <Text style={tw`text-[#F16F31] text-center mt-[5%]`}>¿Olvidaste tu contraseña?</Text>
+      </TouchableHighlight>
 
-      <TouchableMessage
-        text="¿Olvidaste tu contraseña?"
-        style="mt-[5%]"
-        handleClick={() => {
-          return
-        }}
-      />
 
       <Ruler style={`w-3/12 mx-auto my-[${WIDTH_DIMENSIONS * 0.1}]`} />
 

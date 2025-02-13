@@ -11,7 +11,7 @@ const TransparentBadge = ({ label, styles = '' }: TransparentBadgeProps) => {
     <View
       style={tw`rounded-3xl py-1 pl-2 pr-3 flex flex-row items-center h-7 border-2 border-solid border-gray-100 border-opacity-20 bg-opacity-20 bg-black ${styles}`}
     >
-      <Text style={tw`text-gray-100 opacity-80 text-xs font-semibold`}>
+      <Text style={tw`text-white text-xs font-semibold`}>
         {label}
       </Text>
     </View>

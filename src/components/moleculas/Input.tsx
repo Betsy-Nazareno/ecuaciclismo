@@ -16,6 +16,7 @@ import { FieldError } from '../atomos/FieldError'
 interface InputProps {
   text?: string
   name?: string
+  label?: string
   type: TextInputType
   multiline?: boolean
   numberOfLines?: number
@@ -34,6 +35,7 @@ const Input = ({
   text,
   type,
   placeholder,
+  label,
   stylesProp,
   name,
   multiline = false,
@@ -61,6 +63,7 @@ const Input = ({
             isFocus ? styles.containerFocus : styles.containerUnfocus,
             tw`${stylesInput || ''}`,
           ]}
+          accessibilityLabel={label}
           textAlignVertical={textAlignVertical}
           textAlign={textAlignHorizontal}
           textContentType={type}

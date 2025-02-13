@@ -22,8 +22,7 @@ const ListaNovedadesHistoricas = ({ text }: ListaNovedadesHistoricasProps) => {
   )
 
   React.useEffect(() => {
-    let isMounted = true
-    if (isMounted) {
+    {
       ;(async function () {
         const response = await obtenerNovedades(authToken || '')
         const novedades: NovedadInterface[] = response.data
@@ -31,23 +30,19 @@ const ListaNovedadesHistoricas = ({ text }: ListaNovedadesHistoricasProps) => {
         setFilteredNovedades(novedades)
       })()
     }
-    return () => {
-      isMounted = false
-    }
+    
   }, [novedadHasModified])
 
   React.useEffect(() => {
-    let isMounted = true
-    if (isMounted) {
+    
+    {
       if (!text) {
         setFilteredNovedades(novedades)
       } else {
         setFilteredNovedades(filtrarNovedades())
       }
     }
-    return () => {
-      isMounted = false
-    }
+    
   }, [text])
 
   const filtrarNovedades = (): NovedadInterface[] => {

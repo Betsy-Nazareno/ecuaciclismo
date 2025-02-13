@@ -21,7 +21,7 @@ import {
 import { getPublicacionById } from '../../../lib/services/publicaciones.services'
 import { RootState } from '../../../redux/store'
 import { useSelector } from 'react-redux'
-import Carousel from 'react-native-carousel-loop/lib'
+import Carousel from 'react-native-swiper-flatlist';
 import VideoPlayer from 'expo-video-player'
 import { ResizeMode } from 'expo-av'
 import NoteVoice from '../../moleculas/NoteVoice'
@@ -177,17 +177,23 @@ const PublicacionDetalle = ({ token }: PublicacionProps) => {
           </View>
 
           <View style={tw`mt-6`}>
-            <Carousel
-              swipe
-              isLooped
-              bullets
-              style={{
-                width: WIDTH_DIMENSIONS * 0.85,
-                height: 250,
-              }}
-            >
-              {diplayImagesAndVideos(publicacion?.multimediaResult || [])}
-            </Carousel>
+            <View style={tw`justify-center items-center`}>
+              <Carousel
+                    showPagination
+                    index={0}
+                    style={{
+                      width: WIDTH_DIMENSIONS * 0.85,
+                      height: 250,
+                      
+                    }}
+                
+                  >
+                    {diplayImagesAndVideos(publicacion?.multimediaResult || [])}
+                    
+              </Carousel>
+              </View>
+
+            
 
             <View style={tw`pt-4`}>
               <CustomText

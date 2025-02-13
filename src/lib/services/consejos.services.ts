@@ -4,6 +4,7 @@ import { Consejo } from '../../models/Consejo.model'
 import { isDocumentResultType } from '../../utils/ckeckTypes'
 import { FOLDERS_STORAGE } from '../../utils/constants'
 import { guardarArchivo } from '../googleCloudStorage'
+import { BASE_URL } from '@env'
 
 export const agregarConsejo = async (consejo: Consejo, token: string) => {
   try {
@@ -23,7 +24,7 @@ export const agregarConsejo = async (consejo: Consejo, token: string) => {
     }
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/new_consejo_dia/',
+      url: `${BASE_URL}/api/consejodia/new_consejo_dia/`,
       data: { imagen: path, informacion },
       headers: { Authorization: 'Token ' + token },
     })
@@ -54,7 +55,7 @@ export const editarConsejo = async (
     }
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/update_consejo_dia/',
+      url: `${BASE_URL}/api/consejodia/update_consejo_dia/`,
       data: { informacion: informacion, imagen: path, token: oldConsejo.token },
       headers: { Authorization: 'Token ' + token },
     })
@@ -67,7 +68,7 @@ export const obtenerConsejosActuales = async (token: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/get_consejos_dia/',
+      url: `${BASE_URL}/api/consejodia/get_consejos_dia/`,
       headers: { Authorization: 'Token ' + token },
     })
     return response.data
@@ -80,7 +81,7 @@ export const obtenerConsejosHistoricos = async (token: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/get_historico_consejos_dia/',
+      url: `${BASE_URL}/api/consejodia/get_historico_consejos_dia/`,
       headers: { Authorization: 'Token ' + token },
     })
     return response.data
@@ -96,7 +97,7 @@ export const republicarConsejo = async (
   try {
     const response = await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/republicar_consejo_dia/',
+      url: `${BASE_URL}/api/consejodia/republicar_consejo_dia/`,
       headers: { Authorization: 'Token ' + authtoken },
       data: { token: consejoId },
     })
@@ -110,7 +111,7 @@ export const eliminarConsejo = async (token: string, tokenConsejo: string) => {
   try {
     await axios({
       method: 'DELETE',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/delete_consejo_dia/',
+      url: `${BASE_URL}/api/consejodia/delete_consejo_dia/`,
       data: { token: tokenConsejo },
       headers: { Authorization: 'Token ' + token },
     })
@@ -123,7 +124,7 @@ export const despinnearConsejo = async (token: string, authtoken: string) => {
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/remove_fijar_consejo/',
+      url: `${BASE_URL}/api/consejodia/remove_fijar_consejo/`,
       headers: { Authorization: 'Token ' + authtoken },
       data: { token_consejo: token },
     })
@@ -136,7 +137,7 @@ export const pinnearConsejo = async (token: string, authtoken: string) => {
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/consejodia/fijar_consejo/',
+      url: `${BASE_URL}/api/consejodia/fijar_consejo/`,
       headers: { Authorization: 'Token ' + authtoken },
       data: { token_consejo: token },
     })

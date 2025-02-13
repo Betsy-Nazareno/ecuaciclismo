@@ -6,7 +6,7 @@ import { MultimediaResult, Publicacion } from '../../models/Publicaciones.model'
 import { isAudioRecording, isDocumentResultType } from '../../utils/ckeckTypes'
 import { FOLDERS_STORAGE } from '../../utils/constants'
 import { guardarArchivo } from '../googleCloudStorage'
-
+import { BASE_URL } from '@env'
 export const agregarPublicacion = async (
   publicacion: Publicacion,
   token: string
@@ -23,7 +23,7 @@ export const agregarPublicacion = async (
     }
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/publicacion/new_publicacion/',
+      url: `${BASE_URL}/api/publicacion/new_publicacion/`,
       data,
       headers: { Authorization: 'Token ' + token },
     })
@@ -51,7 +51,7 @@ export const editarPublicacion = async (
 
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/publicacion/update_publicacion/',
+      url: `${BASE_URL}/api/publicacion/update_publicacion/`,
       data,
       headers: { Authorization: 'Token ' + authToken },
     })
@@ -110,16 +110,35 @@ const guardarMultimedia = async (multimedia: DocumentResult[]) => {
 }
 
 export const obtenerPublicaciones = async (token: string) => {
+
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/publicacion/get_publicaciones/',
+      url: `${BASE_URL}/api/publicacion/get_publicaciones/`,
       headers: { Authorization: 'Token ' + token },
     })
+    // Procesar la respuesta si la solicitud tiene éxito
+    console.log('Respuesta exitosa:', response.data);
     const { data } = response.data || {}
     return converterPublicaciones(data)
-  } catch (e) {
-    console.error(e)
+  } catch (error) {
+    // Manejar el error
+    if (axios.isAxiosError(error)) {
+      // AxiosError específico
+      if (error.response) {
+        // La solicitud fue realizada y el servidor respondió con un código de estado fuera del rango 2xx
+        console.error('Error de respuesta:', error.response.data);
+      } else if (error.request) {
+        // La solicitud fue realizada pero no se recibió ninguna respuesta
+        console.error('Error de solicitud:', error.request);
+      } else {
+        // Algo sucedió en la configuración de la solicitud que generó un error
+        console.error('Error de configuración:', error.message);
+      }
+    } else {
+      // Otro tipo de error
+      console.error('Error general:', error);
+    }
   }
 }
 
@@ -146,7 +165,7 @@ export const eliminarPublicacion = async (
   try {
     await axios({
       method: 'DELETE',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/publicacion/delete_publicacion/',
+      url: `${BASE_URL}/api/publicacion/delete_publicacion/`,
       data: { token: publicacionToken },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -163,7 +182,7 @@ export const getPublicacionById = async (authToken: string, token: string) => {
   try {
     const response = await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/publicacion/get_publicacion/',
+      url: `${BASE_URL}/api/publicacion/get_publicacion/`,
       data: { token_publicacion: token },
       headers: {
         Authorization: 'Token ' + authToken,
@@ -185,7 +204,7 @@ export const agregarComentarioPublicacion = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/publicacion/new_comentario_publicacion/',
+      url: `${BASE_URL}/api/publicacion/new_comentario_publicacion/`,
       data: { token, comentario },
       headers: {
         Authorization: 'Token ' + authToken,

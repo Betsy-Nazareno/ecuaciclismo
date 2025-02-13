@@ -29,10 +29,10 @@ const DatosContacto = () => {
         <Text
           style={tw`text-base ${TEXT_COLORS.DARK_BLUE} px-8 text-center pt-4`}
         >
-          Teléfono: +59309952251
+          Teléfono: +593995523753
         </Text>
         <Text style={tw`text-base ${TEXT_COLORS.DARK_BLUE} px-8 text-center`}>
-          Email: ecuador.sanchez@gmail.com
+          Email: ecuadorsanchez@gmail.com
         </Text>
       </View>
     </View>

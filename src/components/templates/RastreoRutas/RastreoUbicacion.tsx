@@ -1,17 +1,19 @@
 import * as React from 'react'
 import tw from 'twrnc'
-import { Image, View } from 'react-native'
+import { Image, View, Text, TouchableOpacity } from 'react-native'
+import Modal from 'react-native-modal';
 import * as Location from 'expo-location'
 import * as TaskManager from 'expo-task-manager'
 import MapView, { Marker } from 'react-native-maps'
 import {
+  BACKGROUND_COLORS,
   HEIGHT_DIMENSIONS,
   uri_meta_icon,
   WIDTH_DIMENSIONS,
 } from '../../../utils/constants'
 import RoundedButtonIcon from '../../atomos/RoundedButtonIcon'
 import RutaModal from '../../organismos/RutaModal'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
 import { configureBgTask } from '../../../backgroundTasks/locationTask'
 import { getDatabase, ref, onValue, set, remove, get } from 'firebase/database'
@@ -25,7 +27,14 @@ import {
   getHorasEstimadas,
 } from '../../../utils/rastreoCalculations'
 import { finalizarRastreo } from '../../../lib/services/rutas.services'
-
+import MenuAlertaRuta from '../../moleculas/MenuAlertaRuta'
+import { NavigationProp, useFocusEffect, useNavigation } from '@react-navigation/native';
+import { Lugar } from '../../../models/Lugares'
+import { RootStackParamList, Screens } from '../../../models/Screens.types'
+import { getLugares } from '../../../lib/services/lugares.services'
+import { setLugares } from '../../../redux/lugar'
+import MarcadorLugar from '../../atomos/MarcadorLugar'
+import ModalInfoLugar from '../../organismos/ModalInfoLugar';
 const TASK_NAME = 'BACKGROUND_LOCATION_TASK'
 
 interface RastreoUbicacionProps {
@@ -37,9 +46,32 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
   const [errorMsg, setErrorMsg] = React.useState('')
   const [infParticipantes, setinfParticipantes] = React.useState<any>([])
   const [showModal, setShowModal] = React.useState(false)
+  const [showModalAlerta, setShowModalAlerta] = React.useState(false)
   const [showFinalModal, setShowFinalModal] = React.useState(false)
   const { authToken, user } = useSelector((state: RootState) => state.user)
-
+  const [selectedLocation, setSelectedLocation] = React.useState<{
+    latitude: number | null;
+    longitude: number | null;
+  } | null>(null);
+  const dispatch = useDispatch();
+  const [shouldRefresh, setShouldRefresh] = React.useState(false);
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
+  const { lugares } = useSelector((state: RootState) => state.lugar);
+  const [lugarSeleccionado, setLugarSeleccionado] = React.useState<Lugar>() || undefined;
+  const [modalInfoVisible, setModalInfoVisible] = React.useState(false);
+  const navigation =useNavigation<NavigationProp<RootStackParamList, Screens>>()
+  const lugarS = lugares[0];
+  React.useEffect(() => {
+    ;(async function () {
+      if (authToken) {
+        const response = await getLugares(authToken);
+        dispatch(setLugares({ lugares: response }));
+        setLugarSeleccionado(lugarS);
+        setShouldRefresh(false);
+      }
+    })();
+  }, []);
+  
   React.useEffect(() => {
     ;(async () => {
       const { status } = await Location.requestForegroundPermissionsAsync()
@@ -61,7 +93,14 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
       await startBackgroundLocation()
     })()
   }, [])
-
+ useFocusEffect(
+    React.useCallback(() => {
+      setShowModalAlerta(false);
+      return () => {
+        // Código de limpieza si es necesario
+      };
+    }, [])
+  );
   React.useEffect(() => {
     if (authToken) {
       configureBgTask({
@@ -96,7 +135,6 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
       })
     })()
   }, [])
-
   React.useEffect(() => {
     if (location && ruta.ubicacion && !location.retorno) {
       const { coordinateY } = ruta.ubicacion || {}
@@ -176,13 +214,35 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
     longitude: -79.93498552590609,
     longitudeDelta: 0.13138934969902039,
   }
+  const handleMapLongPress = (event: { nativeEvent: { coordinate: { latitude: number; longitude: number } } }) => {
+    const { latitude, longitude } = event.nativeEvent.coordinate;
+    setSelectedLocation({ latitude, longitude });
+    setIsModalVisible(true);
+  };
+  const handleModalClose = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleGoToLocation = () => {
+    if (selectedLocation) {
+      navigation.navigate('LugarFormulario', { longitud: selectedLocation.longitude, latitud: selectedLocation.latitude })
+
+      
+    }
+    setIsModalVisible(false);
+  };
+
+  const markerStyle = { pinColor: 'orange' };
+
 
   return (
     <View style={tw`relative`}>
       <MapView
         style={{ width: WIDTH_DIMENSIONS, height: HEIGHT_DIMENSIONS }}
         initialRegion={initialRegion}
+        onLongPress={handleMapLongPress}
       >
+        {selectedLocation && <Marker coordinate={selectedLocation} {...markerStyle} />}
         <Marker
           coordinate={{
             longitude: ruta?.ubicacion?.coordinateY?.longitude,
@@ -208,11 +268,33 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
             </Marker>
           )
         })}
+        {lugares ? (
+          lugares.map((lugar: Lugar) => (
+            <MarcadorLugar
+              key={lugar.token}
+              lugar={lugar}
+              setLugarSeleccionado={setLugarSeleccionado}
+              setModalInfoVisible={setModalInfoVisible}
+              setShouldRefresh={setShouldRefresh}
+              shouldRefresh={shouldRefresh}
+            />
+          ))
+        ) : (
+          null
+        )}
+
       </MapView>
       <View style={tw`absolute top-2 left-2`}>
         <RoundedButtonIcon
           src={require('../../../../assets/menu_white_icon.png')}
           handleClick={() => setShowModal(true)}
+        />
+      </View>
+      <View style={tw`absolute top-2 right-2`}>
+        <RoundedButtonIcon
+          src={require('../../../../assets/alert_icon.png')}
+          handleClick={() => setShowModalAlerta(!showModalAlerta)}
+          background = {BACKGROUND_COLORS.RED}
         />
       </View>
       {showModal && (
@@ -229,6 +311,16 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
           )}
         />
       )}
+      {showModalAlerta && (
+        <MenuAlertaRuta 
+          visible={showModalAlerta}
+          setVisible={setShowModalAlerta}
+          ubicacion={{coordinateX: location?.coords,coordinateY:location?.coords}}
+        />
+      )
+
+
+      }
       {showFinalModal && (
         <RutaFinalRastreoModal
           token={ruta?.token || ''}
@@ -236,6 +328,32 @@ const RastreoUbicacion = ({ ruta }: RastreoUbicacionProps) => {
           setVisible={setShowFinalModal}
         />
       )}
+      <Modal isVisible={isModalVisible} onBackdropPress={handleModalClose}>
+        <View style={tw`bg-white p-5 rounded-lg`}>
+          {selectedLocation ? (
+            <>
+              <Text style={tw`text-xl font-bold mb-2 text-center`}>Tu opinion importa</Text>
+              <Text style={tw`text-lg text-center`}>¿Recomendar lugar en esta ubicación?</Text>
+              <TouchableOpacity onPress={handleGoToLocation} style={tw`bg-blue-500 py-2 px-4 rounded-md mt-4 mx-auto`}>
+                <Text style={tw`text-white text-lg text-center`}>Recomendar</Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <Text style={tw`text-xl font-bold text-center`}>Selecciona una ubicación</Text>
+          )}
+        </View>
+      </Modal>
+      {modalInfoVisible ? (
+        <ModalInfoLugar
+          isModalInfoVisible={modalInfoVisible}
+          lugar={lugarSeleccionado}
+          setShouldRefresh={setShouldRefresh}
+          onClose={() => setModalInfoVisible(false)}
+        />
+      ) : (
+        null
+      )}
+
     </View>
   )
 }

@@ -11,10 +11,11 @@ import { BACKGROUND_COLORS } from '../../utils/constants'
 interface Props {
   children: ReactNode
   screen: Screens
+  activeBackgroundColor: BACKGROUND_COLORS
   param?: any
 }
 
-export const ButtonTab = ({ children, screen, param }: Props) => {
+export const ButtonTab = ({ children, screen, activeBackgroundColor,param }: Props) => {
   const { activeScreen } = useSelector((state: RootState) => state.screens)
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, Screens>>()
@@ -37,7 +38,7 @@ export const ButtonTab = ({ children, screen, param }: Props) => {
         <View style={tw`mt-[4%] h-1 w-8/12 mx-auto`}>
           {isActiveScreen() && (
             <View
-              style={tw`rounded-3xl ${BACKGROUND_COLORS.ORANGE} w-full h-full`}
+              style={tw`rounded-3xl ${ activeBackgroundColor || BACKGROUND_COLORS.ORANGE} w-full h-full`}
             />
           )}
         </View>

@@ -1,10 +1,13 @@
 import * as React from 'react'
 import { Picker } from '@react-native-picker/picker'
 import { Etiqueta } from '../../models/Etiqueta.model'
+import { TouchableOpacity } from 'react-native'
+import tw from 'twrnc';
 
 interface SelectInputProps {
   values: Etiqueta[]
   placeholder: string
+  accessibilityLabel: string
   setValuesSelected: (value: string) => void
   selectedValue?: string
 }
@@ -13,18 +16,20 @@ const SelectInput = ({
   values,
   setValuesSelected,
   placeholder,
+  accessibilityLabel,
   selectedValue,
 }: SelectInputProps) => {
   return (
     <Picker
       onValueChange={(itemValue) => setValuesSelected(itemValue as string)}
       mode="dropdown"
+      accessibilityLabel={accessibilityLabel}
       selectedValue={selectedValue}
     >
-      <Picker.Item label={placeholder} style={{ color: '#767676' }} />
+      <Picker.Item testID='pp' label={placeholder} style={{ color: '#767676' }} />
       {values.map((item) => {
         const { nombre, value } = item
-        return <Picker.Item label={nombre} value={value} key={value} />
+        return <Picker.Item testID={nombre} label={nombre} value={value} key={value} />;
       })}
     </Picker>
   )

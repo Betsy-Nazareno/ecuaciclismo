@@ -1,15 +1,12 @@
 import axios from 'axios'
-import { DocumentResult } from 'expo-document-picker'
-import { Registro, User } from '../../models/User'
-import { isDocumentResultType } from '../../utils/ckeckTypes'
-import { FOLDERS_STORAGE } from '../../utils/constants'
-import { guardarArchivo } from '../googleCloudStorage'
 
+import { Registro } from '../../models/User'
+import { BASE_URL } from '@env'
 export const createUser = async (data: Registro, tokenNotification: string) => {
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/usuario/crear_usuario/',
+      url: `${BASE_URL}/api/usuario/crear_usuario/`,
       data: {
         usuario: data.username,
         email: data.email,
@@ -28,7 +25,7 @@ export const getRutasSinConfirmar = async (authToken: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/get_not_response/',
+      url: `${BASE_URL}/api/ruta/get_not_response/`,
       headers: { Authorization: 'Token ' + authToken },
     })
     return response?.data?.data?.[0]
@@ -45,7 +42,7 @@ export const confirmarSafeInHome = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/ruta/safe_in_home/',
+      url: `${BASE_URL}/api/ruta/safe_in_home/`,
       headers: { Authorization: 'Token ' + authToken },
       data: { token_ruta: tokenRuta, safe },
     })
@@ -62,9 +59,10 @@ export const getDetalleUsuario = async (
     const response = await axios({
       method: 'POST',
       data: { token_usuario: userToken },
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/usuario/get_detalle_usuario/',
+      url: `${BASE_URL}/api/usuario/get_detalle_usuario/`,
       headers: { Authorization: 'Token ' + authToken },
     })
+
     const [detalle] = response?.data?.data || []
     return converterUsuario(detalle)
   } catch (e) {
@@ -79,55 +77,24 @@ const converterUsuario = (user: any) => {
   }
 }
 
-export const updateUser = async (
-  authToken: string,
-  updatedUser: Partial<User>
-) => {
-  try {
-    await axios({
-      method: 'POST',
-      data: {
-        ...updatedUser,
-        usuario: updatedUser.username,
-        nombre: updatedUser.first_name,
-        apellido: updatedUser.last_name,
-      },
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/usuario/editar_usuario/',
-      headers: { Authorization: 'Token ' + authToken },
-    })
-  } catch (e) {
-    console.error(e)
-  }
-}
 
 export const enviarDatosUsuarios = async (
   authToken: string,
   updatedUser: any
 ) => {
+  const dataBody = {
+    ...updatedUser,
+  }
   try {
-    const { foto_bicicleta = {} } = updatedUser || {}
-    const document = foto_bicicleta as DocumentResult
-    if (document.type === 'cancel') {
-      return
-    }
 
-    let path = foto_bicicleta
-    if (foto_bicicleta && isDocumentResultType(foto_bicicleta)) {
-      path = await guardarArchivo(
-        FOLDERS_STORAGE.USUARIOS,
-        document.name,
-        document.uri
-      )
-    }
-    await axios({
+    const response = await axios({
       method: 'POST',
-      data: {
-        ...updatedUser,
-        foto_bicicleta: path,
-      },
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/usuario/editar_usuario/',
+      data: dataBody,
+      url: `${BASE_URL}/api/usuario/editar_usuario/`,
       headers: { Authorization: 'Token ' + authToken },
     })
+    console.log(response)
+    return response.data;
   } catch (e) {
     console.error(e)
   }
@@ -137,12 +104,75 @@ export const getComunidad = async (authToken: string) => {
   try {
     const response = await axios({
       method: 'GET',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/usuario/get_usuarios/',
+      url: `${BASE_URL}/api/usuario/get_usuarios/`,
       headers: { Authorization: 'Token ' + authToken },
     })
     return response?.data?.data || []
   } catch (e) {
     console.error(e)
+  }
+}
+
+export const getContactosSeguros = async (authToken: string) => {
+  try {
+    const response = await axios({
+      method: 'GET',
+      url: `${BASE_URL}/api/usuario/get_contactos_seguros/`,
+      headers: { Authorization: 'Token ' + authToken },
+    })
+    return response?.data?.data || []
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const addContactoSeguro = async (authToken: string, user: number, id: number, name: string, phone: string) => {
+  try {
+    const response = await axios({
+      method: 'POST',
+      url: `${BASE_URL}/api/usuario/agregar_contacto_seguro/`,
+      headers: { Authorization: 'Token ' + authToken },
+      data: {
+        isUser: user,
+        user_id: id,
+        nombre: name,
+        celular: phone
+      },
+    })
+    return response?.data?.message || ""
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const deleteContactoSeguro = async (authToken: string) => {
+  try {
+    const response = await axios({
+      method: 'DELETE',
+      url: `${BASE_URL}/api/usuario/delete_contacto_seguro/`,
+      data: { token_contacto: authToken },
+    })
+    return response?.data?.message || ""
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const recuperarContrasena = async (email: string) => {
+  try {
+    const response = await axios({
+      method: 'POST',
+      url: `${BASE_URL}/api/recuperar_credenciales/enviar_email_recuperacion_clave/`,
+      data: {
+        email: email,
+      },
+    })
+    return response;
+  } catch (e) {
+
+    console.error(e)
+    throw new Error('Error interno del servidor (500)');
+
   }
 }
 
@@ -154,8 +184,24 @@ export const cambiarPermiso = async (
   try {
     await axios({
       method: 'POST',
-      url: 'https://ecuaciclismoapp.pythonanywhere.com/api/usuario/setear_admin/',
+      url: `${BASE_URL}/api/usuario/setear_admin/`,
       data: { token_usuario: usuarioToken, admin: isAdmin },
+      headers: { Authorization: 'Token ' + adminToken },
+    })
+  } catch (e) {
+    console.error(e)
+  }
+}
+export const hacerMiembro = async (
+  usuarioToken: string,
+  isMember: boolean,
+  adminToken: string
+) => {
+  try {
+    await axios({
+      method: 'POST',
+      url: `${BASE_URL}/api/usuario/setear_miembro/`,
+      data: { token_usuario: usuarioToken, miembro: isMember },
       headers: { Authorization: 'Token ' + adminToken },
     })
   } catch (e) {

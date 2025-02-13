@@ -23,11 +23,15 @@ interface PerfilFotoHeaderProps {
   foto?: string
   idUser: string
   telefono?: string
-  onUpdate: (user: Partial<User>) => void
+  tipo?:string
+  onUpdate?: (user: Partial<User>) => void
+  editable?: boolean
+  dimensionWidth?: number
 }
 
 const PerfilFotoHeader = ({
   isAdmin,
+  tipo,
   email,
   nombre,
   apellido,
@@ -35,6 +39,8 @@ const PerfilFotoHeader = ({
   idUser,
   telefono,
   onUpdate,
+  editable=true,
+  dimensionWidth = WIDTH_DIMENSIONS,
 }: PerfilFotoHeaderProps) => {
   const [admin, setAdmin] = React.useState(false)
   React.useEffect(() => {
@@ -52,7 +58,17 @@ const PerfilFotoHeader = ({
     )
     onUpdate({ foto: path })
   }
-
+  let iconSource;
+  if(admin){
+    iconSource = require('../../../../assets/admin.png');
+  }else if (tipo === 'Verificado') {
+    iconSource = require('../../../../assets/verificado.png');
+  } else if (tipo === 'Miembro') {
+    iconSource = require('../../../../assets/miembro.png');
+  } else {
+    // Si el tipo de usuario no es "verificado" ni "miembro", no mostramos ningún icono
+    return null;
+  }
   return (
     <>
       <View style={tw`relative mb-6`}>
@@ -63,7 +79,7 @@ const PerfilFotoHeader = ({
               : require('../../../../assets/user_placeholder.png')
           }
           style={{
-            width: WIDTH_DIMENSIONS,
+            width: dimensionWidth,
             height: HEIGHT_DIMENSIONS * 0.7,
             backgroundColor: 'white',
           }}
@@ -71,18 +87,34 @@ const PerfilFotoHeader = ({
         />
 
         <UserValidator userToken={idUser}>
-          <View style={tw`absolute -bottom-6 right-2 `}>
-            <RoundedGalleryButton handleImage={changePhoto} />
-          </View>
+          {editable==true ? (
+              <View style={tw`absolute -bottom-6 right-2 `}>
+                <RoundedGalleryButton handleImage={changePhoto} />
+              </View>
+            
+          ):null}
         </UserValidator>
       </View>
+      <View style={tw`flex flex-row justify-center`}>
+        <CustomText
+          containerProps={{ textAlign: 'center' }}
+          style={`text-3xl ${TEXT_COLORS.DARK_BLUE}`}
+        >
+          {capitalize(nombre || '')} {capitalize(apellido || '')}
+        </CustomText>
+        {iconSource!=null && (
+          <Image
+          source={iconSource}
+          style={{
+            width: 35,
+            height: 35,
+            borderRadius: 400 / 2,
+          }}
+          resizeMode="contain"
+          />
+        )}  
 
-      <CustomText
-        containerProps={{ textAlign: 'center' }}
-        style={`text-3xl ${TEXT_COLORS.DARK_BLUE}`}
-      >
-        {capitalize(nombre || '')} {capitalize(apellido || '')}
-      </CustomText>
+      </View>
 
       <Text style={tw`text-center text-black opacity-40`}>
         {email || ''}
@@ -98,7 +130,7 @@ const PerfilFotoHeader = ({
           containerProps={{ textAlign: 'center' }}
           style={`text-xl ${TEXT_COLORS.ORANGE}`}
         >
-          {admin ? 'Administrador' : 'Ciclista'}
+          {admin ? 'Administrador' : tipo}
         </CustomText>
       </View>
     </>

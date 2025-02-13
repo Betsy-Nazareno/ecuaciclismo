@@ -26,7 +26,7 @@ const FeedbackRuta = ({
   isReadOnly,
   sendFeedback,
 }: FeedbackRutaProps) => {
-  console.log(isReadOnly)
+  
   return (
     <View style={tw`mt-4 flex flex-col items-center`}>
       <Text

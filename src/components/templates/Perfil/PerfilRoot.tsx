@@ -6,9 +6,9 @@ import tw from 'twrnc'
 import { useAuthentication } from '../../../hooks/useAuthentication'
 import {
   getDetalleUsuario,
-  updateUser,
+  enviarDatosUsuarios,
 } from '../../../lib/services/user.services'
-import { RootStackParamList, Screens } from '../../../models/Screens.types'
+import { RootDrawerParamList, RootStackParamList, Screens, ScreensDrawer } from '../../../models/Screens.types'
 import { User } from '../../../models/User'
 import { RootState } from '../../../redux/store'
 import { BACKGROUND_COLORS } from '../../../utils/constants'
@@ -16,7 +16,6 @@ import * as SecureStore from 'expo-secure-store'
 import Ruler from '../../atomos/Ruler'
 import OpcionPerfil from '../../moleculas/OpcionPerfil'
 import PerfilFotoHeader from './PerfilFotoHeader'
-import PerfilInformacionBicicleta from './PerfilInformacionBicicleta'
 import PerfilInformacionPersonal from './PerfilInformacionPersonal'
 import PerfilRutasInteres from './PerfilRutasInteres'
 import PerfilRutasRecorridas from './PerfilRutasRecorridas'
@@ -34,21 +33,22 @@ const PerfilRoot = ({ userToken }: PerfilRootProps) => {
   const [hasRefresh, setHasRefresh] = React.useState(false)
   const [detalleUser, setDetalleUser] = React.useState<Partial<User>>({})
   const navigation =
-    useNavigation<NavigationProp<RootStackParamList, Screens>>()
-
+    useNavigation<NavigationProp<RootDrawerParamList, ScreensDrawer>>()
   React.useEffect(() => {
-    ;(async () => {
+    ; (async () => {
+
       if (authToken) {
         const detalle = await getDetalleUsuario(authToken, userToken)
         setDetalleUser(detalle)
+        setHasRefresh(!hasRefresh)
       }
     })()
-  }, [userToken, hasRefresh, refreshUser])
-
+  }, [!hasRefresh, refreshUser])
   const handleUpdates = async (updatedFields: Partial<User>) => {
     const data = { ...detalleUser, ...updatedFields }
 
-    await updateUser(userToken, data)
+    await enviarDatosUsuarios(userToken, data)
+    
     const result = await SecureStore.getItemAsync('user')
     if (result) {
       const data = JSON.parse(result)
@@ -62,7 +62,6 @@ const PerfilRoot = ({ userToken }: PerfilRootProps) => {
     }
     setHasRefresh(!hasRefresh)
   }
-
   return (
     <View style={tw`pb-12`}>
       <PerfilFotoHeader
@@ -74,6 +73,7 @@ const PerfilRoot = ({ userToken }: PerfilRootProps) => {
         telefono={detalleUser?.telefono}
         onUpdate={handleUpdates}
         idUser={userToken}
+        tipo={detalleUser?.tipo}
       />
       <Ruler style={`w-11/12 mx-auto ${BACKGROUND_COLORS.GRAY} my-4`} />
 
@@ -86,14 +86,6 @@ const PerfilRoot = ({ userToken }: PerfilRootProps) => {
       <Ruler style={`w-11/12 mx-auto ${BACKGROUND_COLORS.GRAY} my-4`} />
 
       <PerfilRutasInteres tipoRutas={detalleUser?.etiquetas} />
-      <Ruler style={`w-11/12 mx-auto ${BACKGROUND_COLORS.GRAY} my-4`} />
-
-      <PerfilInformacionBicicleta
-        tipo={detalleUser?.tipo}
-        marca={detalleUser?.marca}
-        codigo={detalleUser?.codigo}
-        foto={detalleUser?.foto_bicicleta}
-      />
 
       <Ruler style={`w-11/12 mx-auto ${BACKGROUND_COLORS.GRAY} my-4`} />
 

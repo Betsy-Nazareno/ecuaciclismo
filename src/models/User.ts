@@ -13,10 +13,8 @@ export interface User {
   peso?: number
   genero?: string
   admin?: boolean
-  tipo?: string
-  marca?: string
-  codigo?: string
-  foto_bicicleta?: string
+  tipo: string
+  propietary?:boolean
   etiquetas?: catalogs[]
   rutas?: any
   id_usuario?: string

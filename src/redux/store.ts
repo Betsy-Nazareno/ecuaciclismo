@@ -8,7 +8,14 @@ import publicacionBusqueda from './publicacionBusqueda'
 import publicacionReducer from './publicacion'
 import BusquedaRutas from './rutasBusqueda'
 import Rutas from './ruta'
-
+import SecureContacts from './SecureContacts'
+import AlertaReducer from './alerta'
+import AlertaBusqueda from './alertaBusqueda'
+import RegistroLocalSeguro from './RegistroLocalSeguro'
+import LugarReducer from './lugar'
+import SolicitudReducer from './solicitud'
+import RegistroVerificado from './RegistroVerificado'
+import BicicletaReducer from './bicicleta'
 export const store = configureStore({
   reducer: {
     user: userReducer,
@@ -20,6 +27,14 @@ export const store = configureStore({
     publicacion: publicacionReducer,
     busquedaRutas: BusquedaRutas,
     ruta: Rutas,
+    contactosSeguros: SecureContacts,
+    alerta:AlertaReducer,
+    bicicleta:BicicletaReducer,
+    busquedaAlertas:AlertaBusqueda,
+    registroLocalSeguro: RegistroLocalSeguro,
+    lugar: LugarReducer,
+    solicitud: SolicitudReducer,
+    verificado: RegistroVerificado,
   },
 })
 

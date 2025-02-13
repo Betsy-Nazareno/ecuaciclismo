@@ -1,32 +1,53 @@
+import { RutaCoordinadas } from './Alertas'
 import { Consejo } from './Consejo.model'
 import { NovedadInterface } from './Novedad.model'
 import { Publicacion } from './Publicaciones.model'
 import { Ruta } from './Rutas'
+import { RegistroLocalSeguro } from './RegistroLocalSeguro'
+import { RegistroMiembro } from './RegistroMiembro'
+import { Solicitud } from './Solicitud'
 
 export type RootStackParamList = {
   Inicio: { reload: boolean } | undefined
   Login: undefined
   Registro: undefined
+  RecuperarContrasena: undefined
   Rutas: undefined
   Publicaciones: undefined
-  Perfil: { userToken: string } | undefined
+  ContactosComunidad: undefined
+  ContactosCelular: undefined
+  RegistroLocalSeguro: undefined
+  RegistroLocalSeguroRequisitos: { registerType: string } | undefined
+  RegistroLocalSeguroFormulario: { registerType: string; initValues?: RegistroLocalSeguro } | undefined
+  DescargarSubirPDF: undefined
+  RegistroMiembro: undefined
+  RequisitosMiembro: undefined
+  FormularioMiembro: { initValues?: RegistroMiembro } | undefined
+  PaginaDescargaMiembro: undefined
+  RegistroVerificado: undefined
+  SeleccionarUsers: undefined
+
   ConsejoFormulario: { consejo: Consejo } | undefined
   NovedadFormulario: { publicidad: NovedadInterface } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
   DetallePublicacion: { token: string } | undefined
+
   PublicacionFormulario: { data: Publicacion } | undefined
   RutasFormulario: { ruta: Ruta } | undefined
   DetalleRuta: { token: string } | undefined
+
   InicioRastreo: { ruta: Ruta } | undefined
   RastreoUbicacion: { ruta: Ruta } | undefined
   RutaIncompleta: { tokenRuta: string; tokenUsuario: string } | undefined
   FinalRuta: { tokenRuta: string; tokenUsuario: string } | undefined
-  PerfilFormulario: { data: any } | undefined
+
+  AlertaFormulario: { data: RutaCoordinadas } | undefined
+
+
 }
 
 export type Screens =
   | 'Inicio'
-  | 'Perfil'
   | 'Login'
   | 'Registro'
   | 'Rutas'
@@ -38,11 +59,27 @@ export type Screens =
   | 'PublicacionFormulario'
   | 'RutasFormulario'
   | 'DetalleRuta'
+
   | 'InicioRastreo'
   | 'RastreoUbicacion'
   | 'RutaIncompleta'
   | 'FinalRuta'
-  | 'PerfilFormulario'
+
+  | 'ContactosComunidad'
+  | 'ContactosCelular'
+  | 'AlertaFormulario'
+  | 'RegistroLocalSeguro'
+  | 'RegistroLocalSeguroRequisitos'
+  | 'RegistroLocalSeguroFormulario'
+  | 'DescargarSubirPDF'
+  | 'RegistroMiembro'
+  | 'RequisitosMiembro'
+  | 'FormularioMiembro'
+  | 'PaginaDescargaMiembro'
+  | 'RegistroVerificado'
+  | 'SeleccionarUsers'
+  | 'RecuperarContrasena'
+
 
 export type RootDrawerParamList = {
   HomeStack: undefined
@@ -50,11 +87,23 @@ export type RootDrawerParamList = {
   Comunidad: undefined
   Novedades: undefined
   Perfil: { userToken: string } | undefined
+  PerfilFormulario: { data: any } | undefined
   ConsejoDetalle: { consejo: Consejo } | undefined
   DetalleNovedad: { data: NovedadInterface } | undefined
   Publicaciones: undefined
   Inicio: undefined
   Contactenos: undefined
+  ContactosSeguros: undefined
+  Seguridad: undefined
+  Lugares: undefined
+  DetalleSolicitud: { solicitud: Solicitud } | undefined
+  Solicitudes: undefined
+  Bicicletas: undefined
+  BicicletasVisitor: {token_usuario:string}
+  LugarFormulario: { longitud: number | 0; latitud: number | 0 } | undefined
+  BicicletaFormulario: { tokenUsuario: string }
+  
+  DetalleBicicleta: { token: string } | undefined
 }
 
 export type ScreensDrawer =
@@ -66,4 +115,17 @@ export type ScreensDrawer =
   | 'Publicaciones'
   | 'Inicio'
   | 'Perfil'
+  | 'PerfilFormulario'
   | 'Contactenos'
+  | 'ContactosSeguros'
+  | 'LugarFormulario'
+  | 'Seguridad'
+  | 'Lugares'
+  | 'DetalleSolicitud'
+  | 'Solicitudes'
+  | 'BicicletasVisitor'
+  | 'Bicicletas'
+  | 'BicicletaFormulario'
+  | 'DetalleBicicleta'
+
+

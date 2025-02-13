@@ -75,7 +75,6 @@ const ReporteFinalRuta = ({
     navigation.navigate('Rutas')
     setIsLoading(false)
   }
-  console.log(hitosRuta)
   const readOnly = tokenUsuario !== user?.id_usuario
   return (
     <View style={tw`px-4`}>

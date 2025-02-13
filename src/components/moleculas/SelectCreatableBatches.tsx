@@ -13,10 +13,12 @@ import Badge from './Badge'
 interface SelectCreatableBatchesProps {
   values: Etiqueta[]
   selectedValues: string[]
+  accessibilityLabel: string
   placeholder: string
   deleteValue: (value: string) => void
   setValuesSelected: (value: string) => void
   field: string
+  activateCancel?: boolean
 }
 
 const SelectCreatableBatches = ({
@@ -24,8 +26,10 @@ const SelectCreatableBatches = ({
   values,
   selectedValues,
   placeholder,
+  accessibilityLabel,
   setValuesSelected,
   deleteValue,
+  activateCancel = true,
 }: SelectCreatableBatchesProps) => {
   const renderBadge = (value: string) => {
     const badge = values.find((etiqueta) => etiqueta.value === value)
@@ -39,7 +43,10 @@ const SelectCreatableBatches = ({
             label={nombre || ''}
             backgroundColor={BACKGROUND_COLORS.ORANGE}
           />
-          <CancelButton handleClick={deleteValue} value={valor || ''} />
+          {activateCancel ?
+            (<CancelButton handleClick={deleteValue} value={valor || ''} />)
+            :null
+          }
         </View>
       </Gap>
     )
@@ -58,6 +65,7 @@ const SelectCreatableBatches = ({
         }}
       >
         <SelectInput
+          accessibilityLabel={accessibilityLabel}
           values={values}
           setValuesSelected={setValuesSelected}
           placeholder={placeholder}
